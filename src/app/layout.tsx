@@ -1,14 +1,31 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Cinzel_Decorative, Crimson_Pro, IM_Fell_English, Geist } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// Ornate display font for titles (like Lovable)
+const cinzelDecorative = Cinzel_Decorative({
+  variable: "--font-cinzel",
   subsets: ["latin"],
+  weight: ["400", "700", "900"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+// Clean serif for body text
+const crimsonPro = Crimson_Pro({
+  variable: "--font-crimson",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+});
+
+// Manuscript/italic style for quotes and subtitles
+const imFellEnglish = IM_Fell_English({
+  variable: "--font-manuscript",
+  subsets: ["latin"],
+  weight: ["400"],
+  style: ["normal", "italic"],
+});
+
+const geist = Geist({
+  variable: "--font-geist",
   subsets: ["latin"],
 });
 
@@ -25,7 +42,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-zinc-900`}
+        className={`${cinzelDecorative.variable} ${crimsonPro.variable} ${imFellEnglish.variable} ${geist.variable} antialiased bg-zinc-900`}
       >
         {children}
       </body>

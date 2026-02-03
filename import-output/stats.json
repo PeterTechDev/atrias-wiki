@@ -1,0 +1,12 @@
+{
+  "total": 176,
+  "byType": {
+    "faction": 31,
+    "character": 47,
+    "lore": 21,
+    "place": 36,
+    "monster": 6,
+    "item": 35
+  },
+  "files": 15
+}

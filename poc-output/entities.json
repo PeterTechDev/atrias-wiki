@@ -1,0 +1,206 @@
+[
+  {
+    "type": "Village",
+    "name": "Sol Manso",
+    "description": "A calm and tranquil village located in the southeastern part of the imperial road, characterized by simple wooden structures and a population that moves through suspended bridges.",
+    "source": "SOL MANSO.docx"
+  },
+  {
+    "type": "Government",
+    "name": "Lady Arieth de Huma",
+    "description": "The Burgomestre of Sol Manso.",
+    "source": "SOL MANSO.docx"
+  },
+  {
+    "type": "Government",
+    "name": "Eoban Feller",
+    "description": "The Burgomestre of Sol Manso and owner of the inn 'Descanso Fortuno'.",
+    "source": "SOL MANSO.docx"
+  },
+  {
+    "type": "Defensive Unit",
+    "name": "Militia",
+    "description": "A small, basic, and weak defensive unit of the village.",
+    "source": "SOL MANSO.docx"
+  },
+  {
+    "type": "Commerce",
+    "name": "Basic Supplies",
+    "description": "Essential goods available for trade in the village.",
+    "source": "SOL MANSO.docx"
+  },
+  {
+    "type": "Commerce",
+    "name": "Inn",
+    "description": "Descanso Fortuno, a common meeting point for locals and travelers offering good meals and accommodation.",
+    "source": "SOL MANSO.docx"
+  },
+  {
+    "type": "Commerce",
+    "name": "Blacksmith",
+    "description": "Bromm, a skilled blacksmith who repairs tools and accepts specific commissions in a small tent.",
+    "source": "SOL MANSO.docx"
+  },
+  {
+    "type": "Commerce",
+    "name": "Casa de Variedades Feller",
+    "description": "The most famous trading post in the village, offering a variety of goods, including travel supplies.",
+    "source": "SOL MANSO.docx"
+  },
+  {
+    "type": "Person",
+    "name": "Drika",
+    "description": "The family member assisting Eoban Feller in managing the inn.",
+    "source": "SOL MANSO.docx"
+  },
+  {
+    "type": "Person",
+    "name": "Ionáh Feller",
+    "description": "The charismatic and helpful owner of 'Casa de Variedades Feller', wife of Eoban Feller.",
+    "source": "SOL MANSO.docx"
+  },
+  {
+    "type": "Person",
+    "name": "Bromm",
+    "description": "A strong blacksmith known for his skills, who works in a tent at the edge of the village.",
+    "source": "SOL MANSO.docx"
+  },
+  {
+    "type": "Deus",
+    "name": "A Chama Branca",
+    "description": "A Chama Branca é uma fé da justiça e da ordem, emanando uma luz pura e radiante. É invocada como defensora dos oprimidos e garante que a verdade prevaleça. Sua presença é sentida em toda parte onde justiça e ordem precisam ser restauradas.",
+    "source": "A Chama Branca.docx"
+  },
+  {
+    "type": "Alinhamento",
+    "name": "Leal Bom, Leal Neutro",
+    "description": "Refere-se à natureza moral da Chama Branca, que gira em torno da justiça e da ordem.",
+    "source": "A Chama Branca.docx"
+  },
+  {
+    "type": "Arma",
+    "name": "Espada Longa",
+    "description": "Arma associada à Chama Branca, representando a luta pela justiça.",
+    "source": "A Chama Branca.docx"
+  },
+  {
+    "type": "Símbolo",
+    "name": null,
+    "description": "O símbolo da Chama Branca não é especificado, mas geralmente representa vigilância e justiça.",
+    "source": "A Chama Branca.docx"
+  },
+  {
+    "type": "Domínios",
+    "name": "Justiça, Ordem e Luz",
+    "description": "Áreas de influência da Chama Branca, enfatizando sua natureza de justiça e ordem.",
+    "source": "A Chama Branca.docx"
+  },
+  {
+    "type": "Portfólio",
+    "name": "Justiça, Redenção, Tribunal, Acerto de Contas",
+    "description": "Aspectos que a Chama Branca abrange, relacionados a atos de justiça e consequências.",
+    "source": "A Chama Branca.docx"
+  },
+  {
+    "type": "Devotos",
+    "name": "Cavaleiros, Paladinos, Juízes, Soldados, Condestáveis",
+    "description": "Indivíduos que seguem os princípios da Chama Branca, refletindo vigilância e busca pela justiça.",
+    "source": "A Chama Branca.docx"
+  },
+  {
+    "type": "Hierarquia",
+    "name": "Luminares",
+    "description": "Clero da Chama Branca, que inclui categorias como Vigilante, Luminar da Sentença e Luminar Elevado.",
+    "source": "A Chama Branca.docx"
+  },
+  {
+    "type": "Templos",
+    "name": "Templos da Chama Branca",
+    "description": "Locais sagrados que refletem a luz, justiça e ordem. Servem como centros de adoração e justiça.",
+    "source": "A Chama Branca.docx"
+  },
+  {
+    "type": "Dogma",
+    "name": null,
+    "description": "\"Revele a verdade, puna os culpados, corrija o erro e seja sempre verdadeiro e justo em suas ações.\"",
+    "source": "A Chama Branca.docx"
+  },
+  {
+    "type": "Provérbios",
+    "name": null,
+    "description": "\"A verdade ilumina o caminho, mas a justiça é a luz que guia nossos passos.\" (e outros provérbios listados).",
+    "source": "A Chama Branca.docx"
+  },
+  {
+    "type": "Aparência",
+    "name": "A Chama Branca",
+    "description": "Frequentemente representada como uma luz radiante e pura, emitindo um brilho acolhedor e transformador.",
+    "source": "A Chama Branca.docx"
+  },
+  {
+    "type": "Rituais",
+    "name": null,
+    "description": "A presença da chama é evocada por lanternas ou velas brancas.",
+    "source": "A Chama Branca.docx"
+  },
+  {
+    "type": "Povo",
+    "name": "Elfos",
+    "description": "Uma antiga nação que ocupava grande parte do mundo conhecido, organizados em famílias com prestígio de acordo com seus conhecimentos e ofícios.",
+    "source": "Os elfos em Átrias.docx"
+  },
+  {
+    "type": "Raça",
+    "name": "Eldaren",
+    "description": "Elfos que se opuseram à preservação da imortalidade e buscaram poder através da manipulação das linhas de ley.",
+    "source": "Os elfos em Átrias.docx"
+  },
+  {
+    "type": "Raça",
+    "name": "Landaren",
+    "description": "Elfos que se recusaram a sacrificar sua imortalidade em troca de poder, permanecendo ligados à natureza.",
+    "source": "Os elfos em Átrias.docx"
+  },
+  {
+    "type": "Magia",
+    "name": "Magia Arcana",
+    "description": "Poder resultante da manipulação das linhas de ley pelos Eldaren em troca de sua imortalidade.",
+    "source": "Os elfos em Átrias.docx"
+  },
+  {
+    "type": "Personagem",
+    "name": "Parnasen",
+    "description": "Um homem que dominou a magia arcana e buscou se tornar um Deus, caindo em uma maldição devido ao seu poder.",
+    "source": "Os elfos em Átrias.docx"
+  },
+  {
+    "type": "Entidade",
+    "name": "Drawghar Mototh",
+    "description": "Entidade que guiou os humanos em um ritual de poder e causou a Ruptura ao romper as linhas de ley.",
+    "source": "Os elfos em Átrias.docx"
+  },
+  {
+    "type": "Evento",
+    "name": "A Ruptura",
+    "description": "Um cataclismo que resultou na divisão do mundo como conhecido, provocada pelas ações de Parnasen e Drawghar.",
+    "source": "Os elfos em Átrias.docx"
+  },
+  {
+    "type": "Local",
+    "name": "Átrias",
+    "description": "O mundo onde os elfos e outras raças habitavam e onde ocorreu a divisão e conflitos entre os povos.",
+    "source": "Os elfos em Átrias.docx"
+  },
+  {
+    "type": "Personagem",
+    "name": "Khay'zam",
+    "description": "Uma entidade que propôs um pacto entre todas as raças de Átrias para derrotar Drawghar.",
+    "source": "Os elfos em Átrias.docx"
+  },
+  {
+    "type": "Nação",
+    "name": "Elendel",
+    "description": "Nação formada por parte dos Eldaren após a Ruptura, incluindo muitos Meio-Elfos.",
+    "source": "Os elfos em Átrias.docx"
+  }
+]

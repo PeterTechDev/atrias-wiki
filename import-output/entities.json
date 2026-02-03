@@ -1,0 +1,1640 @@
+[
+  {
+    "type": "faction",
+    "name": "Chama Branca",
+    "description": "A faith dedicated to justice and order, symbolizing purity and radiance.",
+    "details": {
+      "alignment": "Leal Bom, Leal Neutro",
+      "domains": [
+        "Justiça",
+        "Ordem",
+        "Luz"
+      ],
+      "portfolio": [
+        "Justiça",
+        "Redenção",
+        "Tribunal",
+        "Acerto de Contas"
+      ]
+    },
+    "mentions": [],
+    "sourceFile": "A Chama Branca.docx"
+  },
+  {
+    "type": "character",
+    "name": "Luminares",
+    "description": "The clergy of A Chama Branca, dedicated to promoting justice and order.",
+    "details": {
+      "hierarchy": [
+        "Vigilante",
+        "Luminar da Sentença",
+        "Luminar Elevado"
+      ]
+    },
+    "mentions": [
+      "Chama Branca"
+    ],
+    "sourceFile": "A Chama Branca.docx"
+  },
+  {
+    "type": "lore",
+    "name": "Dogma da Chama Branca",
+    "description": "The guiding principles of the faith, emphasizing truth, justice, and order.",
+    "details": {
+      "dogma": [
+        "Revele a verdade, puna os culpados, corrija o erro e seja sempre verdadeiro e justo em suas ações.",
+        "A ordem é o caminho que trilhamos em comunhão para promover o bem-estar de todos."
+      ]
+    },
+    "mentions": [
+      "Chama Branca"
+    ],
+    "sourceFile": "A Chama Branca.docx"
+  },
+  {
+    "type": "place",
+    "name": "Templos da Chama Branca",
+    "description": "Sacred places reflecting the light, justice, and order of the Chama Branca.",
+    "details": {
+      "function": "Serve as places of worship and community centers.",
+      "design": "Varies from large temples to quarters, prisons, and communal halls."
+    },
+    "mentions": [
+      "Chama Branca"
+    ],
+    "sourceFile": "A Chama Branca.docx"
+  },
+  {
+    "type": "lore",
+    "name": "Provérbios da Chama Branca",
+    "description": "Proverbs that encapsulate the teachings and values of the Chama Branca.",
+    "details": {
+      "proverbs": [
+        "A verdade ilumina o caminho, mas a justiça é a luz que guia nossos passos.",
+        "Onde há ordem, a paz prospera; onde há paz, a justiça se estabelece.",
+        "O bem comum é uma chama que se alimenta do serviço e da solidariedade.",
+        "Em cada ato de justiça, a luz da Chama Branca brilha mais intensamente.",
+        "A sabedoria é o farol que orienta a jornada daqueles que buscam a iluminação.",
+        "A redenção é a chama que renova o espírito, permitindo que cada passo dado seja um avanço em direção à luz."
+      ]
+    },
+    "mentions": [
+      "Chama Branca"
+    ],
+    "sourceFile": "A Chama Branca.docx"
+  },
+  {
+    "type": "lore",
+    "name": "A Ruptura",
+    "description": "A cataclysmic event caused by a mortal's attempt to gain divinity, resulting in the fall of divine entities and the rise of Infernal Lords.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "A Magia em Átrias.rtf"
+  },
+  {
+    "type": "character",
+    "name": "Khay'zam",
+    "description": "A human mage who united the remaining divine avatars to combat the Infernal Lords during the Ruptura.",
+    "details": {},
+    "mentions": [
+      "Lorde Supremo D r aw g h ar Mototh"
+    ],
+    "sourceFile": "A Magia em Átrias.rtf"
+  },
+  {
+    "type": "character",
+    "name": "Lorde Supremo D r aw g h ar Mototh",
+    "description": "The supreme lord of the Infernal forces who caused significant destruction during the Ruptura.",
+    "details": {},
+    "mentions": [
+      "Khay'zam"
+    ],
+    "sourceFile": "A Magia em Átrias.rtf"
+  },
+  {
+    "type": "faction",
+    "name": "Alta'Arcanas",
+    "description": "An organization founded by Khay'zam to contain and disseminate magical knowledge while monitoring its use to prevent future catastrophes.",
+    "details": {},
+    "mentions": [
+      "Caçadores de Sangue"
+    ],
+    "sourceFile": "A Magia em Átrias.rtf"
+  },
+  {
+    "type": "faction",
+    "name": "Caçadores de Sangue",
+    "description": "A martial force trained to control rogue magic users and maintain the integrity of the Alta'Arcanas.",
+    "details": {},
+    "mentions": [
+      "Alta'Arcanas"
+    ],
+    "sourceFile": "A Magia em Átrias.rtf"
+  },
+  {
+    "type": "place",
+    "name": "Kandar",
+    "description": "One of the new continents where one of the Alta'Arcanas towers was erected.",
+    "details": {},
+    "mentions": [
+      "Eledhel",
+      "Skeld"
+    ],
+    "sourceFile": "A Magia em Átrias.rtf"
+  },
+  {
+    "type": "place",
+    "name": "Eledhel",
+    "description": "The continent known for its ferocity, where one of the Alta'Arcanas towers was built.",
+    "details": {},
+    "mentions": [
+      "Kandar",
+      "Skeld",
+      "Falandir"
+    ],
+    "sourceFile": "A Magia em Átrias.rtf"
+  },
+  {
+    "type": "place",
+    "name": "Skeld",
+    "description": "The northern island where the last of the Alta'Arcanas towers was constructed.",
+    "details": {},
+    "mentions": [
+      "Kandar",
+      "Eledhel",
+      "Khal'Guldur",
+      "Sverdflis"
+    ],
+    "sourceFile": "A Magia em Átrias.rtf"
+  },
+  {
+    "type": "character",
+    "name": "Amergin Ghalbath",
+    "description": "Amergin Ghalbath is portrayed as an ordinary man who becomes a significant figure after a transformative experience. He is described as a fisherman, shepherd, and possibly a baker, whose past is shrouded in mystery.",
+    "details": {},
+    "mentions": [
+      "Silvanus"
+    ],
+    "sourceFile": "A Origem de Ghalbath.rtf"
+  },
+  {
+    "type": "faction",
+    "name": "Khay'Zam",
+    "description": "Khay'Zam is a treaty that united mortal peoples under a common banner during a significant battle that determined the fate of the known world.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "A Origem de Ghalbath.rtf"
+  },
+  {
+    "type": "place",
+    "name": "Átrias",
+    "description": "Átrias is the world setting where the events of the narrative take place, characterized by its dark times following a cataclysm.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "A Origem de Ghalbath.rtf"
+  },
+  {
+    "type": "lore",
+    "name": "Destruidor-de-Mundos",
+    "description": "The Destruidor-de-Mundos is a catastrophic force that contributed to the subjugation of entire nations and the chaos in Átrias.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "A Origem de Ghalbath.rtf"
+  },
+  {
+    "type": "character",
+    "name": "Silvanus",
+    "description": "Silvanus is the god of nature and elements who intervenes in Amergin's life to protect him from impending doom.",
+    "details": {},
+    "mentions": [
+      "Amergin Ghalbath"
+    ],
+    "sourceFile": "A Origem de Ghalbath.rtf"
+  },
+  {
+    "type": "place",
+    "name": "Falandir",
+    "description": "Falandir is a region mentioned in the narrative, specifically in the context of an event involving the use of magic.",
+    "details": {},
+    "mentions": [
+      "Eledhel",
+      "Pacto de Ociddens"
+    ],
+    "sourceFile": "A Origem de Ghalbath.rtf"
+  },
+  {
+    "type": "monster",
+    "name": "Djinns",
+    "description": "Djinns are supernatural beings that Amergin encounters and learns from during his journey through the elemental planes.",
+    "details": {},
+    "mentions": [
+      "Amergin Ghalbath"
+    ],
+    "sourceFile": "A Origem de Ghalbath.rtf"
+  },
+  {
+    "type": "faction",
+    "name": "Ordem de Ghalbaht",
+    "description": "A faction of druids focused on maintaining the natural balance and harmony of the world. They utilize their powers based on the four elements and emphasize the use of shields over weapons.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "A ordem de Ghalbath.rtf"
+  },
+  {
+    "type": "character",
+    "name": "Ghalbath",
+    "description": "The founder of the Order of Ghalbaht, who believed in the importance of balance and the use of shields instead of weapons.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "A ordem de Ghalbath.rtf"
+  },
+  {
+    "type": "faction",
+    "name": "Seguidores de Mordred",
+    "description": "A group of druids who have embraced the corrupted side of magic, opposing the Order of Ghalbaht. They are known for their destructive tendencies and use of dark magic.",
+    "details": {},
+    "mentions": [
+      "Corja Traidora"
+    ],
+    "sourceFile": "A ordem de Ghalbath.rtf"
+  },
+  {
+    "type": "faction",
+    "name": "Corja Traidora",
+    "description": "A faction of druids who have fallen to the corrupted side of magic, often former members of the Order of Ghalbaht. They utilize dark magic to disrupt the natural elements.",
+    "details": {},
+    "mentions": [
+      "Seguidores de Mordred"
+    ],
+    "sourceFile": "A ordem de Ghalbath.rtf"
+  },
+  {
+    "type": "faction",
+    "name": "Portadores de Armas",
+    "description": "Any non-druid who interferes with the balance of nature or uses dark magic, often considered enemies of the Order of Ghalbaht.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "A ordem de Ghalbath.rtf"
+  },
+  {
+    "type": "lore",
+    "name": "Regente do Equilíbrio",
+    "description": "The title given to the current leader of the Order of Ghalbaht, typically the wisest and most powerful druid.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "A ordem de Ghalbath.rtf"
+  },
+  {
+    "type": "faction",
+    "name": "Alto conselho da Natureza",
+    "description": "A council composed of the wisest and most powerful druids within the Order of Ghalbaht, responsible for making important decisions.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "A ordem de Ghalbath.rtf"
+  },
+  {
+    "type": "character",
+    "name": "Guardiã da ordem",
+    "description": "The druid who acts as the leader of the council, serving as the right hand of the Regente do Equilíbrio.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "A ordem de Ghalbath.rtf"
+  },
+  {
+    "type": "character",
+    "name": "Adjutores Naturais",
+    "description": "Masters of the Order who have taken on apprentices, gaining the title of Adjutor.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "A ordem de Ghalbath.rtf"
+  },
+  {
+    "type": "faction",
+    "name": "Baluartes do Elemento",
+    "description": "Druids who have passed the three trials and are considered guardians of the balance of nature, each aligned with one of the four elements.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "A ordem de Ghalbath.rtf"
+  },
+  {
+    "type": "character",
+    "name": "Principiante do Resguardo",
+    "description": "Young druids or those new to the Order who have not yet passed their trials.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "A ordem de Ghalbath.rtf"
+  },
+  {
+    "type": "character",
+    "name": "Recém-chegado da Tutela",
+    "description": "Individuals who are likely to become druids in the future, typically children or young people sensitive to the four elements.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "A ordem de Ghalbath.rtf"
+  },
+  {
+    "type": "character",
+    "name": "Pássaros de Amparo",
+    "description": "Druid messengers and guides responsible for exploring and passing information.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "A ordem de Ghalbath.rtf"
+  },
+  {
+    "type": "character",
+    "name": "Escora da Vida",
+    "description": "Druids focused on healing and purification, possessing high religious and cultural knowledge.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "A ordem de Ghalbath.rtf"
+  },
+  {
+    "type": "character",
+    "name": "Broquel do Templo",
+    "description": "Druids who have failed the elemental mastery trial but still serve as guardians.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "A ordem de Ghalbath.rtf"
+  },
+  {
+    "type": "character",
+    "name": "Investigador da Base",
+    "description": "Druids responsible for recruiting potential new members and identifying imbalances in nature.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "A ordem de Ghalbath.rtf"
+  },
+  {
+    "type": "character",
+    "name": "Exército do Escudo",
+    "description": "Druids who do not fit into any of the previous roles, serving as general support for the Order.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "A ordem de Ghalbath.rtf"
+  },
+  {
+    "type": "lore",
+    "name": "CONTENDA DO COURO",
+    "description": "A game of combat, strategy, speed, and luck played by teams.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "CONTENDA DO COURO.docx"
+  },
+  {
+    "type": "faction",
+    "name": "TIME",
+    "description": "A team composed of 44 players, with only 20 allowed on the field at a time.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "CONTENDA DO COURO.docx"
+  },
+  {
+    "type": "character",
+    "name": "Regente do jogo",
+    "description": "Any authority present at the game who oversees the event.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "CONTENDA DO COURO.docx"
+  },
+  {
+    "type": "item",
+    "name": "godsack",
+    "description": "A backpack made of woven straw and leather used by Carregadores to store balls.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "CONTENDA DO COURO.docx"
+  },
+  {
+    "type": "item",
+    "name": "fundas",
+    "description": "Slingshots used by Baleiros to attack opponents and anforas.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "CONTENDA DO COURO.docx"
+  },
+  {
+    "type": "item",
+    "name": "carretilha",
+    "description": "A mechanism used in the game for scoring points, located below the main tower.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "CONTENDA DO COURO.docx"
+  },
+  {
+    "type": "place",
+    "name": "ARENA",
+    "description": "The oval playing field where the game takes place, featuring various structures and obstacles.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "CONTENDA DO COURO.docx"
+  },
+  {
+    "type": "place",
+    "name": "Torres principais",
+    "description": "The main towers located in the center of the arena, providing access to elevated platforms.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "CONTENDA DO COURO.docx"
+  },
+  {
+    "type": "place",
+    "name": "Cabana de substituição",
+    "description": "The area where players not currently in the game wait, including reserves and injured players.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "CONTENDA DO COURO.docx"
+  },
+  {
+    "type": "place",
+    "name": "Camarote VIP",
+    "description": "The VIP area where personalities, the game regent, and judges observe the game.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "CONTENDA DO COURO.docx"
+  },
+  {
+    "type": "place",
+    "name": "Centro da arena",
+    "description": "The central area of the arena where most of the combat occurs.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "CONTENDA DO COURO.docx"
+  },
+  {
+    "type": "item",
+    "name": "anforas",
+    "description": "Containers used in the game that can be destroyed for points.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "CONTENDA DO COURO.docx"
+  },
+  {
+    "type": "item",
+    "name": "bolas de ataque",
+    "description": "Balls used by players to attack opponents, available in different sizes.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "CONTENDA DO COURO.docx"
+  },
+  {
+    "type": "monster",
+    "name": "jogadores contundidos",
+    "description": "Players who are injured during the game and may require medical attention.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "CONTENDA DO COURO.docx"
+  },
+  {
+    "type": "faction",
+    "name": "COMISSÃO DE ARBITRAGEM/MÉDICA",
+    "description": "The committee responsible for overseeing the game and providing medical assistance.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "CONTENDA DO COURO.docx"
+  },
+  {
+    "type": "item",
+    "name": "Fruta Gélida Azul",
+    "description": "A naturally blue rose that has the ability to neutralize poisons, though not very effectively.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Ervas.rtf"
+  },
+  {
+    "type": "item",
+    "name": "Seiva Clara",
+    "description": "A crystal-clear sap collected from large trees found in forests along mountain ranges, difficult to find due to its visual quality.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Ervas.rtf"
+  },
+  {
+    "type": "item",
+    "name": "Margarida-Encharcada-de-Orvalho",
+    "description": "A purple daisy with a white dotted pattern that can be consumed to cure almost all poisons except the deadliest ones.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Ervas.rtf"
+  },
+  {
+    "type": "item",
+    "name": "Bulbo de Kraken-Kelp",
+    "description": "An extremely tall algae that grows at the edges of extreme margins, sometimes visible from beaches in wave valleys.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Ervas.rtf"
+  },
+  {
+    "type": "item",
+    "name": "Semente de Lavanda",
+    "description": "Lavender seeds scattered across meadows, plains, and sandy coasts, easily detectable due to their purple flower tips.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Ervas.rtf"
+  },
+  {
+    "type": "item",
+    "name": "Pétala de Cacto-Lamica Azul",
+    "description": "A common cactus found in deserts and dunes, with bright blue flowers that store rare cold rainwater.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Ervas.rtf"
+  },
+  {
+    "type": "item",
+    "name": "Grama Lunar",
+    "description": "Grass with silver stripes on the edges, found growing in cold regions through snow and on the tops of high mountains.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Ervas.rtf"
+  },
+  {
+    "type": "item",
+    "name": "Planta Cântaro-Mamute",
+    "description": "A huge plant with dark brown veins found in most jungles and tropical forests, feeding on insects that land inside it.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Ervas.rtf"
+  },
+  {
+    "type": "item",
+    "name": "Margarida Temerária",
+    "description": "Rose petals found on the Temerária Daisy that inhibit fear when properly consumed, useful for aspiring adventurers.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Ervas.rtf"
+  },
+  {
+    "type": "item",
+    "name": "Cogumelo Pingo-Rubro",
+    "description": "A white mushroom with small red spots that grows in humidity and prefers low light or dark areas.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Ervas.rtf"
+  },
+  {
+    "type": "item",
+    "name": "Botão de Locinto",
+    "description": "A vibrant orange plant found in the depths of jungles, quickly developing from a bud into a full plant.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Ervas.rtf"
+  },
+  {
+    "type": "item",
+    "name": "Hibisco Rubi",
+    "description": "A bright red flower famous for its pleasant smell but terrible taste, offering beneficial effects despite its rarity.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Ervas.rtf"
+  },
+  {
+    "type": "item",
+    "name": "Tentáculo de Dros'eara Pálida",
+    "description": "A large and rare carnivorous plant with tentacle-like extrusions that secrete a sweet aroma to attract insects.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Ervas.rtf"
+  },
+  {
+    "type": "item",
+    "name": "Junco Esplendor",
+    "description": "A modest stem growing on the edges of cool water surfaces, often overlooked due to its normal appearance.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Ervas.rtf"
+  },
+  {
+    "type": "item",
+    "name": "Sonhador Chamuscado",
+    "description": "A dark purple flower resembling a lily that feeds on nearby plants, emitting a strong sweet aroma.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Ervas.rtf"
+  },
+  {
+    "type": "item",
+    "name": "Brasa Espinhosa",
+    "description": "A slow-growing orange flower with a black stripe on each petal, thriving in volcanic ash and solidified magma.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Ervas.rtf"
+  },
+  {
+    "type": "item",
+    "name": "Seiva Pedra-Fogo",
+    "description": "An amber-colored thick sap commonly harvested from trees deep in the forest, known for its rich and sweet flavor.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Ervas.rtf"
+  },
+  {
+    "type": "item",
+    "name": "Nós de Arvid-Retorcida",
+    "description": "A caqui-colored nut typically found inside trees near water sources, known for its large size and twisted roots.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Ervas.rtf"
+  },
+  {
+    "type": "item",
+    "name": "Semente Vitalin",
+    "description": "A brown seed speckled with small pink dots, known for its pleasantly sour taste and ability to prevent terrible diseases.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Ervas.rtf"
+  },
+  {
+    "type": "place",
+    "name": "Norbria",
+    "description": "A city that emerged from a fishing village, named in honor of those killed in the first attack by the Horda.",
+    "details": {},
+    "mentions": [
+      "Lago Teamor",
+      "baía de Hardenfor"
+    ],
+    "sourceFile": "HISTÓRIA DE NORBRIA.docx"
+  },
+  {
+    "type": "place",
+    "name": "Lago Teamor",
+    "description": "A lake that served as a landing point for invasions and the site of significant battles.",
+    "details": {},
+    "mentions": [
+      "Norbria",
+      "Horda"
+    ],
+    "sourceFile": "HISTÓRIA DE NORBRIA.docx"
+  },
+  {
+    "type": "place",
+    "name": "Terra dos Vales",
+    "description": "A region where the Skeldens expanded their territory, north of which significant events took place.",
+    "details": {},
+    "mentions": [
+      "Cernizza",
+      "Horda"
+    ],
+    "sourceFile": "HISTÓRIA DE NORBRIA.docx"
+  },
+  {
+    "type": "place",
+    "name": "Cernizza",
+    "description": "A location that was established as the Skeldens expanded their territory.",
+    "details": {},
+    "mentions": [
+      "Terra dos Vales"
+    ],
+    "sourceFile": "HISTÓRIA DE NORBRIA.docx"
+  },
+  {
+    "type": "place",
+    "name": "Rochedos de Baldren",
+    "description": "A region where Andrastos encountered a rudimentary city and port established by the Skeldens.",
+    "details": {},
+    "mentions": [
+      "Andrastos"
+    ],
+    "sourceFile": "HISTÓRIA DE NORBRIA.docx"
+  },
+  {
+    "type": "faction",
+    "name": "Horda",
+    "description": "A coalition of Skeldian clans formed to invade and conquer territories in the continent.",
+    "details": {},
+    "mentions": [
+      "Andrastos",
+      "Skeldens"
+    ],
+    "sourceFile": "HISTÓRIA DE NORBRIA.docx"
+  },
+  {
+    "type": "faction",
+    "name": "Pacto de Ociddens",
+    "description": "An alliance formed to protect the Western continent from Skeldian invasions, consisting of the crowns of Humma, Noan, and Falandir.",
+    "details": {},
+    "mentions": [
+      "Humma",
+      "Noan",
+      "Falandir"
+    ],
+    "sourceFile": "HISTÓRIA DE NORBRIA.docx"
+  },
+  {
+    "type": "place",
+    "name": "baía de Hardenfor",
+    "description": "A bay where a fort was constructed to repel future attacks from the Skeldens.",
+    "details": {},
+    "mentions": [
+      "forte"
+    ],
+    "sourceFile": "HISTÓRIA DE NORBRIA.docx"
+  },
+  {
+    "type": "character",
+    "name": "Andrastos",
+    "description": "The ruler of Vallen who initially proposed an alliance with the Skeldens and later died in battle against the Horda.",
+    "details": {},
+    "mentions": [
+      "Quínewen",
+      "Vallen"
+    ],
+    "sourceFile": "HISTÓRIA DE NORBRIA.docx"
+  },
+  {
+    "type": "character",
+    "name": "Quínewen",
+    "description": "The daughter of Andrastos who took the crown of Vallen and honored her father's agreement with the Skeldens.",
+    "details": {},
+    "mentions": [
+      "Andrastos",
+      "Vallen"
+    ],
+    "sourceFile": "HISTÓRIA DE NORBRIA.docx"
+  },
+  {
+    "type": "faction",
+    "name": "Guarda Argêntea",
+    "description": "The elite guard accompanying Andrastos during his campaign against the Horda.",
+    "details": {},
+    "mentions": [
+      "Andrastos"
+    ],
+    "sourceFile": "HISTÓRIA DE NORBRIA.docx"
+  },
+  {
+    "type": "faction",
+    "name": "Cavaleiros de Nerânia",
+    "description": "A battalion that accompanied Andrastos to face the Horda.",
+    "details": {},
+    "mentions": [
+      "Andrastos"
+    ],
+    "sourceFile": "HISTÓRIA DE NORBRIA.docx"
+  },
+  {
+    "type": "character",
+    "name": "Andrastos O Unificador",
+    "description": "The title given to Andrastos posthumously, celebrated annually in his honor.",
+    "details": {},
+    "mentions": [
+      "Norbria",
+      "Vallen"
+    ],
+    "sourceFile": "HISTÓRIA DE NORBRIA.docx"
+  },
+  {
+    "type": "place",
+    "name": "Vallen",
+    "description": "The realm ruled by Andrastos and later by his daughter Quínewen.",
+    "details": {},
+    "mentions": [
+      "Andrastos",
+      "Quínewen"
+    ],
+    "sourceFile": "HISTÓRIA DE NORBRIA.docx"
+  },
+  {
+    "type": "faction",
+    "name": "Skeldens",
+    "description": "The people who invaded the continent, leading to the formation of the Horda.",
+    "details": {},
+    "mentions": [
+      "Horda",
+      "Andrastos"
+    ],
+    "sourceFile": "HISTÓRIA DE NORBRIA.docx"
+  },
+  {
+    "type": "place",
+    "name": "Humma",
+    "description": "One of the crowns that formed the Pacto de Ociddens to protect against Skeldian invasions.",
+    "details": {},
+    "mentions": [
+      "Pacto de Ociddens"
+    ],
+    "sourceFile": "HISTÓRIA DE NORBRIA.docx"
+  },
+  {
+    "type": "place",
+    "name": "Noan",
+    "description": "Another crown that was part of the Pacto de Ociddens.",
+    "details": {},
+    "mentions": [
+      "Pacto de Ociddens"
+    ],
+    "sourceFile": "HISTÓRIA DE NORBRIA.docx"
+  },
+  {
+    "type": "character",
+    "name": "Thrandorin Dobra'ouro",
+    "description": "Thrandorin Dobra'ouro was the king of the dwarves of Khal'Guldur, known for his bravery and craftsmanship. He led his people in battle against the Devourer of Worlds and was a symbol of pride and strength for the dwarves.",
+    "details": {},
+    "mentions": [
+      "Khal'Guldur",
+      "Ner'drul",
+      "Thor",
+      "Nidhogg"
+    ],
+    "sourceFile": "Os anões em Skeld.rtf"
+  },
+  {
+    "type": "place",
+    "name": "Khal'Guldur",
+    "description": "Khal'Guldur was the ancient kingdom of the dwarves, renowned for its forges and craftsmanship. It was ruled by Thrandorin Dobra'ouro and became a site of tragedy due to the awakening of Nidhogg.",
+    "details": {},
+    "mentions": [
+      "Thrandorin Dobra'ouro",
+      "Nidhogg"
+    ],
+    "sourceFile": "Os anões em Skeld.rtf"
+  },
+  {
+    "type": "monster",
+    "name": "Nidhogg",
+    "description": "Nidhogg is an ancient creature awakened by the dwarves during their mining operations, leading to devastation and the near extinction of their people. It is known for its destructive power and dominance over the shadows of the dwarven halls.",
+    "details": {},
+    "mentions": [
+      "Thrandorin Dobra'ouro",
+      "Khal'Guldur"
+    ],
+    "sourceFile": "Os anões em Skeld.rtf"
+  },
+  {
+    "type": "monster",
+    "name": "Ner'drul",
+    "description": "Ner'drul is referred to as the Demon of Greed, an enemy that Thrandorin fought against during the war. His defeat marked a significant moment in the history of the dwarves.",
+    "details": {},
+    "mentions": [
+      "Thrandorin Dobra'ouro"
+    ],
+    "sourceFile": "Os anões em Skeld.rtf"
+  },
+  {
+    "type": "lore",
+    "name": "Ruptura",
+    "description": "The Ruptura refers to a significant event in the history of the dwarves, marking a time of great external threats and challenges. It is during this time that Thrandorin's leadership was crucial.",
+    "details": {},
+    "mentions": [
+      "Thrandorin Dobra'ouro"
+    ],
+    "sourceFile": "Os anões em Skeld.rtf"
+  },
+  {
+    "type": "lore",
+    "name": "Pedra-Mãe",
+    "description": "The Pedra-Mãe is a mythical object that Thrandorin believed to be the source of life for the dwarves and their mines. His obsession with it led to dire consequences for his people.",
+    "details": {},
+    "mentions": [
+      "Thrandorin Dobra'ouro"
+    ],
+    "sourceFile": "Os anões em Skeld.rtf"
+  },
+  {
+    "type": "faction",
+    "name": "Anões da Grande Ilha",
+    "description": "The Anões da Grande Ilha refers to the dwarves of the Great Island, who once held sovereignty over their lands. Their pride and unity have been severely diminished due to the events that transpired in Khal'Guldur.",
+    "details": {},
+    "mentions": [
+      "Skeld",
+      "Khal'Guldur"
+    ],
+    "sourceFile": "Os anões em Skeld.rtf"
+  },
+  {
+    "type": "place",
+    "name": "Sverdflis",
+    "description": "Sverdflis, meaning 'the broken blade', is the site of a significant battle where Thrandorin fought Ner'drul. It is named in honor of the king and the events that transpired there.",
+    "details": {},
+    "mentions": [
+      "Thrandorin Dobra'ouro"
+    ],
+    "sourceFile": "Os anões em Skeld.rtf"
+  },
+  {
+    "type": "faction",
+    "name": "Eldaren",
+    "description": "A faction of elves who sacrificed their immortality to gain power over the ley lines, leading to their dominance in magic.",
+    "details": {},
+    "mentions": [
+      "Landaren",
+      "Alto Elfos",
+      "Elfos Dourados"
+    ],
+    "sourceFile": "Os elfos em Átrias.docx"
+  },
+  {
+    "type": "faction",
+    "name": "Landaren",
+    "description": "A faction of elves who refused to sacrifice their immortality and chose to remain connected to nature, known as the Elfos Silvestres or Elfos da Lua.",
+    "details": {},
+    "mentions": [
+      "Eldaren",
+      "Alto Elfos",
+      "Elfos Dourados"
+    ],
+    "sourceFile": "Os elfos em Átrias.docx"
+  },
+  {
+    "type": "character",
+    "name": "Parnasen",
+    "description": "A human considered wise among his people, who mastered the manipulation of ley lines and sought to become a god.",
+    "details": {},
+    "mentions": [
+      "Drawghar Mototh"
+    ],
+    "sourceFile": "Os elfos em Átrias.docx"
+  },
+  {
+    "type": "character",
+    "name": "Drawghar Mototh",
+    "description": "An entity that guided humans in a ritual, leading to their corruption and the rise of the Maldição da Ambição.",
+    "details": {},
+    "mentions": [
+      "Parnasen"
+    ],
+    "sourceFile": "Os elfos em Átrias.docx"
+  },
+  {
+    "type": "lore",
+    "name": "A Magia Arcana",
+    "description": "The powerful magic developed by the Eldaren after sacrificing their immortality, allowing them to manipulate ley lines.",
+    "details": {},
+    "mentions": [
+      "Eldaren"
+    ],
+    "sourceFile": "Os elfos em Átrias.docx"
+  },
+  {
+    "type": "lore",
+    "name": "Maldição da Ambição",
+    "description": "A curse that affected humans who manipulated arcane magic, stemming from the infernal forces used in their rituals.",
+    "details": {},
+    "mentions": [
+      "Drawghar Mototh"
+    ],
+    "sourceFile": "Os elfos em Átrias.docx"
+  },
+  {
+    "type": "place",
+    "name": "Elendel",
+    "description": "A nation formed by the Eldaren after the Ruptura, where many elves and half-elves reside.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Os elfos em Átrias.docx"
+  },
+  {
+    "type": "place",
+    "name": "Pedraluna",
+    "description": "A small village with a population of approximately 500 people, mostly humans. It is located near the Gawain river and around the Elengil lake, characterized by its mild climate and abundant vegetation.",
+    "details": {
+      "population": "500+",
+      "climate": "Mild during the day, colder at night",
+      "notable_features": "Abundant trees, flowers, and fruit bushes"
+    },
+    "mentions": [
+      "Gawain",
+      "Elengil",
+      "Humma"
+    ],
+    "sourceFile": "Pedraluna.rtf"
+  },
+  {
+    "type": "character",
+    "name": "Latélia Hugmore",
+    "description": "The Burgo-Mestra of Pedraluna, a middle-aged woman who inherited her position in recent years. She represents the local authority despite the absence of the village's walls.",
+    "details": {},
+    "mentions": [
+      "Gilmond Vern",
+      "Hiram Thorp",
+      "Veleska Haralskin",
+      "Eribert Galwain"
+    ],
+    "sourceFile": "Pedraluna.rtf"
+  },
+  {
+    "type": "character",
+    "name": "Gilmond Vern",
+    "description": "A recently established baron in Pedraluna, known for his wealth and influence. He gained permission to explore sacred mines through public meetings and votes.",
+    "details": {},
+    "mentions": [
+      "Latélia Hugmore"
+    ],
+    "sourceFile": "Pedraluna.rtf"
+  },
+  {
+    "type": "character",
+    "name": "Hiram Thorp",
+    "description": "An old mercenary who chose Pedraluna for a peaceful retirement and was appointed as the Commander of the Guard. He oversees the protection of the village.",
+    "details": {},
+    "mentions": [
+      "Latélia Hugmore"
+    ],
+    "sourceFile": "Pedraluna.rtf"
+  },
+  {
+    "type": "character",
+    "name": "Veleska Haralskin",
+    "description": "An exiled aristocrat from Nerânia who believes she has the right to govern Pedraluna due to her noble blood. She often conflicts with Latélia Hugmore.",
+    "details": {},
+    "mentions": [
+      "Latélia Hugmore"
+    ],
+    "sourceFile": "Pedraluna.rtf"
+  },
+  {
+    "type": "character",
+    "name": "Eribert Galwain",
+    "description": "A dedicated young citizen in his twenties, known for helping with daily tasks in the village. He dreams of becoming a knight like his ancestor, Sir Gawain.",
+    "details": {},
+    "mentions": [
+      "Sir Gawain",
+      "Latélia Hugmore"
+    ],
+    "sourceFile": "Pedraluna.rtf"
+  },
+  {
+    "type": "item",
+    "name": "A Trilha Ardente",
+    "description": "The forge of Pedraluna, run by the skilled Golden Elf Sêren. He specializes in the elven forging technique known as Ardore Guiaden.",
+    "details": {
+      "owner": "Sêren",
+      "specialty": "Elven forging technique"
+    },
+    "mentions": [],
+    "sourceFile": "Pedraluna.rtf"
+  },
+  {
+    "type": "character",
+    "name": "Sêren",
+    "description": "A skilled golden elf blacksmith who runs A Trilha Ardente. He is capable of repairing weapons and armor but only produces equipment for reasons he deems correct.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Pedraluna.rtf"
+  },
+  {
+    "type": "item",
+    "name": "Casa Haralskin",
+    "description": "The property of Veleska Haralskin, which offers various utility articles and discreet services for those willing to assist her.",
+    "details": {},
+    "mentions": [
+      "Veleska Haralskin"
+    ],
+    "sourceFile": "Pedraluna.rtf"
+  },
+  {
+    "type": "character",
+    "name": "Augustinus Clifford",
+    "description": "Known as Gut Clifford, he does not own a commercial establishment but cultivates a medicinal herb garden in memory of his late wife.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Pedraluna.rtf"
+  },
+  {
+    "type": "lore",
+    "name": "Paragon",
+    "description": "Paragon is a homebrew game that involves teams of players competing in a structured format with specific roles and rules.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "REGRAS PARAGON.docx"
+  },
+  {
+    "type": "character",
+    "name": "Defensor",
+    "description": "The most resilient player whose main function is to protect the area of the Aro and is the only player who uses a shield for blocking.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "REGRAS PARAGON.docx"
+  },
+  {
+    "type": "character",
+    "name": "Ponta",
+    "description": "The most agile player responsible for covering the sides of the field and making throws from the quadrants.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "REGRAS PARAGON.docx"
+  },
+  {
+    "type": "character",
+    "name": "Breaker",
+    "description": "The player with the greatest physical strength, whose main function is to stop opponents and score within the opponent's defense area.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "REGRAS PARAGON.docx"
+  },
+  {
+    "type": "character",
+    "name": "Lançador",
+    "description": "The most intelligent and versatile player, responsible for leading the team with passes and intercepting opponent passes.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "REGRAS PARAGON.docx"
+  },
+  {
+    "type": "character",
+    "name": "Capitão",
+    "description": "The player with the commanding voice, responsible for coordinating the team and can freely act on the sides.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "REGRAS PARAGON.docx"
+  },
+  {
+    "type": "item",
+    "name": "Aro",
+    "description": "The target area that players aim to score points by launching the ball through it.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "REGRAS PARAGON.docx"
+  },
+  {
+    "type": "item",
+    "name": "rede",
+    "description": "An item used by the Ponta to carry the ball and perform launches.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "REGRAS PARAGON.docx"
+  },
+  {
+    "type": "item",
+    "name": "escudo",
+    "description": "A shield used by the Defensor for blocking during the game.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "REGRAS PARAGON.docx"
+  },
+  {
+    "type": "lore",
+    "name": "Teste de Força",
+    "description": "A strength test used to determine the outcome of contested balls during the game.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "REGRAS PARAGON.docx"
+  },
+  {
+    "type": "lore",
+    "name": "Teste de Destreza",
+    "description": "A dexterity test required for certain passes and actions during the game.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "REGRAS PARAGON.docx"
+  },
+  {
+    "type": "lore",
+    "name": "CA",
+    "description": "An abbreviation for 'Classe de Armadura', which is the armor class that players must overcome to successfully block or intercept passes.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "REGRAS PARAGON.docx"
+  },
+  {
+    "type": "lore",
+    "name": "manobras físicas",
+    "description": "Physical maneuvers that players can perform to contain their opponents, such as grabbing, knocking down, or pushing.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "REGRAS PARAGON.docx"
+  },
+  {
+    "type": "item",
+    "name": "Machado de Batalha",
+    "description": "A battle axe used by the character Flint, which can suffer damage and durability penalties during combat.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Regras de Durabilidade.rtf"
+  },
+  {
+    "type": "character",
+    "name": "Flint",
+    "description": "An anão guerreiro (dwarf warrior) who uses the Machado de Batalha in combat and experiences penalties due to damage.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Regras de Durabilidade.rtf"
+  },
+  {
+    "type": "monster",
+    "name": "Orc",
+    "description": "A common enemy encountered by Flint during his adventures, representing a typical adversary in the setting.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Regras de Durabilidade.rtf"
+  },
+  {
+    "type": "monster",
+    "name": "Goblin",
+    "description": "Another enemy faced by Flint, showcasing the various creatures that adventurers might encounter.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Regras de Durabilidade.rtf"
+  },
+  {
+    "type": "place",
+    "name": "masmorra",
+    "description": "A dungeon explored by Flint and his group of adventurers, serving as a setting for their encounters.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Regras de Durabilidade.rtf"
+  },
+  {
+    "type": "faction",
+    "name": "ferreiro",
+    "description": "A blacksmith who can repair damaged weapons and armor, essential for maintaining equipment durability.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Regras de Durabilidade.rtf"
+  },
+  {
+    "type": "item",
+    "name": "Bordões",
+    "description": "Simple weapons that can be repaired or used as materials for repairs if not destroyed.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Regras de Durabilidade.rtf"
+  },
+  {
+    "type": "item",
+    "name": "Porretes",
+    "description": "Another type of simple weapon that can be repaired or used for repairs.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Regras de Durabilidade.rtf"
+  },
+  {
+    "type": "item",
+    "name": "Azagaias",
+    "description": "Spears that fall under the category of simple weapons, eligible for repair.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Regras de Durabilidade.rtf"
+  },
+  {
+    "type": "item",
+    "name": "Lanças",
+    "description": "Lances that can be repaired or used as materials for repairs.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Regras de Durabilidade.rtf"
+  },
+  {
+    "type": "item",
+    "name": "Clavas",
+    "description": "Clubs that can be repaired or used for repairs if not destroyed.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Regras de Durabilidade.rtf"
+  },
+  {
+    "type": "lore",
+    "name": "durabilidade",
+    "description": "The concept of durability in weapons and armor, affecting their performance and longevity in combat.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Regras de Durabilidade.rtf"
+  },
+  {
+    "type": "lore",
+    "name": "penalidade",
+    "description": "The penalties applied to weapons and armor as they accumulate damage, impacting their effectiveness.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Regras de Durabilidade.rtf"
+  },
+  {
+    "type": "lore",
+    "name": "qualidade",
+    "description": "The classification of equipment based on the materials used and the skill of the craftsman, affecting durability and performance.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Regras de Durabilidade.rtf"
+  },
+  {
+    "type": "lore",
+    "name": "Comum ou Mundana",
+    "description": "A quality classification for equipment that is commonly found and easily produced by any blacksmith.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Regras de Durabilidade.rtf"
+  },
+  {
+    "type": "lore",
+    "name": "Superior",
+    "description": "A quality classification for equipment that is more durable and resistant, produced by skilled blacksmiths.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Regras de Durabilidade.rtf"
+  },
+  {
+    "type": "lore",
+    "name": "Obra-Prima",
+    "description": "A classification for masterfully crafted weapons and armor, often possessing magical properties and indestructible by normal means.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Regras de Durabilidade.rtf"
+  },
+  {
+    "type": "place",
+    "name": "Sol Manso",
+    "description": "A quiet village known for its simple wooden structures and a peaceful atmosphere, located along the imperial road.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "SOL MANSO.docx"
+  },
+  {
+    "type": "character",
+    "name": "Lady Arieth de Huma",
+    "description": "The governing figure of Sol Manso, serving as the burgomaster.",
+    "details": {},
+    "mentions": [
+      "Eoban"
+    ],
+    "sourceFile": "SOL MANSO.docx"
+  },
+  {
+    "type": "character",
+    "name": "Eoban Feller",
+    "description": "The burgomaster of Sol Manso and owner of the inn Descanso Fortuno, known for his hospitality.",
+    "details": {},
+    "mentions": [
+      "Lady Arieth de Huma",
+      "Drika",
+      "Ionáh Feller"
+    ],
+    "sourceFile": "SOL MANSO.docx"
+  },
+  {
+    "type": "character",
+    "name": "Drika",
+    "description": "The family member who assists Eoban Feller in managing the inn.",
+    "details": {},
+    "mentions": [
+      "Eoban Feller"
+    ],
+    "sourceFile": "SOL MANSO.docx"
+  },
+  {
+    "type": "place",
+    "name": "Descanso Fortuno",
+    "description": "The inn located in the center of Sol Manso, known for its good meals and accommodations.",
+    "details": {},
+    "mentions": [
+      "Eoban Feller"
+    ],
+    "sourceFile": "SOL MANSO.docx"
+  },
+  {
+    "type": "character",
+    "name": "Ionáh Feller",
+    "description": "The charismatic and helpful wife of Eoban Feller, who owns the Casa de Variedades Feller.",
+    "details": {},
+    "mentions": [
+      "Eoban Feller"
+    ],
+    "sourceFile": "SOL MANSO.docx"
+  },
+  {
+    "type": "place",
+    "name": "Casa de Variedades Feller",
+    "description": "The most famous commerce point in Sol Manso, offering a variety of goods for travelers and locals.",
+    "details": {},
+    "mentions": [
+      "Ionáh Feller"
+    ],
+    "sourceFile": "SOL MANSO.docx"
+  },
+  {
+    "type": "character",
+    "name": "Bromm",
+    "description": "A strong blacksmith known for his skills, who operates a small tent on the outskirts of the village.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "SOL MANSO.docx"
+  },
+  {
+    "type": "faction",
+    "name": "Garanhões Reais",
+    "description": "Known as the Royal Stallions, this faction represents a team characterized by nobility and strength.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Times de Paragon.rtf"
+  },
+  {
+    "type": "faction",
+    "name": "Martelos Ágeis",
+    "description": "The Nimble Hammers are a faction known for their quick and precise actions, likely in combat or craftsmanship.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Times de Paragon.rtf"
+  },
+  {
+    "type": "faction",
+    "name": "Papagaios Selvagens",
+    "description": "Wild Parrots represent a faction that embodies freedom and agility, possibly in exploration or scouting.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Times de Paragon.rtf"
+  },
+  {
+    "type": "faction",
+    "name": "Dragões Valorosos",
+    "description": "The Valiant Dragons are a faction that symbolizes bravery and power, often seen as formidable allies or foes.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Times de Paragon.rtf"
+  },
+  {
+    "type": "faction",
+    "name": "Areias Ardentes",
+    "description": "Hot Sands is a faction that likely represents a harsh and unforgiving environment, possibly associated with desert themes.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Times de Paragon.rtf"
+  },
+  {
+    "type": "faction",
+    "name": "Crocodilos Atrozes",
+    "description": "Giant Crocs are a faction that embodies ferocity and strength, possibly in aquatic or swampy terrains.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Times de Paragon.rtf"
+  },
+  {
+    "type": "faction",
+    "name": "Sol Dourado",
+    "description": "Golden Sun represents a faction that symbolizes hope and prosperity, possibly associated with light and healing.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Times de Paragon.rtf"
+  },
+  {
+    "type": "faction",
+    "name": "Gigantes do Trovão",
+    "description": "Thunder Giants are a faction known for their immense power and connection to storms, likely formidable in battle.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Times de Paragon.rtf"
+  },
+  {
+    "type": "faction",
+    "name": "Grifos Audazes",
+    "description": "Bold Griffons represent a faction that embodies courage and majesty, often seen as noble creatures in the skies.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Times de Paragon.rtf"
+  },
+  {
+    "type": "faction",
+    "name": "Golens Furiosos",
+    "description": "Fiery Golens are a faction that symbolizes raw power and elemental fury, likely associated with fire and destruction.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "Times de Paragon.rtf"
+  },
+  {
+    "type": "place",
+    "name": "Vigília de Akos",
+    "description": "A trading post situated in the heart of the Mortalha forest, founded by the knight Akos to protect travelers.",
+    "details": {},
+    "mentions": [
+      "Mortalha",
+      "Akos"
+    ],
+    "sourceFile": "VIGÍLIA DE AKOS.docx"
+  },
+  {
+    "type": "character",
+    "name": "Akos",
+    "description": "A legendary knight whose legacy has left a significant mark on the Vigil of Akos.",
+    "details": {},
+    "mentions": [],
+    "sourceFile": "VIGÍLIA DE AKOS.docx"
+  },
+  {
+    "type": "place",
+    "name": "Mortalha",
+    "description": "A vast and mysterious forest surrounding the Vigil of Akos, filled with dangers.",
+    "details": {},
+    "mentions": [
+      "Vigília de Akos"
+    ],
+    "sourceFile": "VIGÍLIA DE AKOS.docx"
+  },
+  {
+    "type": "place",
+    "name": "Estalagem da Lua Crescente",
+    "description": "A rustic inn known for its homemade meals and a gathering place for travelers.",
+    "details": {},
+    "mentions": [
+      "Grombard Pedravermelha"
+    ],
+    "sourceFile": "VIGÍLIA DE AKOS.docx"
+  },
+  {
+    "type": "character",
+    "name": "Grombard Pedravermelha",
+    "description": "A robust dwarf with long, pointed mustache and red hair, who manages the Estalagem da Lua Crescente.",
+    "details": {},
+    "mentions": [
+      "Estalagem da Lua Crescente"
+    ],
+    "sourceFile": "VIGÍLIA DE AKOS.docx"
+  },
+  {
+    "type": "place",
+    "name": "Companhia de Comércio Augustine",
+    "description": "A trading company managed by Lorian Augustine, overseeing local and imported goods.",
+    "details": {},
+    "mentions": [
+      "Lorian Augustine"
+    ],
+    "sourceFile": "VIGÍLIA DE AKOS.docx"
+  },
+  {
+    "type": "character",
+    "name": "Lorian Augustine",
+    "description": "A middle-aged human man who manages the local branch of the Companhia de Comércio Augustine.",
+    "details": {},
+    "mentions": [
+      "Companhia de Comércio Augustine"
+    ],
+    "sourceFile": "VIGÍLIA DE AKOS.docx"
+  },
+  {
+    "type": "place",
+    "name": "Taverna Galho de Freixo",
+    "description": "A cozy tavern decorated with polished wood furniture, known for its welcoming atmosphere.",
+    "details": {},
+    "mentions": [
+      "Targrim Ferrocanela"
+    ],
+    "sourceFile": "VIGÍLIA DE AKOS.docx"
+  },
+  {
+    "type": "character",
+    "name": "Targrim Ferrocanela",
+    "description": "A lively halfling with curly brown hair and bright, mischievous eyes, who runs the Taverna Galho de Freixo.",
+    "details": {},
+    "mentions": [
+      "Taverna Galho de Freixo"
+    ],
+    "sourceFile": "VIGÍLIA DE AKOS.docx"
+  },
+  {
+    "type": "place",
+    "name": "Acampamento dos Patrulheiros",
+    "description": "A camp used by the Rangers of the Vigil of Akos for patrol and defense operations.",
+    "details": {},
+    "mentions": [
+      "Capitã Thalia Corçanegra"
+    ],
+    "sourceFile": "VIGÍLIA DE AKOS.docx"
+  },
+  {
+    "type": "character",
+    "name": "Capitã Thalia Corçanegra",
+    "description": "A middle-aged human woman with a military posture, leading the Rangers of the Vigil of Akos.",
+    "details": {},
+    "mentions": [
+      "Acampamento dos Patrulheiros"
+    ],
+    "sourceFile": "VIGÍLIA DE AKOS.docx"
+  },
+  {
+    "type": "place",
+    "name": "Casa Hospitalar",
+    "description": "A facility providing medical care and health services to the community.",
+    "details": {},
+    "mentions": [
+      "Ilena Curafolhas"
+    ],
+    "sourceFile": "VIGÍLIA DE AKOS.docx"
+  },
+  {
+    "type": "character",
+    "name": "Ilena Curafolhas",
+    "description": "A gentle and compassionate elf who serves as a healer and nurse at the Casa Hospitalar.",
+    "details": {},
+    "mentions": [
+      "Casa Hospitalar"
+    ],
+    "sourceFile": "VIGÍLIA DE AKOS.docx"
+  },
+  {
+    "type": "place",
+    "name": "Caravançará",
+    "description": "A bustling trade center where merchants gather to buy, sell, and exchange goods.",
+    "details": {},
+    "mentions": [
+      "Akdai"
+    ],
+    "sourceFile": "VIGÍLIA DE AKOS.docx"
+  },
+  {
+    "type": "character",
+    "name": "Akdai",
+    "description": "A distinct-looking half-elf who manages the Caravançará, reflecting his background as a trader.",
+    "details": {},
+    "mentions": [
+      "Caravançará"
+    ],
+    "sourceFile": "VIGÍLIA DE AKOS.docx"
+  }
+]
