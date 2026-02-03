@@ -17,6 +17,9 @@ function getEntities() {
   } catch { return [] }
 }
 
+// Base path for assets (GitHub Pages uses /atrias-wiki/)
+const basePath = process.env.NODE_ENV === 'production' ? '/atrias-wiki' : ''
+
 export default function Home() {
   const entities = getEntities()
   
@@ -41,7 +44,7 @@ export default function Home() {
       <section
         className="relative min-h-screen flex items-center justify-center overflow-hidden"
         style={{
-          backgroundImage: `url('/hero.png')`,
+          backgroundImage: `url('${basePath}/hero.png')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
