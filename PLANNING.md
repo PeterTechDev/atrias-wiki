@@ -3,6 +3,19 @@
 > A Wikipedia-style wiki for the Átrias RPG universe.  
 > Built as a surprise gift for the DM who created this world.
 
+## 📊 Content Scale (Discovered 2026-02-03)
+
+This is bigger than expected — a **full world** with:
+- **7 Continents**: Skeld, Vellenor, Noan, Elandir, Kandar, Ohan, Morte Gelida
+- **18+ Location Maps** including 8K world map
+- **2 Full Campaigns** with multiple seasons
+- **4 One-Shot Adventures**
+- **5+ Unique Monsters**
+- **15+ Lore Documents** (races, magic, history, factions)
+- **Multiple Deities**: A Chama Branca, A Chama de Prata, Uther, Ghalbath
+
+See `CONTENT_INVENTORY.md` for full breakdown.
+
 ## 🎯 Project Goals
 
 1. **Primary**: Create a beautiful, functional wiki for the Átrias RPG group
@@ -137,6 +150,37 @@
 > Waiting for content from Peter to define calendar structure
 > Will include: months, days, eras, current year, etc.
 
+### Monsters (NEW - discovered from content)
+| Field | Type | Notes |
+|-------|------|-------|
+| name | string | Required |
+| slug | slug | |
+| type | enum | Beast / Undead / Fiend / Aberration / Unique |
+| challenge | string | CR or custom difficulty |
+| description | block content | |
+| abilities | block content | Special abilities |
+| lore | block content | In-world history |
+| image | image | |
+| location | ref → Place | Where it's found |
+| dmNotes | text | |
+| isSpoiler | boolean | |
+
+### Adventures (NEW - discovered from content)
+| Field | Type | Notes |
+|-------|------|-------|
+| name | string | Required |
+| slug | slug | |
+| type | enum | One-Shot / Campaign / Arc |
+| level | string | Recommended level range |
+| synopsis | text | Short summary (no spoilers) |
+| fullDescription | block content | DM-only full details |
+| locations | ref[] → Place | |
+| keyNPCs | ref[] → Character | |
+| relatedAdventures | ref[] → Adventure | |
+| image | image | Cover art |
+| dmNotes | text | |
+| isSpoiler | boolean | Always true until completed |
+
 ## 🖥️ Pages & Routes
 
 ```
@@ -169,12 +213,17 @@
 - [ ] Dark fantasy theme
 
 ### Nice to Have (v1.1)
-- [ ] Interactive map with pins
+- [ ] **Interactive world map** (HIGH PRIORITY - we have 8K map!)
+  - Zoomable/pannable
+  - Click regions → see info
+  - Drill down: Continent → Region → City → Locations
+  - Hover previews on markers
 - [ ] Character relationship graph
 - [ ] Timeline visualization
 - [ ] Átrias calendar widget
 - [ ] Recent changes feed
 - [ ] Print-friendly character sheets
+- [ ] Adventure browser (filter by level, type)
 
 ### Future Ideas
 - [ ] Player authentication (see personalized content)
