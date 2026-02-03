@@ -116,7 +116,7 @@ export default defineType({
       media: 'image',
     },
     prepare({ title, rarity, type, media }) {
-      const rarityColors = {
+      const rarityColors: Record<string, string> = {
         common: '⚪',
         uncommon: '🟢',
         rare: '🔵',
@@ -125,7 +125,7 @@ export default defineType({
         artifact: '🔴',
       }
       return {
-        title: `${rarityColors[rarity as string] || '⚪'} ${title}`,
+        title: `${rarityColors[rarity] || '⚪'} ${title}`,
         subtitle: `${type} - ${rarity}`,
         media,
       }
