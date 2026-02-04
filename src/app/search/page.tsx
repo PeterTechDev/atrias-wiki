@@ -1,12 +1,20 @@
 'use client'
 
 /**
- * Search page with instant results
+ * Search page with instant client-side filtering
+ * Works with static export (no API routes needed)
  */
 
-import { useState, useEffect, useTransition } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import Link from 'next/link'
-import type { SearchResult } from '@/types/entities'
+
+interface SearchableEntity {
+  id: string
+  type: string
+  slug: string
+  name: string
+  description: string | null
+}
 
 const typeIcons: Record<string, string> = {
   character: '\u{1F464}',
@@ -32,65 +40,45 @@ const typeToPath: Record<string, string> = {
   place: 'places',
   faction: 'factions',
   item: 'items',
-  lore: 'lore', // No 's' - irregular
+  lore: 'lore',
   monster: 'monsters',
   session: 'sessions',
 }
 
-interface SearchState {
-  results: SearchResult[]
-  error: string | null
-}
-
-async function searchEntitiesAction(query: string): Promise<SearchState> {
-  if (!query || query.length < 2) {
-    return { results: [], error: null }
-  }
-
-  try {
-    const res = await fetch(`/api/search?q=${encodeURIComponent(query)}`)
-
-    if (!res.ok) {
-      const errorData = await res.json().catch(() => ({}))
-      return {
-        results: [],
-        error: errorData.error || 'Search failed. Please try again.'
-      }
-    }
-
-    const results = await res.json()
-    return { results, error: null }
-  } catch (error) {
-    console.error('Search request failed:', error)
-    return {
-      results: [],
-      error: 'Unable to connect to search. Please check your connection.'
-    }
-  }
-}
-
 export default function SearchPage() {
   const [query, setQuery] = useState('')
-  const [searchState, setSearchState] = useState<SearchState>({ results: [], error: null })
-  const [isPending, startTransition] = useTransition()
+  const [allEntities, setAllEntities] = useState<SearchableEntity[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
+  // Load search index on mount
   useEffect(() => {
-    if (query.length < 2) {
-      setSearchState({ results: [], error: null })
-      return
-    }
-
-    const timer = setTimeout(() => {
-      startTransition(async () => {
-        const state = await searchEntitiesAction(query)
-        setSearchState(state)
+    fetch('/search-index.json')
+      .then(res => {
+        if (!res.ok) throw new Error('Failed to load search index')
+        return res.json()
       })
-    }, 300)
+      .then(data => {
+        setAllEntities(data)
+        setIsLoading(false)
+      })
+      .catch(err => {
+        console.error('Failed to load search index:', err)
+        setError('Failed to load search data. Please refresh the page.')
+        setIsLoading(false)
+      })
+  }, [])
 
-    return () => clearTimeout(timer)
-  }, [query])
+  // Client-side filtering
+  const results = useMemo(() => {
+    if (!query || query.length < 2) return []
 
-  const { results, error } = searchState
+    const searchLower = query.toLowerCase()
+    return allEntities.filter(entity =>
+      entity.name.toLowerCase().includes(searchLower) ||
+      (entity.description?.toLowerCase().includes(searchLower) ?? false)
+    ).slice(0, 20)
+  }, [query, allEntities])
 
   return (
     <main className="min-h-screen bg-zinc-900 text-zinc-100">
@@ -110,28 +98,23 @@ export default function SearchPage() {
             onChange={(e) => setQuery(e.target.value)}
             className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 text-lg focus:outline-none focus:border-amber-400"
             autoFocus
+            disabled={isLoading}
           />
-          {isPending && (
+          {isLoading && (
             <div className="absolute right-4 top-1/2 -translate-y-1/2">
               <div className="w-5 h-5 border-2 border-amber-400 border-t-transparent rounded-full animate-spin" />
             </div>
           )}
         </div>
 
-        {query.length > 0 && query.length < 2 && (
-          <p className="text-zinc-500 text-center mt-8">Type at least 2 characters to search</p>
-        )}
-
         {error && (
           <div className="mt-8 p-4 bg-red-900/30 border border-red-700 rounded-lg text-center">
             <p className="text-red-300">{error}</p>
-            <button
-              onClick={() => setQuery(query + ' ')}
-              className="mt-2 text-sm text-amber-400 hover:text-amber-300"
-            >
-              Try again
-            </button>
           </div>
+        )}
+
+        {query.length > 0 && query.length < 2 && (
+          <p className="text-zinc-500 text-center mt-8">Type at least 2 characters to search</p>
         )}
 
         {results.length > 0 && (
@@ -160,7 +143,7 @@ export default function SearchPage() {
           </div>
         )}
 
-        {query.length >= 2 && !isPending && !error && results.length === 0 && (
+        {query.length >= 2 && !isLoading && !error && results.length === 0 && (
           <p className="text-zinc-500 text-center mt-8">No results found for &quot;{query}&quot;</p>
         )}
       </div>
