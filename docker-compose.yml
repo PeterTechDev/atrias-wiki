@@ -9,6 +9,7 @@ services:
       POSTGRES_PASSWORD: atrias_dev
     volumes:
       - pgdata:/var/lib/postgresql/data
+      - ./docker/init:/docker-entrypoint-initdb.d
 
 volumes:
   pgdata:
