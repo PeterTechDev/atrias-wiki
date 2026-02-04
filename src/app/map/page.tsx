@@ -79,6 +79,7 @@ export default function MapPage() {
         zoomSnap: 0.25,
         zoomDelta: 0.5,
         attributionControl: false,
+        zoomControl: false, // Disable default zoom controls
       })
 
       // Calculate bounds
@@ -229,7 +230,7 @@ export default function MapPage() {
 
           {/* Selected Location Info */}
           {selectedLocation && (
-            <div className="absolute bottom-4 left-4 right-4 md:left-auto md:right-4 md:w-80 bg-[#0d1f35]/95 backdrop-blur border border-amber-900/50 rounded-lg p-4 z-10">
+            <div className="absolute bottom-4 left-4 right-4 md:left-auto md:right-4 md:w-80 bg-[#0d1f35]/95 backdrop-blur border border-amber-900/50 rounded-lg p-4 z-[1000]">
               <button 
                 onClick={() => setSelectedLocation(null)}
                 className="absolute top-2 right-2 text-slate-400 hover:text-white"
@@ -252,7 +253,7 @@ export default function MapPage() {
           )}
 
           {/* Zoom Controls */}
-          <div className="absolute top-4 right-4 flex flex-col gap-2 z-10">
+          <div className="absolute top-4 right-4 flex flex-col gap-2 z-[1000]">
             <button
               onClick={() => mapRef.current?.zoomIn()}
               className="w-10 h-10 bg-[#0d1f35]/90 border border-amber-900/50 rounded-lg flex items-center justify-center text-amber-400 hover:bg-amber-600/20 transition-colors"
@@ -277,7 +278,7 @@ export default function MapPage() {
           {/* Mobile Locations Button */}
           <button
             onClick={() => setShowMobileLocations(true)}
-            className="lg:hidden absolute top-4 left-4 px-4 py-2 bg-[#0d1f35]/90 border border-amber-900/50 rounded-lg flex items-center gap-2 text-amber-400 hover:bg-amber-600/20 transition-colors z-10"
+            className="lg:hidden absolute top-4 left-4 px-4 py-2 bg-[#0d1f35]/90 border border-amber-900/50 rounded-lg flex items-center gap-2 text-amber-400 hover:bg-amber-600/20 transition-colors z-[1000]"
           >
             <Icon icon="game-icons:compass" className="w-5 h-5" />
             <span className="text-sm font-medium">Locais</span>
