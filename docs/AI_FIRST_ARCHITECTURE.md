@@ -519,15 +519,67 @@ tailscale up
 ## Files to Update
 
 - [x] `docs/AI_FIRST_ARCHITECTURE.md` (this file)
-- [ ] `PLANNING.md` — add AI-first section
-- [ ] `README.md` — update project description
+- [x] `PLANNING.md` — add AI-first section
+- [x] `README.md` — update project description
 - [ ] GitHub Issues — create milestone and issues
+
+---
+
+## Phase 1 Implementation Notes (2026-02-04)
+
+### Completed
+
+**Database Setup:**
+- PostgreSQL with pgvector extension via Docker Compose
+- Drizzle ORM for type-safe queries
+- All 4 tables implemented: `entities`, `entity_relations`, `knowledge_chunks`, `ingestion_jobs`
+
+**Schema Implementation (`src/db/schema.ts`):**
+```typescript
+// Custom vector type for pgvector
+const vector = customType<{ data: number[]; dpiverName: 'vector' }>({...})
+
+// Entity types supported: character, place, faction, item, lore, monster, session
+// JSONB data field for flexible per-type schema
+// 1536-dimension vector field ready for embeddings
+```
+
+**Query Functions (`src/db/queries/`):**
+- `getEntityBySlug(type, slug)` - Single entity lookup
+- `getEntitiesByType(type)` - List entities by type
+- `getEntityCounts()` - Stats for home page
+- `searchEntities(query)` - ILIKE-based text search
+
+**Seeding:**
+- Script: `scripts/seed-database.ts`
+- Source: `import-output/entities.json` (125+ entities)
+- Generates slugs with duplicate handling
+- Creates entity relations from mentions array
+
+**Pages Migrated:**
+- All list pages (characters, places, factions, items, lore, monsters)
+- All detail pages ([slug] routes)
+- Search page (via API route)
+- Home page (stats from database)
+
+### Decisions Made
+
+1. **Sanity removed entirely** - No fallback, clean break to Postgres
+2. **Vector field placeholder** - 1536 dimensions ready, embeddings not yet generated
+3. **Simple text search** - Using ILIKE for now, will switch to vector search later
+4. **Relations from mentions** - Created during seeding from extracted mentions
+
+### Next Steps
+
+- Phase 2: Set up GPU infrastructure (RunPod + vLLM)
+- Generate embeddings for all entities
+- Implement vector-based semantic search
 
 ---
 
 ## Open Questions
 
-1. Keep Sanity as fallback or remove entirely?
+1. ~~Keep Sanity as fallback or remove entirely?~~ **Removed entirely**
 2. Which model to start with? (Qwen 2.5 72B vs Llama 3.1 70B)
 3. Local Whisper or GPU-hosted Whisper?
 4. LangGraph vs custom orchestration?

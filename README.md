@@ -1,36 +1,154 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Átrias Wiki
+
+A Wikipedia-style wiki for the Átrias RPG universe, built as a surprise gift for the DM who created this world.
+
+## Tech Stack
+
+- **Frontend**: Next.js 15 (App Router) with static export
+- **Database**: PostgreSQL + pgvector
+- **ORM**: Drizzle ORM
+- **Styling**: Tailwind CSS
+- **Deployment**: GitHub Pages / Vercel
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18+
+- Docker & Docker Compose
+- npm/yarn/pnpm
+
+### 1. Clone and Install
+
+```bash
+git clone https://github.com/PeterTechDev/atrias-wiki.git
+cd atrias-wiki
+npm install
+```
+
+### 2. Start the Database
+
+```bash
+docker compose up -d
+```
+
+This starts PostgreSQL with the pgvector extension on port 5432.
+
+### 3. Set Up Environment
+
+Create a `.env.local` file:
+
+```env
+DATABASE_URL=postgres://atrias:atrias_dev@localhost:5432/atrias_wiki
+```
+
+### 4. Initialize Database Schema
+
+```bash
+npm run db:push
+```
+
+### 5. Seed the Database
+
+```bash
+npm run db:seed
+```
+
+This imports all entities from `import-output/entities.json`.
+
+### 6. Run Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to see the wiki.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Available Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Script | Description |
+|--------|-------------|
+| `npm run dev` | Start development server |
+| `npm run build` | Build for production (generates search index) |
+| `npm run start` | Start production server |
+| `npm run db:push` | Push schema changes to database |
+| `npm run db:studio` | Open Drizzle Studio (database GUI) |
+| `npm run db:seed` | Seed database from entities.json |
+| `npm run generate:search` | Generate search index JSON |
 
-## Learn More
+## Adding Entity Images
 
-To learn more about Next.js, take a look at the following resources:
+1. Add image to `public/images/<type>/` (e.g., `public/images/characters/akdai.jpg`)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. Update the entity in Drizzle Studio:
+   ```bash
+   npm run db:studio
+   ```
+   Set the `image` field to `/images/characters/akdai.jpg`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. Regenerate search index:
+   ```bash
+   npm run generate:search
+   ```
 
-## Deploy on Vercel
+## Project Structure
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+atrias-wiki/
+├── src/
+│   ├── app/                 # Next.js App Router pages
+│   │   ├── characters/      # Character list & detail pages
+│   │   ├── places/          # Places list & detail pages
+│   │   ├── factions/        # Factions list & detail pages
+│   │   ├── items/           # Items list & detail pages
+│   │   ├── lore/            # Lore list & detail pages
+│   │   ├── monsters/        # Monsters/Bestiary pages
+│   │   ├── sessions/        # Session logs
+│   │   └── search/          # Client-side search
+│   ├── db/
+│   │   ├── index.ts         # Database client
+│   │   ├── schema.ts        # Drizzle table definitions
+│   │   └── queries/         # Query functions
+│   └── types/
+│       └── entities.ts      # TypeScript type definitions
+├── scripts/
+│   ├── seed-database.ts     # Database seeding script
+│   └── generate-search-index.ts  # Search index generator
+├── public/
+│   ├── images/              # Entity images
+│   └── search-index.json    # Generated search data
+├── docker/
+│   └── init/                # PostgreSQL init scripts
+├── docker-compose.yml       # PostgreSQL + pgvector
+├── drizzle.config.ts        # Drizzle ORM configuration
+└── docs/
+    └── AI_FIRST_ARCHITECTURE.md
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Database Schema
+
+The wiki uses 4 main tables:
+
+- **entities**: All wiki content (characters, places, factions, items, lore, monsters, sessions)
+- **entity_relations**: Connections between entities
+- **knowledge_chunks**: Reference content for future RAG
+- **ingestion_jobs**: Pipeline tracking for AI processing
+
+See `src/db/schema.ts` for full schema details.
+
+## Features
+
+- **176+ entities** extracted from DM's documents
+- **Client-side search** with instant filtering (static export compatible)
+- **Entity type icons** from game-icons with custom image support
+- **Dark fantasy theme** inspired by Baldur's Gate / Elden Ring
+- **Mobile responsive** design
+
+## Documentation
+
+- [PLANNING.md](./PLANNING.md) - Project planning and roadmap
+- [AI_FIRST_ARCHITECTURE.md](./docs/AI_FIRST_ARCHITECTURE.md) - AI-first architecture design
+
+## License
+
+Private project - All rights reserved.

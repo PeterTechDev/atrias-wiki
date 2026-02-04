@@ -5,22 +5,25 @@
 
 import Link from 'next/link'
 import { Icon } from '@iconify/react'
+import { getEntitiesByType } from '@/db/queries/entities'
+import type { PlaceData } from '@/types/entities'
 
-// Mocked places data
-const places = [
-  {
-    slug: 'abrigo-de-solaria',
-    name: 'Abrigo de Solaria',
-    type: 'Vila',
-    region: 'Colinas do Serpeio',
-    kingdom: 'Nerania',
-    dangerLevel: 'Baixo',
-    description: 'Uma pequena vila acolhedora salpicada de casas rústicas e campos verdejantes, onde até os de sangue exótico encontram abrigo.',
-  },
-  // Add more places here
-]
+export default async function PlacesPage() {
+  const entities = await getEntitiesByType('place')
 
-export default function PlacesPage() {
+  const places = entities.map((e) => {
+    const data = e.data as PlaceData
+    return {
+      slug: e.slug,
+      name: e.name,
+      type: data.type || 'Local',
+      region: data.region || '',
+      kingdom: '',
+      dangerLevel: 'Desconhecido',
+      description: e.description || '',
+    }
+  })
+
   return (
     <main className="min-h-screen bg-[#e8dcc8]">
       {/* Header */}
@@ -28,7 +31,7 @@ export default function PlacesPage() {
         <div className="max-w-6xl mx-auto flex justify-between items-center">
           <Link href="/" className="flex items-center gap-2 text-amber-400 hover:text-amber-300">
             <Icon icon="game-icons:book-cover" className="w-6 h-6" />
-            <span className="font-cinzel text-lg tracking-wider">WIKI ÁTRIAS</span>
+            <span className="font-cinzel text-lg tracking-wider">WIKI ATRIAS</span>
           </Link>
           <Link href="/" className="flex items-center gap-2 text-amber-400 hover:text-amber-300">
             <Icon icon="game-icons:house" className="w-5 h-5" />
@@ -57,8 +60,8 @@ export default function PlacesPage() {
             </div>
           </div>
           <p className="text-slate-700 font-crimson text-lg">
-            Explore os lugares que compõem o mundo de Átrias. De vilas pacíficas a fortalezas imponentes,
-            cada local guarda seus próprios segredos e histórias.
+            Explore os lugares que compoem o mundo de Atrias. De vilas pacificas a fortalezas imponentes,
+            cada local guarda seus proprios segredos e historias.
           </p>
         </div>
       </div>
@@ -69,13 +72,13 @@ export default function PlacesPage() {
           <div className="text-center py-12">
             <Icon icon="game-icons:treasure-map" className="w-16 h-16 text-slate-400 mx-auto mb-4" />
             <p className="text-xl text-slate-600">Nenhum lugar encontrado</p>
-            <p className="text-slate-500 mt-2">Os lugares serão adicionados em breve.</p>
+            <p className="text-slate-500 mt-2">Os lugares serao adicionados em breve.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {places.map((place) => (
-              <Link 
-                key={place.slug} 
+              <Link
+                key={place.slug}
                 href={`/places/${place.slug}`}
                 className="group bg-white/80 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all hover:-translate-y-1"
               >
@@ -86,25 +89,27 @@ export default function PlacesPage() {
                       {place.type}
                     </span>
                     <span className={`text-xs px-2 py-1 rounded ${
-                      place.dangerLevel === 'Baixo' 
-                        ? 'bg-green-600/20 text-green-400' 
-                        : place.dangerLevel === 'Médio'
+                      place.dangerLevel === 'Baixo'
+                        ? 'bg-green-600/20 text-green-400'
+                        : place.dangerLevel === 'Medio'
                         ? 'bg-yellow-600/20 text-yellow-400'
-                        : 'bg-red-600/20 text-red-400'
+                        : 'bg-slate-600/20 text-slate-400'
                     }`}>
-                      Perigo: {place.dangerLevel}
+                      {place.dangerLevel !== 'Desconhecido' ? `Perigo: ${place.dangerLevel}` : ''}
                     </span>
                   </div>
                   <h2 className="font-cinzel text-xl text-amber-400 group-hover:text-amber-300 transition-colors">
                     {place.name}
                   </h2>
-                  <p className="text-slate-400 text-sm italic">{place.region}, {place.kingdom}</p>
+                  {place.region && (
+                    <p className="text-slate-400 text-sm italic">{place.region}{place.kingdom ? `, ${place.kingdom}` : ''}</p>
+                  )}
                 </div>
 
                 {/* Card Body */}
                 <div className="p-4">
                   <p className="text-slate-600 text-sm font-crimson line-clamp-3">
-                    {place.description}
+                    {place.description || 'Um lugar misterioso aguardando para ser explorado.'}
                   </p>
                 </div>
 
@@ -125,9 +130,9 @@ export default function PlacesPage() {
       <footer className="bg-[#0a1628] text-white py-8 px-6">
         <div className="max-w-6xl mx-auto text-center">
           <p className="text-amber-400/60 font-crimson italic">
-            "As crônicas de Átrias são escritas pelo sangue dos heróis e as lágrimas dos caídos."
+            "As cronicas de Atrias sao escritas pelo sangue dos herois e as lagrimas dos caidos."
           </p>
-          <p className="text-slate-500 text-sm mt-4">Wiki Átrias © 2026</p>
+          <p className="text-slate-500 text-sm mt-4">Wiki Atrias &copy; 2026</p>
         </div>
       </footer>
     </main>

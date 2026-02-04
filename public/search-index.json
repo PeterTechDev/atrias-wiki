@@ -1,0 +1,1410 @@
+[
+  {
+    "id": "3abbc8fb-3f88-4da7-a51f-6c8945f7805f",
+    "type": "place",
+    "slug": "acampamento-dos-patrulheiros",
+    "name": "Acampamento dos Patrulheiros",
+    "description": "A camp used by the Rangers of the Vigil of Akos for patrol and defense operations.",
+    "image": null
+  },
+  {
+    "id": "105f6d9f-80ab-456c-a716-d4a35d40fc56",
+    "type": "character",
+    "slug": "adjutores-naturais",
+    "name": "Adjutores Naturais",
+    "description": "Masters of the Order who have taken on apprentices, gaining the title of Adjutor.",
+    "image": null
+  },
+  {
+    "id": "90c289ba-e485-4bf8-8f27-524382826dec",
+    "type": "character",
+    "slug": "akdai",
+    "name": "Akdai",
+    "description": "A distinct-looking half-elf who manages the Caravançará, reflecting his background as a trader.",
+    "image": "/images/characters/akdai.jpg"
+  },
+  {
+    "id": "33a88f63-33cf-4906-b637-4e9c763694ab",
+    "type": "character",
+    "slug": "akos",
+    "name": "Akos",
+    "description": "A legendary knight whose legacy has left a significant mark on the Vigil of Akos.",
+    "image": null
+  },
+  {
+    "id": "6c0c7436-6ef5-4fc6-9a1e-9af85809a2c6",
+    "type": "faction",
+    "slug": "alta-arcanas",
+    "name": "Alta'Arcanas",
+    "description": "An organization founded by Khay'zam to contain and disseminate magical knowledge while monitoring its use to prevent future catastrophes.",
+    "image": null
+  },
+  {
+    "id": "01d633a1-122a-4b8d-88b9-d4e805b7096d",
+    "type": "faction",
+    "slug": "alto-conselho-da-natureza",
+    "name": "Alto conselho da Natureza",
+    "description": "A council composed of the wisest and most powerful druids within the Order of Ghalbaht, responsible for making important decisions.",
+    "image": null
+  },
+  {
+    "id": "9254689d-87f8-43f5-9289-72bad49cb515",
+    "type": "lore",
+    "slug": "a-magia-arcana",
+    "name": "A Magia Arcana",
+    "description": "The powerful magic developed by the Eldaren after sacrificing their immortality, allowing them to manipulate ley lines.",
+    "image": null
+  },
+  {
+    "id": "1b7e237f-8fec-4fef-a955-af7829e6f731",
+    "type": "character",
+    "slug": "amergin-ghalbath",
+    "name": "Amergin Ghalbath",
+    "description": "Amergin Ghalbath is portrayed as an ordinary man who becomes a significant figure after a transformative experience. He is described as a fisherman, shepherd, and possibly a baker, whose past is shrouded in mystery.",
+    "image": null
+  },
+  {
+    "id": "72467e68-44a7-4601-a4f3-e0bd4ad1c6a7",
+    "type": "character",
+    "slug": "andrastos",
+    "name": "Andrastos",
+    "description": "The ruler of Vallen who initially proposed an alliance with the Skeldens and later died in battle against the Horda.",
+    "image": null
+  },
+  {
+    "id": "b066415c-0542-4e8e-8b0d-88eed76f1dd3",
+    "type": "character",
+    "slug": "andrastos-o-unificador",
+    "name": "Andrastos O Unificador",
+    "description": "The title given to Andrastos posthumously, celebrated annually in his honor.",
+    "image": null
+  },
+  {
+    "id": "cce699cc-88ab-4b82-b092-12187cb6ab52",
+    "type": "item",
+    "slug": "anforas",
+    "name": "anforas",
+    "description": "Containers used in the game that can be destroyed for points.",
+    "image": null
+  },
+  {
+    "id": "e8e0ad3d-015b-4c20-b132-d4ceab4c2175",
+    "type": "faction",
+    "slug": "anoes-da-grande-ilha",
+    "name": "Anões da Grande Ilha",
+    "description": "The Anões da Grande Ilha refers to the dwarves of the Great Island, who once held sovereignty over their lands. Their pride and unity have been severely diminished due to the events that transpired in Khal'Guldur.",
+    "image": null
+  },
+  {
+    "id": "94ccd114-fb31-42dc-a1a0-731428dd0ce2",
+    "type": "faction",
+    "slug": "areias-ardentes",
+    "name": "Areias Ardentes",
+    "description": "Hot Sands is a faction that likely represents a harsh and unforgiving environment, possibly associated with desert themes.",
+    "image": null
+  },
+  {
+    "id": "507055a3-d210-413b-8625-e71484d831e1",
+    "type": "place",
+    "slug": "arena",
+    "name": "ARENA",
+    "description": "The oval playing field where the game takes place, featuring various structures and obstacles.",
+    "image": null
+  },
+  {
+    "id": "182d8f8b-89b1-4f6d-bb36-657ef5fbd74d",
+    "type": "item",
+    "slug": "aro",
+    "name": "Aro",
+    "description": "The target area that players aim to score points by launching the ball through it.",
+    "image": null
+  },
+  {
+    "id": "435cf0fc-4ca9-4740-a5fe-ae0138ef7d6f",
+    "type": "lore",
+    "slug": "a-ruptura",
+    "name": "A Ruptura",
+    "description": "A cataclysmic event caused by a mortal's attempt to gain divinity, resulting in the fall of divine entities and the rise of Infernal Lords.",
+    "image": null
+  },
+  {
+    "id": "a8ec2cd8-245e-49e0-b4b3-cb66a3344138",
+    "type": "place",
+    "slug": "atrias",
+    "name": "Átrias",
+    "description": "Átrias is the world setting where the events of the narrative take place, characterized by its dark times following a cataclysm.",
+    "image": null
+  },
+  {
+    "id": "bc916dbc-0b66-4512-854f-0f24f9858d63",
+    "type": "item",
+    "slug": "a-trilha-ardente",
+    "name": "A Trilha Ardente",
+    "description": "The forge of Pedraluna, run by the skilled Golden Elf Sêren. He specializes in the elven forging technique known as Ardore Guiaden.",
+    "image": null
+  },
+  {
+    "id": "e06b6f29-3b89-45f2-9c67-6631b76299c6",
+    "type": "character",
+    "slug": "augustinus-clifford",
+    "name": "Augustinus Clifford",
+    "description": "Known as Gut Clifford, he does not own a commercial establishment but cultivates a medicinal herb garden in memory of his late wife.",
+    "image": null
+  },
+  {
+    "id": "57e5ebe7-e8d9-4321-b1ee-1e5bf1b47d92",
+    "type": "item",
+    "slug": "azagaias",
+    "name": "Azagaias",
+    "description": "Spears that fall under the category of simple weapons, eligible for repair.",
+    "image": null
+  },
+  {
+    "id": "383b2e0f-da50-4768-9a60-87b25c835df0",
+    "type": "place",
+    "slug": "baia-de-hardenfor",
+    "name": "baía de Hardenfor",
+    "description": "A bay where a fort was constructed to repel future attacks from the Skeldens.",
+    "image": null
+  },
+  {
+    "id": "4aeb11e3-d92d-4e78-9cb6-62e536482563",
+    "type": "faction",
+    "slug": "baluartes-do-elemento",
+    "name": "Baluartes do Elemento",
+    "description": "Druids who have passed the three trials and are considered guardians of the balance of nature, each aligned with one of the four elements.",
+    "image": null
+  },
+  {
+    "id": "678fe54f-dd61-4b2d-a44a-ab69388f7970",
+    "type": "item",
+    "slug": "bolas-de-ataque",
+    "name": "bolas de ataque",
+    "description": "Balls used by players to attack opponents, available in different sizes.",
+    "image": null
+  },
+  {
+    "id": "9a12aec5-991e-42c9-84e9-87eeab54c012",
+    "type": "item",
+    "slug": "bordoes",
+    "name": "Bordões",
+    "description": "Simple weapons that can be repaired or used as materials for repairs if not destroyed.",
+    "image": null
+  },
+  {
+    "id": "feb12db7-e170-41b5-bce7-f974f783a3ca",
+    "type": "item",
+    "slug": "botao-de-locinto",
+    "name": "Botão de Locinto",
+    "description": "A vibrant orange plant found in the depths of jungles, quickly developing from a bud into a full plant.",
+    "image": null
+  },
+  {
+    "id": "1f82c992-1177-48fd-9598-fe419e162b04",
+    "type": "item",
+    "slug": "brasa-espinhosa",
+    "name": "Brasa Espinhosa",
+    "description": "A slow-growing orange flower with a black stripe on each petal, thriving in volcanic ash and solidified magma.",
+    "image": null
+  },
+  {
+    "id": "4c581459-c14a-4124-822d-2bfd4450051f",
+    "type": "character",
+    "slug": "breaker",
+    "name": "Breaker",
+    "description": "The player with the greatest physical strength, whose main function is to stop opponents and score within the opponent's defense area.",
+    "image": null
+  },
+  {
+    "id": "3881b8bf-7f04-4438-80f2-a70b6d332849",
+    "type": "character",
+    "slug": "bromm",
+    "name": "Bromm",
+    "description": "A strong blacksmith known for his skills, who operates a small tent on the outskirts of the village.",
+    "image": null
+  },
+  {
+    "id": "134306ce-6a57-4107-a7d5-a417b8d47911",
+    "type": "character",
+    "slug": "broquel-do-templo",
+    "name": "Broquel do Templo",
+    "description": "Druids who have failed the elemental mastery trial but still serve as guardians.",
+    "image": null
+  },
+  {
+    "id": "5a5b3f3f-c8ef-4e15-81c4-26d69c490af7",
+    "type": "item",
+    "slug": "bulbo-de-kraken-kelp",
+    "name": "Bulbo de Kraken-Kelp",
+    "description": "An extremely tall algae that grows at the edges of extreme margins, sometimes visible from beaches in wave valleys.",
+    "image": null
+  },
+  {
+    "id": "b037ced9-0bf7-46ac-b38e-b8b3b47c3e46",
+    "type": "lore",
+    "slug": "ca",
+    "name": "CA",
+    "description": "An abbreviation for 'Classe de Armadura', which is the armor class that players must overcome to successfully block or intercept passes.",
+    "image": null
+  },
+  {
+    "id": "3f06b429-d68d-4093-82a2-3cb7d51abfd9",
+    "type": "place",
+    "slug": "cabana-de-substituicao",
+    "name": "Cabana de substituição",
+    "description": "The area where players not currently in the game wait, including reserves and injured players.",
+    "image": null
+  },
+  {
+    "id": "b6454d36-cf94-48fe-b8b6-f39499eee98c",
+    "type": "faction",
+    "slug": "cacadores-de-sangue",
+    "name": "Caçadores de Sangue",
+    "description": "A martial force trained to control rogue magic users and maintain the integrity of the Alta'Arcanas.",
+    "image": null
+  },
+  {
+    "id": "e7d30405-3b48-4a7b-8310-2b450ac1aa15",
+    "type": "place",
+    "slug": "camarote-vip",
+    "name": "Camarote VIP",
+    "description": "The VIP area where personalities, the game regent, and judges observe the game.",
+    "image": null
+  },
+  {
+    "id": "5f44d264-20ac-4b5c-8581-4cf4c48e9346",
+    "type": "character",
+    "slug": "capitao",
+    "name": "Capitão",
+    "description": "The player with the commanding voice, responsible for coordinating the team and can freely act on the sides.",
+    "image": null
+  },
+  {
+    "id": "6c18db9d-01fc-48ef-8e2b-0f8762c0aa92",
+    "type": "character",
+    "slug": "capita-thalia-corcanegra",
+    "name": "Capitã Thalia Corçanegra",
+    "description": "A middle-aged human woman with a military posture, leading the Rangers of the Vigil of Akos.",
+    "image": null
+  },
+  {
+    "id": "f3f0db71-d03c-4ab5-a55b-bc8a88e0836a",
+    "type": "place",
+    "slug": "caravancara",
+    "name": "Caravançará",
+    "description": "A bustling trade center where merchants gather to buy, sell, and exchange goods.",
+    "image": null
+  },
+  {
+    "id": "fb563961-9d72-4151-8e81-6b7f85cb7f4c",
+    "type": "item",
+    "slug": "carretilha",
+    "name": "carretilha",
+    "description": "A mechanism used in the game for scoring points, located below the main tower.",
+    "image": null
+  },
+  {
+    "id": "a6863449-205a-43e4-a7fa-c536299d9ab5",
+    "type": "place",
+    "slug": "casa-de-variedades-feller",
+    "name": "Casa de Variedades Feller",
+    "description": "The most famous commerce point in Sol Manso, offering a variety of goods for travelers and locals.",
+    "image": null
+  },
+  {
+    "id": "be58bda4-1ad9-4f73-8635-cdf3e6499a5c",
+    "type": "item",
+    "slug": "casa-haralskin",
+    "name": "Casa Haralskin",
+    "description": "The property of Veleska Haralskin, which offers various utility articles and discreet services for those willing to assist her.",
+    "image": null
+  },
+  {
+    "id": "24833bab-947b-41a6-b9d1-8d8f9581fb2b",
+    "type": "place",
+    "slug": "casa-hospitalar",
+    "name": "Casa Hospitalar",
+    "description": "A facility providing medical care and health services to the community.",
+    "image": null
+  },
+  {
+    "id": "45766d40-6d54-4796-ae34-fd92515389e5",
+    "type": "faction",
+    "slug": "cavaleiros-de-nerania",
+    "name": "Cavaleiros de Nerânia",
+    "description": "A battalion that accompanied Andrastos to face the Horda.",
+    "image": null
+  },
+  {
+    "id": "95cf85c4-3d1b-45de-840c-1826630def0d",
+    "type": "place",
+    "slug": "centro-da-arena",
+    "name": "Centro da arena",
+    "description": "The central area of the arena where most of the combat occurs.",
+    "image": null
+  },
+  {
+    "id": "a5e816a4-72e6-4b8e-8582-526c2ae5764a",
+    "type": "place",
+    "slug": "cernizza",
+    "name": "Cernizza",
+    "description": "A location that was established as the Skeldens expanded their territory.",
+    "image": null
+  },
+  {
+    "id": "d5d21e77-cf08-485d-a5bd-02417a303776",
+    "type": "faction",
+    "slug": "chama-branca",
+    "name": "Chama Branca",
+    "description": "A faith dedicated to justice and order, symbolizing purity and radiance.",
+    "image": null
+  },
+  {
+    "id": "3e19b817-a522-492a-a728-6964001d4990",
+    "type": "item",
+    "slug": "clavas",
+    "name": "Clavas",
+    "description": "Clubs that can be repaired or used for repairs if not destroyed.",
+    "image": null
+  },
+  {
+    "id": "f19d9784-c7ad-47e5-bae4-8cb16d3d1fe3",
+    "type": "item",
+    "slug": "cogumelo-pingo-rubro",
+    "name": "Cogumelo Pingo-Rubro",
+    "description": "A white mushroom with small red spots that grows in humidity and prefers low light or dark areas.",
+    "image": null
+  },
+  {
+    "id": "0511d569-d1b7-42fe-a306-d9f739e5b312",
+    "type": "faction",
+    "slug": "comissao-de-arbitragem-medica",
+    "name": "COMISSÃO DE ARBITRAGEM/MÉDICA",
+    "description": "The committee responsible for overseeing the game and providing medical assistance.",
+    "image": null
+  },
+  {
+    "id": "d7adb20e-1b69-44e7-b24b-a7e2f3986eed",
+    "type": "place",
+    "slug": "companhia-de-comercio-augustine",
+    "name": "Companhia de Comércio Augustine",
+    "description": "A trading company managed by Lorian Augustine, overseeing local and imported goods.",
+    "image": null
+  },
+  {
+    "id": "f5bf106d-0926-481f-ae1d-f24575b5bf45",
+    "type": "lore",
+    "slug": "comum-ou-mundana",
+    "name": "Comum ou Mundana",
+    "description": "A quality classification for equipment that is commonly found and easily produced by any blacksmith.",
+    "image": null
+  },
+  {
+    "id": "95730cc2-836e-4afa-98ac-58966d9217c3",
+    "type": "lore",
+    "slug": "contenda-do-couro",
+    "name": "CONTENDA DO COURO",
+    "description": "A game of combat, strategy, speed, and luck played by teams.",
+    "image": null
+  },
+  {
+    "id": "81a2b4d7-e3a4-4058-a22d-d0166914d564",
+    "type": "faction",
+    "slug": "corja-traidora",
+    "name": "Corja Traidora",
+    "description": "A faction of druids who have fallen to the corrupted side of magic, often former members of the Order of Ghalbaht. They utilize dark magic to disrupt the natural elements.",
+    "image": null
+  },
+  {
+    "id": "caf58190-d144-4361-afbf-3ce803de076a",
+    "type": "faction",
+    "slug": "crocodilos-atrozes",
+    "name": "Crocodilos Atrozes",
+    "description": "Giant Crocs are a faction that embodies ferocity and strength, possibly in aquatic or swampy terrains.",
+    "image": null
+  },
+  {
+    "id": "b5bf09d9-a1e4-4857-8cbb-1ae21c97dab9",
+    "type": "character",
+    "slug": "defensor",
+    "name": "Defensor",
+    "description": "The most resilient player whose main function is to protect the area of the Aro and is the only player who uses a shield for blocking.",
+    "image": null
+  },
+  {
+    "id": "4b8195bb-7635-43b8-a157-4878dbb471bd",
+    "type": "place",
+    "slug": "descanso-fortuno",
+    "name": "Descanso Fortuno",
+    "description": "The inn located in the center of Sol Manso, known for its good meals and accommodations.",
+    "image": null
+  },
+  {
+    "id": "4b4edbcc-05f3-4b09-bfb1-fce5b5178abc",
+    "type": "lore",
+    "slug": "destruidor-de-mundos",
+    "name": "Destruidor-de-Mundos",
+    "description": "The Destruidor-de-Mundos is a catastrophic force that contributed to the subjugation of entire nations and the chaos in Átrias.",
+    "image": null
+  },
+  {
+    "id": "e8e42adb-9f93-47e1-9107-3df3dbddfda7",
+    "type": "monster",
+    "slug": "djinns",
+    "name": "Djinns",
+    "description": "Djinns are supernatural beings that Amergin encounters and learns from during his journey through the elemental planes.",
+    "image": null
+  },
+  {
+    "id": "18a96a17-df2b-4496-a95b-331686bab102",
+    "type": "lore",
+    "slug": "dogma-da-chama-branca",
+    "name": "Dogma da Chama Branca",
+    "description": "The guiding principles of the faith, emphasizing truth, justice, and order.",
+    "image": null
+  },
+  {
+    "id": "3c96dba8-9421-47f8-8047-df8fd3e8f8ea",
+    "type": "faction",
+    "slug": "dragoes-valorosos",
+    "name": "Dragões Valorosos",
+    "description": "The Valiant Dragons are a faction that symbolizes bravery and power, often seen as formidable allies or foes.",
+    "image": null
+  },
+  {
+    "id": "4b48be9e-4214-44ff-883e-c578caf3148e",
+    "type": "character",
+    "slug": "drawghar-mototh",
+    "name": "Drawghar Mototh",
+    "description": "An entity that guided humans in a ritual, leading to their corruption and the rise of the Maldição da Ambição.",
+    "image": null
+  },
+  {
+    "id": "7bb6697c-620f-4bdf-b1a4-0708e3183a57",
+    "type": "character",
+    "slug": "drika",
+    "name": "Drika",
+    "description": "The family member who assists Eoban Feller in managing the inn.",
+    "image": null
+  },
+  {
+    "id": "784f8e34-5ab9-4ece-b458-7c1558fa991c",
+    "type": "lore",
+    "slug": "durabilidade",
+    "name": "durabilidade",
+    "description": "The concept of durability in weapons and armor, affecting their performance and longevity in combat.",
+    "image": null
+  },
+  {
+    "id": "58a694f8-f35f-4de2-8506-b0307a27c71a",
+    "type": "faction",
+    "slug": "eldaren",
+    "name": "Eldaren",
+    "description": "A faction of elves who sacrificed their immortality to gain power over the ley lines, leading to their dominance in magic.",
+    "image": null
+  },
+  {
+    "id": "c6e2eabe-21a2-4176-9a38-4cd379673dcd",
+    "type": "place",
+    "slug": "eledhel",
+    "name": "Eledhel",
+    "description": "The continent known for its ferocity, where one of the Alta'Arcanas towers was built.",
+    "image": null
+  },
+  {
+    "id": "2045626a-879a-487c-9ee6-e6db6dbe6309",
+    "type": "place",
+    "slug": "elendel",
+    "name": "Elendel",
+    "description": "A nation formed by the Eldaren after the Ruptura, where many elves and half-elves reside.",
+    "image": null
+  },
+  {
+    "id": "2965e978-aced-4aeb-b173-3466abddba44",
+    "type": "character",
+    "slug": "eoban-feller",
+    "name": "Eoban Feller",
+    "description": "The burgomaster of Sol Manso and owner of the inn Descanso Fortuno, known for his hospitality.",
+    "image": null
+  },
+  {
+    "id": "8953ebb0-786e-4c2d-b370-19740ea54196",
+    "type": "character",
+    "slug": "eribert-galwain",
+    "name": "Eribert Galwain",
+    "description": "A dedicated young citizen in his twenties, known for helping with daily tasks in the village. He dreams of becoming a knight like his ancestor, Sir Gawain.",
+    "image": null
+  },
+  {
+    "id": "cd9509eb-dd9c-4d17-b8e8-18359af43efb",
+    "type": "character",
+    "slug": "escora-da-vida",
+    "name": "Escora da Vida",
+    "description": "Druids focused on healing and purification, possessing high religious and cultural knowledge.",
+    "image": null
+  },
+  {
+    "id": "eed881fc-ac2d-4d5d-9813-ccda1eaa7f5a",
+    "type": "item",
+    "slug": "escudo",
+    "name": "escudo",
+    "description": "A shield used by the Defensor for blocking during the game.",
+    "image": null
+  },
+  {
+    "id": "2edf8da0-5f54-4ac6-8933-bc1d882b6abd",
+    "type": "place",
+    "slug": "estalagem-da-lua-crescente",
+    "name": "Estalagem da Lua Crescente",
+    "description": "A rustic inn known for its homemade meals and a gathering place for travelers.",
+    "image": null
+  },
+  {
+    "id": "3c1977ac-45b6-45bb-baef-cb7685f69c7b",
+    "type": "character",
+    "slug": "exercito-do-escudo",
+    "name": "Exército do Escudo",
+    "description": "Druids who do not fit into any of the previous roles, serving as general support for the Order.",
+    "image": null
+  },
+  {
+    "id": "9c5877e1-ed78-4a3b-912e-c4118133ddd6",
+    "type": "place",
+    "slug": "falandir",
+    "name": "Falandir",
+    "description": "Falandir is a region mentioned in the narrative, specifically in the context of an event involving the use of magic.",
+    "image": null
+  },
+  {
+    "id": "c7da7e39-cf9b-461f-96a7-2858963360f4",
+    "type": "faction",
+    "slug": "ferreiro",
+    "name": "ferreiro",
+    "description": "A blacksmith who can repair damaged weapons and armor, essential for maintaining equipment durability.",
+    "image": null
+  },
+  {
+    "id": "5d97bd4d-065f-4110-a3c9-58ea46d7ce74",
+    "type": "character",
+    "slug": "flint",
+    "name": "Flint",
+    "description": "An anão guerreiro (dwarf warrior) who uses the Machado de Batalha in combat and experiences penalties due to damage.",
+    "image": null
+  },
+  {
+    "id": "8dcf94fa-1d7a-408c-a99a-ee69f0d41779",
+    "type": "item",
+    "slug": "fruta-gelida-azul",
+    "name": "Fruta Gélida Azul",
+    "description": "A naturally blue rose that has the ability to neutralize poisons, though not very effectively.",
+    "image": null
+  },
+  {
+    "id": "0ecd3cf8-8433-4213-9a24-5d6d4fd461af",
+    "type": "item",
+    "slug": "fundas",
+    "name": "fundas",
+    "description": "Slingshots used by Baleiros to attack opponents and anforas.",
+    "image": null
+  },
+  {
+    "id": "e710be57-b733-4ec5-bfe3-7e1549dde668",
+    "type": "faction",
+    "slug": "garanhoes-reais",
+    "name": "Garanhões Reais",
+    "description": "Known as the Royal Stallions, this faction represents a team characterized by nobility and strength.",
+    "image": null
+  },
+  {
+    "id": "8a9b5ab1-3907-4563-9193-ef6de499b03b",
+    "type": "character",
+    "slug": "ghalbath",
+    "name": "Ghalbath",
+    "description": "The founder of the Order of Ghalbaht, who believed in the importance of balance and the use of shields instead of weapons.",
+    "image": null
+  },
+  {
+    "id": "986c887d-79d6-4c3c-9759-7a147b3fd89a",
+    "type": "faction",
+    "slug": "gigantes-do-trovao",
+    "name": "Gigantes do Trovão",
+    "description": "Thunder Giants are a faction known for their immense power and connection to storms, likely formidable in battle.",
+    "image": null
+  },
+  {
+    "id": "2d8e3a1e-cc7a-45a3-ad5d-4d96908e36c0",
+    "type": "character",
+    "slug": "gilmond-vern",
+    "name": "Gilmond Vern",
+    "description": "A recently established baron in Pedraluna, known for his wealth and influence. He gained permission to explore sacred mines through public meetings and votes.",
+    "image": null
+  },
+  {
+    "id": "540f03f8-f181-4bd7-b700-7e0726aea78a",
+    "type": "monster",
+    "slug": "goblin",
+    "name": "Goblin",
+    "description": "Another enemy faced by Flint, showcasing the various creatures that adventurers might encounter.",
+    "image": null
+  },
+  {
+    "id": "cb6187b1-705e-469e-bb29-d8ce69519568",
+    "type": "item",
+    "slug": "godsack",
+    "name": "godsack",
+    "description": "A backpack made of woven straw and leather used by Carregadores to store balls.",
+    "image": null
+  },
+  {
+    "id": "d442f74e-3d60-4885-9593-afd041d9f1d2",
+    "type": "faction",
+    "slug": "golens-furiosos",
+    "name": "Golens Furiosos",
+    "description": "Fiery Golens are a faction that symbolizes raw power and elemental fury, likely associated with fire and destruction.",
+    "image": null
+  },
+  {
+    "id": "14013caa-ef27-4d1f-a8d6-e8abd05e53a9",
+    "type": "item",
+    "slug": "grama-lunar",
+    "name": "Grama Lunar",
+    "description": "Grass with silver stripes on the edges, found growing in cold regions through snow and on the tops of high mountains.",
+    "image": null
+  },
+  {
+    "id": "b9dfbea2-7621-40dc-884a-deaa56eef5aa",
+    "type": "faction",
+    "slug": "grifos-audazes",
+    "name": "Grifos Audazes",
+    "description": "Bold Griffons represent a faction that embodies courage and majesty, often seen as noble creatures in the skies.",
+    "image": null
+  },
+  {
+    "id": "81b1397d-6780-44bd-8524-5a764a81f5c3",
+    "type": "character",
+    "slug": "grombard-pedravermelha",
+    "name": "Grombard Pedravermelha",
+    "description": "A robust dwarf with long, pointed mustache and red hair, who manages the Estalagem da Lua Crescente.",
+    "image": null
+  },
+  {
+    "id": "456ca248-d185-415e-a14c-0029cde56f03",
+    "type": "faction",
+    "slug": "guarda-argentea",
+    "name": "Guarda Argêntea",
+    "description": "The elite guard accompanying Andrastos during his campaign against the Horda.",
+    "image": null
+  },
+  {
+    "id": "b2a2826e-18ed-464a-8b51-23ce463d420a",
+    "type": "character",
+    "slug": "guardia-da-ordem",
+    "name": "Guardiã da ordem",
+    "description": "The druid who acts as the leader of the council, serving as the right hand of the Regente do Equilíbrio.",
+    "image": null
+  },
+  {
+    "id": "13d3615b-cb2c-471b-bd16-15de771c2915",
+    "type": "item",
+    "slug": "hibisco-rubi",
+    "name": "Hibisco Rubi",
+    "description": "A bright red flower famous for its pleasant smell but terrible taste, offering beneficial effects despite its rarity.",
+    "image": null
+  },
+  {
+    "id": "3a92e955-dcb2-4d6d-970e-11d90088ed39",
+    "type": "character",
+    "slug": "hiram-thorp",
+    "name": "Hiram Thorp",
+    "description": "An old mercenary who chose Pedraluna for a peaceful retirement and was appointed as the Commander of the Guard. He oversees the protection of the village.",
+    "image": null
+  },
+  {
+    "id": "0d16651f-9484-46ec-b415-a0d0cdf860ea",
+    "type": "faction",
+    "slug": "horda",
+    "name": "Horda",
+    "description": "A coalition of Skeldian clans formed to invade and conquer territories in the continent.",
+    "image": null
+  },
+  {
+    "id": "73da2d71-ddbe-44a4-98ba-2fdb32914ed0",
+    "type": "place",
+    "slug": "humma",
+    "name": "Humma",
+    "description": "One of the crowns that formed the Pacto de Ociddens to protect against Skeldian invasions.",
+    "image": null
+  },
+  {
+    "id": "806a502e-cf0e-439f-9660-6772edb2f303",
+    "type": "character",
+    "slug": "ilena-curafolhas",
+    "name": "Ilena Curafolhas",
+    "description": "A gentle and compassionate elf who serves as a healer and nurse at the Casa Hospitalar.",
+    "image": null
+  },
+  {
+    "id": "0b6f0fd5-dc74-47c2-8b51-832bad5bdbcd",
+    "type": "character",
+    "slug": "investigador-da-base",
+    "name": "Investigador da Base",
+    "description": "Druids responsible for recruiting potential new members and identifying imbalances in nature.",
+    "image": null
+  },
+  {
+    "id": "6e8fd035-f97f-4a0d-ac2a-f3a4163972f5",
+    "type": "character",
+    "slug": "ionah-feller",
+    "name": "Ionáh Feller",
+    "description": "The charismatic and helpful wife of Eoban Feller, who owns the Casa de Variedades Feller.",
+    "image": null
+  },
+  {
+    "id": "3e984d9a-f8c9-4ece-b0e5-45233308d35e",
+    "type": "monster",
+    "slug": "jogadores-contundidos",
+    "name": "jogadores contundidos",
+    "description": "Players who are injured during the game and may require medical attention.",
+    "image": null
+  },
+  {
+    "id": "b952bc39-1cff-4f2f-8200-f5e7313d9db6",
+    "type": "item",
+    "slug": "junco-esplendor",
+    "name": "Junco Esplendor",
+    "description": "A modest stem growing on the edges of cool water surfaces, often overlooked due to its normal appearance.",
+    "image": null
+  },
+  {
+    "id": "7d026b4b-ccb1-4c17-a0d2-0c4cde293069",
+    "type": "place",
+    "slug": "kandar",
+    "name": "Kandar",
+    "description": "One of the new continents where one of the Alta'Arcanas towers was erected.",
+    "image": null
+  },
+  {
+    "id": "3b442fb7-9433-4143-8098-54707adacc7c",
+    "type": "place",
+    "slug": "khal-guldur",
+    "name": "Khal'Guldur",
+    "description": "Khal'Guldur was the ancient kingdom of the dwarves, renowned for its forges and craftsmanship. It was ruled by Thrandorin Dobra'ouro and became a site of tragedy due to the awakening of Nidhogg.",
+    "image": null
+  },
+  {
+    "id": "2f233d22-94ef-478a-ae5d-a2e3bdda533c",
+    "type": "character",
+    "slug": "khay-zam",
+    "name": "Khay'zam",
+    "description": "A human mage who united the remaining divine avatars to combat the Infernal Lords during the Ruptura.",
+    "image": null
+  },
+  {
+    "id": "1c7e5e85-6c92-4865-aa68-fe2734bb818e",
+    "type": "faction",
+    "slug": "khay-zam-2",
+    "name": "Khay'Zam",
+    "description": "Khay'Zam is a treaty that united mortal peoples under a common banner during a significant battle that determined the fate of the known world.",
+    "image": null
+  },
+  {
+    "id": "ab68ef23-4ae0-4f71-a2e6-8a7f7410a6c7",
+    "type": "character",
+    "slug": "lady-arieth-de-huma",
+    "name": "Lady Arieth de Huma",
+    "description": "The governing figure of Sol Manso, serving as the burgomaster.",
+    "image": null
+  },
+  {
+    "id": "ca244b0a-0d1f-468f-89d5-f35b5adbfb9a",
+    "type": "place",
+    "slug": "lago-teamor",
+    "name": "Lago Teamor",
+    "description": "A lake that served as a landing point for invasions and the site of significant battles.",
+    "image": null
+  },
+  {
+    "id": "27b22fbb-403f-4944-a60e-d012ce15feaa",
+    "type": "character",
+    "slug": "lancador",
+    "name": "Lançador",
+    "description": "The most intelligent and versatile player, responsible for leading the team with passes and intercepting opponent passes.",
+    "image": null
+  },
+  {
+    "id": "0599914c-9365-459c-bcaf-ec68daf3c1ba",
+    "type": "item",
+    "slug": "lancas",
+    "name": "Lanças",
+    "description": "Lances that can be repaired or used as materials for repairs.",
+    "image": null
+  },
+  {
+    "id": "47d97d43-5067-4414-95be-ed623ac0939c",
+    "type": "faction",
+    "slug": "landaren",
+    "name": "Landaren",
+    "description": "A faction of elves who refused to sacrifice their immortality and chose to remain connected to nature, known as the Elfos Silvestres or Elfos da Lua.",
+    "image": null
+  },
+  {
+    "id": "44718ceb-4159-4c0b-b943-e6636f546c39",
+    "type": "character",
+    "slug": "latelia-hugmore",
+    "name": "Latélia Hugmore",
+    "description": "The Burgo-Mestra of Pedraluna, a middle-aged woman who inherited her position in recent years. She represents the local authority despite the absence of the village's walls.",
+    "image": null
+  },
+  {
+    "id": "7766673d-4cd6-47c5-8ef0-b4fbb7d63504",
+    "type": "character",
+    "slug": "lorde-supremo-d-r-aw-g-h-ar-mototh",
+    "name": "Lorde Supremo D r aw g h ar Mototh",
+    "description": "The supreme lord of the Infernal forces who caused significant destruction during the Ruptura.",
+    "image": null
+  },
+  {
+    "id": "187ca342-f6f3-477d-b51e-5d2ef9ad856e",
+    "type": "character",
+    "slug": "lorian-augustine",
+    "name": "Lorian Augustine",
+    "description": "A middle-aged human man who manages the local branch of the Companhia de Comércio Augustine.",
+    "image": null
+  },
+  {
+    "id": "eaaa50b1-d953-4d15-8999-2f68eb10e3da",
+    "type": "character",
+    "slug": "luminares",
+    "name": "Luminares",
+    "description": "The clergy of A Chama Branca, dedicated to promoting justice and order.",
+    "image": null
+  },
+  {
+    "id": "58016a96-c288-494b-8c73-e3fef0c312c8",
+    "type": "item",
+    "slug": "machado-de-batalha",
+    "name": "Machado de Batalha",
+    "description": "A battle axe used by the character Flint, which can suffer damage and durability penalties during combat.",
+    "image": null
+  },
+  {
+    "id": "bff80392-49e1-45a5-9c9e-811370478396",
+    "type": "lore",
+    "slug": "maldicao-da-ambicao",
+    "name": "Maldição da Ambição",
+    "description": "A curse that affected humans who manipulated arcane magic, stemming from the infernal forces used in their rituals.",
+    "image": null
+  },
+  {
+    "id": "7810e97b-60ac-4bc2-97cb-a813edc444fd",
+    "type": "lore",
+    "slug": "manobras-fisicas",
+    "name": "manobras físicas",
+    "description": "Physical maneuvers that players can perform to contain their opponents, such as grabbing, knocking down, or pushing.",
+    "image": null
+  },
+  {
+    "id": "5ff0f12a-441b-4a0f-9e38-df606d5dc827",
+    "type": "item",
+    "slug": "margarida-encharcada-de-orvalho",
+    "name": "Margarida-Encharcada-de-Orvalho",
+    "description": "A purple daisy with a white dotted pattern that can be consumed to cure almost all poisons except the deadliest ones.",
+    "image": null
+  },
+  {
+    "id": "e24dc028-5236-4a41-8116-28363b82bc9e",
+    "type": "item",
+    "slug": "margarida-temeraria",
+    "name": "Margarida Temerária",
+    "description": "Rose petals found on the Temerária Daisy that inhibit fear when properly consumed, useful for aspiring adventurers.",
+    "image": null
+  },
+  {
+    "id": "76f16ead-6bf5-4481-8e55-4d33b8e471f0",
+    "type": "faction",
+    "slug": "martelos-ageis",
+    "name": "Martelos Ágeis",
+    "description": "The Nimble Hammers are a faction known for their quick and precise actions, likely in combat or craftsmanship.",
+    "image": null
+  },
+  {
+    "id": "fa384a8e-b4fd-4f35-aaa2-e9535c446d8e",
+    "type": "place",
+    "slug": "masmorra",
+    "name": "masmorra",
+    "description": "A dungeon explored by Flint and his group of adventurers, serving as a setting for their encounters.",
+    "image": null
+  },
+  {
+    "id": "997f2603-e50e-47ba-8b9e-739480d60fc8",
+    "type": "place",
+    "slug": "mortalha",
+    "name": "Mortalha",
+    "description": "A vast and mysterious forest surrounding the Vigil of Akos, filled with dangers.",
+    "image": null
+  },
+  {
+    "id": "9cb96c6f-fdba-484c-9337-cccaf1b10c72",
+    "type": "monster",
+    "slug": "ner-drul",
+    "name": "Ner'drul",
+    "description": "Ner'drul is referred to as the Demon of Greed, an enemy that Thrandorin fought against during the war. His defeat marked a significant moment in the history of the dwarves.",
+    "image": null
+  },
+  {
+    "id": "639f9015-3672-425b-80cc-581bfee1fc8b",
+    "type": "monster",
+    "slug": "nidhogg",
+    "name": "Nidhogg",
+    "description": "Nidhogg is an ancient creature awakened by the dwarves during their mining operations, leading to devastation and the near extinction of their people. It is known for its destructive power and dominance over the shadows of the dwarven halls.",
+    "image": null
+  },
+  {
+    "id": "0398bae7-831d-4964-bb05-4b12148fafd7",
+    "type": "place",
+    "slug": "noan",
+    "name": "Noan",
+    "description": "Another crown that was part of the Pacto de Ociddens.",
+    "image": null
+  },
+  {
+    "id": "3e304370-955e-4ad8-bf35-52485464508d",
+    "type": "place",
+    "slug": "norbria",
+    "name": "Norbria",
+    "description": "A city that emerged from a fishing village, named in honor of those killed in the first attack by the Horda.",
+    "image": null
+  },
+  {
+    "id": "d1153c14-f06c-413e-a039-aa55cca1536e",
+    "type": "item",
+    "slug": "nos-de-arvid-retorcida",
+    "name": "Nós de Arvid-Retorcida",
+    "description": "A caqui-colored nut typically found inside trees near water sources, known for its large size and twisted roots.",
+    "image": null
+  },
+  {
+    "id": "44de518a-584f-479e-8f5f-2643fed842bb",
+    "type": "lore",
+    "slug": "obra-prima",
+    "name": "Obra-Prima",
+    "description": "A classification for masterfully crafted weapons and armor, often possessing magical properties and indestructible by normal means.",
+    "image": null
+  },
+  {
+    "id": "bcd25e85-7fc0-489b-83f0-675b655ac1b1",
+    "type": "monster",
+    "slug": "orc",
+    "name": "Orc",
+    "description": "A common enemy encountered by Flint during his adventures, representing a typical adversary in the setting.",
+    "image": null
+  },
+  {
+    "id": "db6d2311-6723-424c-8c3b-83e61a3e6a1b",
+    "type": "faction",
+    "slug": "ordem-de-ghalbaht",
+    "name": "Ordem de Ghalbaht",
+    "description": "A faction of druids focused on maintaining the natural balance and harmony of the world. They utilize their powers based on the four elements and emphasize the use of shields over weapons.",
+    "image": null
+  },
+  {
+    "id": "4905ea1e-6848-49e4-9cac-8393fd65b481",
+    "type": "faction",
+    "slug": "pacto-de-ociddens",
+    "name": "Pacto de Ociddens",
+    "description": "An alliance formed to protect the Western continent from Skeldian invasions, consisting of the crowns of Humma, Noan, and Falandir.",
+    "image": null
+  },
+  {
+    "id": "42cdd207-7fbb-416e-9b90-160cef80443c",
+    "type": "faction",
+    "slug": "papagaios-selvagens",
+    "name": "Papagaios Selvagens",
+    "description": "Wild Parrots represent a faction that embodies freedom and agility, possibly in exploration or scouting.",
+    "image": null
+  },
+  {
+    "id": "1bc1c422-b290-4d9c-b7c5-ce8d16c96deb",
+    "type": "lore",
+    "slug": "paragon",
+    "name": "Paragon",
+    "description": "Paragon is a homebrew game that involves teams of players competing in a structured format with specific roles and rules.",
+    "image": null
+  },
+  {
+    "id": "90964ad4-ff56-4d35-9fc8-5e9e8d306124",
+    "type": "character",
+    "slug": "parnasen",
+    "name": "Parnasen",
+    "description": "A human considered wise among his people, who mastered the manipulation of ley lines and sought to become a god.",
+    "image": null
+  },
+  {
+    "id": "8008932b-36d9-4093-9f59-7e0fdf2eed58",
+    "type": "character",
+    "slug": "passaros-de-amparo",
+    "name": "Pássaros de Amparo",
+    "description": "Druid messengers and guides responsible for exploring and passing information.",
+    "image": null
+  },
+  {
+    "id": "b8522c48-faa4-444b-b5b7-ce10bf8a057b",
+    "type": "place",
+    "slug": "pedraluna",
+    "name": "Pedraluna",
+    "description": "A small village with a population of approximately 500 people, mostly humans. It is located near the Gawain river and around the Elengil lake, characterized by its mild climate and abundant vegetation.",
+    "image": null
+  },
+  {
+    "id": "e8aa098f-8eee-4b14-94b3-bd3ffbc62619",
+    "type": "lore",
+    "slug": "pedra-mae",
+    "name": "Pedra-Mãe",
+    "description": "The Pedra-Mãe is a mythical object that Thrandorin believed to be the source of life for the dwarves and their mines. His obsession with it led to dire consequences for his people.",
+    "image": null
+  },
+  {
+    "id": "c550bfed-4717-4d41-9bee-2b34b5c09be7",
+    "type": "lore",
+    "slug": "penalidade",
+    "name": "penalidade",
+    "description": "The penalties applied to weapons and armor as they accumulate damage, impacting their effectiveness.",
+    "image": null
+  },
+  {
+    "id": "d58802f4-8696-40c2-aef1-fb24ddd5f5d9",
+    "type": "item",
+    "slug": "petala-de-cacto-lamica-azul",
+    "name": "Pétala de Cacto-Lamica Azul",
+    "description": "A common cactus found in deserts and dunes, with bright blue flowers that store rare cold rainwater.",
+    "image": null
+  },
+  {
+    "id": "c868d102-59f3-4d07-a404-cc785be22365",
+    "type": "item",
+    "slug": "planta-cantaro-mamute",
+    "name": "Planta Cântaro-Mamute",
+    "description": "A huge plant with dark brown veins found in most jungles and tropical forests, feeding on insects that land inside it.",
+    "image": null
+  },
+  {
+    "id": "a0980b31-ff27-4146-8137-aa6c5cf44ec7",
+    "type": "character",
+    "slug": "ponta",
+    "name": "Ponta",
+    "description": "The most agile player responsible for covering the sides of the field and making throws from the quadrants.",
+    "image": null
+  },
+  {
+    "id": "fca45b34-d192-47cc-af6d-52af51b61e0e",
+    "type": "item",
+    "slug": "porretes",
+    "name": "Porretes",
+    "description": "Another type of simple weapon that can be repaired or used for repairs.",
+    "image": null
+  },
+  {
+    "id": "b4c02808-96c4-4086-95df-b770d42e6f4a",
+    "type": "faction",
+    "slug": "portadores-de-armas",
+    "name": "Portadores de Armas",
+    "description": "Any non-druid who interferes with the balance of nature or uses dark magic, often considered enemies of the Order of Ghalbaht.",
+    "image": null
+  },
+  {
+    "id": "026c9533-7df2-4a18-9556-9f878062836e",
+    "type": "character",
+    "slug": "principiante-do-resguardo",
+    "name": "Principiante do Resguardo",
+    "description": "Young druids or those new to the Order who have not yet passed their trials.",
+    "image": null
+  },
+  {
+    "id": "dc6e1158-3a9f-405b-9cee-5b98b8ca3aa5",
+    "type": "lore",
+    "slug": "proverbios-da-chama-branca",
+    "name": "Provérbios da Chama Branca",
+    "description": "Proverbs that encapsulate the teachings and values of the Chama Branca.",
+    "image": null
+  },
+  {
+    "id": "c5feaaed-a596-4f07-94f3-81b2eb5b88b7",
+    "type": "lore",
+    "slug": "qualidade",
+    "name": "qualidade",
+    "description": "The classification of equipment based on the materials used and the skill of the craftsman, affecting durability and performance.",
+    "image": null
+  },
+  {
+    "id": "e48e60ae-e362-4d51-9c63-fcab981d4a94",
+    "type": "character",
+    "slug": "quinewen",
+    "name": "Quínewen",
+    "description": "The daughter of Andrastos who took the crown of Vallen and honored her father's agreement with the Skeldens.",
+    "image": null
+  },
+  {
+    "id": "03c0e380-4cfa-4c20-81dd-5b1bb463640f",
+    "type": "character",
+    "slug": "recem-chegado-da-tutela",
+    "name": "Recém-chegado da Tutela",
+    "description": "Individuals who are likely to become druids in the future, typically children or young people sensitive to the four elements.",
+    "image": null
+  },
+  {
+    "id": "38258944-03c3-450e-86e0-9861d885f289",
+    "type": "item",
+    "slug": "rede",
+    "name": "rede",
+    "description": "An item used by the Ponta to carry the ball and perform launches.",
+    "image": null
+  },
+  {
+    "id": "20d5318f-3515-4dd9-9ffe-a7f657ba716e",
+    "type": "lore",
+    "slug": "regente-do-equilibrio",
+    "name": "Regente do Equilíbrio",
+    "description": "The title given to the current leader of the Order of Ghalbaht, typically the wisest and most powerful druid.",
+    "image": null
+  },
+  {
+    "id": "ec974df8-1b09-474a-8df1-e28d4dbc70d3",
+    "type": "character",
+    "slug": "regente-do-jogo",
+    "name": "Regente do jogo",
+    "description": "Any authority present at the game who oversees the event.",
+    "image": null
+  },
+  {
+    "id": "6e5cba04-f50b-4bcb-a1c5-3240d838bdeb",
+    "type": "place",
+    "slug": "rochedos-de-baldren",
+    "name": "Rochedos de Baldren",
+    "description": "A region where Andrastos encountered a rudimentary city and port established by the Skeldens.",
+    "image": null
+  },
+  {
+    "id": "3a607c38-d903-4157-a899-d3e9ca12a076",
+    "type": "lore",
+    "slug": "ruptura",
+    "name": "Ruptura",
+    "description": "The Ruptura refers to a significant event in the history of the dwarves, marking a time of great external threats and challenges. It is during this time that Thrandorin's leadership was crucial.",
+    "image": null
+  },
+  {
+    "id": "04a0cd76-ad4b-44e1-8dfc-9b63a0ed4033",
+    "type": "faction",
+    "slug": "seguidores-de-mordred",
+    "name": "Seguidores de Mordred",
+    "description": "A group of druids who have embraced the corrupted side of magic, opposing the Order of Ghalbaht. They are known for their destructive tendencies and use of dark magic.",
+    "image": null
+  },
+  {
+    "id": "551c1d0f-a236-4f60-8e1c-53810447f3ae",
+    "type": "item",
+    "slug": "seiva-clara",
+    "name": "Seiva Clara",
+    "description": "A crystal-clear sap collected from large trees found in forests along mountain ranges, difficult to find due to its visual quality.",
+    "image": null
+  },
+  {
+    "id": "6bf0a51e-e7f2-473b-adc0-ca26a6e4ca16",
+    "type": "item",
+    "slug": "seiva-pedra-fogo",
+    "name": "Seiva Pedra-Fogo",
+    "description": "An amber-colored thick sap commonly harvested from trees deep in the forest, known for its rich and sweet flavor.",
+    "image": null
+  },
+  {
+    "id": "848f417c-68b2-4386-a40b-75d71cb058eb",
+    "type": "item",
+    "slug": "semente-de-lavanda",
+    "name": "Semente de Lavanda",
+    "description": "Lavender seeds scattered across meadows, plains, and sandy coasts, easily detectable due to their purple flower tips.",
+    "image": null
+  },
+  {
+    "id": "e6461117-ac02-41fd-bbb7-28dd5d045701",
+    "type": "item",
+    "slug": "semente-vitalin",
+    "name": "Semente Vitalin",
+    "description": "A brown seed speckled with small pink dots, known for its pleasantly sour taste and ability to prevent terrible diseases.",
+    "image": null
+  },
+  {
+    "id": "2583684c-dab0-42dc-85de-89a288291857",
+    "type": "character",
+    "slug": "seren",
+    "name": "Sêren",
+    "description": "A skilled golden elf blacksmith who runs A Trilha Ardente. He is capable of repairing weapons and armor but only produces equipment for reasons he deems correct.",
+    "image": null
+  },
+  {
+    "id": "55a823ef-1aab-4b8b-b8b8-7251be76e783",
+    "type": "character",
+    "slug": "silvanus",
+    "name": "Silvanus",
+    "description": "Silvanus is the god of nature and elements who intervenes in Amergin's life to protect him from impending doom.",
+    "image": null
+  },
+  {
+    "id": "7399d06c-0a5d-4be7-beee-4e3377861cdd",
+    "type": "place",
+    "slug": "skeld",
+    "name": "Skeld",
+    "description": "The northern island where the last of the Alta'Arcanas towers was constructed.",
+    "image": null
+  },
+  {
+    "id": "3e566345-2f3b-4cc5-b09d-2e84ea3eaf4c",
+    "type": "faction",
+    "slug": "skeldens",
+    "name": "Skeldens",
+    "description": "The people who invaded the continent, leading to the formation of the Horda.",
+    "image": null
+  },
+  {
+    "id": "206b9ec5-814c-4281-8d38-e83261e1f2f5",
+    "type": "faction",
+    "slug": "sol-dourado",
+    "name": "Sol Dourado",
+    "description": "Golden Sun represents a faction that symbolizes hope and prosperity, possibly associated with light and healing.",
+    "image": null
+  },
+  {
+    "id": "f312f397-e7b4-4dca-8b9b-18c78f4d879b",
+    "type": "place",
+    "slug": "sol-manso",
+    "name": "Sol Manso",
+    "description": "A quiet village known for its simple wooden structures and a peaceful atmosphere, located along the imperial road.",
+    "image": null
+  },
+  {
+    "id": "fae034f3-285c-4ef5-834f-fdbb698a4be2",
+    "type": "item",
+    "slug": "sonhador-chamuscado",
+    "name": "Sonhador Chamuscado",
+    "description": "A dark purple flower resembling a lily that feeds on nearby plants, emitting a strong sweet aroma.",
+    "image": null
+  },
+  {
+    "id": "a047a9a5-196b-4587-bfeb-0fff7e7ee13e",
+    "type": "lore",
+    "slug": "superior",
+    "name": "Superior",
+    "description": "A quality classification for equipment that is more durable and resistant, produced by skilled blacksmiths.",
+    "image": null
+  },
+  {
+    "id": "7f00adf3-6447-4a88-a7c4-0eea2596ae99",
+    "type": "place",
+    "slug": "sverdflis",
+    "name": "Sverdflis",
+    "description": "Sverdflis, meaning 'the broken blade', is the site of a significant battle where Thrandorin fought Ner'drul. It is named in honor of the king and the events that transpired there.",
+    "image": null
+  },
+  {
+    "id": "aba3c724-ac92-42fb-8bf7-230d500bfc4b",
+    "type": "character",
+    "slug": "targrim-ferrocanela",
+    "name": "Targrim Ferrocanela",
+    "description": "A lively halfling with curly brown hair and bright, mischievous eyes, who runs the Taverna Galho de Freixo.",
+    "image": null
+  },
+  {
+    "id": "3db7a705-55a8-4cbc-8bc6-764e465022b1",
+    "type": "place",
+    "slug": "taverna-galho-de-freixo",
+    "name": "Taverna Galho de Freixo",
+    "description": "A cozy tavern decorated with polished wood furniture, known for its welcoming atmosphere.",
+    "image": null
+  },
+  {
+    "id": "64eddf12-23ae-40f7-9a09-88c334b1f7fe",
+    "type": "place",
+    "slug": "templos-da-chama-branca",
+    "name": "Templos da Chama Branca",
+    "description": "Sacred places reflecting the light, justice, and order of the Chama Branca.",
+    "image": null
+  },
+  {
+    "id": "7936d818-39a7-4586-a319-58cf405666ce",
+    "type": "item",
+    "slug": "tentaculo-de-dros-eara-palida",
+    "name": "Tentáculo de Dros'eara Pálida",
+    "description": "A large and rare carnivorous plant with tentacle-like extrusions that secrete a sweet aroma to attract insects.",
+    "image": null
+  },
+  {
+    "id": "c6846324-f7bd-4566-a7c6-5d60a320bf4c",
+    "type": "place",
+    "slug": "terra-dos-vales",
+    "name": "Terra dos Vales",
+    "description": "A region where the Skeldens expanded their territory, north of which significant events took place.",
+    "image": null
+  },
+  {
+    "id": "17620850-2012-4566-94f1-e412b2ea961b",
+    "type": "lore",
+    "slug": "teste-de-destreza",
+    "name": "Teste de Destreza",
+    "description": "A dexterity test required for certain passes and actions during the game.",
+    "image": null
+  },
+  {
+    "id": "b6b30c1c-0f2f-47e7-95b2-dd3b1c6ce901",
+    "type": "lore",
+    "slug": "teste-de-forca",
+    "name": "Teste de Força",
+    "description": "A strength test used to determine the outcome of contested balls during the game.",
+    "image": null
+  },
+  {
+    "id": "3ed9e0f0-0a5f-47a5-9eba-912bbd554e8c",
+    "type": "character",
+    "slug": "thrandorin-dobra-ouro",
+    "name": "Thrandorin Dobra'ouro",
+    "description": "Thrandorin Dobra'ouro was the king of the dwarves of Khal'Guldur, known for his bravery and craftsmanship. He led his people in battle against the Devourer of Worlds and was a symbol of pride and strength for the dwarves.",
+    "image": null
+  },
+  {
+    "id": "5b20f3ac-5159-4bee-84fa-eb7ef29ff8d7",
+    "type": "faction",
+    "slug": "time",
+    "name": "TIME",
+    "description": "A team composed of 44 players, with only 20 allowed on the field at a time.",
+    "image": null
+  },
+  {
+    "id": "b97dfb67-c073-4c02-aa20-464ca4d3bc0e",
+    "type": "place",
+    "slug": "torres-principais",
+    "name": "Torres principais",
+    "description": "The main towers located in the center of the arena, providing access to elevated platforms.",
+    "image": null
+  },
+  {
+    "id": "78c33c90-dddb-4304-8367-197aa1beb895",
+    "type": "place",
+    "slug": "vallen",
+    "name": "Vallen",
+    "description": "The realm ruled by Andrastos and later by his daughter Quínewen.",
+    "image": null
+  },
+  {
+    "id": "67d0535b-cefe-49ff-b6ba-13055b1207a5",
+    "type": "character",
+    "slug": "veleska-haralskin",
+    "name": "Veleska Haralskin",
+    "description": "An exiled aristocrat from Nerânia who believes she has the right to govern Pedraluna due to her noble blood. She often conflicts with Latélia Hugmore.",
+    "image": null
+  },
+  {
+    "id": "0b882d22-6e7f-4b52-afea-b10c9304f5ea",
+    "type": "place",
+    "slug": "vigilia-de-akos",
+    "name": "Vigília de Akos",
+    "description": "A trading post situated in the heart of the Mortalha forest, founded by the knight Akos to protect travelers.",
+    "image": null
+  }
+]
