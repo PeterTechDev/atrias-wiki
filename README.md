@@ -4,11 +4,11 @@ A Wikipedia-style wiki for the Átrias RPG universe, built as a surprise gift fo
 
 ## Tech Stack
 
-- **Frontend**: Next.js 15 (App Router)
+- **Frontend**: Next.js 15 (App Router) with static export
 - **Database**: PostgreSQL + pgvector
 - **ORM**: Drizzle ORM
 - **Styling**: Tailwind CSS
-- **Deployment**: Vercel
+- **Deployment**: GitHub Pages / Vercel
 
 ## Getting Started
 
@@ -21,7 +21,7 @@ A Wikipedia-style wiki for the Átrias RPG universe, built as a surprise gift fo
 ### 1. Clone and Install
 
 ```bash
-git clone https://github.com/yourusername/atrias-wiki.git
+git clone https://github.com/PeterTechDev/atrias-wiki.git
 cd atrias-wiki
 npm install
 ```
@@ -69,11 +69,27 @@ Open [http://localhost:3000](http://localhost:3000) to see the wiki.
 | Script | Description |
 |--------|-------------|
 | `npm run dev` | Start development server |
-| `npm run build` | Build for production |
+| `npm run build` | Build for production (generates search index) |
 | `npm run start` | Start production server |
 | `npm run db:push` | Push schema changes to database |
 | `npm run db:studio` | Open Drizzle Studio (database GUI) |
 | `npm run db:seed` | Seed database from entities.json |
+| `npm run generate:search` | Generate search index JSON |
+
+## Adding Entity Images
+
+1. Add image to `public/images/<type>/` (e.g., `public/images/characters/akdai.jpg`)
+
+2. Update the entity in Drizzle Studio:
+   ```bash
+   npm run db:studio
+   ```
+   Set the `image` field to `/images/characters/akdai.jpg`
+
+3. Regenerate search index:
+   ```bash
+   npm run generate:search
+   ```
 
 ## Project Structure
 
@@ -88,8 +104,7 @@ atrias-wiki/
 │   │   ├── lore/            # Lore list & detail pages
 │   │   ├── monsters/        # Monsters/Bestiary pages
 │   │   ├── sessions/        # Session logs
-│   │   ├── search/          # Search functionality
-│   │   └── api/             # API routes
+│   │   └── search/          # Client-side search
 │   ├── db/
 │   │   ├── index.ts         # Database client
 │   │   ├── schema.ts        # Drizzle table definitions
@@ -97,9 +112,13 @@ atrias-wiki/
 │   └── types/
 │       └── entities.ts      # TypeScript type definitions
 ├── scripts/
-│   └── seed-database.ts     # Database seeding script
-├── import-output/
-│   └── entities.json        # Extracted entity data
+│   ├── seed-database.ts     # Database seeding script
+│   └── generate-search-index.ts  # Search index generator
+├── public/
+│   ├── images/              # Entity images
+│   └── search-index.json    # Generated search data
+├── docker/
+│   └── init/                # PostgreSQL init scripts
 ├── docker-compose.yml       # PostgreSQL + pgvector
 ├── drizzle.config.ts        # Drizzle ORM configuration
 └── docs/
@@ -116,6 +135,14 @@ The wiki uses 4 main tables:
 - **ingestion_jobs**: Pipeline tracking for AI processing
 
 See `src/db/schema.ts` for full schema details.
+
+## Features
+
+- **176+ entities** extracted from DM's documents
+- **Client-side search** with instant filtering (static export compatible)
+- **Entity type icons** from game-icons with custom image support
+- **Dark fantasy theme** inspired by Baldur's Gate / Elden Ring
+- **Mobile responsive** design
 
 ## Documentation
 
