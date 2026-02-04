@@ -8,9 +8,6 @@ import { Icon } from '@iconify/react'
 import CinematicComet from '@/components/CinematicComet'
 import { getEntityCounts, getEntitiesByType } from '@/db/queries/entities'
 
-// Base path for assets (GitHub Pages uses /atrias-wiki/)
-const basePath = process.env.NODE_ENV === 'production' ? '/atrias-wiki' : ''
-
 export default async function Home() {
   const stats = await getEntityCounts()
   const places = await getEntitiesByType('place')
@@ -27,7 +24,7 @@ export default async function Home() {
       <section
         className="relative min-h-screen flex items-center justify-center overflow-hidden"
         style={{
-          backgroundImage: `url('${basePath}/hero.png')`,
+          backgroundImage: `url('/hero.png')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}

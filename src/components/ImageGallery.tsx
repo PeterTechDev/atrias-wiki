@@ -11,10 +11,9 @@ interface GalleryImage {
 
 interface ImageGalleryProps {
   images: GalleryImage[]
-  basePath?: string
 }
 
-export default function ImageGallery({ images, basePath = '' }: ImageGalleryProps) {
+export default function ImageGallery({ images }: ImageGalleryProps) {
   const [lightboxOpen, setLightboxOpen] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
 
@@ -55,7 +54,7 @@ export default function ImageGallery({ images, basePath = '' }: ImageGalleryProp
             onClick={() => openLightbox(index)}
           >
             <img
-              src={`${basePath}${image.src}`}
+              src={image.src}
               alt={image.alt}
               className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105"
             />
@@ -115,7 +114,7 @@ export default function ImageGallery({ images, basePath = '' }: ImageGalleryProp
             onClick={(e) => e.stopPropagation()}
           >
             <img
-              src={`${basePath}${images[currentIndex].src}`}
+              src={images[currentIndex].src}
               alt={images[currentIndex].alt}
               className="max-w-full max-h-[85vh] object-contain"
             />
@@ -148,7 +147,7 @@ export default function ImageGallery({ images, basePath = '' }: ImageGalleryProp
                   onClick={(e) => { e.stopPropagation(); setCurrentIndex(index); }}
                 >
                   <img
-                    src={`${basePath}${img.src}`}
+                    src={img.src}
                     alt={img.alt}
                     className="w-full h-full object-cover"
                   />

@@ -11,9 +11,6 @@ import ImageGallery from '@/components/ImageGallery'
 import { getEntityBySlug, getEntitiesByType } from '@/db/queries/entities'
 import type { CharacterData } from '@/types/entities'
 
-// Base path for assets
-const basePath = process.env.NODE_ENV === 'production' ? '/atrias-wiki' : ''
-
 // Generate static params for all characters
 export async function generateStaticParams() {
   const characters = await getEntitiesByType('character')
@@ -202,7 +199,7 @@ export default async function CharacterPage({ params }: PageProps) {
             {/* Image Gallery */}
             {character.gallery && character.gallery.length > 0 && (
               <div className="mb-6">
-                <ImageGallery images={character.gallery} basePath={basePath} />
+                <ImageGallery images={character.gallery} />
               </div>
             )}
 

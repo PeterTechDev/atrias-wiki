@@ -8,9 +8,6 @@ import { Icon } from '@iconify/react'
 import { getEntitiesByType } from '@/db/queries/entities'
 import type { CharacterData } from '@/types/entities'
 
-// Base path for assets
-const basePath = process.env.NODE_ENV === 'production' ? '/atrias-wiki' : ''
-
 export default async function CharactersPage() {
   const entities = await getEntitiesByType('character')
 
@@ -91,7 +88,7 @@ export default async function CharactersPage() {
                 {char.portrait ? (
                   <div className="h-48 overflow-hidden">
                     <img
-                      src={`${basePath}${char.portrait}`}
+                      src={char.portrait}
                       alt={char.name}
                       className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
                     />
