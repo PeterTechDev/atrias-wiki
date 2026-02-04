@@ -19,6 +19,7 @@ interface SearchableEntity {
   slug: string
   name: string
   description: string | null
+  image: string | null
 }
 
 async function generateSearchIndex() {
@@ -40,6 +41,7 @@ async function generateSearchIndex() {
         slug: entities.slug,
         name: entities.name,
         description: entities.description,
+        image: entities.image,
       })
       .from(entities)
       .orderBy(entities.name)

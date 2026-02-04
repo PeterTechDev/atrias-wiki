@@ -48,6 +48,7 @@ export const entities = pgTable(
     slug: text('slug').notNull().unique(),
     name: text('name').notNull(),
     description: text('description'),
+    image: text('image'), // URL to profile picture / cover image
     data: jsonb('data').$type<Record<string, unknown>>().default({}),
     embedding: vector('embedding'),
     isSpoiler: boolean('is_spoiler').default(false),

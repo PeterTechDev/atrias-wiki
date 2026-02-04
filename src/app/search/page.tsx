@@ -15,6 +15,7 @@ interface SearchableEntity {
   slug: string
   name: string
   description: string | null
+  image: string | null
 }
 
 // Game icons for each entity type
@@ -154,13 +155,21 @@ export default function SearchPage() {
                 className="block bg-zinc-800 border border-zinc-700 rounded-lg p-4 hover:border-amber-400/50 transition-colors"
               >
                 <div className="flex items-center gap-4">
-                  {/* Entity type icon */}
-                  <div className={`w-12 h-12 rounded-lg ${typeIconBg[result.type] || 'bg-zinc-700'} flex items-center justify-center flex-shrink-0`}>
-                    <Icon
-                      icon={typeIcons[result.type] || 'game-icons:scroll-quill'}
-                      className={`w-7 h-7 ${typeIconColor[result.type] || 'text-zinc-400'}`}
+                  {/* Entity image or fallback icon */}
+                  {result.image ? (
+                    <img
+                      src={result.image}
+                      alt={result.name}
+                      className="w-12 h-12 rounded-lg object-cover flex-shrink-0"
                     />
-                  </div>
+                  ) : (
+                    <div className={`w-12 h-12 rounded-lg ${typeIconBg[result.type] || 'bg-zinc-700'} flex items-center justify-center flex-shrink-0`}>
+                      <Icon
+                        icon={typeIcons[result.type] || 'game-icons:scroll-quill'}
+                        className={`w-7 h-7 ${typeIconColor[result.type] || 'text-zinc-400'}`}
+                      />
+                    </div>
+                  )}
                   <div className="flex-1 min-w-0">
                     <h3 className={`font-semibold ${typeNameColor[result.type] || 'text-zinc-200'}`}>
                       {result.name}
