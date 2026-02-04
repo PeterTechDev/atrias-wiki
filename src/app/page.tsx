@@ -121,7 +121,7 @@ export default function Home() {
               { icon: 'game-icons:swap-bag', label: 'Itens', count: stats.items, href: '/items' },
               { icon: 'game-icons:scroll-unfurled', label: 'Lore', count: stats.lore, href: '/lore' },
               { icon: 'game-icons:spiked-dragon-head', label: 'Bestiário', count: stats.monsters, href: '/monsters' },
-              { icon: 'game-icons:sundial', label: 'Timeline', count: '6 eras', href: '/timeline' },
+              { icon: 'game-icons:scroll-quill', label: 'Sessões', count: 'Logs', href: '/sessions' },
             ].map((cat) => (
               <Link
                 key={cat.label}
