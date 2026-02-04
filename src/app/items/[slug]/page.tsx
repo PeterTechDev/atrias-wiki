@@ -3,116 +3,22 @@
  */
 
 import Link from 'next/link'
+import { notFound } from 'next/navigation'
 import { Icon } from '@iconify/react'
-import MechanicsToggle from '@/components/MechanicsToggle'
-
-const items: Record<string, any> = {
-  'espada-do-juramento': {
-    name: 'Espada do Juramento',
-    type: 'Arma',
-    subtype: 'Espada Longa',
-    rarity: 'Raro',
-    attunement: true,
-    description: 'Uma lâmina sagrada empunhada pelos paladinos da Chama Branca, brilha com luz divina quando empunhada por um coração puro.',
-    history: 'Forjada nos templos da Chama Branca durante a Era das Guerras Sagradas, esta espada foi abençoada por sete sumos sacerdotes em uma cerimônia que durou sete dias e sete noites.',
-    // Lore-friendly descriptions (shown by default)
-    traits: [
-      'A lâmina é notavelmente mais afiada e resistente que uma espada comum',
-      'Emana uma luz dourada quando empunhada por um coração justo',
-      'Queima os mortos-vivos com chamas sagradas ao menor toque',
-    ],
-    // Mechanical properties (hidden behind toggle)
-    mechanics: [
-      '+1 em jogadas de ataque e dano',
-      'Emite luz brilhante em um raio de 3m quando empunhada',
-      'Dano adicional de 1d6 radiante contra mortos-vivos',
-    ],
-    lore: 'Diz a lenda que apenas aqueles verdadeiramente dedicados à justiça podem despertar todo o poder desta lâmina. Muitos a empunharam, mas poucos viram sua luz verdadeira.',
-    location: 'Desconhecido - última vez vista em Solaria',
-    contributor: 'Dungeon Master',
-    lastUpdated: '2026-02-04',
-    previousOwners: ['Cavaleiro Vaelor', 'Ordem do Cálice'],
-  },
-  'godsack': {
-    name: 'Godsack',
-    type: 'Equipamento',
-    subtype: 'Mochila',
-    rarity: 'Comum',
-    attunement: false,
-    description: 'Uma mochila feita de palha trançada e couro, usada pelos Carregadores para armazenar bolas durante a Contenda do Couro.',
-    history: 'Item tradicional usado nos jogos da Contenda do Couro, uma competição esportiva popular em várias regiões de Átrias.',
-    traits: [
-      'Feita com couro resistente e palha trançada, suporta uso intenso',
-      'Permite acesso rápido ao conteúdo durante jogos',
-    ],
-    mechanics: [
-      'Pode carregar até 10 bolas de couro',
-      'Acesso rápido para arremesso',
-    ],
-    lore: 'O nome curioso vem de uma antiga expressão local que significa "bolsa sagrada do jogo".',
-    location: 'Comum em cidades que praticam a Contenda',
-    contributor: 'Dungeon Master',
-    lastUpdated: '2026-02-04',
-    previousOwners: [],
-  },
-  'fundas': {
-    name: 'Fundas',
-    type: 'Arma',
-    subtype: 'Arma de Arremesso',
-    rarity: 'Comum',
-    attunement: false,
-    description: 'Estilingues usados pelos Baleiros para atacar oponentes e ânforas durante os jogos.',
-    history: 'Ferramentas simples mas eficazes, as fundas são parte integral da Contenda do Couro.',
-    traits: [
-      'Simples de usar, mas requer prática para dominar',
-      'Capaz de acertar alvos a distâncias consideráveis',
-    ],
-    mechanics: [
-      'Alcance: 9/36m',
-      'Dano: 1d4 contundente',
-    ],
-    lore: 'Os melhores Baleiros são conhecidos por sua precisão impressionante, capazes de acertar ânforas em movimento a grandes distâncias.',
-    location: 'Comum em toda Átrias',
-    contributor: 'Dungeon Master',
-    lastUpdated: '2026-02-04',
-    previousOwners: [],
-  },
-  'amuleto-de-ghalbath': {
-    name: 'Amuleto de Ghalbath',
-    type: 'Acessório',
-    subtype: 'Amuleto',
-    rarity: 'Lendário',
-    attunement: true,
-    description: 'Um amuleto antigo que permite ao portador sentir as correntes elementais do mundo.',
-    history: 'Criado pelo próprio Amergin Ghalbath durante sua jornada pelos planos elementais, este amuleto contém fragmentos de cada plano que ele visitou.',
-    traits: [
-      'Protege seu portador contra os elementos naturais',
-      'Pulsa quando criaturas elementais estão próximas',
-      'Permite invocar uma barreira protetora contra energia',
-    ],
-    mechanics: [
-      'Resistência a dano elemental (fogo, gelo, raio, ácido)',
-      'Pode detectar criaturas elementais em 18m',
-      'Uma vez por dia, pode conjurar Proteção contra Energia',
-    ],
-    lore: 'O amuleto pulsa com energia elemental, mudando sutilmente de cor conforme as correntes mágicas do ambiente. Dizem que seu verdadeiro poder só é revelado a quem completa a mesma jornada espiritual de Ghalbath.',
-    location: 'Guardado pela Ordem de Ghalbath',
-    contributor: 'Dungeon Master',
-    lastUpdated: '2026-02-04',
-    previousOwners: ['Amergin Ghalbath'],
-  },
-}
+import { getEntityBySlug, getEntitiesByType } from '@/db/queries/entities'
+import type { ItemData } from '@/types/entities'
 
 const rarityColors: Record<string, string> = {
   'Comum': 'bg-slate-600/20 text-slate-400',
   'Incomum': 'bg-green-600/20 text-green-400',
   'Raro': 'bg-blue-600/20 text-blue-400',
-  'Épico': 'bg-purple-600/20 text-purple-400',
-  'Lendário': 'bg-amber-600/30 text-amber-400',
+  'Epico': 'bg-purple-600/20 text-purple-400',
+  'Lendario': 'bg-amber-600/30 text-amber-400',
 }
 
-export function generateStaticParams() {
-  return Object.keys(items).map((slug) => ({ slug }))
+export async function generateStaticParams() {
+  const items = await getEntitiesByType('item')
+  return items.map((i) => ({ slug: i.slug }))
 }
 
 interface PageProps {
@@ -121,19 +27,24 @@ interface PageProps {
 
 export default async function ItemPage({ params }: PageProps) {
   const { slug } = await params
-  const item = items[slug]
+  const entity = await getEntityBySlug('item', slug)
 
-  if (!item) {
-    return (
-      <main className="min-h-screen bg-[#e8dcc8] flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-4xl font-cinzel text-slate-800">Item não encontrado</h1>
-          <Link href="/items" className="text-amber-700 hover:text-amber-600 mt-4 inline-block">
-            ← Voltar para Itens
-          </Link>
-        </div>
-      </main>
-    )
+  if (!entity) {
+    notFound()
+  }
+
+  const data = entity.data as ItemData
+
+  const item = {
+    name: entity.name,
+    type: data.type || 'Item',
+    rarity: data.rarity || 'Comum',
+    attunement: data.attunement || false,
+    description: entity.description || '',
+    properties: data.properties || [],
+    effects: data.effects || [],
+    contributor: 'AI Extraction',
+    lastUpdated: entity.updatedAt?.toISOString().split('T')[0] || '',
   }
 
   return (
@@ -143,7 +54,7 @@ export default async function ItemPage({ params }: PageProps) {
         <div className="max-w-6xl mx-auto flex justify-between items-center">
           <Link href="/" className="flex items-center gap-2 text-amber-400 hover:text-amber-300">
             <Icon icon="game-icons:book-cover" className="w-6 h-6" />
-            <span className="font-cinzel text-lg tracking-wider">WIKI ÁTRIAS</span>
+            <span className="font-cinzel text-lg tracking-wider">WIKI ATRIAS</span>
           </Link>
           <Link href="/" className="flex items-center gap-2 text-amber-400 hover:text-amber-300">
             <Icon icon="game-icons:house" className="w-5 h-5" />
@@ -174,14 +85,13 @@ export default async function ItemPage({ params }: PageProps) {
             <div className="flex-1">
               <div className="flex flex-wrap gap-2 mb-2">
                 <span className="text-xs bg-cyan-600/20 text-cyan-400 px-2 py-1 rounded">{item.type}</span>
-                <span className="text-xs bg-slate-600/20 text-slate-400 px-2 py-1 rounded">{item.subtype}</span>
-                <span className={`text-xs px-2 py-1 rounded ${rarityColors[item.rarity]}`}>{item.rarity}</span>
+                <span className={`text-xs px-2 py-1 rounded ${rarityColors[item.rarity] || rarityColors['Comum']}`}>{item.rarity}</span>
                 {item.attunement && (
-                  <span className="text-xs bg-purple-600/20 text-purple-400 px-2 py-1 rounded">Requer Sintonização</span>
+                  <span className="text-xs bg-purple-600/20 text-purple-400 px-2 py-1 rounded">Requer Sintonizacao</span>
                 )}
               </div>
               <h1 className="font-cinzel text-4xl text-amber-400 mb-2">{item.name}</h1>
-              <p className="text-slate-300 font-crimson text-lg italic">{item.description}</p>
+              <p className="text-slate-300 font-crimson text-lg italic">{item.description || 'Um item misterioso aguardando para ser descoberto.'}</p>
             </div>
           </div>
         </div>
@@ -189,82 +99,61 @@ export default async function ItemPage({ params }: PageProps) {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Traits (Lore-friendly) */}
-            {item.traits && (
+            {/* Properties */}
+            {item.properties.length > 0 && (
               <section className="bg-white/80 rounded-lg shadow-lg p-6">
                 <h2 className="font-cinzel text-2xl text-slate-800 mb-4 flex items-center gap-2">
                   <Icon icon="game-icons:sparkles" className="w-6 h-6 text-amber-700" />
-                  Características
+                  Propriedades
                 </h2>
                 <ul className="space-y-2">
-                  {item.traits.map((t: string, i: number) => (
+                  {item.properties.map((t, i) => (
                     <li key={i} className="flex items-start gap-2 text-slate-700">
                       <Icon icon="game-icons:check-mark" className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
                       <span className="font-crimson">{t}</span>
                     </li>
                   ))}
                 </ul>
-
-                {/* Mechanics Toggle */}
-                {item.mechanics && (
-                  <MechanicsToggle>
-                    <ul className="space-y-2">
-                      {item.mechanics.map((m: string, i: number) => (
-                        <li key={i} className="flex items-start gap-2 text-slate-700 text-sm">
-                          <Icon icon="game-icons:dice-six-faces-six" className="w-4 h-4 text-slate-500 flex-shrink-0 mt-0.5" />
-                          <span className="font-mono">{m}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </MechanicsToggle>
-                )}
               </section>
             )}
 
-            {/* History */}
-            <section className="bg-white/80 rounded-lg shadow-lg p-6">
-              <h2 className="font-cinzel text-2xl text-slate-800 mb-4 flex items-center gap-2">
-                <Icon icon="game-icons:scroll-unfurled" className="w-6 h-6 text-amber-700" />
-                História
-              </h2>
-              <p className="text-slate-700 font-crimson leading-relaxed">{item.history}</p>
-            </section>
-
-            {/* Lore */}
-            <section className="bg-white/80 rounded-lg shadow-lg p-6">
-              <h2 className="font-cinzel text-2xl text-slate-800 mb-4 flex items-center gap-2">
-                <Icon icon="game-icons:book-aura" className="w-6 h-6 text-amber-700" />
-                Lore
-              </h2>
-              <p className="text-slate-600 font-crimson italic border-l-4 border-amber-600 pl-4">
-                {item.lore}
-              </p>
-            </section>
+            {/* Effects */}
+            {item.effects.length > 0 && (
+              <section className="bg-white/80 rounded-lg shadow-lg p-6">
+                <h2 className="font-cinzel text-2xl text-slate-800 mb-4 flex items-center gap-2">
+                  <Icon icon="game-icons:magic-swirl" className="w-6 h-6 text-amber-700" />
+                  Efeitos
+                </h2>
+                <ul className="space-y-2">
+                  {item.effects.map((e, i) => (
+                    <li key={i} className="flex items-start gap-2 text-slate-700">
+                      <Icon icon="game-icons:sparkles" className="w-5 h-5 text-purple-600 flex-shrink-0 mt-0.5" />
+                      <span className="font-crimson">{e}</span>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
           </div>
 
           {/* Sidebar */}
           <div className="space-y-6">
             {/* Quick Info */}
             <div className="bg-white/80 rounded-lg shadow-lg p-6">
-              <h3 className="font-cinzel text-lg text-slate-800 mb-4">Informações</h3>
+              <h3 className="font-cinzel text-lg text-slate-800 mb-4">Informacoes</h3>
               <dl className="space-y-3 text-sm">
                 <div>
-                  <dt className="text-slate-500">Localização Conhecida</dt>
-                  <dd className="text-slate-800 font-medium">{item.location}</dd>
+                  <dt className="text-slate-500">Tipo</dt>
+                  <dd className="text-slate-800 font-medium">{item.type}</dd>
                 </div>
-                {item.previousOwners.length > 0 && (
-                  <div>
-                    <dt className="text-slate-500">Donos Anteriores</dt>
-                    <dd className="mt-1 space-y-1">
-                      {item.previousOwners.map((o: string) => (
-                        <div key={o} className="flex items-center gap-2 text-slate-700">
-                          <Icon icon="game-icons:cowled" className="w-4 h-4 text-amber-600" />
-                          {o}
-                        </div>
-                      ))}
-                    </dd>
-                  </div>
-                )}
+                <div>
+                  <dt className="text-slate-500">Raridade</dt>
+                  <dd className="text-slate-800 font-medium">{item.rarity}</dd>
+                </div>
+                <div>
+                  <dt className="text-slate-500">Sintonizacao</dt>
+                  <dd className="text-slate-800 font-medium">{item.attunement ? 'Requerida' : 'Nao Requerida'}</dd>
+                </div>
               </dl>
             </div>
           </div>
@@ -275,7 +164,7 @@ export default async function ItemPage({ params }: PageProps) {
           <div className="flex items-center gap-2 text-slate-500">
             <Icon icon="game-icons:quill-ink" className="w-4 h-4" />
             <span>Adicionado por:</span>
-            <span className="text-slate-700 font-medium">{item.contributor || 'Dungeon Master'}</span>
+            <span className="text-slate-700 font-medium">{item.contributor}</span>
           </div>
           {item.lastUpdated && (
             <div className="text-slate-500">
@@ -289,9 +178,9 @@ export default async function ItemPage({ params }: PageProps) {
       <footer className="bg-[#0a1628] text-white py-8 px-6">
         <div className="max-w-6xl mx-auto text-center">
           <p className="text-amber-400/60 font-crimson italic">
-            "Todo artefato carrega a história daqueles que o empunharam."
+            "Todo artefato carrega a historia daqueles que o empunharam."
           </p>
-          <p className="text-slate-500 text-sm mt-4">Wiki Átrias © 2026</p>
+          <p className="text-slate-500 text-sm mt-4">Wiki Atrias &copy; 2026</p>
         </div>
       </footer>
     </main>

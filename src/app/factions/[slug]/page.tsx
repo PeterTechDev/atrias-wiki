@@ -3,90 +3,14 @@
  */
 
 import Link from 'next/link'
-import DetailsToggle from '@/components/DetailsToggle'
+import { notFound } from 'next/navigation'
 import { Icon } from '@iconify/react'
+import { getEntityBySlug, getEntitiesByType } from '@/db/queries/entities'
+import type { FactionData } from '@/types/entities'
 
-const factions: Record<string, any> = {
-  'chama-branca': {
-    name: 'Chama Branca',
-    type: 'Religião',
-    alignment: 'Leal Bom, Leal Neutro',
-    description: 'Uma fé dedicada à justiça e ordem, simbolizando pureza e radiância.',
-    domains: ['Justiça', 'Ordem', 'Luz'],
-    portfolio: ['Justiça', 'Redenção', 'Tribunal', 'Acerto de Contas'],
-    dogma: [
-      'Revele a verdade, puna os culpados, corrija o erro e seja sempre verdadeiro e justo em suas ações.',
-      'A ordem é o caminho que trilhamos em comunhão para promover o bem-estar de todos.'
-    ],
-    proverbs: [
-      'A verdade ilumina o caminho, mas a justiça é a luz que guia nossos passos.',
-      'Onde há ordem, a paz prospera; onde há paz, a justiça se estabelece.',
-      'O bem comum é uma chama que se alimenta do serviço e da solidariedade.',
-      'Em cada ato de justiça, a luz da Chama Branca brilha mais intensamente.',
-    ],
-    members: [
-      { name: 'Idris Rucandel', role: 'Paladino' },
-    ],
-    headquarters: 'Diversas capelas e templos por Nerania',
-    contributor: 'Dungeon Master',
-    lastUpdated: '2026-02-04',
-    history: 'A Chama Branca é uma das fés mais antigas de Átrias, dedicada a manter a ordem e promover a justiça. Seus seguidores acreditam que a verdade é a maior arma contra a corrupção e que cada ato de justiça fortalece a luz no mundo.',
-  },
-  'alta-arcanas': {
-    name: "Alta'Arcanas",
-    type: 'Organização Mágica',
-    alignment: 'Neutro',
-    description: 'Organização fundada por Khay\'zam para conter e disseminar conhecimento mágico.',
-    domains: ['Magia', 'Conhecimento', 'Controle'],
-    portfolio: ['Educação Arcana', 'Regulamentação Mágica', 'Pesquisa'],
-    dogma: [
-      'O conhecimento mágico deve ser preservado, mas controlado.',
-      'Aqueles que abusam da magia devem ser contidos.'
-    ],
-    members: [],
-    headquarters: 'Torres Arcanas em várias cidades',
-    contributor: 'Dungeon Master',
-    lastUpdated: '2026-02-04',
-    history: 'Após a Grande Destruição, Khay\'zam fundou a Alta\'Arcanas para garantir que a magia nunca mais causasse tamanha devastação. A organização monitora o uso de magia e treina novos magos dentro de diretrizes rígidas.',
-  },
-  'cacadores-de-sangue': {
-    name: 'Caçadores de Sangue',
-    type: 'Força Marcial',
-    alignment: 'Leal Neutro',
-    description: 'Uma força marcial treinada para controlar usuários de magia renegados.',
-    domains: ['Caça', 'Combate Anti-Magia', 'Execução'],
-    portfolio: ['Captura de Renegados', 'Proteção Civil', 'Investigação'],
-    dogma: [
-      'A magia descontrolada é uma ameaça a todos.',
-      'Não há piedade para aqueles que corrompem o dom arcano.'
-    ],
-    members: [],
-    headquarters: 'Fortaleza em local secreto',
-    contributor: 'Dungeon Master',
-    lastUpdated: '2026-02-04',
-    history: 'Os Caçadores de Sangue são o braço armado da Alta\'Arcanas. Treinados desde jovens para resistir e combater magia, eles são temidos por magos renegados em todo o continente.',
-  },
-  'ordem-de-ghalbath': {
-    name: 'Ordem de Ghalbath',
-    type: 'Ordem Mística',
-    alignment: 'Neutro Bom',
-    description: 'Uma antiga ordem dedicada aos ensinamentos de Amergin Ghalbath.',
-    domains: ['Elementos', 'Equilíbrio', 'Sabedoria'],
-    portfolio: ['Harmonia Elemental', 'Meditação', 'Jornada Espiritual'],
-    dogma: [
-      'Os elementos são a base de toda existência.',
-      'Busque o equilíbrio em todas as coisas.'
-    ],
-    members: [],
-    headquarters: 'Monastério nas Montanhas',
-    contributor: 'Dungeon Master',
-    lastUpdated: '2026-02-04',
-    history: 'Fundada pelos discípulos de Amergin Ghalbath após sua jornada pelos planos elementais, a ordem preserva seus ensinamentos sobre a natureza fundamental da realidade.',
-  },
-}
-
-export function generateStaticParams() {
-  return Object.keys(factions).map((slug) => ({ slug }))
+export async function generateStaticParams() {
+  const factions = await getEntitiesByType('faction')
+  return factions.map((f) => ({ slug: f.slug }))
 }
 
 interface PageProps {
@@ -95,19 +19,26 @@ interface PageProps {
 
 export default async function FactionPage({ params }: PageProps) {
   const { slug } = await params
-  const faction = factions[slug]
+  const entity = await getEntityBySlug('faction', slug)
 
-  if (!faction) {
-    return (
-      <main className="min-h-screen bg-[#e8dcc8] flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-4xl font-cinzel text-slate-800">Facção não encontrada</h1>
-          <Link href="/factions" className="text-amber-700 hover:text-amber-600 mt-4 inline-block">
-            ← Voltar para Facções
-          </Link>
-        </div>
-      </main>
-    )
+  if (!entity) {
+    notFound()
+  }
+
+  const data = entity.data as FactionData
+
+  const faction = {
+    name: entity.name,
+    type: data.domains?.[0] || 'Organizacao',
+    alignment: data.alignment || '',
+    description: entity.description || '',
+    domains: data.domains || [],
+    portfolio: data.portfolio || [],
+    goals: data.goals || [],
+    headquarters: data.headquarters || '',
+    leader: data.leader || '',
+    contributor: 'AI Extraction',
+    lastUpdated: entity.updatedAt?.toISOString().split('T')[0] || '',
   }
 
   return (
@@ -117,7 +48,7 @@ export default async function FactionPage({ params }: PageProps) {
         <div className="max-w-6xl mx-auto flex justify-between items-center">
           <Link href="/" className="flex items-center gap-2 text-amber-400 hover:text-amber-300">
             <Icon icon="game-icons:book-cover" className="w-6 h-6" />
-            <span className="font-cinzel text-lg tracking-wider">WIKI ÁTRIAS</span>
+            <span className="font-cinzel text-lg tracking-wider">WIKI ATRIAS</span>
           </Link>
           <Link href="/" className="flex items-center gap-2 text-amber-400 hover:text-amber-300">
             <Icon icon="game-icons:house" className="w-5 h-5" />
@@ -131,7 +62,7 @@ export default async function FactionPage({ params }: PageProps) {
         <nav className="flex items-center gap-2 text-sm text-slate-600">
           <Link href="/" className="hover:text-amber-700">Home</Link>
           <span>›</span>
-          <Link href="/factions" className="hover:text-amber-700">Facções</Link>
+          <Link href="/factions" className="hover:text-amber-700">Faccoes</Link>
           <span>›</span>
           <span className="text-slate-800">{faction.name}</span>
         </nav>
@@ -148,10 +79,12 @@ export default async function FactionPage({ params }: PageProps) {
             <div className="flex-1">
               <div className="flex flex-wrap gap-2 mb-2">
                 <span className="text-xs bg-purple-600/20 text-purple-400 px-2 py-1 rounded">{faction.type}</span>
-                <span className="text-xs bg-slate-600/20 text-slate-400 px-2 py-1 rounded">{faction.alignment}</span>
+                {faction.alignment && (
+                  <span className="text-xs bg-slate-600/20 text-slate-400 px-2 py-1 rounded">{faction.alignment}</span>
+                )}
               </div>
               <h1 className="font-cinzel text-4xl text-amber-400 mb-2">{faction.name}</h1>
-              <p className="text-slate-300 font-crimson text-lg italic">{faction.description}</p>
+              <p className="text-slate-300 font-crimson text-lg italic">{faction.description || 'Uma organizacao influente em Atrias.'}</p>
             </div>
           </div>
         </div>
@@ -159,46 +92,55 @@ export default async function FactionPage({ params }: PageProps) {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-6">
-            {/* History */}
-            <section className="bg-white/80 rounded-lg shadow-lg p-6">
-              <h2 className="font-cinzel text-2xl text-slate-800 mb-4 flex items-center gap-2">
-                <Icon icon="game-icons:scroll-unfurled" className="w-6 h-6 text-amber-700" />
-                História
-              </h2>
-              <p className="text-slate-700 font-crimson leading-relaxed">{faction.history}</p>
-            </section>
-
-            {/* Dogma */}
-            {faction.dogma && (
+            {/* Domains */}
+            {faction.domains.length > 0 && (
               <section className="bg-white/80 rounded-lg shadow-lg p-6">
                 <h2 className="font-cinzel text-2xl text-slate-800 mb-4 flex items-center gap-2">
-                  <Icon icon="game-icons:book-aura" className="w-6 h-6 text-amber-700" />
-                  Dogma
+                  <Icon icon="game-icons:crowned-heart" className="w-6 h-6 text-amber-700" />
+                  Dominios
                 </h2>
-                <ul className="space-y-3">
-                  {faction.dogma.map((d: string, i: number) => (
-                    <li key={i} className="text-slate-700 font-crimson italic border-l-4 border-amber-600 pl-4">
-                      "{d}"
-                    </li>
+                <div className="flex flex-wrap gap-3">
+                  {faction.domains.map((d, i) => (
+                    <span key={i} className="bg-purple-100 text-purple-800 px-4 py-2 rounded-lg font-medium">
+                      {d}
+                    </span>
                   ))}
-                </ul>
+                </div>
               </section>
             )}
 
-            {/* Proverbs */}
-            {faction.proverbs && (
+            {/* Portfolio */}
+            {faction.portfolio.length > 0 && (
               <section className="bg-white/80 rounded-lg shadow-lg p-6">
                 <h2 className="font-cinzel text-2xl text-slate-800 mb-4 flex items-center gap-2">
-                  <Icon icon="game-icons:quill-ink" className="w-6 h-6 text-amber-700" />
-                  Provérbios
+                  <Icon icon="game-icons:scroll-unfurled" className="w-6 h-6 text-amber-700" />
+                  Portfolio
                 </h2>
-                <div className="grid gap-3">
-                  {faction.proverbs.map((p: string, i: number) => (
-                    <p key={i} className="text-slate-600 font-crimson text-sm bg-amber-50 rounded p-3">
-                      "{p}"
-                    </p>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                  {faction.portfolio.map((p, i) => (
+                    <div key={i} className="bg-amber-50 rounded-lg p-3 text-center">
+                      <span className="text-slate-700 font-crimson">{p}</span>
+                    </div>
                   ))}
                 </div>
+              </section>
+            )}
+
+            {/* Goals */}
+            {faction.goals.length > 0 && (
+              <section className="bg-white/80 rounded-lg shadow-lg p-6">
+                <h2 className="font-cinzel text-2xl text-slate-800 mb-4 flex items-center gap-2">
+                  <Icon icon="game-icons:target-arrows" className="w-6 h-6 text-amber-700" />
+                  Objetivos
+                </h2>
+                <ul className="space-y-3">
+                  {faction.goals.map((goal, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <Icon icon="game-icons:check-mark" className="w-5 h-5 text-amber-600 mt-1 flex-shrink-0" />
+                      <span className="text-slate-700 font-crimson">{goal}</span>
+                    </li>
+                  ))}
+                </ul>
               </section>
             )}
           </div>
@@ -207,46 +149,32 @@ export default async function FactionPage({ params }: PageProps) {
           <div className="space-y-6">
             {/* Quick Info */}
             <div className="bg-white/80 rounded-lg shadow-lg p-6">
-              <h3 className="font-cinzel text-lg text-slate-800 mb-4">Informações</h3>
+              <h3 className="font-cinzel text-lg text-slate-800 mb-4">Informacoes</h3>
               <dl className="space-y-3 text-sm">
-                <div>
-                  <dt className="text-slate-500">Sede</dt>
-                  <dd className="text-slate-800 font-medium">{faction.headquarters}</dd>
-                </div>
-                <div>
-                  <dt className="text-slate-500">Domínios</dt>
-                  <dd className="flex flex-wrap gap-1 mt-1">
-                    {faction.domains.map((d: string) => (
-                      <span key={d} className="text-xs bg-amber-100 text-amber-800 px-2 py-1 rounded">{d}</span>
-                    ))}
-                  </dd>
-                </div>
-                <div>
-                  <dt className="text-slate-500">Portfólio</dt>
-                  <dd className="flex flex-wrap gap-1 mt-1">
-                    {faction.portfolio.map((p: string) => (
-                      <span key={p} className="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded">{p}</span>
-                    ))}
-                  </dd>
-                </div>
+                {faction.headquarters && (
+                  <div>
+                    <dt className="text-slate-500">Sede</dt>
+                    <dd className="text-slate-800 font-medium">{faction.headquarters}</dd>
+                  </div>
+                )}
+                {faction.leader && (
+                  <div>
+                    <dt className="text-slate-500">Lider</dt>
+                    <dd className="text-slate-800 font-medium">{faction.leader}</dd>
+                  </div>
+                )}
+                {faction.domains.length > 0 && (
+                  <div>
+                    <dt className="text-slate-500">Dominios</dt>
+                    <dd className="flex flex-wrap gap-1 mt-1">
+                      {faction.domains.map((d) => (
+                        <span key={d} className="text-xs bg-amber-100 text-amber-800 px-2 py-1 rounded">{d}</span>
+                      ))}
+                    </dd>
+                  </div>
+                )}
               </dl>
             </div>
-
-            {/* Members */}
-            {faction.members.length > 0 && (
-              <div className="bg-white/80 rounded-lg shadow-lg p-6">
-                <h3 className="font-cinzel text-lg text-slate-800 mb-4">Membros Conhecidos</h3>
-                <ul className="space-y-2">
-                  {faction.members.map((m: any) => (
-                    <li key={m.name} className="flex items-center gap-2 text-sm">
-                      <Icon icon="game-icons:cowled" className="w-4 h-4 text-amber-600" />
-                      <span className="text-slate-800">{m.name}</span>
-                      <span className="text-slate-500">- {m.role}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
           </div>
         </div>
 
@@ -255,7 +183,7 @@ export default async function FactionPage({ params }: PageProps) {
           <div className="flex items-center gap-2 text-slate-500">
             <Icon icon="game-icons:quill-ink" className="w-4 h-4" />
             <span>Adicionado por:</span>
-            <span className="text-slate-700 font-medium">{faction.contributor || 'Dungeon Master'}</span>
+            <span className="text-slate-700 font-medium">{faction.contributor}</span>
           </div>
           {faction.lastUpdated && (
             <div className="text-slate-500">
@@ -269,9 +197,9 @@ export default async function FactionPage({ params }: PageProps) {
       <footer className="bg-[#0a1628] text-white py-8 px-6">
         <div className="max-w-6xl mx-auto text-center">
           <p className="text-amber-400/60 font-crimson italic">
-            "Lealdade é a moeda mais valiosa entre aqueles que servem a uma causa maior."
+            "Lealdade e a moeda mais valiosa entre aqueles que servem a uma causa maior."
           </p>
-          <p className="text-slate-500 text-sm mt-4">Wiki Átrias © 2026</p>
+          <p className="text-slate-500 text-sm mt-4">Wiki Atrias &copy; 2026</p>
         </div>
       </footer>
     </main>

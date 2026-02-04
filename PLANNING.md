@@ -203,14 +203,14 @@ See `CONTENT_INVENTORY.md` for full breakdown.
 ## ✨ Key Features
 
 ### Must Have (MVP)
-- [ ] All content types with CRUD in Sanity
-- [ ] Public pages for all content types
+- [x] All content types in database
+- [x] Public pages for all content types
 - [ ] Spoiler system (hide/reveal content)
 - [ ] Wiki-style linking between entries
 - [ ] Hover preview cards on links
-- [ ] Search functionality
-- [ ] Mobile responsive
-- [ ] Dark fantasy theme
+- [x] Search functionality
+- [x] Mobile responsive
+- [x] Dark fantasy theme
 
 ### Nice to Have (v1.1)
 - [ ] **Interactive world map** (HIGH PRIORITY - we have 8K map!)
@@ -235,11 +235,11 @@ See `CONTENT_INVENTORY.md` for full breakdown.
 
 | Layer | Technology | Why |
 |-------|------------|-----|
-| Frontend | Next.js 14 (App Router) | SSG, great DX, portfolio-worthy |
-| CMS | Sanity.io | Free tier, great editor, real-time |
+| Frontend | Next.js 15 (App Router) | SSG, great DX, portfolio-worthy |
+| Database | PostgreSQL + pgvector | Flexible JSONB, vector search ready |
+| ORM | Drizzle ORM | Type-safe, lightweight |
 | Styling | Tailwind CSS | Fast, utility-first |
 | Hosting | Vercel | Free, automatic deploys |
-| Auth | Sanity native | Built-in for Studio access |
 
 ## 🎨 Design Direction
 
@@ -253,61 +253,65 @@ See `CONTENT_INVENTORY.md` for full breakdown.
 
 ```
 atrias-wiki/
-├── app/                    # Next.js app router
-│   ├── (wiki)/             # Public wiki pages
+├── src/
+│   ├── app/                    # Next.js app router
 │   │   ├── characters/
 │   │   ├── places/
 │   │   ├── factions/
 │   │   ├── items/
 │   │   ├── lore/
-│   │   └── sessions/
-│   ├── search/
-│   └── page.tsx            # Home
-├── components/
-│   ├── ui/                 # Reusable UI components
-│   ├── wiki/               # Wiki-specific components
-│   │   ├── WikiLink.tsx    # Link with hover preview
-│   │   ├── ContentCard.tsx
-│   │   └── SearchBar.tsx
-│   └── layout/
-├── lib/
-│   ├── sanity/             # Sanity client & queries
-│   └── utils/
-├── sanity/
-│   ├── schemas/            # Content schemas
-│   └── sanity.config.ts
+│   │   ├── monsters/
+│   │   ├── sessions/
+│   │   ├── search/
+│   │   ├── api/                # API routes
+│   │   └── page.tsx            # Home
+│   ├── components/
+│   │   ├── ui/                 # Reusable UI components
+│   │   └── wiki/               # Wiki-specific components
+│   ├── db/
+│   │   ├── index.ts            # Database client
+│   │   ├── schema.ts           # Drizzle table definitions
+│   │   └── queries/            # Query functions
+│   └── types/
+│       └── entities.ts         # TypeScript type definitions
+├── scripts/
+│   └── seed-database.ts        # Database seeding
+├── import-output/
+│   └── entities.json           # Extracted entity data
+├── docker-compose.yml          # PostgreSQL + pgvector
+├── drizzle.config.ts           # Drizzle ORM config
 └── public/
     └── fonts/
 ```
 
 ## 📅 Milestones
 
-### M1: Foundation
-- Project setup (Next.js + Sanity)
-- Sanity schemas for all content types
-- Basic Sanity Studio working
+### M1: Foundation ✅
+- Project setup (Next.js + PostgreSQL)
+- Database schemas for all content types
+- Drizzle ORM integration
 - Deploy empty shell to Vercel
 
-### M2: Core Content
+### M2: Core Content ✅
 - All list pages
 - All detail pages
 - Basic styling/theme
-- Spoiler system working
+- Database seeding from extracted entities
 
 ### M3: Wiki Features
 - Wiki-style linking
 - Hover preview cards
-- Search functionality
-- Mobile responsive
+- [x] Search functionality
+- [x] Mobile responsive
 
 ### M4: Polish
 - Final design polish
 - Performance optimization
 - SEO & meta tags
-- README & documentation
+- [x] README & documentation
 
-### M5: Content Population
-- Import DM's content
+### M5: Content Population ✅
+- [x] Import DM's content (125+ entities extracted)
 - The big reveal! 🎉
 
 ## 📝 Notes
@@ -336,6 +340,14 @@ atrias-wiki/
 > Major architectural evolution: from traditional CMS to AI-native content pipeline.
 
 See full details in `docs/AI_FIRST_ARCHITECTURE.md`
+
+### Phase 1: Database Migration ✅ (Completed 2026-02-04)
+
+- [x] Removed Sanity CMS completely
+- [x] Set up PostgreSQL + pgvector via Docker
+- [x] Created Drizzle ORM schema (entities, relations, knowledge_chunks, ingestion_jobs)
+- [x] Migrated all pages to query Postgres
+- [x] Seeded database from extracted entities (125+ entities)
 
 ### Vision
 
@@ -370,16 +382,11 @@ CPU Host (Local/VPS)          GPU Host (RunPod)
 
 ### Migration Path
 
-| Phase | Focus | Timeline |
-|-------|-------|----------|
-| 1 | Postgres + pgvector + embeddings | Week 1-2 |
-| 2 | GPU infrastructure (vLLM + Tailscale) | Week 3 |
-| 3 | Ingestor + Extractor agents | Week 4-5 |
-| 4 | Linker agent + dedup | Week 6 |
-| 5 | Reviewer agent + UI | Week 7 |
-| 6 | Publisher + polish | Week 8+ |
-
-### Coexistence Strategy
-
-Current Sanity-based wiki continues working while AI system is built.
-Once AI pipeline is stable, migrate to AI-native storage.
+| Phase | Focus | Status |
+|-------|-------|--------|
+| 1 | Postgres + pgvector + schema | ✅ Complete |
+| 2 | GPU infrastructure (vLLM + Tailscale) | Pending |
+| 3 | Ingestor + Extractor agents | Pending |
+| 4 | Linker agent + dedup | Pending |
+| 5 | Reviewer agent + UI | Pending |
+| 6 | Publisher + polish | Pending |
