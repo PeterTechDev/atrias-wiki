@@ -6,6 +6,7 @@
 import Link from 'next/link'
 import { Icon } from '@iconify/react'
 import DetailsToggle from '@/components/DetailsToggle'
+import ImageGallery from '@/components/ImageGallery'
 
 // Base path for assets
 const basePath = process.env.NODE_ENV === 'production' ? '/atrias-wiki' : ''
@@ -22,8 +23,10 @@ const characters: Record<string, any> = {
     alignment: 'Leal e Bom',
     origin: 'Abrigo de Solaria, Colinas do Serpeio',
     faction: 'Ordem da Chama Branca',
-    portrait: '/images/characters/idris-portrait.jpg',
-    fullImage: '/images/characters/idris-full.jpg',
+    gallery: [
+      { src: '/images/characters/idris-portrait.jpg', alt: 'Idris Rucandel', caption: 'Idris empunhando sua espada flamejante' },
+      { src: '/images/characters/idris-full.jpg', alt: 'Idris Rucandel - Corpo completo', caption: 'O Chefe da Guarda de Solaria' },
+    ],
     description: 'Um paladino veterano que carrega o peso de fracassos passados, mas continua a servir sua comunidade com honra inabalável.',
     quote: '"Mesmo sob a nuvem de seus fracassos passados, Idris continuou a servir Solaria com um sorriso."',
     backstory: `Idris Rucandel foi um filho do Abrigo de Solaria, nascido sob o manto de uma família humilde. Os ecos da vida passada ainda se encontravam nas paredes cinzentas do castelo que dominava a paisagem da pequena vila nas Colinas do Serpeio. Solaria era um lugar amistoso, onde até os de sangue exótico encontravam abrigo.
@@ -208,25 +211,10 @@ export default async function CharacterPage({ params }: PageProps) {
 
           {/* Sidebar */}
           <div className="lg:col-span-1">
-            {/* Portrait */}
-            {character.portrait && (
-              <div className="mb-6 rounded-lg overflow-hidden shadow-xl">
-                <img 
-                  src={`${basePath}${character.portrait}`}
-                  alt={character.name}
-                  className="w-full h-auto object-cover"
-                />
-              </div>
-            )}
-
-            {/* Full Image (if different from portrait) */}
-            {character.fullImage && character.fullImage !== character.portrait && (
-              <div className="mb-6 rounded-lg overflow-hidden shadow-xl">
-                <img 
-                  src={`${basePath}${character.fullImage}`}
-                  alt={`${character.name} - Corpo completo`}
-                  className="w-full h-auto object-cover"
-                />
+            {/* Image Gallery */}
+            {character.gallery && character.gallery.length > 0 && (
+              <div className="mb-6">
+                <ImageGallery images={character.gallery} basePath={basePath} />
               </div>
             )}
 
