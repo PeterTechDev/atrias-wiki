@@ -8,8 +8,6 @@
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { Icon } from '@iconify/react'
-import L from 'leaflet'
-import 'leaflet/dist/leaflet.css'
 
 // Base path for assets
 const basePath = process.env.NODE_ENV === 'production' ? '/atrias-wiki' : ''
@@ -48,77 +46,87 @@ const locations = [
 
 export default function MapPage() {
   const mapContainer = useRef<HTMLDivElement>(null)
-  const mapRef = useRef<L.Map | null>(null)
+  const mapRef = useRef<any>(null)
   const [selectedLocation, setSelectedLocation] = useState<typeof locations[0] | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     if (!mapContainer.current || mapRef.current) return
 
-    // Image dimensions
-    const imageWidth = 8192
-    const imageHeight = 7842
+    // Dynamically import Leaflet (client-side only)
+    const initMap = async () => {
+      const L = (await import('leaflet')).default
+      await import('leaflet/dist/leaflet.css')
 
-    // Create map with simple CRS (for images)
-    const map = L.map(mapContainer.current, {
-      crs: L.CRS.Simple,
-      minZoom: -2,
-      maxZoom: 2,
-      zoomSnap: 0.25,
-      zoomDelta: 0.5,
-      attributionControl: false,
-    })
+      // Image dimensions
+      const imageWidth = 8192
+      const imageHeight = 7842
 
-    // Calculate bounds
-    const bounds: L.LatLngBoundsExpression = [[0, 0], [imageHeight, imageWidth]]
-
-    // Add image overlay
-    L.imageOverlay(`${basePath}/world-map.jpg`, bounds).addTo(map)
-
-    // Fit map to image bounds
-    map.fitBounds(bounds)
-    map.setMaxBounds(bounds)
-
-    // Custom marker icon
-    const markerIcon = L.divIcon({
-      className: 'custom-marker',
-      html: `<div class="marker-pin"></div>`,
-      iconSize: [30, 40],
-      iconAnchor: [15, 40],
-      popupAnchor: [0, -40],
-    })
-
-    // Add markers for locations
-    locations.forEach((loc) => {
-      const marker = L.marker([loc.coords[1], loc.coords[0]] as L.LatLngExpression, {
-        icon: markerIcon,
-        title: loc.name,
+      // Create map with simple CRS (for images)
+      const map = L.map(mapContainer.current!, {
+        crs: L.CRS.Simple,
+        minZoom: -2,
+        maxZoom: 2,
+        zoomSnap: 0.25,
+        zoomDelta: 0.5,
+        attributionControl: false,
       })
-        .addTo(map)
-        .on('click', () => setSelectedLocation(loc))
 
-      // Popup
-      marker.bindPopup(`
-        <div class="map-popup">
-          <strong>${loc.name}</strong>
-          <span class="popup-type">${loc.type}</span>
-        </div>
-      `)
-    })
+      // Calculate bounds
+      const bounds = [[0, 0], [imageHeight, imageWidth]] as [[number, number], [number, number]]
 
-    mapRef.current = map
-    setIsLoading(false)
+      // Add image overlay
+      L.imageOverlay(`${basePath}/world-map.jpg`, bounds).addTo(map)
+
+      // Fit map to image bounds
+      map.fitBounds(bounds)
+      map.setMaxBounds(bounds)
+
+      // Custom marker icon
+      const markerIcon = L.divIcon({
+        className: 'custom-marker',
+        html: `<div class="marker-pin"></div>`,
+        iconSize: [30, 40],
+        iconAnchor: [15, 40],
+        popupAnchor: [0, -40],
+      })
+
+      // Add markers for locations
+      locations.forEach((loc) => {
+        const marker = L.marker([loc.coords[1], loc.coords[0]] as [number, number], {
+          icon: markerIcon,
+          title: loc.name,
+        })
+          .addTo(map)
+          .on('click', () => setSelectedLocation(loc))
+
+        // Popup
+        marker.bindPopup(`
+          <div class="map-popup">
+            <strong>${loc.name}</strong>
+            <span class="popup-type">${loc.type}</span>
+          </div>
+        `)
+      })
+
+      mapRef.current = map
+      setIsLoading(false)
+    }
+
+    initMap()
 
     // Cleanup
     return () => {
-      map.remove()
-      mapRef.current = null
+      if (mapRef.current) {
+        mapRef.current.remove()
+        mapRef.current = null
+      }
     }
   }, [])
 
   const flyToLocation = (loc: typeof locations[0]) => {
     if (mapRef.current) {
-      mapRef.current.flyTo([loc.coords[1], loc.coords[0]] as L.LatLngExpression, 0, {
+      mapRef.current.flyTo([loc.coords[1], loc.coords[0]], 0, {
         duration: 1,
       })
       setSelectedLocation(loc)
