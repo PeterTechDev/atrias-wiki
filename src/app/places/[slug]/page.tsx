@@ -5,6 +5,7 @@
 
 import Link from 'next/link'
 import { Icon } from '@iconify/react'
+import DetailsToggle from './DetailsToggle'
 
 // Base path for assets
 const basePath = process.env.NODE_ENV === 'production' ? '/atrias-wiki' : ''
@@ -99,6 +100,8 @@ Os voluntários participam de treinamentos semanais e são dedicados e corajosos
     climate: 'Temperado',
     resources: ['Agricultura', 'Mineração (Ferro e Prata)', 'Artesanato', 'Tecidos', 'Ervas Medicinais'],
     tags: ['Vila', 'Refúgio', 'Colinas do Serpeio', 'Diversidade', 'Mineração', 'Comércio'],
+    contributor: 'Dungeon Master',
+    lastUpdated: '2026-02-04',
   },
 }
 
@@ -180,34 +183,18 @@ export default async function PlacePage({ params }: PageProps) {
                 {place.region}, {place.kingdom}
               </p>
 
-              {/* Quick Stats */}
-              <div className="flex flex-wrap gap-4 mb-6 text-sm">
-                <div className="flex items-center gap-2">
-                  <Icon icon="game-icons:village" className="w-4 h-4 text-amber-700" />
-                  <span className="text-slate-600">População:</span>
-                  <span className="text-slate-800 font-medium">{place.population}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Icon icon="game-icons:crown" className="w-4 h-4 text-amber-700" />
-                  <span className="text-slate-600">Governo:</span>
-                  <span className="text-slate-800 font-medium">{place.government}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Icon icon="game-icons:shield" className="w-4 h-4 text-amber-700" />
-                  <span className="text-slate-600">Perigo:</span>
-                  <span className={`font-medium ${
-                    place.dangerLevel === 'Baixo' ? 'text-green-700' : 
-                    place.dangerLevel === 'Médio' ? 'text-yellow-700' : 'text-red-700'
-                  }`}>
-                    {place.dangerLevel}
-                  </span>
-                </div>
-              </div>
-
               {/* Description */}
-              <p className="text-slate-700 font-crimson text-lg leading-relaxed">
+              <p className="text-slate-700 font-crimson text-lg leading-relaxed mb-4">
                 {place.description}
               </p>
+
+              {/* Quick Stats Toggle (Client Component) */}
+              <DetailsToggle 
+                population={place.population}
+                government={place.government}
+                dangerLevel={place.dangerLevel}
+                climate={place.climate}
+              />
             </div>
 
             {/* Quote */}
@@ -392,6 +379,20 @@ export default async function PlacePage({ params }: PageProps) {
               </span>
             ))}
           </div>
+        </div>
+
+        {/* Contributor Attribution */}
+        <div className="mt-8 pt-6 border-t border-amber-300/50 flex items-center justify-between text-sm">
+          <div className="flex items-center gap-2 text-slate-500">
+            <Icon icon="game-icons:quill-ink" className="w-4 h-4" />
+            <span>Adicionado por:</span>
+            <span className="text-slate-700 font-medium">{place.contributor}</span>
+          </div>
+          {place.lastUpdated && (
+            <div className="text-slate-500">
+              Atualizado em: {place.lastUpdated}
+            </div>
+          )}
         </div>
       </div>
 
