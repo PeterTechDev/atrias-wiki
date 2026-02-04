@@ -260,10 +260,10 @@ export default async function MonsterPage({ params }: PageProps) {
 
           {/* Sidebar */}
           <div className="space-y-6">
-            {/* Combat Info (Hidden by default) */}
+            {/* Abilities & Weaknesses Toggle */}
             <div className="bg-white/80 rounded-lg shadow-lg p-6">
-              <MechanicsToggle title="Informações de Combate">
-                <div className="space-y-6">
+              <MechanicsToggle title="Habilidades e Fraquezas">
+                <div className="space-y-4">
                   {/* Abilities */}
                   <div>
                     <h4 className="font-cinzel text-sm text-slate-800 mb-2 flex items-center gap-2">
@@ -295,37 +295,35 @@ export default async function MonsterPage({ params }: PageProps) {
                       ))}
                     </ul>
                   </div>
-
-                  {/* Stats */}
-                  {monster.stats && (
-                    <div>
-                      <h4 className="font-cinzel text-sm text-slate-800 mb-2 flex items-center gap-2">
-                        <Icon icon="game-icons:dice-twenty-faces-twenty" className="w-4 h-4 text-purple-600" />
-                        Ficha de Combate
-                      </h4>
-                      <div className="grid grid-cols-2 gap-2 text-sm">
-                        <div>
-                          <span className="text-slate-500">CA:</span>
-                          <span className="ml-2 font-mono text-slate-800">{monster.stats.ac}</span>
-                        </div>
-                        <div>
-                          <span className="text-slate-500">PV:</span>
-                          <span className="ml-2 font-mono text-slate-800">{monster.stats.hp}</span>
-                        </div>
-                        <div>
-                          <span className="text-slate-500">Velocidade:</span>
-                          <span className="ml-2 font-mono text-slate-800">{monster.stats.speed}</span>
-                        </div>
-                        <div>
-                          <span className="text-slate-500">ND:</span>
-                          <span className="ml-2 font-mono text-slate-800">{monster.stats.cr}</span>
-                        </div>
-                      </div>
-                    </div>
-                  )}
                 </div>
               </MechanicsToggle>
             </div>
+
+            {/* Combat Stats Toggle */}
+            {monster.stats && (
+              <div className="bg-white/80 rounded-lg shadow-lg p-6">
+                <MechanicsToggle title="Ficha de Combate">
+                  <div className="grid grid-cols-2 gap-3 text-sm">
+                    <div>
+                      <span className="text-slate-500">CA:</span>
+                      <span className="ml-2 font-mono text-slate-800">{monster.stats.ac}</span>
+                    </div>
+                    <div>
+                      <span className="text-slate-500">PV:</span>
+                      <span className="ml-2 font-mono text-slate-800">{monster.stats.hp}</span>
+                    </div>
+                    <div>
+                      <span className="text-slate-500">Velocidade:</span>
+                      <span className="ml-2 font-mono text-slate-800">{monster.stats.speed}</span>
+                    </div>
+                    <div>
+                      <span className="text-slate-500">ND:</span>
+                      <span className="ml-2 font-mono text-slate-800">{monster.stats.cr}</span>
+                    </div>
+                  </div>
+                </MechanicsToggle>
+              </div>
+            )}
           </div>
         </div>
 
