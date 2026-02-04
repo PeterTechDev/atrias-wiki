@@ -286,7 +286,7 @@ export default function MapPage() {
 
           {/* Mobile Locations Panel */}
           {showMobileLocations && (
-            <div className="lg:hidden fixed inset-0 z-50 flex flex-col">
+            <div className="lg:hidden fixed inset-0 z-[2000] flex flex-col">
               {/* Backdrop */}
               <div 
                 className="absolute inset-0 bg-black/60"
