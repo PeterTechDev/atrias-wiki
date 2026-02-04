@@ -16,55 +16,89 @@ const places: Record<string, any> = {
     type: 'Vila',
     region: 'Colinas do Serpeio',
     kingdom: 'Nerania',
-    population: '~2.000 habitantes',
-    government: 'Conselho Local sob proteção de Nerania',
-    description: 'Uma pequena vila acolhedora salpicada de casas rústicas e campos verdejantes, onde até os de sangue exótico encontram abrigo.',
-    quote: '"Solaria era um lugar amistoso, onde até os de sangue exótico encontravam abrigo."',
-    history: `O Abrigo de Solaria nasceu como um refúgio para aqueles que buscavam paz nas terras de Nerania. Fundada há séculos por colonos que fugiam dos conflitos das grandes cidades, a vila cresceu organicamente ao redor de um castelo cinzento que ainda domina a paisagem.
+    population: '~600 habitantes',
+    government: 'Barão Aric Valtor com Conselho de Anciãos',
+    description: 'Uma pequena vila situada nas Colinas do Serpeio, reconhecida por seu castelo de pedra cinzenta e pela diversidade de seus habitantes. Um lugar onde até os de sangue exótico encontram abrigo.',
+    quote: '"Não fosse pelas ações de Reynard de Sollam, o corajoso Leão Vermelho, a vila teria sucumbido perante o medo e a fome."',
+    history: `Solaria é uma pequena vila situada nas Colinas do Serpeio, entre os Picos do Alvorecer a Leste e a Passagem Crepitante que leva aos Bosques da Mortalha ao oeste. A vila é reconhecida por um castelo de pedra cinzenta que domina a paisagem, sendo visível de longe.
 
-O castelo, agora em ruínas parciais, serve como um lembrete das glórias e horrores passados. Diz-se que foi construído por um lorde que buscava proteger os viajantes das criaturas que espreitavam nas Colinas do Serpeio. Com o tempo, a vila se tornou conhecida por sua hospitalidade — um lugar onde humanos, meio-elfos e até raças mais exóticas podiam viver em harmonia.`,
-    geography: `Localizada nas Colinas do Serpeio, Solaria é cercada por campos verdejantes e colinas suaves que se estendem até onde a vista alcança. A vila fica em um vale protegido, com acesso a um riacho que fornece água fresca para os habitantes e irrigação para as fazendas.
+A população de Solaria é composta por cerca de 600 pessoas, onde é possível encontrar membros de cada um dos povos civilizados e não é incomum se deparar com indivíduos de ancestralidades exóticas, que em outros locais seriam hostilizados.
 
-O castelo cinzento ergue-se em uma elevação ao norte da vila, suas torres parcialmente desmoronadas criando uma silhueta melancólica contra o céu do entardecer. A estrada principal que atravessa Solaria conecta as rotas comerciais menores de Nerania, trazendo viajantes e mercadores ocasionais.`,
-    culture: `Os solarenses são conhecidos por sua natureza acolhedora e espírito comunitário. A vila celebra festivais sazonais com música, dança e competições amistosas. A Taverna do Leão Vermelho serve como o coração social da comunidade, onde histórias são compartilhadas e amizades forjadas.
+Isso se deve à história e cultura local, que no passado teve que lidar com grande opressão imposta por um governante tirano o qual possuía as terras ao redor. Não fosse pelas ações de Reynard de Sollam — um corajoso guerreiro e seguidor de Uther, o deus da Luz — bem como um grupo improvável de aliados de todos os cantos de Átrias, a vila teria sucumbido perante o medo e a fome.
 
-A guarda da cidade, liderada pelo veterano Idris Rucandel, mantém a paz com mão firme mas justa. Os habitantes respeitam a ordem mas valorizam ainda mais a compaixão — uma tradição que remonta aos fundadores da vila.`,
+Reynard tombou em batalha, mas por sua tenacidade e bravura recebeu a alcunha de "O Leão Vermelho", e a vila foi batizada de Abrigo de Solaria em homenagem à sua devoção e ao seu desejo de um lugar em que todos fossem acolhidos.`,
+    geography: `Localizada nas Colinas do Serpeio, Solaria está estrategicamente posicionada entre os Picos do Alvorecer a Leste e a Passagem Crepitante que leva aos Bosques da Mortalha ao oeste.
+
+O castelo de pedra cinzenta ergue-se dominando a paisagem, visível de longe para qualquer viajante que se aproxime. A vila é cercada por campos agricolas verdejantes e a mineração nas montanhas a leste extrai principalmente ferro e prata.
+
+A estrada principal conecta Solaria às rotas comerciais da região, trazendo mercadores dos condados de Noan, os principais clientes dos minerais exportados pela Compania Roccia.`,
+    culture: `Os solarenses são conhecidos por sua natureza acolhedora — uma herança direta dos ensinamentos de Reynard de Sollam. A vila celebra a diversidade, acolhendo humanos, meio-elfos e até raças mais exóticas que em outros lugares seriam hostilizadas.
+
+A feira semanal é o coração do comércio local, vendendo frutas e vegetais frescos, produtos artesanais, ferramentas, tecidos e joias. A Taverna do Leão Vermelho, comandada por Thorne Ravenwood, serve como o ponto de encontro social onde histórias são compartilhadas.
+
+Todos os cidadãos podem participar do treinamento semanal da milícia, aprendendo o manuseio de armas simples e estratégias de defesa, recebendo um soldo ao final do mês.`,
+    defenses: `A milícia de Solaria é composta por cerca de 15 membros permanentes e 50 voluntários, a maioria fazendeiros e artesãos que lutam apenas em caso de necessidade. Usam armas simples como lanças, arcos e espadas, sem uniformes padronizados.
+
+Os voluntários participam de treinamentos semanais e são dedicados e corajosos, prontos para defender sua vila a qualquer momento. A milícia trabalha em conjunto com os guardas do Barão e os caçadores locais para manter a paz.`,
     landmarks: [
       { 
-        name: 'O Castelo Cinzento', 
-        type: 'Ruínas',
-        description: 'As ruínas do antigo castelo que domina a paisagem da vila, um lembrete das glórias passadas.'
+        name: 'Forte Coroa Dourada', 
+        type: 'Fortaleza',
+        description: 'O imponente complexo fortificado com catedral, sede do governo e defesa da vila.'
       },
       { 
         name: 'Taverna do Leão Vermelho', 
-        type: 'Estabelecimento',
-        description: 'O coração social de Solaria, onde histórias são compartilhadas e amizades forjadas ao redor de canecas de hidromel.'
+        type: 'Taverna',
+        description: 'Comandada por Thorne Ravenwood, é o coração social de Solaria onde histórias são compartilhadas.'
       },
       { 
-        name: 'Barraca do Gizmo', 
-        type: 'Comércio',
-        description: 'A barraca de comida do inusitado cozinheiro Koboldi, famosa por seus pratos exóticos e deliciosos.'
+        name: 'Fornalha Fulgurante', 
+        type: 'Ferraria',
+        description: 'A oficina do ferreiro Marcellus Stone, responsável pela produção de ferramentas locais.'
       },
       { 
-        name: 'Praça Central', 
+        name: 'Fios da Rainha', 
+        type: 'Loja',
+        description: 'Loja de tecidos e roupas da meio-elfa Lysandra, bem relacionada com os nobres das cidades vizinhas.'
+      },
+      { 
+        name: 'Sândalo Dourado', 
+        type: 'Herbário',
+        description: 'O herbário da curandeira Abigail, conhecida por suas ervas e remédios da região.'
+      },
+      { 
+        name: 'Mercado Central', 
         type: 'Área Pública',
-        description: 'Onde Morpheys costuma realizar seus truques de mágica para ganhar moedas dos aldeões.'
+        description: 'Local da feira semanal onde frutas, vegetais e produtos artesanais são comercializados.'
+      },
+      { 
+        name: 'Loja de Magia', 
+        type: 'Comércio Arcano',
+        description: 'Estabelecimento que vende itens e componentes mágicos para aventureiros.'
       },
     ],
     notableResidents: [
+      { name: 'Barão Aric Valtor', role: 'Líder da Vila', link: null },
       { name: 'Idris Rucandel', role: 'Chefe da Guarda', link: '/characters/idris-rucandel' },
+      { name: 'Thorne Ravenwood', role: 'Dono da Taverna Leão Vermelho', link: null },
+      { name: 'Lysandra', role: 'Proprietária - Fios da Rainha', link: null },
+      { name: 'Gwendolyn De Roccia', role: 'Chefe da Compania Roccia', link: null },
+      { name: 'Marcellus Stone', role: 'Ferreiro', link: null },
+      { name: 'Abigail', role: 'Curandeira', link: null },
+      { name: 'Bertrand', role: 'Fazendeiro Chefe', link: null },
       { name: 'Gizmo', role: 'Cozinheiro Koboldi', link: null },
       { name: 'Morpheys', role: 'Jovem Mago de Rua', link: null },
     ],
     connections: [
-      { name: 'Colinas do Serpeio', type: 'Região', description: 'A região montanhosa onde Solaria está localizada.' },
-      { name: 'Nerania', type: 'Reino', description: 'O reino protetor ao qual Solaria pertence.' },
+      { name: 'Picos do Alvorecer', type: 'Montanhas', description: 'Cordilheira a leste de onde são extraídos ferro e prata.' },
+      { name: 'Bosques da Mortalha', type: 'Floresta', description: 'Floresta misteriosa acessível pela Passagem Crepitante a oeste.' },
+      { name: 'Condados de Noan', type: 'Reino', description: 'Principais clientes dos minerais exportados por Solaria.' },
       { name: 'Ordem do Cálice', type: 'Organização', description: 'A ordem de paladinos que recrutou Idris desta vila.' },
     ],
     dangerLevel: 'Baixo',
     climate: 'Temperado',
-    resources: ['Agricultura', 'Pastoreio', 'Artesanato Local'],
-    tags: ['Vila', 'Refúgio', 'Colinas do Serpeio', 'Nerania', 'Pacífico'],
+    resources: ['Agricultura', 'Mineração (Ferro e Prata)', 'Artesanato', 'Tecidos', 'Ervas Medicinais'],
+    tags: ['Vila', 'Refúgio', 'Colinas do Serpeio', 'Diversidade', 'Mineração', 'Comércio'],
   },
 }
 
@@ -224,6 +258,22 @@ export default async function PlacePage({ params }: PageProps) {
                 ))}
               </div>
             </div>
+
+            {/* Defenses - only show if exists */}
+            {place.defenses && (
+              <div className="bg-white/80 rounded-lg shadow-lg p-8 mb-8">
+                <h2 className="font-cinzel text-2xl text-slate-800 mb-6 flex items-center gap-3">
+                  <Icon icon="game-icons:crossed-swords" className="w-6 h-6 text-amber-700" />
+                  Defesas
+                </h2>
+                
+                <div className="prose prose-slate max-w-none font-crimson text-lg leading-relaxed">
+                  {place.defenses.split('\n\n').map((paragraph: string, i: number) => (
+                    <p key={i} className="mb-4 text-slate-700">{paragraph}</p>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Landmarks */}
             <div className="bg-white/80 rounded-lg shadow-lg p-8">
