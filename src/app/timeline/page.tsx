@@ -575,6 +575,7 @@ export default function TimelinePage() {
   const [witnessMode, setWitnessMode] = useState(false)
   const [witnessIndex, setWitnessIndex] = useState(0)
   const [currentEraIndex, setCurrentEraIndex] = useState(0)
+  const [showFilters, setShowFilters] = useState(false)
   const timelineRef = useRef<HTMLDivElement>(null)
 
   const filteredEvents = timelineData.events.filter((event) => {
@@ -731,76 +732,113 @@ export default function TimelinePage() {
           </div>
         </div>
 
-        {/* Filters (hidden in witness mode) */}
+        {/* Filters Toggle (hidden in witness mode) */}
         {!witnessMode && (
-          <div className="max-w-6xl mx-auto px-4 py-8">
-            {/* Era Pills */}
-            <div className="mb-6">
-              <h3 className="text-amber-100/60 text-sm uppercase tracking-wider mb-3">
-                Filtrar por Era
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                <button
-                  onClick={() => setSelectedEra(null)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                    selectedEra === null
-                      ? 'bg-amber-500 text-slate-950'
-                      : 'bg-white/10 text-amber-100/70 hover:bg-white/20'
-                  }`}
-                >
-                  Todas
-                </button>
-                {timelineData.eras.map((era) => (
-                  <button
-                    key={era.id}
-                    onClick={() => setSelectedEra(era.id)}
-                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2 ${
-                      selectedEra === era.id
-                        ? 'text-slate-950'
-                        : 'bg-white/10 text-amber-100/70 hover:bg-white/20'
-                    }`}
-                    style={{
-                      backgroundColor: selectedEra === era.id ? era.color : undefined,
-                    }}
-                  >
-                    <Icon icon={era.icon} className="w-5 h-5" />
-                    {era.name}
-                  </button>
-                ))}
-              </div>
-            </div>
+          <div className="max-w-6xl mx-auto px-4 pt-6">
+            {/* Filter Toggle Button */}
+            <button
+              onClick={() => setShowFilters(!showFilters)}
+              className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-amber-100/70 text-sm font-medium transition-all"
+            >
+              <Icon icon="game-icons:funnel" className="w-4 h-4" />
+              Filtros
+              <Icon 
+                icon={showFilters ? "game-icons:arrow-up" : "game-icons:arrow-down"} 
+                className="w-3 h-3 ml-1" 
+              />
+              {(selectedEra || selectedCategories.length > 0) && (
+                <span className="ml-2 px-2 py-0.5 bg-amber-500 text-slate-950 text-xs rounded-full">
+                  {(selectedEra ? 1 : 0) + selectedCategories.length}
+                </span>
+              )}
+            </button>
 
-            {/* Category Toggle Buttons */}
-            <div className="mb-8">
-              <h3 className="text-amber-100/60 text-sm uppercase tracking-wider mb-3">
-                Categorias
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {categories.map((cat) => {
-                  const config = categoryConfig[cat]
-                  const isSelected = selectedCategories.includes(cat)
-                  return (
+            {/* Collapsible Filters */}
+            {showFilters && (
+              <div className="mt-4 p-4 bg-black/30 backdrop-blur-md rounded-xl border border-white/10 animate-fadeIn">
+                {/* Era Pills */}
+                <div className="mb-6">
+                  <h3 className="text-amber-100/60 text-sm uppercase tracking-wider mb-3">
+                    Filtrar por Era
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
                     <button
-                      key={cat}
-                      onClick={() => toggleCategory(cat)}
-                      className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all flex items-center gap-2 border ${
-                        isSelected
-                          ? 'border-current'
-                          : 'border-transparent bg-white/10 hover:bg-white/20'
+                      onClick={() => setSelectedEra(null)}
+                      className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                        selectedEra === null
+                          ? 'bg-amber-500 text-slate-950'
+                          : 'bg-white/10 text-amber-100/70 hover:bg-white/20'
                       }`}
-                      style={{
-                        backgroundColor: isSelected ? `${config.color}30` : undefined,
-                        color: isSelected ? config.color : 'rgba(255,255,255,0.7)',
-                        borderColor: isSelected ? config.color : undefined,
-                      }}
                     >
-                      <Icon icon={config.icon} className="w-4 h-4" />
-                      {config.label}
+                      Todas
                     </button>
-                  )
-                })}
+                    {timelineData.eras.map((era) => (
+                      <button
+                        key={era.id}
+                        onClick={() => setSelectedEra(era.id)}
+                        className={`px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2 ${
+                          selectedEra === era.id
+                            ? 'text-slate-950'
+                            : 'bg-white/10 text-amber-100/70 hover:bg-white/20'
+                        }`}
+                        style={{
+                          backgroundColor: selectedEra === era.id ? era.color : undefined,
+                        }}
+                      >
+                        <Icon icon={era.icon} className="w-5 h-5" />
+                        {era.name}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Category Toggle Buttons */}
+                <div>
+                  <h3 className="text-amber-100/60 text-sm uppercase tracking-wider mb-3">
+                    Categorias
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {categories.map((cat) => {
+                      const config = categoryConfig[cat]
+                      const isSelected = selectedCategories.includes(cat)
+                      return (
+                        <button
+                          key={cat}
+                          onClick={() => toggleCategory(cat)}
+                          className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all flex items-center gap-2 border ${
+                            isSelected
+                              ? 'border-current'
+                              : 'border-transparent bg-white/10 hover:bg-white/20'
+                          }`}
+                          style={{
+                            backgroundColor: isSelected ? `${config.color}30` : undefined,
+                            color: isSelected ? config.color : 'rgba(255,255,255,0.7)',
+                            borderColor: isSelected ? config.color : undefined,
+                          }}
+                        >
+                          <Icon icon={config.icon} className="w-4 h-4" />
+                          {config.label}
+                        </button>
+                      )
+                    })}
+                  </div>
+                </div>
+
+                {/* Clear Filters */}
+                {(selectedEra || selectedCategories.length > 0) && (
+                  <button
+                    onClick={() => {
+                      setSelectedEra(null)
+                      setSelectedCategories([])
+                    }}
+                    className="mt-4 text-amber-500/70 hover:text-amber-400 text-sm flex items-center gap-1"
+                  >
+                    <Icon icon="game-icons:cancel" className="w-4 h-4" />
+                    Limpar filtros
+                  </button>
+                )}
               </div>
-            </div>
+            )}
           </div>
         )}
 
