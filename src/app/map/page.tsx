@@ -9,9 +9,6 @@ import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { Icon } from '@iconify/react'
 
-// Base path for assets
-const basePath = process.env.NODE_ENV === 'production' ? '/atrias-wiki' : ''
-
 // Map markers for known locations
 const locations = [
   { 
@@ -94,7 +91,7 @@ export default function MapPage() {
       const bounds = [[0, 0], [imageHeight, imageWidth]] as [[number, number], [number, number]]
 
       // Add image overlay
-      L.imageOverlay(`${basePath}/world-map.jpg`, bounds).addTo(map)
+      L.imageOverlay('/world-map.jpg', bounds).addTo(map)
 
       // Fit map to image bounds
       map.fitBounds(bounds)
