@@ -260,63 +260,72 @@ export default async function MonsterPage({ params }: PageProps) {
 
           {/* Sidebar */}
           <div className="space-y-6">
-            {/* Abilities */}
+            {/* Combat Info (Hidden by default) */}
             <div className="bg-white/80 rounded-lg shadow-lg p-6">
-              <h3 className="font-cinzel text-lg text-slate-800 mb-4 flex items-center gap-2">
-                <Icon icon="game-icons:burning-meteor" className="w-5 h-5 text-red-600" />
-                Habilidades
-              </h3>
-              <ul className="space-y-2">
-                {monster.abilities.map((ability: string, i: number) => (
-                  <li key={i} className="flex items-start gap-2 text-sm text-slate-700">
-                    <Icon icon="game-icons:check-mark" className="w-4 h-4 text-red-500 flex-shrink-0 mt-0.5" />
-                    {ability}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Weaknesses */}
-            <div className="bg-white/80 rounded-lg shadow-lg p-6">
-              <h3 className="font-cinzel text-lg text-slate-800 mb-4 flex items-center gap-2">
-                <Icon icon="game-icons:broken-shield" className="w-5 h-5 text-green-600" />
-                Fraquezas
-              </h3>
-              <ul className="space-y-2">
-                {monster.weaknesses.map((weakness: string, i: number) => (
-                  <li key={i} className="flex items-start gap-2 text-sm text-slate-700">
-                    <Icon icon="game-icons:target-dummy" className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
-                    {weakness}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Stats Block (Hidden by default) */}
-            {monster.stats && (
-              <div className="bg-white/80 rounded-lg shadow-lg p-6">
-                <MechanicsToggle title="Ficha de Combate">
-                  <div className="grid grid-cols-2 gap-3 text-sm">
-                    <div>
-                      <span className="text-slate-500">CA:</span>
-                      <span className="ml-2 font-mono text-slate-800">{monster.stats.ac}</span>
-                    </div>
-                    <div>
-                      <span className="text-slate-500">PV:</span>
-                      <span className="ml-2 font-mono text-slate-800">{monster.stats.hp}</span>
-                    </div>
-                    <div>
-                      <span className="text-slate-500">Velocidade:</span>
-                      <span className="ml-2 font-mono text-slate-800">{monster.stats.speed}</span>
-                    </div>
-                    <div>
-                      <span className="text-slate-500">ND:</span>
-                      <span className="ml-2 font-mono text-slate-800">{monster.stats.cr}</span>
-                    </div>
+              <MechanicsToggle title="Informações de Combate">
+                <div className="space-y-6">
+                  {/* Abilities */}
+                  <div>
+                    <h4 className="font-cinzel text-sm text-slate-800 mb-2 flex items-center gap-2">
+                      <Icon icon="game-icons:burning-meteor" className="w-4 h-4 text-red-600" />
+                      Habilidades
+                    </h4>
+                    <ul className="space-y-1">
+                      {monster.abilities.map((ability: string, i: number) => (
+                        <li key={i} className="flex items-start gap-2 text-sm text-slate-700">
+                          <Icon icon="game-icons:check-mark" className="w-3 h-3 text-red-500 flex-shrink-0 mt-1" />
+                          {ability}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                </MechanicsToggle>
-              </div>
-            )}
+
+                  {/* Weaknesses */}
+                  <div>
+                    <h4 className="font-cinzel text-sm text-slate-800 mb-2 flex items-center gap-2">
+                      <Icon icon="game-icons:broken-shield" className="w-4 h-4 text-green-600" />
+                      Fraquezas
+                    </h4>
+                    <ul className="space-y-1">
+                      {monster.weaknesses.map((weakness: string, i: number) => (
+                        <li key={i} className="flex items-start gap-2 text-sm text-slate-700">
+                          <Icon icon="game-icons:target-dummy" className="w-3 h-3 text-green-500 flex-shrink-0 mt-1" />
+                          {weakness}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Stats */}
+                  {monster.stats && (
+                    <div>
+                      <h4 className="font-cinzel text-sm text-slate-800 mb-2 flex items-center gap-2">
+                        <Icon icon="game-icons:dice-twenty-faces-twenty" className="w-4 h-4 text-purple-600" />
+                        Ficha de Combate
+                      </h4>
+                      <div className="grid grid-cols-2 gap-2 text-sm">
+                        <div>
+                          <span className="text-slate-500">CA:</span>
+                          <span className="ml-2 font-mono text-slate-800">{monster.stats.ac}</span>
+                        </div>
+                        <div>
+                          <span className="text-slate-500">PV:</span>
+                          <span className="ml-2 font-mono text-slate-800">{monster.stats.hp}</span>
+                        </div>
+                        <div>
+                          <span className="text-slate-500">Velocidade:</span>
+                          <span className="ml-2 font-mono text-slate-800">{monster.stats.speed}</span>
+                        </div>
+                        <div>
+                          <span className="text-slate-500">ND:</span>
+                          <span className="ml-2 font-mono text-slate-800">{monster.stats.cr}</span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </MechanicsToggle>
+            </div>
           </div>
         </div>
 
