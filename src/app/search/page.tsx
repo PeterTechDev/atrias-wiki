@@ -7,6 +7,7 @@
 
 import { useState, useEffect, useMemo } from 'react'
 import Link from 'next/link'
+import { Icon } from '@iconify/react'
 
 interface SearchableEntity {
   id: string
@@ -16,22 +17,48 @@ interface SearchableEntity {
   description: string | null
 }
 
+// Game icons for each entity type
 const typeIcons: Record<string, string> = {
-  character: '\u{1F464}',
-  place: '\u{1F5FA}\u{FE0F}',
-  faction: '\u{2694}\u{FE0F}',
-  item: '\u{1F5E1}\u{FE0F}',
-  lore: '\u{1F4DC}',
-  monster: '\u{1F479}',
+  character: 'game-icons:hooded-figure',
+  place: 'game-icons:castle',
+  faction: 'game-icons:rally-the-troops',
+  item: 'game-icons:swap-bag',
+  lore: 'game-icons:scroll-unfurled',
+  monster: 'game-icons:spiked-dragon-head',
+  session: 'game-icons:quill-ink',
 }
 
-const typeColors: Record<string, string> = {
+// Background colors for icon containers
+const typeIconBg: Record<string, string> = {
+  character: 'bg-amber-900/50',
+  place: 'bg-green-900/50',
+  faction: 'bg-purple-900/50',
+  item: 'bg-cyan-900/50',
+  lore: 'bg-yellow-900/50',
+  monster: 'bg-red-900/50',
+  session: 'bg-blue-900/50',
+}
+
+// Icon colors
+const typeIconColor: Record<string, string> = {
+  character: 'text-amber-400',
+  place: 'text-green-400',
+  faction: 'text-purple-400',
+  item: 'text-cyan-400',
+  lore: 'text-yellow-400',
+  monster: 'text-red-400',
+  session: 'text-blue-400',
+}
+
+// Text colors for names
+const typeNameColor: Record<string, string> = {
   character: 'text-amber-300',
   place: 'text-green-300',
-  faction: 'text-red-300',
-  item: 'text-purple-300',
+  faction: 'text-purple-300',
+  item: 'text-cyan-300',
   lore: 'text-yellow-300',
-  monster: 'text-pink-300',
+  monster: 'text-red-300',
+  session: 'text-blue-300',
 }
 
 // Map entity type to URL path (handles irregular plurals)
@@ -126,18 +153,24 @@ export default function SearchPage() {
                 href={`/${typeToPath[result.type] || result.type}/${result.slug}`}
                 className="block bg-zinc-800 border border-zinc-700 rounded-lg p-4 hover:border-amber-400/50 transition-colors"
               >
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl">{typeIcons[result.type] || '\u{1F4C4}'}</span>
-                  <div>
-                    <h3 className={`font-semibold ${typeColors[result.type] || 'text-zinc-200'}`}>
+                <div className="flex items-center gap-4">
+                  {/* Entity type icon */}
+                  <div className={`w-12 h-12 rounded-lg ${typeIconBg[result.type] || 'bg-zinc-700'} flex items-center justify-center flex-shrink-0`}>
+                    <Icon
+                      icon={typeIcons[result.type] || 'game-icons:scroll-quill'}
+                      className={`w-7 h-7 ${typeIconColor[result.type] || 'text-zinc-400'}`}
+                    />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className={`font-semibold ${typeNameColor[result.type] || 'text-zinc-200'}`}>
                       {result.name}
                     </h3>
                     <span className="text-xs text-zinc-500 uppercase">{result.type}</span>
+                    {result.description && (
+                      <p className="text-zinc-400 text-sm mt-1 line-clamp-2">{result.description}</p>
+                    )}
                   </div>
                 </div>
-                {result.description && (
-                  <p className="text-zinc-400 text-sm mt-2 line-clamp-2">{result.description}</p>
-                )}
               </Link>
             ))}
           </div>
