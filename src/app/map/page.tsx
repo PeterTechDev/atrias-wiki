@@ -50,6 +50,14 @@ export default function MapPage() {
   const [selectedLocation, setSelectedLocation] = useState<typeof locations[0] | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [showMobileLocations, setShowMobileLocations] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
+
+  // Filter locations based on search
+  const filteredLocations = locations.filter(loc => 
+    loc.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    loc.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    loc.description.toLowerCase().includes(searchQuery.toLowerCase())
+  )
 
   useEffect(() => {
     if (!mapContainer.current || mapRef.current) return
@@ -167,11 +175,24 @@ export default function MapPage() {
         {/* Sidebar - Location List */}
         <aside className="w-64 bg-[#0d1f35] border-r border-amber-900/30 overflow-y-auto hidden lg:block">
           <div className="p-4">
-            <h2 className="font-cinzel text-amber-400 text-sm uppercase tracking-wider mb-4">
+            <h2 className="font-cinzel text-amber-400 text-sm uppercase tracking-wider mb-3">
               Locais Conhecidos
             </h2>
+            {/* Search Input */}
+            <div className="relative mb-4">
+              <Icon icon="game-icons:magnifying-glass" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+              <input
+                type="text"
+                placeholder="Buscar local..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-9 pr-3 py-2 bg-slate-800/50 border border-amber-900/30 rounded-lg text-white text-sm placeholder:text-slate-500 focus:outline-none focus:border-amber-600/50"
+              />
+            </div>
             <div className="space-y-2">
-              {locations.map((loc) => (
+              {filteredLocations.length === 0 ? (
+                <p className="text-slate-400 text-sm text-center py-4">Nenhum local encontrado</p>
+              ) : filteredLocations.map((loc) => (
                 <button
                   key={loc.name}
                   onClick={() => flyToLocation(loc)}
@@ -310,10 +331,26 @@ export default function MapPage() {
                     <Icon icon="game-icons:cross-mark" className="w-6 h-6" />
                   </button>
                 </div>
+
+                {/* Search Input */}
+                <div className="px-4 py-3">
+                  <div className="relative">
+                    <Icon icon="game-icons:magnifying-glass" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                    <input
+                      type="text"
+                      placeholder="Buscar local..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="w-full pl-9 pr-3 py-2.5 bg-slate-800/50 border border-amber-900/30 rounded-lg text-white text-sm placeholder:text-slate-500 focus:outline-none focus:border-amber-600/50"
+                    />
+                  </div>
+                </div>
                 
                 {/* Locations List */}
-                <div className="flex-1 overflow-y-auto p-4 space-y-2">
-                  {locations.map((loc) => (
+                <div className="flex-1 overflow-y-auto px-4 pb-4 space-y-2">
+                  {filteredLocations.length === 0 ? (
+                    <p className="text-slate-400 text-sm text-center py-8">Nenhum local encontrado</p>
+                  ) : filteredLocations.map((loc) => (
                     <button
                       key={loc.name}
                       onClick={() => {
