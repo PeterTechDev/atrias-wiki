@@ -1,74 +1,154 @@
 /**
  * Lore listing page
+ * History, legends, and knowledge of Átrias
  */
 
-import { client } from '@/sanity/client'
 import Link from 'next/link'
+import { Icon } from '@iconify/react'
 
-interface Lore {
-  _id: string
-  name: string
-  slug: { current: string }
-  category?: string
-  description?: string
+// Mocked lore data from entities.json
+const loreEntries = [
+  {
+    slug: 'dogma-da-chama-branca',
+    name: 'Dogma da Chama Branca',
+    category: 'Religião',
+    era: 'Era Atual',
+    description: 'Os princípios guia da fé, enfatizando verdade, justiça e ordem. Revele a verdade, puna os culpados, corrija o erro.',
+  },
+  {
+    slug: 'proverbios-da-chama-branca',
+    name: 'Provérbios da Chama Branca',
+    category: 'Religião',
+    era: 'Era Atual',
+    description: 'Provérbios que encapsulam os ensinamentos e valores da Chama Branca: "A verdade ilumina o caminho, mas a justiça é a luz que guia nossos passos."',
+  },
+  {
+    slug: 'a-grande-destruicao',
+    name: 'A Grande Destruição',
+    category: 'História',
+    era: 'Era Antiga',
+    description: 'O cataclismo mágico que reformulou Átrias, levando à criação da Alta\'Arcanas e mudando para sempre a relação entre mortais e magia.',
+  },
+  {
+    slug: 'origem-dos-djinns',
+    name: 'Origem dos Djinns',
+    category: 'Cosmologia',
+    era: 'Era Primordial',
+    description: 'A história dos seres elementais que habitam os planos além de Átrias, e sua conexão com a magia do mundo.',
+  },
+]
+
+const categoryColors: Record<string, string> = {
+  'Religião': 'bg-amber-600/20 text-amber-400',
+  'História': 'bg-blue-600/20 text-blue-400',
+  'Cosmologia': 'bg-purple-600/20 text-purple-400',
+  'Cultura': 'bg-green-600/20 text-green-400',
+  'Magia': 'bg-cyan-600/20 text-cyan-400',
 }
 
-async function getLore(): Promise<Lore[]> {
-  return client.fetch(`
-    *[_type == "lore" && isPlayerVisible == true] | order(name asc) {
-      _id, name, slug, category, description
-    }
-  `)
-}
-
-export default async function LorePage() {
-  const lore = await getLore()
-
+export default function LorePage() {
   return (
-    <main className="min-h-screen bg-zinc-900 text-zinc-100">
-      <div className="max-w-6xl mx-auto px-4 py-8">
-        <div className="mb-8">
-          <Link href="/" className="text-amber-400 hover:text-amber-300 text-sm">
-            ← Back to Home
+    <main className="min-h-screen bg-[#e8dcc8]">
+      {/* Header */}
+      <header className="bg-[#0a1628] text-white py-4 px-6">
+        <div className="max-w-6xl mx-auto flex justify-between items-center">
+          <Link href="/" className="flex items-center gap-2 text-amber-400 hover:text-amber-300">
+            <Icon icon="game-icons:book-cover" className="w-6 h-6" />
+            <span className="font-cinzel text-lg tracking-wider">WIKI ÁTRIAS</span>
           </Link>
-          <h1 className="text-4xl font-bold text-amber-400 mt-4">📜 Lore</h1>
-          <p className="text-zinc-400 mt-2">
-            History, magic systems, and the secrets of Átrias
+          <Link href="/" className="flex items-center gap-2 text-amber-400 hover:text-amber-300">
+            <Icon icon="game-icons:house" className="w-5 h-5" />
+            <span>Return Home</span>
+          </Link>
+        </div>
+      </header>
+
+      {/* Breadcrumb */}
+      <div className="max-w-6xl mx-auto px-6 py-4">
+        <nav className="flex items-center gap-2 text-sm text-slate-600">
+          <Link href="/" className="hover:text-amber-700">Home</Link>
+          <span>›</span>
+          <span className="text-slate-800">Lore</span>
+        </nav>
+      </div>
+
+      {/* Page Header */}
+      <div className="max-w-6xl mx-auto px-6 mb-8">
+        <div className="bg-white/80 rounded-lg shadow-lg p-8">
+          <div className="flex items-center gap-4 mb-4">
+            <Icon icon="game-icons:scroll-unfurled" className="w-12 h-12 text-amber-700" />
+            <div>
+              <h1 className="font-cinzel text-4xl text-slate-800">Lore</h1>
+              <p className="text-slate-600 font-crimson italic">História, lendas e conhecimento antigo</p>
+            </div>
+          </div>
+          <p className="text-slate-700 font-crimson text-lg">
+            Mergulhe nas profundezas do conhecimento de Átrias. Aqui repousam as histórias antigas,
+            os dogmas sagrados e os segredos que moldaram este mundo através das eras.
           </p>
         </div>
+      </div>
 
-        {lore.length === 0 ? (
-          <div className="text-center py-12 text-zinc-500">
-            <p className="text-xl">No lore entries yet</p>
-            <p className="mt-2">Add lore via the <Link href="/studio" className="text-amber-400">Studio</Link></p>
+      {/* Lore Grid */}
+      <div className="max-w-6xl mx-auto px-6 pb-12">
+        {loreEntries.length === 0 ? (
+          <div className="text-center py-12">
+            <Icon icon="game-icons:burning-book" className="w-16 h-16 text-slate-400 mx-auto mb-4" />
+            <p className="text-xl text-slate-600">Nenhum conhecimento encontrado</p>
+            <p className="text-slate-500 mt-2">O lore será adicionado em breve.</p>
           </div>
         ) : (
-          <div className="space-y-4">
-            {lore.map((entry) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {loreEntries.map((lore) => (
               <Link 
-                key={entry._id} 
-                href={`/lore/${entry.slug?.current || entry._id}`}
-                className="block bg-zinc-800 border border-zinc-700 rounded-lg p-4 hover:border-yellow-400/50 transition-colors"
+                key={lore.slug} 
+                href={`/lore/${lore.slug}`}
+                className="group bg-white/80 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all hover:-translate-y-1"
               >
-                <div className="flex items-start gap-3">
-                  <span className="text-2xl">📜</span>
-                  <div>
-                    <h2 className="text-xl font-semibold text-yellow-300">{entry.name}</h2>
-                    {entry.category && (
-                      <span className="text-xs bg-zinc-700 px-2 py-1 rounded capitalize mt-1 inline-block">
-                        {entry.category}
-                      </span>
-                    )}
-                    {entry.description && (
-                      <p className="text-zinc-400 text-sm mt-2">{entry.description}</p>
-                    )}
+                {/* Card Header */}
+                <div className="bg-[#0a1628] p-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className={`text-xs px-2 py-1 rounded ${categoryColors[lore.category] || categoryColors['História']}`}>
+                      {lore.category}
+                    </span>
+                    <span className="text-xs bg-slate-600/20 text-slate-400 px-2 py-1 rounded">
+                      {lore.era}
+                    </span>
                   </div>
+                  <h2 className="font-cinzel text-xl text-amber-400 group-hover:text-amber-300 transition-colors">
+                    {lore.name}
+                  </h2>
+                </div>
+
+                {/* Card Body */}
+                <div className="p-4">
+                  <p className="text-slate-600 text-sm font-crimson line-clamp-3">
+                    {lore.description}
+                  </p>
+                </div>
+
+                {/* Card Footer */}
+                <div className="px-4 pb-4">
+                  <span className="text-amber-700 text-sm font-medium group-hover:text-amber-600 flex items-center gap-1">
+                    Ler mais
+                    <Icon icon="game-icons:open-book" className="w-4 h-4" />
+                  </span>
                 </div>
               </Link>
             ))}
           </div>
         )}
       </div>
+
+      {/* Footer */}
+      <footer className="bg-[#0a1628] text-white py-8 px-6">
+        <div className="max-w-6xl mx-auto text-center">
+          <p className="text-amber-400/60 font-crimson italic">
+            "Aqueles que não conhecem a história estão condenados a repetir seus erros."
+          </p>
+          <p className="text-slate-500 text-sm mt-4">Wiki Átrias © 2026</p>
+        </div>
+      </footer>
     </main>
   )
 }
