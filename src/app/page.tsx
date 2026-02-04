@@ -113,7 +113,7 @@ export default function Home() {
             Navegação Rápida
           </h2>
           
-          <div className="mt-8 grid grid-cols-3 md:grid-cols-6 gap-4">
+          <div className="mt-8 grid grid-cols-3 md:grid-cols-7 gap-4">
             {[
               { icon: 'game-icons:cowled', label: 'Personagens', count: stats.characters, href: '/characters' },
               { icon: 'game-icons:castle', label: 'Lugares', count: stats.places, href: '/places' },
@@ -121,6 +121,7 @@ export default function Home() {
               { icon: 'game-icons:swap-bag', label: 'Itens', count: stats.items, href: '/items' },
               { icon: 'game-icons:scroll-unfurled', label: 'Lore', count: stats.lore, href: '/lore' },
               { icon: 'game-icons:spiked-dragon-head', label: 'Bestiário', count: stats.monsters, href: '/monsters' },
+              { icon: 'game-icons:sundial', label: 'Timeline', count: '6 eras', href: '/timeline' },
             ].map((cat) => (
               <Link
                 key={cat.label}
