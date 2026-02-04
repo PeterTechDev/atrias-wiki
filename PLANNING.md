@@ -328,3 +328,58 @@ atrias-wiki/
 ---
 
 *Last updated: 2026-02-03*
+
+---
+
+## 🤖 AI-First Architecture (2026-02-04)
+
+> Major architectural evolution: from traditional CMS to AI-native content pipeline.
+
+See full details in `docs/AI_FIRST_ARCHITECTURE.md`
+
+### Vision
+
+Replace form-based content entry with intelligent content processing:
+- Users dump content (text, audio, images, PDFs, character sheets)
+- Multi-agent pipeline processes and extracts entities
+- AI finds connections between entities automatically
+- Review UI for validation and clarification
+- One-click publish
+
+### Key Principles
+
+1. **Own the model** — self-hosted LLM, no per-token costs
+2. **Self-contained knowledge** — D&D books + Átrias content in vector DB
+3. **Multi-agent orchestration** — real production patterns
+4. **On-demand compute** — GPU costs only when running
+
+### Architecture Summary
+
+```
+CPU Host (Local/VPS)          GPU Host (RunPod)
+├── Next.js UI                ├── vLLM Server
+├── Postgres + pgvector       │   └── Qwen 2.5 72B
+├── Redis (queues)            └── Whisper (optional)
+└── Multi-Agent Orchestrator
+    ├── Ingestor Agent
+    ├── Extractor Agent
+    ├── Linker Agent
+    ├── Reviewer Agent
+    └── Publisher Agent
+```
+
+### Migration Path
+
+| Phase | Focus | Timeline |
+|-------|-------|----------|
+| 1 | Postgres + pgvector + embeddings | Week 1-2 |
+| 2 | GPU infrastructure (vLLM + Tailscale) | Week 3 |
+| 3 | Ingestor + Extractor agents | Week 4-5 |
+| 4 | Linker agent + dedup | Week 6 |
+| 5 | Reviewer agent + UI | Week 7 |
+| 6 | Publisher + polish | Week 8+ |
+
+### Coexistence Strategy
+
+Current Sanity-based wiki continues working while AI system is built.
+Once AI pipeline is stable, migrate to AI-native storage.
