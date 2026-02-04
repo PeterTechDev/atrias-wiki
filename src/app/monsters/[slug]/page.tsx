@@ -4,6 +4,7 @@
 
 import Link from 'next/link'
 import { Icon } from '@iconify/react'
+import MechanicsToggle from '@/components/MechanicsToggle'
 
 const monsters: Record<string, any> = {
   'djinns': {
@@ -29,6 +30,15 @@ const monsters: Record<string, any> = {
     ],
     lore: 'Amergin Ghalbath passou anos estudando com os Djinns durante sua jornada. Ele registrou que são criaturas de imenso poder, mas também de grande sabedoria. Segundo seus escritos, os Djinns veem o mundo mortal como efêmero demais para se preocupar, mas ocasionalmente encontram mortais dignos de sua atenção.',
     encounters: 'Encontros com Djinns são raros no mundo material. Quando ocorrem, geralmente envolvem magos poderosos tentando convocá-los ou viajantes acidentais nos Planos Elementais.',
+    // D&D mechanics (hidden by default)
+    stats: {
+      ac: '17 (armadura natural)',
+      hp: '161 (14d10 + 84)',
+      speed: '9m, voo 27m',
+      cr: '11 (7.200 XP)',
+    },
+    contributor: 'Dungeon Master',
+    lastUpdated: '2026-02-04',
   },
   'lobisomem-de-vellenor': {
     name: 'Lobisomem de Vellenor',
@@ -54,6 +64,14 @@ const monsters: Record<string, any> = {
     ],
     lore: 'A maldição da licantropia em Vellenor data de séculos, quando uma bruxa amaldiçoou um lorde cruel. A maldição se espalhou por suas terras, e até hoje as florestas de Vellenor são conhecidas por seus lobisomens.',
     encounters: 'Viajantes são aconselhados a evitar as florestas de Vellenor durante a lua cheia. Aqueles que devem passar são instruídos a carregar prata e acônito.',
+    stats: {
+      ac: '12 (forma híbrida)',
+      hp: '58 (9d8 + 18)',
+      speed: '12m (forma híbrida)',
+      cr: '3 (700 XP)',
+    },
+    contributor: 'Dungeon Master',
+    lastUpdated: '2026-02-04',
   },
   'golem-de-pedra': {
     name: 'Golem de Pedra',
@@ -78,6 +96,14 @@ const monsters: Record<string, any> = {
       'Destruir as runas de controle os desativa',
     ],
     lore: 'Golems de pedra eram comumente criados nas eras antigas para proteger tesouros e locais sagrados. Muitos ainda permanecem em ruínas esquecidas, aguardando visitantes indesejados.',
+    stats: {
+      ac: '17 (armadura natural)',
+      hp: '178 (17d10 + 85)',
+      speed: '9m',
+      cr: '10 (5.900 XP)',
+    },
+    contributor: 'Dungeon Master',
+    lastUpdated: '2026-02-04',
     encounters: 'Aventureiros frequentemente encontram golems em masmorras e ruínas. A chave é identificar e neutralizar suas runas de controle.',
   },
   'serpente-marinha': {
@@ -265,6 +291,32 @@ export default async function MonsterPage({ params }: PageProps) {
                 ))}
               </ul>
             </div>
+
+            {/* Stats Block (Hidden by default) */}
+            {monster.stats && (
+              <div className="bg-white/80 rounded-lg shadow-lg p-6">
+                <MechanicsToggle title="Ficha de Combate">
+                  <div className="grid grid-cols-2 gap-3 text-sm">
+                    <div>
+                      <span className="text-slate-500">CA:</span>
+                      <span className="ml-2 font-mono text-slate-800">{monster.stats.ac}</span>
+                    </div>
+                    <div>
+                      <span className="text-slate-500">PV:</span>
+                      <span className="ml-2 font-mono text-slate-800">{monster.stats.hp}</span>
+                    </div>
+                    <div>
+                      <span className="text-slate-500">Velocidade:</span>
+                      <span className="ml-2 font-mono text-slate-800">{monster.stats.speed}</span>
+                    </div>
+                    <div>
+                      <span className="text-slate-500">ND:</span>
+                      <span className="ml-2 font-mono text-slate-800">{monster.stats.cr}</span>
+                    </div>
+                  </div>
+                </MechanicsToggle>
+              </div>
+            )}
           </div>
         </div>
 

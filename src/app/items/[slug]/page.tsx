@@ -4,6 +4,7 @@
 
 import Link from 'next/link'
 import { Icon } from '@iconify/react'
+import MechanicsToggle from '@/components/MechanicsToggle'
 
 const items: Record<string, any> = {
   'espada-do-juramento': {
@@ -14,7 +15,14 @@ const items: Record<string, any> = {
     attunement: true,
     description: 'Uma lâmina sagrada empunhada pelos paladinos da Chama Branca, brilha com luz divina quando empunhada por um coração puro.',
     history: 'Forjada nos templos da Chama Branca durante a Era das Guerras Sagradas, esta espada foi abençoada por sete sumos sacerdotes em uma cerimônia que durou sete dias e sete noites.',
-    properties: [
+    // Lore-friendly descriptions (shown by default)
+    traits: [
+      'A lâmina é notavelmente mais afiada e resistente que uma espada comum',
+      'Emana uma luz dourada quando empunhada por um coração justo',
+      'Queima os mortos-vivos com chamas sagradas ao menor toque',
+    ],
+    // Mechanical properties (hidden behind toggle)
+    mechanics: [
       '+1 em jogadas de ataque e dano',
       'Emite luz brilhante em um raio de 3m quando empunhada',
       'Dano adicional de 1d6 radiante contra mortos-vivos',
@@ -33,7 +41,11 @@ const items: Record<string, any> = {
     attunement: false,
     description: 'Uma mochila feita de palha trançada e couro, usada pelos Carregadores para armazenar bolas durante a Contenda do Couro.',
     history: 'Item tradicional usado nos jogos da Contenda do Couro, uma competição esportiva popular em várias regiões de Átrias.',
-    properties: [
+    traits: [
+      'Feita com couro resistente e palha trançada, suporta uso intenso',
+      'Permite acesso rápido ao conteúdo durante jogos',
+    ],
+    mechanics: [
       'Pode carregar até 10 bolas de couro',
       'Acesso rápido para arremesso',
     ],
@@ -51,7 +63,11 @@ const items: Record<string, any> = {
     attunement: false,
     description: 'Estilingues usados pelos Baleiros para atacar oponentes e ânforas durante os jogos.',
     history: 'Ferramentas simples mas eficazes, as fundas são parte integral da Contenda do Couro.',
-    properties: [
+    traits: [
+      'Simples de usar, mas requer prática para dominar',
+      'Capaz de acertar alvos a distâncias consideráveis',
+    ],
+    mechanics: [
       'Alcance: 9/36m',
       'Dano: 1d4 contundente',
     ],
@@ -69,13 +85,20 @@ const items: Record<string, any> = {
     attunement: true,
     description: 'Um amuleto antigo que permite ao portador sentir as correntes elementais do mundo.',
     history: 'Criado pelo próprio Amergin Ghalbath durante sua jornada pelos planos elementais, este amuleto contém fragmentos de cada plano que ele visitou.',
-    properties: [
+    traits: [
+      'Protege seu portador contra os elementos naturais',
+      'Pulsa quando criaturas elementais estão próximas',
+      'Permite invocar uma barreira protetora contra energia',
+    ],
+    mechanics: [
       'Resistência a dano elemental (fogo, gelo, raio, ácido)',
       'Pode detectar criaturas elementais em 18m',
       'Uma vez por dia, pode conjurar Proteção contra Energia',
     ],
     lore: 'O amuleto pulsa com energia elemental, mudando sutilmente de cor conforme as correntes mágicas do ambiente. Dizem que seu verdadeiro poder só é revelado a quem completa a mesma jornada espiritual de Ghalbath.',
     location: 'Guardado pela Ordem de Ghalbath',
+    contributor: 'Dungeon Master',
+    lastUpdated: '2026-02-04',
     previousOwners: ['Amergin Ghalbath'],
   },
 }
@@ -166,21 +189,37 @@ export default async function ItemPage({ params }: PageProps) {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Properties */}
-            <section className="bg-white/80 rounded-lg shadow-lg p-6">
-              <h2 className="font-cinzel text-2xl text-slate-800 mb-4 flex items-center gap-2">
-                <Icon icon="game-icons:gear-hammer" className="w-6 h-6 text-amber-700" />
-                Propriedades
-              </h2>
-              <ul className="space-y-2">
-                {item.properties.map((p: string, i: number) => (
-                  <li key={i} className="flex items-start gap-2 text-slate-700">
-                    <Icon icon="game-icons:check-mark" className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-                    <span className="font-crimson">{p}</span>
-                  </li>
-                ))}
-              </ul>
-            </section>
+            {/* Traits (Lore-friendly) */}
+            {item.traits && (
+              <section className="bg-white/80 rounded-lg shadow-lg p-6">
+                <h2 className="font-cinzel text-2xl text-slate-800 mb-4 flex items-center gap-2">
+                  <Icon icon="game-icons:sparkles" className="w-6 h-6 text-amber-700" />
+                  Características
+                </h2>
+                <ul className="space-y-2">
+                  {item.traits.map((t: string, i: number) => (
+                    <li key={i} className="flex items-start gap-2 text-slate-700">
+                      <Icon icon="game-icons:check-mark" className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+                      <span className="font-crimson">{t}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                {/* Mechanics Toggle */}
+                {item.mechanics && (
+                  <MechanicsToggle>
+                    <ul className="space-y-2">
+                      {item.mechanics.map((m: string, i: number) => (
+                        <li key={i} className="flex items-start gap-2 text-slate-700 text-sm">
+                          <Icon icon="game-icons:dice-six-faces-six" className="w-4 h-4 text-slate-500 flex-shrink-0 mt-0.5" />
+                          <span className="font-mono">{m}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </MechanicsToggle>
+                )}
+              </section>
+            )}
 
             {/* History */}
             <section className="bg-white/80 rounded-lg shadow-lg p-6">
