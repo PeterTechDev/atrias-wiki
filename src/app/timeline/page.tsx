@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react'
 import Link from 'next/link'
+import { Icon } from '@iconify/react'
 
 // Timeline data - events organized by era
 const timelineData = {
@@ -14,7 +15,7 @@ const timelineData = {
       color: '#6366F1',
       gradient: 'from-indigo-950 via-slate-950 to-purple-950',
       bgStyle: 'cosmic',
-      icon: '🌌',
+      icon: 'game-icons:galaxy',
       ambient: 'Deep cosmic void, stars being born',
     },
     {
@@ -25,7 +26,7 @@ const timelineData = {
       color: '#FFD700',
       gradient: 'from-amber-950 via-yellow-950 to-orange-950',
       bgStyle: 'golden',
-      icon: '☀️',
+      icon: 'game-icons:sunrise',
       ambient: 'Golden light, divine creation',
     },
     {
@@ -36,7 +37,7 @@ const timelineData = {
       color: '#9B59B6',
       gradient: 'from-purple-950 via-violet-950 to-fuchsia-950',
       bgStyle: 'magical',
-      icon: '✨',
+      icon: 'game-icons:magic-swirl',
       ambient: 'Magical runes, arcane energy',
     },
     {
@@ -47,7 +48,7 @@ const timelineData = {
       color: '#E74C3C',
       gradient: 'from-red-950 via-orange-950 to-red-900',
       bgStyle: 'destruction',
-      icon: '💥',
+      icon: 'game-icons:broken-skull',
       ambient: 'Fire, chaos, world ending',
     },
     {
@@ -58,7 +59,7 @@ const timelineData = {
       color: '#2C3E50',
       gradient: 'from-slate-950 via-gray-950 to-zinc-950',
       bgStyle: 'dark',
-      icon: '🌑',
+      icon: 'game-icons:eclipse',
       ambient: 'Ash, despair, survival',
     },
     {
@@ -69,7 +70,7 @@ const timelineData = {
       color: '#27AE60',
       gradient: 'from-emerald-950 via-green-950 to-teal-950',
       bgStyle: 'hope',
-      icon: '🌱',
+      icon: 'game-icons:sprouting',
       ambient: 'New growth, rebuilding',
     },
     {
@@ -80,7 +81,7 @@ const timelineData = {
       color: '#D4A574',
       gradient: 'from-amber-900/50 via-stone-900 to-amber-950',
       bgStyle: 'parchment',
-      icon: '⚔️',
+      icon: 'game-icons:crossed-swords',
       ambient: 'Adventure, destiny awaits',
     },
   ],
@@ -375,19 +376,19 @@ const timelineData = {
 }
 
 const categoryConfig: Record<string, { icon: string; label: string; color: string }> = {
-  divine: { icon: '⚡', label: 'Divino', color: '#FFD700' },
-  race: { icon: '👥', label: 'Raças', color: '#9B59B6' },
-  magic: { icon: '🔮', label: 'Magia', color: '#3498DB' },
-  faction: { icon: '🏛️', label: 'Facções', color: '#27AE60' },
-  civilization: { icon: '🏰', label: 'Civilização', color: '#E67E22' },
-  cataclysm: { icon: '💀', label: 'Cataclismos', color: '#E74C3C' },
-  curse: { icon: '☠️', label: 'Maldições', color: '#8E44AD' },
-  character: { icon: '👤', label: 'Personagens', color: '#1ABC9C' },
-  religion: { icon: '🕯️', label: 'Religião', color: '#F39C12' },
-  culture: { icon: '🎭', label: 'Cultura', color: '#E91E63' },
-  campaign: { icon: '📜', label: 'Campanhas', color: '#00BCD4' },
-  threat: { icon: '⚠️', label: 'Ameaças', color: '#FF5722' },
-  politics: { icon: '👑', label: 'Política', color: '#9C27B0' },
+  divine: { icon: 'game-icons:angel-wings', label: 'Divino', color: '#FFD700' },
+  race: { icon: 'game-icons:three-friends', label: 'Raças', color: '#9B59B6' },
+  magic: { icon: 'game-icons:crystal-ball', label: 'Magia', color: '#3498DB' },
+  faction: { icon: 'game-icons:rally-the-troops', label: 'Facções', color: '#27AE60' },
+  civilization: { icon: 'game-icons:castle', label: 'Civilização', color: '#E67E22' },
+  cataclysm: { icon: 'game-icons:skull-crack', label: 'Cataclismos', color: '#E74C3C' },
+  curse: { icon: 'game-icons:death-note', label: 'Maldições', color: '#8E44AD' },
+  character: { icon: 'game-icons:cowled', label: 'Personagens', color: '#1ABC9C' },
+  religion: { icon: 'game-icons:prayer', label: 'Religião', color: '#F39C12' },
+  culture: { icon: 'game-icons:theater', label: 'Cultura', color: '#E91E63' },
+  campaign: { icon: 'game-icons:scroll-unfurled', label: 'Campanhas', color: '#00BCD4' },
+  threat: { icon: 'game-icons:burning-skull', label: 'Ameaças', color: '#FF5722' },
+  politics: { icon: 'game-icons:throne-king', label: 'Política', color: '#9C27B0' },
 }
 
 // Parallax background components for each era style
@@ -762,7 +763,7 @@ export default function TimelinePage() {
                       backgroundColor: selectedEra === era.id ? era.color : undefined,
                     }}
                   >
-                    <span>{era.icon}</span>
+                    <Icon icon={era.icon} className="w-5 h-5" />
                     {era.name}
                   </button>
                 ))}
@@ -793,7 +794,7 @@ export default function TimelinePage() {
                         borderColor: isSelected ? config.color : undefined,
                       }}
                     >
-                      <span>{config.icon}</span>
+                      <Icon icon={config.icon} className="w-4 h-4" />
                       {config.label}
                     </button>
                   )
@@ -821,7 +822,7 @@ export default function TimelinePage() {
                       boxShadow: `0 0 60px ${era.color}20`,
                     }}
                   >
-                    <span className="text-4xl">{era.icon}</span>
+                    <Icon icon={era.icon} className="w-10 h-10" style={{ color: era.color }} />
                     <div>
                       <h2
                         className="font-cinzel text-2xl font-bold"
@@ -908,7 +909,7 @@ export default function TimelinePage() {
                                     color: catConfig.color,
                                   }}
                                 >
-                                  {catConfig.icon} {catConfig.label}
+                                  <Icon icon={catConfig.icon} className="w-3 h-3 inline" /> {catConfig.label}
                                 </span>
                                 {event.importance === 'legendary' && (
                                   <span className="text-xs px-2 py-0.5 rounded bg-amber-500 text-slate-950 font-bold">
@@ -962,7 +963,7 @@ export default function TimelinePage() {
                                               className="text-xs px-2 py-1 bg-purple-500/20 text-purple-300 rounded hover:bg-purple-500/30 transition-colors"
                                               onClick={(e) => e.stopPropagation()}
                                             >
-                                              👤 {char}
+                                              <Icon icon="game-icons:cowled" className="w-3 h-3 inline mr-1" />{char}
                                             </Link>
                                           ))}
                                         </div>
@@ -981,7 +982,7 @@ export default function TimelinePage() {
                                               className="text-xs px-2 py-1 bg-emerald-500/20 text-emerald-300 rounded hover:bg-emerald-500/30 transition-colors"
                                               onClick={(e) => e.stopPropagation()}
                                             >
-                                              🏰 {place}
+                                              <Icon icon="game-icons:castle" className="w-3 h-3 inline mr-1" />{place}
                                             </Link>
                                           ))}
                                         </div>
@@ -1000,7 +1001,7 @@ export default function TimelinePage() {
                                               className="text-xs px-2 py-1 bg-amber-500/20 text-amber-300 rounded hover:bg-amber-500/30 transition-colors"
                                               onClick={(e) => e.stopPropagation()}
                                             >
-                                              🏛️ {faction}
+                                              <Icon icon="game-icons:rally-the-troops" className="w-3 h-3 inline mr-1" />{faction}
                                             </Link>
                                           ))}
                                         </div>
