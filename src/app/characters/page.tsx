@@ -19,6 +19,7 @@ const characters = [
     class: 'Paladino',
     status: 'Vivo',
     faction: 'Ordem da Chama Branca',
+    portrait: '/images/characters/idris-portrait.jpg',
     description: 'Um paladino veterano que carrega o peso de fracassos passados, mas continua a servir sua comunidade com honra inabalável.',
   },
   // Add more characters here as they are created
@@ -83,6 +84,21 @@ export default function CharactersPage() {
                 href={`/characters/${char.slug}`}
                 className="group bg-white/80 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all hover:-translate-y-1"
               >
+                {/* Portrait Image */}
+                {char.portrait ? (
+                  <div className="h-48 overflow-hidden">
+                    <img 
+                      src={`${basePath}${char.portrait}`}
+                      alt={char.name}
+                      className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                ) : (
+                  <div className="h-48 bg-gradient-to-br from-slate-700 to-slate-800 flex items-center justify-center">
+                    <Icon icon="game-icons:cowled" className="w-20 h-20 text-slate-600" />
+                  </div>
+                )}
+
                 {/* Card Header */}
                 <div className="bg-[#0a1628] p-4">
                   <div className="flex items-center justify-between mb-2">

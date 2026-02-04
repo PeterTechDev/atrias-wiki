@@ -21,6 +21,8 @@ const characters: Record<string, any> = {
     alignment: 'Leal e Bom',
     origin: 'Abrigo de Solaria, Colinas do Serpeio',
     faction: 'Ordem da Chama Branca',
+    portrait: '/images/characters/idris-portrait.jpg',
+    fullImage: '/images/characters/idris-full.jpg',
     description: 'Um paladino veterano que carrega o peso de fracassos passados, mas continua a servir sua comunidade com honra inabalável.',
     quote: '"Mesmo sob a nuvem de seus fracassos passados, Idris continuou a servir Solaria com um sorriso."',
     backstory: `Idris Rucandel foi um filho do Abrigo de Solaria, nascido sob o manto de uma família humilde. Os ecos da vida passada ainda se encontravam nas paredes cinzentas do castelo que dominava a paisagem da pequena vila nas Colinas do Serpeio. Solaria era um lugar amistoso, onde até os de sangue exótico encontravam abrigo.
@@ -216,6 +218,28 @@ export default async function CharacterPage({ params }: PageProps) {
 
           {/* Sidebar */}
           <div className="lg:col-span-1">
+            {/* Portrait */}
+            {character.portrait && (
+              <div className="mb-6 rounded-lg overflow-hidden shadow-xl">
+                <img 
+                  src={`${basePath}${character.portrait}`}
+                  alt={character.name}
+                  className="w-full h-auto object-cover"
+                />
+              </div>
+            )}
+
+            {/* Full Image (if different from portrait) */}
+            {character.fullImage && character.fullImage !== character.portrait && (
+              <div className="mb-6 rounded-lg overflow-hidden shadow-xl">
+                <img 
+                  src={`${basePath}${character.fullImage}`}
+                  alt={`${character.name} - Corpo completo`}
+                  className="w-full h-auto object-cover"
+                />
+              </div>
+            )}
+
             {/* Character Info Card */}
             <div className="bg-[#0a1628] text-white rounded-lg p-6 mb-6 sticky top-6">
               <h3 className="font-cinzel text-amber-400 text-lg mb-4 uppercase tracking-wider">
