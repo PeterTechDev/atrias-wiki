@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef, useCallback } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import Link from 'next/link'
 import { Icon } from '@iconify/react'
 
@@ -558,7 +558,7 @@ function ParchmentBackground() {
   )
 }
 
-const backgrounds: Record<string, () => JSX.Element> = {
+const backgrounds: Record<string, React.FC> = {
   cosmic: CosmicBackground,
   golden: GoldenBackground,
   magical: MagicalBackground,
@@ -886,7 +886,7 @@ export default function TimelinePage() {
                             } ${isWitnessing ? 'ring-4' : ''}`}
                             style={{
                               borderColor: `${era.color}50`,
-                              ringColor: era.color,
+                              ['--tw-ring-color' as string]: era.color,
                             }}
                           >
                             {/* Card Header */}
