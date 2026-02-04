@@ -49,6 +49,7 @@ export default function MapPage() {
   const mapRef = useRef<any>(null)
   const [selectedLocation, setSelectedLocation] = useState<typeof locations[0] | null>(null)
   const [isLoading, setIsLoading] = useState(true)
+  const [showMobileLocations, setShowMobileLocations] = useState(false)
 
   useEffect(() => {
     if (!mapContainer.current || mapRef.current) return
@@ -272,6 +273,70 @@ export default function MapPage() {
               <Icon icon="game-icons:expand" className="w-5 h-5" />
             </button>
           </div>
+
+          {/* Mobile Locations Button */}
+          <button
+            onClick={() => setShowMobileLocations(true)}
+            className="lg:hidden absolute top-4 left-4 px-4 py-2 bg-[#0d1f35]/90 border border-amber-900/50 rounded-lg flex items-center gap-2 text-amber-400 hover:bg-amber-600/20 transition-colors z-10"
+          >
+            <Icon icon="game-icons:compass" className="w-5 h-5" />
+            <span className="text-sm font-medium">Locais</span>
+          </button>
+
+          {/* Mobile Locations Panel */}
+          {showMobileLocations && (
+            <div className="lg:hidden fixed inset-0 z-50 flex flex-col">
+              {/* Backdrop */}
+              <div 
+                className="absolute inset-0 bg-black/60"
+                onClick={() => setShowMobileLocations(false)}
+              />
+              
+              {/* Panel */}
+              <div className="absolute bottom-0 left-0 right-0 bg-[#0d1f35] border-t border-amber-900/50 rounded-t-2xl max-h-[70vh] overflow-hidden flex flex-col">
+                {/* Handle */}
+                <div className="flex justify-center py-2">
+                  <div className="w-12 h-1 bg-amber-900/50 rounded-full" />
+                </div>
+                
+                {/* Header */}
+                <div className="flex items-center justify-between px-4 pb-3 border-b border-amber-900/30">
+                  <h2 className="font-cinzel text-amber-400 text-lg">Locais Conhecidos</h2>
+                  <button 
+                    onClick={() => setShowMobileLocations(false)}
+                    className="text-slate-400 hover:text-white p-1"
+                  >
+                    <Icon icon="game-icons:cross-mark" className="w-6 h-6" />
+                  </button>
+                </div>
+                
+                {/* Locations List */}
+                <div className="flex-1 overflow-y-auto p-4 space-y-2">
+                  {locations.map((loc) => (
+                    <button
+                      key={loc.name}
+                      onClick={() => {
+                        flyToLocation(loc)
+                        setShowMobileLocations(false)
+                      }}
+                      className="w-full text-left p-4 rounded-lg bg-slate-800/50 hover:bg-slate-700/50 border border-transparent active:border-amber-600/40 transition-colors"
+                    >
+                      <div className="flex items-center gap-3">
+                        <Icon 
+                          icon={loc.type === 'Vila' ? 'game-icons:village' : loc.type === 'Porto' ? 'game-icons:anchor' : 'game-icons:castle'} 
+                          className="w-6 h-6 text-amber-500" 
+                        />
+                        <div>
+                          <span className="text-white font-medium block">{loc.name}</span>
+                          <span className="text-slate-400 text-sm">{loc.type} • {loc.description}</span>
+                        </div>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
