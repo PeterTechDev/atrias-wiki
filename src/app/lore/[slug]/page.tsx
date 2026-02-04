@@ -238,6 +238,20 @@ export default async function LorePage({ params }: PageProps) {
             </div>
           </div>
         </div>
+
+        {/* Contributor Attribution */}
+        <div className="mt-8 pt-6 border-t border-amber-300/50 flex items-center justify-between text-sm">
+          <div className="flex items-center gap-2 text-slate-500">
+            <Icon icon="game-icons:quill-ink" className="w-4 h-4" />
+            <span>Adicionado por:</span>
+            <span className="text-slate-700 font-medium">{lore.contributor || 'Dungeon Master'}</span>
+          </div>
+          {lore.lastUpdated && (
+            <div className="text-slate-500">
+              Atualizado em: {lore.lastUpdated}
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Footer */}

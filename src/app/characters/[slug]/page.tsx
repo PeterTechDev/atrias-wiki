@@ -5,6 +5,7 @@
 
 import Link from 'next/link'
 import { Icon } from '@iconify/react'
+import DetailsToggle from '@/components/DetailsToggle'
 
 // Base path for assets
 const basePath = process.env.NODE_ENV === 'production' ? '/atrias-wiki' : ''
@@ -52,6 +53,8 @@ Uma sombra de dúvida pairava sobre ele — ele fracassou em acender a chama pra
     ],
     traits: ['Honra Inabalável', 'Protetor', 'Carrega Culpa', 'Veterano', 'Líder Natural'],
     abilities: ['Combate Corpo a Corpo', 'Liderança', 'Fé Abalada', 'Experiência de Guerra'],
+    contributor: 'Dungeon Master',
+    lastUpdated: '2026-02-04',
   },
 }
 
@@ -133,31 +136,18 @@ export default async function CharacterPage({ params }: PageProps) {
                 {character.title}
               </p>
 
-              {/* Quick Stats */}
-              <div className="flex flex-wrap gap-4 mb-6 text-sm">
-                <div className="flex items-center gap-2">
-                  <Icon icon="game-icons:person" className="w-4 h-4 text-amber-700" />
-                  <span className="text-slate-600">Raça:</span>
-                  <span className="text-slate-800 font-medium">{character.race}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Icon icon="game-icons:ages" className="w-4 h-4 text-amber-700" />
-                  <span className="text-slate-600">Idade:</span>
-                  <span className="text-slate-800 font-medium">{character.age}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Icon icon="game-icons:health-normal" className="w-4 h-4 text-amber-700" />
-                  <span className="text-slate-600">Status:</span>
-                  <span className={`font-medium ${character.status === 'Vivo' ? 'text-green-700' : 'text-red-700'}`}>
-                    {character.status}
-                  </span>
-                </div>
-              </div>
-
               {/* Description */}
-              <p className="text-slate-700 font-crimson text-lg leading-relaxed">
+              <p className="text-slate-700 font-crimson text-lg leading-relaxed mb-4">
                 {character.description}
               </p>
+
+              {/* Quick Stats Toggle */}
+              <DetailsToggle items={[
+                { icon: 'game-icons:person', label: 'Raça', value: character.race },
+                { icon: 'game-icons:ages', label: 'Idade', value: character.age },
+                { icon: 'game-icons:health-normal', label: 'Status', value: character.status, color: character.status === 'Vivo' ? 'text-green-700' : 'text-red-700' },
+                { icon: 'game-icons:compass', label: 'Alinhamento', value: character.alignment },
+              ]} />
             </div>
 
             {/* Quote */}
@@ -308,6 +298,20 @@ export default async function CharacterPage({ params }: PageProps) {
               </ul>
             </div>
           </div>
+        </div>
+
+        {/* Contributor Attribution */}
+        <div className="mt-8 pt-6 border-t border-amber-300/50 flex items-center justify-between text-sm">
+          <div className="flex items-center gap-2 text-slate-500">
+            <Icon icon="game-icons:quill-ink" className="w-4 h-4" />
+            <span>Adicionado por:</span>
+            <span className="text-slate-700 font-medium">{character.contributor}</span>
+          </div>
+          {character.lastUpdated && (
+            <div className="text-slate-500">
+              Atualizado em: {character.lastUpdated}
+            </div>
+          )}
         </div>
       </div>
 

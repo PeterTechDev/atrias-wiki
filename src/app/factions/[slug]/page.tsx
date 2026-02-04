@@ -3,6 +3,7 @@
  */
 
 import Link from 'next/link'
+import DetailsToggle from '@/components/DetailsToggle'
 import { Icon } from '@iconify/react'
 
 const factions: Record<string, any> = {
@@ -27,6 +28,8 @@ const factions: Record<string, any> = {
       { name: 'Idris Rucandel', role: 'Paladino' },
     ],
     headquarters: 'Diversas capelas e templos por Nerania',
+    contributor: 'Dungeon Master',
+    lastUpdated: '2026-02-04',
     history: 'A Chama Branca é uma das fés mais antigas de Átrias, dedicada a manter a ordem e promover a justiça. Seus seguidores acreditam que a verdade é a maior arma contra a corrupção e que cada ato de justiça fortalece a luz no mundo.',
   },
   'alta-arcanas': {
@@ -42,6 +45,8 @@ const factions: Record<string, any> = {
     ],
     members: [],
     headquarters: 'Torres Arcanas em várias cidades',
+    contributor: 'Dungeon Master',
+    lastUpdated: '2026-02-04',
     history: 'Após a Grande Destruição, Khay\'zam fundou a Alta\'Arcanas para garantir que a magia nunca mais causasse tamanha devastação. A organização monitora o uso de magia e treina novos magos dentro de diretrizes rígidas.',
   },
   'cacadores-de-sangue': {
@@ -57,6 +62,8 @@ const factions: Record<string, any> = {
     ],
     members: [],
     headquarters: 'Fortaleza em local secreto',
+    contributor: 'Dungeon Master',
+    lastUpdated: '2026-02-04',
     history: 'Os Caçadores de Sangue são o braço armado da Alta\'Arcanas. Treinados desde jovens para resistir e combater magia, eles são temidos por magos renegados em todo o continente.',
   },
   'ordem-de-ghalbath': {
@@ -72,6 +79,8 @@ const factions: Record<string, any> = {
     ],
     members: [],
     headquarters: 'Monastério nas Montanhas',
+    contributor: 'Dungeon Master',
+    lastUpdated: '2026-02-04',
     history: 'Fundada pelos discípulos de Amergin Ghalbath após sua jornada pelos planos elementais, a ordem preserva seus ensinamentos sobre a natureza fundamental da realidade.',
   },
 }
@@ -239,6 +248,20 @@ export default async function FactionPage({ params }: PageProps) {
               </div>
             )}
           </div>
+        </div>
+
+        {/* Contributor Attribution */}
+        <div className="mt-8 pt-6 border-t border-amber-300/50 flex items-center justify-between text-sm">
+          <div className="flex items-center gap-2 text-slate-500">
+            <Icon icon="game-icons:quill-ink" className="w-4 h-4" />
+            <span>Adicionado por:</span>
+            <span className="text-slate-700 font-medium">{faction.contributor || 'Dungeon Master'}</span>
+          </div>
+          {faction.lastUpdated && (
+            <div className="text-slate-500">
+              Atualizado em: {faction.lastUpdated}
+            </div>
+          )}
         </div>
       </div>
 

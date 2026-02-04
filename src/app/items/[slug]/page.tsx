@@ -21,6 +21,8 @@ const items: Record<string, any> = {
     ],
     lore: 'Diz a lenda que apenas aqueles verdadeiramente dedicados à justiça podem despertar todo o poder desta lâmina. Muitos a empunharam, mas poucos viram sua luz verdadeira.',
     location: 'Desconhecido - última vez vista em Solaria',
+    contributor: 'Dungeon Master',
+    lastUpdated: '2026-02-04',
     previousOwners: ['Cavaleiro Vaelor', 'Ordem do Cálice'],
   },
   'godsack': {
@@ -37,6 +39,8 @@ const items: Record<string, any> = {
     ],
     lore: 'O nome curioso vem de uma antiga expressão local que significa "bolsa sagrada do jogo".',
     location: 'Comum em cidades que praticam a Contenda',
+    contributor: 'Dungeon Master',
+    lastUpdated: '2026-02-04',
     previousOwners: [],
   },
   'fundas': {
@@ -53,6 +57,8 @@ const items: Record<string, any> = {
     ],
     lore: 'Os melhores Baleiros são conhecidos por sua precisão impressionante, capazes de acertar ânforas em movimento a grandes distâncias.',
     location: 'Comum em toda Átrias',
+    contributor: 'Dungeon Master',
+    lastUpdated: '2026-02-04',
     previousOwners: [],
   },
   'amuleto-de-ghalbath': {
@@ -223,6 +229,20 @@ export default async function ItemPage({ params }: PageProps) {
               </dl>
             </div>
           </div>
+        </div>
+
+        {/* Contributor Attribution */}
+        <div className="mt-8 pt-6 border-t border-amber-300/50 flex items-center justify-between text-sm">
+          <div className="flex items-center gap-2 text-slate-500">
+            <Icon icon="game-icons:quill-ink" className="w-4 h-4" />
+            <span>Adicionado por:</span>
+            <span className="text-slate-700 font-medium">{item.contributor || 'Dungeon Master'}</span>
+          </div>
+          {item.lastUpdated && (
+            <div className="text-slate-500">
+              Atualizado em: {item.lastUpdated}
+            </div>
+          )}
         </div>
       </div>
 
