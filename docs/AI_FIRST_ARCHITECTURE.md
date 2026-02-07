@@ -11,6 +11,37 @@ Replace traditional CMS forms with an AI-native content pipeline:
 - AI asks clarifying questions if needed
 - User reviews and publishes
 
+---
+
+## Content Input Modes
+
+Users can add content in two ways:
+
+### 1. Traditional Forms (Manual)
+Standard wiki editing — fill in fields, upload images, link entities manually.
+Good for precise control or quick edits.
+
+### 2. ✨ Pena Mágica (Magic Quill)
+AI-powered content input inspired by the Order of Scribes wizard ability.
+
+> *"A Pena Mágica dança sobre o pergaminho, transformando pensamentos caóticos em conhecimento estruturado..."*
+
+- Dump raw notes, voice memos, images, PDFs
+- AI extracts entities, suggests connections
+- Review and approve before publishing
+- Perfect for session recaps, worldbuilding dumps, character backstories
+
+**UX Flow:**
+```
+[Choose Input Type]
+     │
+     ├─→ 📝 Traditional Form
+     │      └─→ Fill fields → Save
+     │
+     └─→ ✨ Pena Mágica
+            └─→ Dump content → AI processes → Review → Publish
+```
+
 ## Core Principles
 
 1. **Own the model** — no per-token costs, control what runs
@@ -471,11 +502,125 @@ tailscale up
 
 ### Cost Estimates
 
-| Usage Pattern | Monthly Cost |
-|---------------|--------------|
-| 2 hrs/day development | ~$25-40 |
-| 4 hrs/day active | ~$50-80 |
-| 8 hrs/day heavy | ~$100-160 |
+#### GPU Hourly Rates (RunPod)
+
+| GPU | VRAM | Best For | $/hr |
+|-----|------|----------|------|
+| RTX 4090 | 24GB | 7B-32B models | $0.44 |
+| RTX A6000 | 48GB | Up to 70B (quantized) | $0.79 |
+| A100 80GB | 80GB | 70B+ full precision | $1.49 |
+
+**Recommendation:** Start with RTX 4090 + Qwen 2.5 32B or Llama 3.1 8B. Upgrade if needed.
+
+#### Phase-Based Cost Projection
+
+**Phase 1: Initial Content Load (Weeks 1-4)**
+- 315+ files to process
+- Heavy testing and prompt iteration
+- Estimated: 4-6 hrs/day on weekends, 1-2 hrs/day weekdays
+
+| Week | Hours | Cost (4090) |
+|------|-------|-------------|
+| 1 | 20 | $9 |
+| 2 | 25 | $11 |
+| 3 | 20 | $9 |
+| 4 | 15 | $7 |
+| **Total** | **80 hrs** | **~$36** |
+
+**Phase 2: Active Development (Months 2-3)**
+- Tuning agents, fixing edge cases
+- Adding missed content
+- Estimated: 2-3 hrs/day when working on it
+
+| Month | Hours | Cost (4090) |
+|-------|-------|-------------|
+| Month 2 | 50 | $22 |
+| Month 3 | 40 | $18 |
+
+**Phase 3: Maintenance (Ongoing)**
+- Occasional new content
+- Session log processing after D&D nights
+- Estimated: 2-4 hrs/week
+
+| Pattern | Monthly Hours | Cost (4090) |
+|---------|---------------|-------------|
+| Light (1 session/week) | 4-8 | $2-4 |
+| Normal (after each D&D) | 8-12 | $4-6 |
+| Heavy (active worldbuilding) | 20-30 | $9-14 |
+
+#### Total First-Year Estimate
+
+| Phase | Duration | Cost |
+|-------|----------|------|
+| Initial Load | 1 month | ~$40 |
+| Development | 2 months | ~$40 |
+| Maintenance | 9 months | ~$45 |
+| **Year 1 Total** | | **~$125** |
+
+Compare to API costs: Processing 315 files with GPT-4o would cost ~$50-100 just for initial extraction, plus ongoing costs for every interaction.
+
+---
+
+### On-Demand Architecture Pattern
+
+**Key Principle:** GPU costs money only when running. Design for cold starts.
+
+```
+USER ACTION                    GPU STATE
+────────────────────────────────────────────
+Browsing wiki                  OFF (Postgres serves reads)
+Adding new content             STARTING (~30s cold start)
+Processing pipeline            RUNNING (pay per second)
+Pipeline complete              STOPPING (auto after idle)
+Back to browsing               OFF
+```
+
+**Implementation:**
+
+1. **RunPod Serverless** (Recommended)
+   - Zero cost when idle
+   - ~30s cold start
+   - Auto-scales based on queue
+   - Perfect for batch processing
+
+2. **Spot Instances** (Alternative)
+   - Even cheaper (~50% discount)
+   - Can be interrupted
+   - Good for non-urgent batch jobs
+
+3. **Pod with Auto-Stop**
+   - Start manually or via API
+   - Auto-stop after X minutes idle
+   - Predictable availability
+
+**Wake-on-Demand Flow:**
+
+```typescript
+async function processContent(input: ContentInput) {
+  // 1. Queue the job locally
+  await db.insertJob({ status: 'pending', input });
+  
+  // 2. Wake GPU if not running
+  const gpuStatus = await runpod.getStatus();
+  if (gpuStatus === 'stopped') {
+    await runpod.start();
+    await waitForHealthy(); // ~30s
+  }
+  
+  // 3. Process
+  const result = await callPipeline(input);
+  
+  // 4. GPU auto-stops after idle timeout
+  return result;
+}
+```
+
+**Cost Optimization Tips:**
+
+1. **Batch content** — Don't process one file at a time. Collect content, process in batches
+2. **Smaller models first** — Start with 8B for testing, 32B for production
+3. **Local embeddings** — Use CPU-based embedding model (e5-small) for vectors
+4. **Cache aggressively** — Store extracted entities, don't re-extract
 
 ---
 

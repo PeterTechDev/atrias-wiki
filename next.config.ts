@@ -1,9 +1,14 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Using Vercel SSR - no static export needed
+  // Vercel SSR deployment - images optimized
   images: {
-    unoptimized: true, // Keep for now, can enable optimization later
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'cdn.sanity.io',
+      },
+    ],
   },
 };
 
