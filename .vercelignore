@@ -1,0 +1,20 @@
+# Build artifacts
+.next/
+out/
+
+# Content inbox (source files, not needed for deployment)
+content-inbox/
+
+# Import outputs (processed data)
+import-output/
+poc-output/
+
+# Large files
+*.zip
+*.pdf
+
+# Local env
+.env.local
+
+# Docs (not needed for deployment)
+docs/
