@@ -14,71 +14,30 @@ import { Icon } from '@iconify/react'
 // Leaflet uses [lat,lng]=[y,x] with y flipped (imageHeight - y)
 const IMAGE_HEIGHT = 7842
 
+type LocationCategory = 'local' | 'reino'
+
 const locations = [
-  { 
-    name: 'Abrigo de Solária', 
-    coords: [2150, 4050],
-    type: 'Vila',
-    link: '/places/abrigo-de-solaria',
-    description: 'Uma vila acolhedora nas Colinas do Serpeio',
-    region: 'Solária',
-  },
-  { 
-    name: 'Vigília de Akos', 
-    coords: [3550, 2450],
-    type: 'Cidade',
-    link: '/places/vigilia-de-akos',
-    description: 'Cidade às portas da Mortalha Negra',
-    region: 'Solária',
-  },
-  { 
-    name: 'Pengram', 
-    coords: [1550, 5050],
-    type: 'Cidade',
-    link: null,
-    description: 'Cidade ao sul, além das Colinas do Serpeio',
-    region: 'Solária',
-  },
-  { 
-    name: 'A Mortalha', 
-    coords: [3700, 3500],
-    type: 'Floresta',
-    link: '/places/mortalha',
-    description: 'Floresta da Mortalha Negra — densa, perigosa e cheia de mistérios',
-    region: 'Solária',
-  },
-  { 
-    name: 'Portão do Vale', 
-    coords: [4200, 4650],
-    type: 'Fortaleza',
-    link: null,
-    description: 'Passagem fortificada ao sul da Mortalha',
-    region: 'Solária',
-  },
-  { 
-    name: 'Forte da Aliança', 
-    coords: [3400, 5300],
-    type: 'Fortaleza',
-    link: null,
-    description: 'Forte estratégico ao sul, guardião das rotas comerciais',
-    region: 'Solária',
-  },
-  { 
-    name: 'Valtriunfo', 
-    coords: [1900, 2350],
-    type: 'Cidade',
-    link: null,
-    description: 'Cidade ao norte, próxima à Grande Fonte de Aurun',
-    region: 'Solária',
-  },
-  { 
-    name: 'Grande Fonte de Aurun', 
-    coords: [1650, 2050],
-    type: 'Landmark',
-    link: null,
-    description: 'Nascente sagrada ao norte de Valtriunfo',
-    region: 'Solária',
-  },
+  // Key locations (Solária region)
+  { name: 'Abrigo de Solária', coords: [2426, 4851], type: 'Vila', link: '/places/abrigo-de-solaria', description: 'Uma vila acolhedora nas Colinas do Serpeio', category: 'local' as LocationCategory },
+  { name: 'Vigília de Akos', coords: [2812, 4630], type: 'Cidade', link: '/places/vigilia-de-akos', description: 'Cidade às portas da Mortalha Negra', category: 'local' as LocationCategory },
+  { name: 'Pengram', coords: [2334, 5008], type: 'Cidade', link: null, description: 'Cidade ao sul, além das Colinas do Serpeio', category: 'local' as LocationCategory },
+  { name: 'A Mortalha', coords: [2768, 4689], type: 'Floresta', link: '/places/mortalha', description: 'Floresta da Mortalha Negra — densa e cheia de mistérios', category: 'local' as LocationCategory },
+  { name: 'Portão do Vale', coords: [2899, 4930], type: 'Fortaleza', link: null, description: 'Passagem fortificada ao sul da Mortalha', category: 'local' as LocationCategory },
+  { name: 'Forte da Aliança', coords: [2686, 5048], type: 'Fortaleza', link: null, description: 'Forte estratégico, guardião das rotas comerciais', category: 'local' as LocationCategory },
+  { name: 'Valtriunfo', coords: [2470, 4578], type: 'Cidade', link: null, description: 'Cidade ao norte, próxima à Grande Fonte de Aurun', category: 'local' as LocationCategory },
+  // Reinos (kingdoms/major regions)
+  { name: 'Skeld', coords: [4370, 1781], type: 'Reino', link: '/places/skeld', description: 'Reino ao norte', category: 'reino' as LocationCategory },
+  { name: 'Skelligard', coords: [2817, 1495], type: 'Reino', link: null, description: 'Região gelada ao noroeste', category: 'reino' as LocationCategory },
+  { name: 'Norbria', coords: [2359, 2824], type: 'Reino', link: '/places/norbria', description: 'Reino central', category: 'reino' as LocationCategory },
+  { name: 'Humma', coords: [2786, 3263], type: 'Reino', link: '/places/humma', description: 'Reino ao centro-leste', category: 'reino' as LocationCategory },
+  { name: 'Elendel', coords: [1723, 3642], type: 'Reino', link: '/places/elendel', description: 'Reino a oeste', category: 'reino' as LocationCategory },
+  { name: 'Nerania', coords: [2554, 3865], type: 'Reino', link: null, description: 'Região central', category: 'reino' as LocationCategory },
+  { name: 'Falandir', coords: [1724, 5003], type: 'Reino', link: '/places/falandir', description: 'Reino ao sudoeste', category: 'reino' as LocationCategory },
+  { name: 'Zarkovia', coords: [2481, 5447], type: 'Reino', link: null, description: 'Reino ao sul', category: 'reino' as LocationCategory },
+  { name: 'Ardanore', coords: [2588, 6211], type: 'Reino', link: null, description: 'Reino ao extremo sul', category: 'reino' as LocationCategory },
+  { name: 'Zaoh', coords: [4396, 5923], type: 'Reino', link: null, description: 'Reino ao sudeste', category: 'reino' as LocationCategory },
+  { name: 'Raruna', coords: [4845, 5176], type: 'Reino', link: null, description: 'Reino a leste', category: 'reino' as LocationCategory },
+  { name: 'Kandar', coords: [6302, 5104], type: 'Reino', link: '/places/kandar', description: 'Reino ao extremo leste', category: 'reino' as LocationCategory },
 ]
 
 export default function MapPage() {
@@ -89,12 +48,16 @@ export default function MapPage() {
   const [showMobileLocations, setShowMobileLocations] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
 
-  // Filter locations based on search
-  const filteredLocations = locations.filter(loc => 
-    loc.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    loc.type.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    loc.description.toLowerCase().includes(searchQuery.toLowerCase())
-  )
+  const [activeCategory, setActiveCategory] = useState<LocationCategory | null>('local')
+
+  // Filter locations based on search and category
+  const filteredLocations = locations.filter(loc => {
+    const matchesSearch = searchQuery === '' || 
+      loc.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      loc.type.toLowerCase().includes(searchQuery.toLowerCase())
+    const matchesCategory = !activeCategory || loc.category === activeCategory || searchQuery !== ''
+    return matchesSearch && matchesCategory
+  })
 
   useEffect(() => {
     if (!mapContainer.current || mapRef.current) return
@@ -137,25 +100,33 @@ export default function MapPage() {
       map.fitBounds(bounds)
       map.setMaxBounds(bounds)
 
-      // Custom marker icon
-      const markerIcon = L.divIcon({
+      // Marker icons
+      const localIcon = L.divIcon({
         className: 'custom-marker',
         html: `<div class="marker-pin"></div>`,
-        iconSize: [30, 40],
-        iconAnchor: [15, 40],
-        popupAnchor: [0, -40],
+        iconSize: [24, 32],
+        iconAnchor: [12, 32],
+        popupAnchor: [0, -32],
+      })
+
+      const reinoIcon = L.divIcon({
+        className: 'custom-marker',
+        html: `<div class="marker-reino"></div>`,
+        iconSize: [16, 16],
+        iconAnchor: [8, 8],
+        popupAnchor: [0, -12],
       })
 
       // Add markers for locations
       locations.forEach((loc) => {
+        const icon = loc.category === 'reino' ? reinoIcon : localIcon
         const marker = L.marker([IMAGE_HEIGHT - loc.coords[1], loc.coords[0]] as [number, number], {
-          icon: markerIcon,
+          icon,
           title: loc.name,
         })
           .addTo(map)
           .on('click', () => setSelectedLocation(loc))
 
-        // Popup
         marker.bindPopup(`
           <div class="map-popup">
             <strong>${loc.name}</strong>
@@ -193,7 +164,13 @@ export default function MapPage() {
 
   const flyToLocation = (loc: typeof locations[0]) => {
     if (mapRef.current) {
-      mapRef.current.flyTo([IMAGE_HEIGHT - loc.coords[1], loc.coords[0]], 0.5, {
+      // Toggle: clicking same location deselects
+      if (selectedLocation?.name === loc.name) {
+        setSelectedLocation(null)
+        return
+      }
+      const zoom = loc.category === 'reino' ? -0.5 : 0.5
+      mapRef.current.flyTo([IMAGE_HEIGHT - loc.coords[1], loc.coords[0]], zoom, {
         duration: 1,
       })
       setSelectedLocation(loc)
@@ -224,11 +201,8 @@ export default function MapPage() {
         {/* Sidebar - Location List */}
         <aside className="w-64 bg-[#0d1f35] border-r border-amber-900/30 overflow-y-auto hidden lg:block">
           <div className="p-4">
-            <h2 className="font-cinzel text-amber-400 text-sm uppercase tracking-wider mb-3">
-              Locais Conhecidos
-            </h2>
             {/* Search Input */}
-            <div className="relative mb-4">
+            <div className="relative mb-3">
               <Icon icon="game-icons:magnifying-glass" className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
               <input
                 type="text"
@@ -238,17 +212,36 @@ export default function MapPage() {
                 className="w-full pl-9 pr-3 py-2 bg-slate-800/50 border border-amber-900/30 rounded-lg text-white text-sm placeholder:text-slate-500 focus:outline-none focus:border-amber-600/50"
               />
             </div>
-            <div className="space-y-2">
+
+            {/* Category tabs */}
+            {!searchQuery && (
+              <div className="flex gap-1 mb-3">
+                <button
+                  onClick={() => setActiveCategory(activeCategory === 'local' ? null : 'local')}
+                  className={`flex-1 text-xs py-1.5 rounded transition-colors font-semibold ${activeCategory === 'local' ? 'bg-amber-600/30 text-amber-300 border border-amber-600/40' : 'bg-slate-800/50 text-slate-400 border border-transparent hover:text-slate-300'}`}
+                >
+                  Locais
+                </button>
+                <button
+                  onClick={() => setActiveCategory(activeCategory === 'reino' ? null : 'reino')}
+                  className={`flex-1 text-xs py-1.5 rounded transition-colors font-semibold ${activeCategory === 'reino' ? 'bg-amber-600/30 text-amber-300 border border-amber-600/40' : 'bg-slate-800/50 text-slate-400 border border-transparent hover:text-slate-300'}`}
+                >
+                  Reinos
+                </button>
+              </div>
+            )}
+
+            <div className="space-y-1">
               {filteredLocations.length === 0 ? (
                 <p className="text-slate-400 text-sm text-center py-4">Nenhum local encontrado</p>
               ) : filteredLocations.map((loc) => (
                 <button
                   key={loc.name}
                   onClick={() => flyToLocation(loc)}
-                  className={`w-full text-left p-3 rounded-lg transition-colors ${
+                  className={`w-full text-left px-3 py-2 rounded-lg transition-colors ${
                     selectedLocation?.name === loc.name
                       ? 'bg-amber-600/20 border border-amber-600/40'
-                      : 'bg-slate-800/50 hover:bg-slate-700/50 border border-transparent'
+                      : 'hover:bg-slate-700/50 border border-transparent'
                   }`}
                 >
                   <div className="flex items-center gap-2">
@@ -258,13 +251,13 @@ export default function MapPage() {
                         loc.type === 'Floresta' ? 'game-icons:forest' :
                         loc.type === 'Fortaleza' ? 'game-icons:tower-bridge' :
                         loc.type === 'Landmark' ? 'game-icons:waterfall' :
+                        loc.type === 'Reino' ? 'game-icons:crown' :
                         loc.type === 'Porto' ? 'game-icons:anchor' : 'game-icons:castle'
                       } 
-                      className="w-4 h-4 text-amber-500" 
+                      className="w-3.5 h-3.5 text-amber-500" 
                     />
-                    <span className="text-white font-medium text-sm">{loc.name}</span>
+                    <span className="text-white text-sm">{loc.name}</span>
                   </div>
-                  <span className="text-slate-400 text-xs mt-1 block">{loc.type}</span>
                 </button>
               ))}
             </div>
@@ -453,6 +446,14 @@ export default function MapPage() {
           transform: rotate(-45deg);
           border: 3px solid #fbbf24;
           box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        }
+        .marker-reino {
+          width: 12px;
+          height: 12px;
+          background: rgba(217, 119, 6, 0.6);
+          border: 2px solid #fbbf24;
+          border-radius: 50%;
+          box-shadow: 0 0 8px rgba(245, 158, 11, 0.4);
         }
         .marker-pin::after {
           content: '';
