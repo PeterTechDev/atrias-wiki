@@ -21,7 +21,7 @@ export default async function CharactersPage() {
       class: data.class || 'Aventureiro',
       status: data.status || 'Desconhecido',
       faction: data.affiliation || '',
-      portrait: '', // No images in DB yet
+      portrait: e.image || '',
       description: e.description || '',
     }
   })

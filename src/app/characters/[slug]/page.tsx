@@ -42,7 +42,7 @@ export default async function CharacterPage({ params }: PageProps) {
     alignment: data.alignment || '',
     origin: '',
     faction: data.affiliation || '',
-    gallery: [] as { src: string; alt: string; caption?: string }[],
+    gallery: (entity.image ? [{ src: entity.image, alt: entity.name, caption: entity.name }] : []) as { src: string; alt: string; caption?: string }[],
     description: entity.description || '',
     quote: '',
     backstory: '',

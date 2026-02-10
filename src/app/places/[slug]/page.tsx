@@ -84,6 +84,22 @@ export default async function PlacePage({ params }: PageProps) {
         </nav>
       </div>
 
+      {/* Map Image - Full Width */}
+      {(data.map || entity.image) && (
+        <div className="max-w-6xl mx-auto px-6 mb-8">
+          <div className="bg-white/80 rounded-lg shadow-lg overflow-hidden">
+            <img 
+              src={data.map || entity.image || ''} 
+              alt={`Mapa de ${entity.name}`}
+              className="w-full h-auto max-h-[500px] object-contain"
+            />
+            <div className="px-4 py-2 text-center text-sm text-slate-500 font-crimson italic">
+              Mapa de {entity.name}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Main Content */}
       <div className="max-w-6xl mx-auto px-6 pb-12">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

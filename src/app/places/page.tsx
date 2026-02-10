@@ -21,6 +21,7 @@ export default async function PlacesPage() {
       kingdom: '',
       dangerLevel: 'Desconhecido',
       description: e.description || '',
+      image: e.image || (data.map as string) || '',
     }
   })
 
@@ -82,6 +83,13 @@ export default async function PlacesPage() {
                 href={`/places/${place.slug}`}
                 className="group bg-white/80 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all hover:-translate-y-1"
               >
+                {/* Map/Image Preview */}
+                {place.image && (
+                  <div className="h-40 overflow-hidden">
+                    <img src={place.image} alt={place.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                  </div>
+                )}
+
                 {/* Card Header */}
                 <div className="bg-[#0a1628] p-4">
                   <div className="flex items-center justify-between mb-2">
