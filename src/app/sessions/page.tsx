@@ -2,6 +2,8 @@
  * Campaign list page (Session Logs)
  */
 
+export const dynamic = 'force-dynamic'
+
 import Link from 'next/link'
 import { Icon } from '@iconify/react'
 import { getCampaignsWithCounts } from '@/db/queries/sessionLogs'
