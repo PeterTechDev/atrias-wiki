@@ -8,6 +8,8 @@ import {
   real,
   index,
   customType,
+  integer,
+  date,
 } from 'drizzle-orm/pg-core'
 
 // Custom type for pgvector
@@ -129,3 +131,54 @@ export const ingestionJobs = pgTable('ingestion_jobs', {
 
 export type IngestionJob = typeof ingestionJobs.$inferSelect
 export type NewIngestionJob = typeof ingestionJobs.$inferInsert
+
+// === Session Logs (Campaigns + Chapters) ===
+
+export const campaignStatusEnum = ['active', 'completed', 'hiatus'] as const
+export type CampaignStatus = (typeof campaignStatusEnum)[number]
+
+export const sessionLogStatusEnum = ['draft', 'approved', 'published'] as const
+export type SessionLogStatus = (typeof sessionLogStatusEnum)[number]
+
+export const campaigns = pgTable('campaigns', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  slug: text('slug').notNull().unique(),
+  name: text('name').notNull(),
+  description: text('description'),
+  image: text('image'),
+  status: text('status').$type<CampaignStatus>().notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+})
+
+export type Campaign = typeof campaigns.$inferSelect
+export type NewCampaign = typeof campaigns.$inferInsert
+
+export const sessionLogs = pgTable(
+  'session_logs',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    campaignId: uuid('campaign_id')
+      .notNull()
+      .references(() => campaigns.id, { onDelete: 'cascade' }),
+    chapterNumber: integer('chapter_number').notNull(),
+    title: text('title').notNull(),
+    rawRecap: text('raw_recap'),
+    narration: text('narration').notNull(),
+    datePlayed: date('date_played'),
+    playersPresent: jsonb('players_present').$type<string[]>().default([]),
+    locationsVisited: jsonb('locations_visited').$type<string[]>().default([]),
+    npcsEncountered: jsonb('npcs_encountered').$type<string[]>().default([]),
+    keyEvents: jsonb('key_events').$type<string[]>().default([]),
+    status: text('status').$type<SessionLogStatus>().notNull().default('draft'),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+    updatedAt: timestamp('updated_at').defaultNow().notNull(),
+  },
+  (table) => [
+    index('session_logs_campaign_idx').on(table.campaignId),
+    index('session_logs_chapter_idx').on(table.chapterNumber),
+  ]
+)
+
+export type SessionLog = typeof sessionLogs.$inferSelect
+export type NewSessionLog = typeof sessionLogs.$inferInsert
