@@ -186,10 +186,7 @@ export default function MapPage() {
             <Icon icon="game-icons:book-cover" className="w-6 h-6" />
             <span className="font-cinzel text-lg tracking-wider">WIKI ÁTRIAS</span>
           </Link>
-          <div className="flex items-center gap-4">
-            <h1 className="font-cinzel text-amber-400 text-xl hidden md:block">Mapa do Mundo</h1>
-            </Link>
-          </div>
+          <h1 className="font-cinzel text-amber-400 text-xl hidden md:block">Mapa do Mundo</h1>
         </div>
       </header>
 

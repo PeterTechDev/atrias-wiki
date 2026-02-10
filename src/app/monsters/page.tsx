@@ -49,7 +49,6 @@ export default async function MonstersPage() {
             <Icon icon="game-icons:book-cover" className="w-6 h-6" />
             <span className="font-cinzel text-lg tracking-wider">WIKI ATRIAS</span>
           </Link>
-          </Link>
         </div>
       </header>
 
