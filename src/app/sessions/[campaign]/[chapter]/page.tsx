@@ -26,19 +26,16 @@ function formatDate(date: unknown) {
   }
 }
 
-function ListBlock({ title, items }: { title: string; items: string[] | null | undefined }) {
+function MetadataToggle({ label, items }: { label: string; items: string[] | null | undefined }) {
   if (!items || items.length === 0) return null
-
   return (
-    <div>
-      <h3 className="font-cinzel text-amber-400/90 text-sm uppercase tracking-wider mb-2">{title}</h3>
-      <ul className="space-y-1">
-        {items.map((it, idx) => (
-          <li key={`${it}-${idx}`} className="text-slate-100/90 font-crimson">
-            <span className="text-amber-400/70">•</span> {it}
-          </li>
-        ))}
-      </ul>
+    <div className="flex flex-wrap gap-2">
+      <span className="text-amber-700 font-crimson text-sm font-semibold">{label}:</span>
+      {items.map((it, idx) => (
+        <span key={`${it}-${idx}`} className="text-sm text-slate-600 font-crimson bg-amber-50 px-2 py-0.5 rounded">
+          {it}
+        </span>
+      ))}
     </div>
   )
 }
@@ -58,6 +55,12 @@ export default async function SessionLogPage({ params }: PageProps) {
 
   const played = formatDate(log.datePlayed)
 
+  const hasMetadata = played ||
+    (log.playersPresent && log.playersPresent.length > 0) ||
+    (log.locationsVisited && log.locationsVisited.length > 0) ||
+    (log.npcsEncountered && log.npcsEncountered.length > 0) ||
+    (log.keyEvents && log.keyEvents.length > 0)
+
   return (
     <main className="min-h-screen bg-[#e8dcc8]">
       {/* Header */}
@@ -75,7 +78,7 @@ export default async function SessionLogPage({ params }: PageProps) {
       </header>
 
       {/* Breadcrumb */}
-      <div className="max-w-6xl mx-auto px-6 py-4">
+      <div className="max-w-4xl mx-auto px-6 py-4">
         <nav className="flex items-center gap-2 text-sm text-slate-600">
           <Link href="/" className="hover:text-amber-700">Home</Link>
           <span>›</span>
@@ -87,97 +90,98 @@ export default async function SessionLogPage({ params }: PageProps) {
         </nav>
       </div>
 
-      <div className="max-w-6xl mx-auto px-6 pb-12">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Main column */}
-          <div className="lg:col-span-2">
-            <div className="bg-white/80 rounded-lg shadow-lg p-8">
-              <div className="flex items-center gap-3 mb-3">
-                <span className="inline-block bg-amber-100 text-amber-800 text-xs font-semibold px-3 py-1 rounded-full">
-                  Capítulo {log.chapterNumber}
-                </span>
-                {played && (
-                  <span className="text-xs text-slate-600 flex items-center gap-1">
-                    <Icon icon="game-icons:calendar" className="w-4 h-4" />
-                    {played}
-                  </span>
-                )}
-                <span className="text-xs bg-slate-100 text-slate-700 px-2 py-1 rounded-full">
-                  {log.status}
-                </span>
-              </div>
-
-              <h1 className="font-cinzel text-3xl md:text-4xl text-slate-800 mb-6">
-                {log.title}
-              </h1>
-
-              <div className="text-slate-700 font-crimson text-lg leading-relaxed space-y-4">
-                {(log.narration || '').split('\n\n').map((p, i) => (
-                  <p key={i}>{p}</p>
-                ))}
-              </div>
-
-              {/* Attribution */}
-              <div className="mt-8 pt-6 border-t border-amber-200 flex items-center gap-3 text-slate-600">
-                <Icon icon="game-icons:quill-ink" className="w-5 h-5 text-amber-700" />
-                <span className="font-crimson italic">
-                  Registrado por:{' '}
-                  <Link href="/characters/thaveus" className="text-amber-800 hover:text-amber-900 underline">
-                    Thaveus, O Escriba
-                  </Link>
-                </span>
-              </div>
-
-              {/* Prev/Next */}
-              <div className="mt-6 flex items-center justify-between gap-4">
-                {prev ? (
-                  <Link
-                    href={`/sessions/${campaign.slug}/${prev}`}
-                    className="inline-flex items-center gap-2 text-amber-800 hover:text-amber-900 font-semibold"
-                  >
-                    <Icon icon="game-icons:arrow-left" className="w-5 h-5" />
-                    Capítulo {prev}
-                  </Link>
-                ) : (
-                  <div />
-                )}
-
-                {next ? (
-                  <Link
-                    href={`/sessions/${campaign.slug}/${next}`}
-                    className="inline-flex items-center gap-2 text-amber-800 hover:text-amber-900 font-semibold"
-                  >
-                    Capítulo {next}
-                    <Icon icon="game-icons:arrow-right" className="w-5 h-5" />
-                  </Link>
-                ) : (
-                  <div />
-                )}
-              </div>
-            </div>
+      {/* Content — single column, reading-focused */}
+      <div className="max-w-4xl mx-auto px-6 pb-12">
+        <div className="bg-white/80 rounded-lg shadow-lg p-8 md:p-12">
+          {/* Chapter header */}
+          <div className="text-center mb-10">
+            <span className="inline-block bg-amber-100 text-amber-800 text-xs font-semibold px-3 py-1 rounded-full mb-4">
+              Capítulo {log.chapterNumber}
+            </span>
+            <h1 className="font-cinzel text-3xl md:text-4xl text-slate-800 mb-2">
+              {log.title}
+            </h1>
+            {played && (
+              <p className="text-slate-500 font-crimson text-sm italic">{played}</p>
+            )}
           </div>
 
-          {/* Sidebar */}
-          <div className="lg:col-span-1">
-            <div className="bg-[#0a1628] text-white rounded-lg p-6 sticky top-6">
-              <h2 className="font-cinzel text-amber-400 text-lg mb-4 uppercase tracking-wider">
-                Metadados
-              </h2>
+          {/* Decorative divider */}
+          <div className="flex items-center justify-center gap-4 mb-10">
+            <div className="h-px bg-amber-300/50 flex-1" />
+            <Icon icon="game-icons:quill-ink" className="w-5 h-5 text-amber-400" />
+            <div className="h-px bg-amber-300/50 flex-1" />
+          </div>
 
-              <div className="space-y-6">
+          {/* Narration */}
+          <div className="text-slate-700 font-crimson text-lg leading-relaxed space-y-5">
+            {(log.narration || '').split('\n\n').map((p, i) => (
+              <p key={i}>{p}</p>
+            ))}
+          </div>
+
+          {/* Decorative end */}
+          <div className="flex items-center justify-center gap-4 mt-10 mb-6">
+            <div className="h-px bg-amber-300/50 flex-1" />
+            <span className="text-amber-400 font-cinzel text-sm">✦</span>
+            <div className="h-px bg-amber-300/50 flex-1" />
+          </div>
+
+          {/* Attribution */}
+          <div className="text-center mb-8">
+            <span className="font-crimson italic text-slate-500">
+              Registrado por{' '}
+              <Link href="/characters/thaveus" className="text-amber-700 hover:text-amber-900 transition-colors">
+                Thaveus, O Escriba
+              </Link>
+            </span>
+          </div>
+
+          {/* Metadata toggle */}
+          {hasMetadata && (
+            <details className="border-t border-amber-200 pt-4 mt-4">
+              <summary className="cursor-pointer flex items-center gap-2 text-slate-500 hover:text-amber-700 transition-colors text-sm font-crimson">
+                <Icon icon="game-icons:info" className="w-4 h-4" />
+                <span>Ver detalhes da sessão</span>
+              </summary>
+              <div className="mt-4 space-y-3 pl-6">
                 {played && (
-                  <div>
-                    <span className="text-amber-400/60 text-xs uppercase tracking-wider">Data jogada</span>
-                    <p className="text-white font-medium">{played}</p>
+                  <div className="flex gap-2 text-sm">
+                    <span className="text-amber-700 font-crimson font-semibold">Data:</span>
+                    <span className="text-slate-600 font-crimson">{played}</span>
                   </div>
                 )}
-
-                <ListBlock title="Jogadores presentes" items={log.playersPresent} />
-                <ListBlock title="Locais visitados" items={log.locationsVisited} />
-                <ListBlock title="NPCs encontrados" items={log.npcsEncountered} />
-                <ListBlock title="Eventos-chave" items={log.keyEvents} />
+                <MetadataToggle label="Jogadores" items={log.playersPresent} />
+                <MetadataToggle label="Locais" items={log.locationsVisited} />
+                <MetadataToggle label="NPCs" items={log.npcsEncountered} />
+                <MetadataToggle label="Eventos" items={log.keyEvents} />
               </div>
-            </div>
+            </details>
+          )}
+
+          {/* Prev/Next */}
+          <div className="mt-8 pt-6 border-t border-amber-200 flex items-center justify-between gap-4">
+            {prev ? (
+              <Link
+                href={`/sessions/${campaign.slug}/${prev}`}
+                className="inline-flex items-center gap-2 text-amber-800 hover:text-amber-900 font-crimson font-semibold"
+              >
+                ← Capítulo {prev}
+              </Link>
+            ) : (
+              <div />
+            )}
+
+            {next ? (
+              <Link
+                href={`/sessions/${campaign.slug}/${next}`}
+                className="inline-flex items-center gap-2 text-amber-800 hover:text-amber-900 font-crimson font-semibold"
+              >
+                Capítulo {next} →
+              </Link>
+            ) : (
+              <div />
+            )}
           </div>
         </div>
       </div>
