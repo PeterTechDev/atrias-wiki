@@ -58,7 +58,7 @@ export default async function Home() {
           {/* CTA Buttons */}
           <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href="/places"
+              href="/browse"
               className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#a8935a] hover:bg-[#c6a862] text-slate-900 font-semibold rounded-md transition-all hover:-translate-y-1 hover:shadow-lg hover:shadow-stone-900/40"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
