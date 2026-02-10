@@ -50,6 +50,9 @@ export default function MapPage() {
 
   const [activeCategory, setActiveCategory] = useState<LocationCategory | null>('local')
 
+  const [isLocalExpanded, setIsLocalExpanded] = useState(true)
+  const [isReinoExpanded, setIsReinoExpanded] = useState(false)
+
   // Filter locations based on search and category
   const filteredLocations = locations.filter(loc => {
     const matchesSearch = searchQuery === '' || 
@@ -58,6 +61,21 @@ export default function MapPage() {
     const matchesCategory = !activeCategory || loc.category === activeCategory || searchQuery !== ''
     return matchesSearch && matchesCategory
   })
+
+  // Expand relevant sections when filtering changes
+  useEffect(() => {
+    if (searchQuery) {
+      setIsLocalExpanded(true)
+      setIsReinoExpanded(true)
+      return
+    }
+    if (activeCategory === 'local') {
+      setIsLocalExpanded(true)
+    }
+    if (activeCategory === 'reino') {
+      setIsReinoExpanded(true)
+    }
+  }, [searchQuery, activeCategory])
 
   useEffect(() => {
     if (!mapContainer.current || mapRef.current) return
@@ -225,36 +243,89 @@ export default function MapPage() {
               </div>
             )}
 
-            <div className="space-y-1">
-              {filteredLocations.length === 0 ? (
-                <p className="text-slate-400 text-sm text-center py-4">Nenhum local encontrado</p>
-              ) : filteredLocations.map((loc) => (
-                <button
-                  key={loc.name}
-                  onClick={() => flyToLocation(loc)}
-                  className={`w-full text-left px-3 py-2 rounded-lg transition-colors ${
-                    selectedLocation?.name === loc.name
-                      ? 'bg-amber-600/20 border border-amber-600/40'
-                      : 'hover:bg-slate-700/50 border border-transparent'
-                  }`}
-                >
-                  <div className="flex items-center gap-2">
-                    <Icon 
-                      icon={
-                        loc.type === 'Vila' ? 'game-icons:village' : 
-                        loc.type === 'Floresta' ? 'game-icons:forest' :
-                        loc.type === 'Fortaleza' ? 'game-icons:tower-bridge' :
-                        loc.type === 'Landmark' ? 'game-icons:waterfall' :
-                        loc.type === 'Reino' ? 'game-icons:crown' :
-                        loc.type === 'Porto' ? 'game-icons:anchor' : 'game-icons:castle'
-                      } 
-                      className="w-3.5 h-3.5 text-amber-500" 
-                    />
-                    <span className="text-white text-sm">{loc.name}</span>
-                  </div>
-                </button>
-              ))}
-            </div>
+            {filteredLocations.length === 0 ? (
+              <p className="text-slate-400 text-sm text-center py-4">Nenhum local encontrado</p>
+            ) : (
+              <div className="space-y-3">
+                {(() => {
+                  const localLocations = filteredLocations.filter((l) => l.category === 'local')
+                  const reinoLocations = filteredLocations.filter((l) => l.category === 'reino')
+
+                  const renderLocation = (loc: (typeof locations)[0]) => (
+                    <button
+                      key={loc.name}
+                      onClick={() => flyToLocation(loc)}
+                      className={`w-full text-left px-3 py-2 rounded-lg transition-colors ${
+                        selectedLocation?.name === loc.name
+                          ? 'bg-amber-600/20 border border-amber-600/40'
+                          : 'hover:bg-slate-700/50 border border-transparent'
+                      }`}
+                    >
+                      <div className="flex items-center gap-2">
+                        <Icon
+                          icon={
+                            loc.type === 'Vila' ? 'game-icons:village' :
+                            loc.type === 'Floresta' ? 'game-icons:forest' :
+                            loc.type === 'Fortaleza' ? 'game-icons:tower-bridge' :
+                            loc.type === 'Landmark' ? 'game-icons:waterfall' :
+                            loc.type === 'Reino' ? 'game-icons:crown' :
+                            loc.type === 'Porto' ? 'game-icons:anchor' : 'game-icons:castle'
+                          }
+                          className="w-3.5 h-3.5 text-amber-500"
+                        />
+                        <span className="text-white text-sm">{loc.name}</span>
+                      </div>
+                    </button>
+                  )
+
+                  return (
+                    <>
+                      {localLocations.length > 0 && (
+                        <div className="space-y-1">
+                          <button
+                            onClick={() => setIsLocalExpanded((v) => !v)}
+                            className="w-full flex items-center justify-between px-2 py-1.5 rounded-lg hover:bg-slate-800/40 transition-colors"
+                          >
+                            <div className="flex items-center gap-2">
+                              <Icon
+                                icon={isLocalExpanded ? 'mdi:chevron-down' : 'mdi:chevron-right'}
+                                className="w-5 h-5 text-amber-400"
+                              />
+                              <span className="font-cinzel text-amber-300 text-sm tracking-wide">A Mortalha</span>
+                            </div>
+                            <span className="text-xs text-slate-400">{localLocations.length}</span>
+                          </button>
+                          {isLocalExpanded && (
+                            <div className="space-y-1 pl-2">{localLocations.map(renderLocation)}</div>
+                          )}
+                        </div>
+                      )}
+
+                      {reinoLocations.length > 0 && (
+                        <div className="space-y-1">
+                          <button
+                            onClick={() => setIsReinoExpanded((v) => !v)}
+                            className="w-full flex items-center justify-between px-2 py-1.5 rounded-lg hover:bg-slate-800/40 transition-colors"
+                          >
+                            <div className="flex items-center gap-2">
+                              <Icon
+                                icon={isReinoExpanded ? 'mdi:chevron-down' : 'mdi:chevron-right'}
+                                className="w-5 h-5 text-amber-400"
+                              />
+                              <span className="font-cinzel text-amber-300 text-sm tracking-wide">Reinos</span>
+                            </div>
+                            <span className="text-xs text-slate-400">{reinoLocations.length}</span>
+                          </button>
+                          {isReinoExpanded && (
+                            <div className="space-y-1 pl-2">{reinoLocations.map(renderLocation)}</div>
+                          )}
+                        </div>
+                      )}
+                    </>
+                  )
+                })()}
+              </div>
+            )}
           </div>
 
           {/* Legend */}
@@ -405,36 +476,94 @@ export default function MapPage() {
                 </div>
                 
                 {/* Locations List */}
-                <div className="flex-1 overflow-y-auto px-4 pb-4 space-y-2">
+                <div className="flex-1 overflow-y-auto px-4 pb-4">
                   {filteredLocations.length === 0 ? (
                     <p className="text-slate-400 text-sm text-center py-8">Nenhum local encontrado</p>
-                  ) : filteredLocations.map((loc) => (
-                    <button
-                      key={loc.name}
-                      onClick={() => {
-                        flyToLocation(loc)
-                        setShowMobileLocations(false)
-                      }}
-                      className="w-full text-left p-4 rounded-lg bg-slate-800/50 hover:bg-slate-700/50 border border-transparent active:border-amber-600/40 transition-colors"
-                    >
-                      <div className="flex items-center gap-3">
-                        <Icon 
-                          icon={
-                            loc.type === 'Vila' ? 'game-icons:village' : 
-                            loc.type === 'Floresta' ? 'game-icons:forest' :
-                            loc.type === 'Fortaleza' ? 'game-icons:tower-bridge' :
-                            loc.type === 'Landmark' ? 'game-icons:waterfall' :
-                            loc.type === 'Porto' ? 'game-icons:anchor' : 'game-icons:castle'
-                          } 
-                          className="w-6 h-6 text-amber-500" 
-                        />
-                        <div>
-                          <span className="text-white font-medium block">{loc.name}</span>
-                          <span className="text-slate-400 text-sm">{loc.type} • {loc.description}</span>
-                        </div>
-                      </div>
-                    </button>
-                  ))}
+                  ) : (
+                    <div className="space-y-3">
+                      {(() => {
+                        const localLocations = filteredLocations.filter((l) => l.category === 'local')
+                        const reinoLocations = filteredLocations.filter((l) => l.category === 'reino')
+
+                        const renderLocation = (loc: (typeof locations)[0]) => (
+                          <button
+                            key={loc.name}
+                            onClick={() => {
+                              flyToLocation(loc)
+                              setShowMobileLocations(false)
+                            }}
+                            className={`w-full text-left p-4 rounded-lg bg-slate-800/50 hover:bg-slate-700/50 border transition-colors ${
+                              selectedLocation?.name === loc.name ? 'border-amber-600/40' : 'border-transparent'
+                            }`}
+                          >
+                            <div className="flex items-center gap-3">
+                              <Icon
+                                icon={
+                                  loc.type === 'Vila' ? 'game-icons:village' :
+                                  loc.type === 'Floresta' ? 'game-icons:forest' :
+                                  loc.type === 'Fortaleza' ? 'game-icons:tower-bridge' :
+                                  loc.type === 'Landmark' ? 'game-icons:waterfall' :
+                                  loc.type === 'Reino' ? 'game-icons:crown' :
+                                  loc.type === 'Porto' ? 'game-icons:anchor' : 'game-icons:castle'
+                                }
+                                className="w-6 h-6 text-amber-500"
+                              />
+                              <div>
+                                <span className="text-white font-medium block">{loc.name}</span>
+                                <span className="text-slate-400 text-sm">{loc.type} • {loc.description}</span>
+                              </div>
+                            </div>
+                          </button>
+                        )
+
+                        return (
+                          <>
+                            {localLocations.length > 0 && (
+                              <div className="space-y-2">
+                                <button
+                                  onClick={() => setIsLocalExpanded((v) => !v)}
+                                  className="w-full flex items-center justify-between px-2 py-2 rounded-lg hover:bg-slate-800/40 transition-colors"
+                                >
+                                  <div className="flex items-center gap-2">
+                                    <Icon
+                                      icon={isLocalExpanded ? 'mdi:chevron-down' : 'mdi:chevron-right'}
+                                      className="w-6 h-6 text-amber-400"
+                                    />
+                                    <span className="font-cinzel text-amber-300 text-base tracking-wide">A Mortalha</span>
+                                  </div>
+                                  <span className="text-sm text-slate-400">{localLocations.length}</span>
+                                </button>
+                                {isLocalExpanded && (
+                                  <div className="space-y-2 pl-2">{localLocations.map(renderLocation)}</div>
+                                )}
+                              </div>
+                            )}
+
+                            {reinoLocations.length > 0 && (
+                              <div className="space-y-2">
+                                <button
+                                  onClick={() => setIsReinoExpanded((v) => !v)}
+                                  className="w-full flex items-center justify-between px-2 py-2 rounded-lg hover:bg-slate-800/40 transition-colors"
+                                >
+                                  <div className="flex items-center gap-2">
+                                    <Icon
+                                      icon={isReinoExpanded ? 'mdi:chevron-down' : 'mdi:chevron-right'}
+                                      className="w-6 h-6 text-amber-400"
+                                    />
+                                    <span className="font-cinzel text-amber-300 text-base tracking-wide">Reinos</span>
+                                  </div>
+                                  <span className="text-sm text-slate-400">{reinoLocations.length}</span>
+                                </button>
+                                {isReinoExpanded && (
+                                  <div className="space-y-2 pl-2">{reinoLocations.map(renderLocation)}</div>
+                                )}
+                              </div>
+                            )}
+                          </>
+                        )
+                      })()}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
