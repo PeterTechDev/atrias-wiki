@@ -374,6 +374,22 @@ export default function MapPage() {
                   </button>
                 </div>
 
+                {/* Category tabs (mobile) */}
+                <div className="flex gap-1 px-4 pt-3">
+                  <button
+                    onClick={() => setActiveCategory(activeCategory === 'local' ? null : 'local')}
+                    className={`flex-1 text-sm py-2 rounded transition-colors font-semibold ${activeCategory === 'local' ? 'bg-amber-600/30 text-amber-300 border border-amber-600/40' : 'bg-slate-800/50 text-slate-400 border border-transparent'}`}
+                  >
+                    Locais
+                  </button>
+                  <button
+                    onClick={() => setActiveCategory(activeCategory === 'reino' ? null : 'reino')}
+                    className={`flex-1 text-sm py-2 rounded transition-colors font-semibold ${activeCategory === 'reino' ? 'bg-amber-600/30 text-amber-300 border border-amber-600/40' : 'bg-slate-800/50 text-slate-400 border border-transparent'}`}
+                  >
+                    Reinos
+                  </button>
+                </div>
+
                 {/* Search Input */}
                 <div className="px-4 py-3">
                   <div className="relative">
