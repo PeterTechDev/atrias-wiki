@@ -10,34 +10,74 @@ import Link from 'next/link'
 import { Icon } from '@iconify/react'
 
 // Map markers for known locations
+// coords: [x, y] where x=horizontal from left, y=from TOP of image
+// Leaflet uses [lat,lng]=[y,x] with y flipped (imageHeight - y)
+const IMAGE_HEIGHT = 7842
+
 const locations = [
   { 
-    name: 'Abrigo de Solaria', 
-    coords: [4200, 4600], // Approximate position
+    name: 'Abrigo de Solária', 
+    coords: [2150, 4050],
     type: 'Vila',
     link: '/places/abrigo-de-solaria',
-    description: 'Uma vila acolhedora nas Colinas do Serpeio'
+    description: 'Uma vila acolhedora nas Colinas do Serpeio',
+    region: 'Solária',
   },
   { 
     name: 'Vigília de Akos', 
-    coords: [6800, 3200],
+    coords: [3550, 2450],
     type: 'Cidade',
-    link: null,
-    description: 'Cidade a leste, próxima ao Lago Crispin'
+    link: '/places/vigilia-de-akos',
+    description: 'Cidade às portas da Mortalha Negra',
+    region: 'Solária',
   },
   { 
     name: 'Pengram', 
-    coords: [3500, 5800],
+    coords: [1550, 5050],
     type: 'Cidade',
     link: null,
-    description: 'Cidade ao sul de Solaria'
+    description: 'Cidade ao sul, além das Colinas do Serpeio',
+    region: 'Solária',
   },
   { 
-    name: 'Balsa Longa', 
-    coords: [4200, 7200],
-    type: 'Porto',
+    name: 'A Mortalha', 
+    coords: [3700, 3500],
+    type: 'Floresta',
+    link: '/places/mortalha',
+    description: 'Floresta da Mortalha Negra — densa, perigosa e cheia de mistérios',
+    region: 'Solária',
+  },
+  { 
+    name: 'Portão do Vale', 
+    coords: [4200, 4650],
+    type: 'Fortaleza',
     link: null,
-    description: 'Porto no extremo sul'
+    description: 'Passagem fortificada ao sul da Mortalha',
+    region: 'Solária',
+  },
+  { 
+    name: 'Forte da Aliança', 
+    coords: [3400, 5300],
+    type: 'Fortaleza',
+    link: null,
+    description: 'Forte estratégico ao sul, guardião das rotas comerciais',
+    region: 'Solária',
+  },
+  { 
+    name: 'Valtriunfo', 
+    coords: [1900, 2350],
+    type: 'Cidade',
+    link: null,
+    description: 'Cidade ao norte, próxima à Grande Fonte de Aurun',
+    region: 'Solária',
+  },
+  { 
+    name: 'Grande Fonte de Aurun', 
+    coords: [1650, 2050],
+    type: 'Landmark',
+    link: null,
+    description: 'Nascente sagrada ao norte de Valtriunfo',
+    region: 'Solária',
   },
 ]
 
@@ -74,7 +114,7 @@ export default function MapPage() {
 
       // Image dimensions
       const imageWidth = 8192
-      const imageHeight = 7842
+      const imageHeight = IMAGE_HEIGHT
 
       // Create map with simple CRS (for images)
       const map = L.map(mapContainer.current!, {
@@ -108,7 +148,7 @@ export default function MapPage() {
 
       // Add markers for locations
       locations.forEach((loc) => {
-        const marker = L.marker([loc.coords[1], loc.coords[0]] as [number, number], {
+        const marker = L.marker([IMAGE_HEIGHT - loc.coords[1], loc.coords[0]] as [number, number], {
           icon: markerIcon,
           title: loc.name,
         })
@@ -141,7 +181,7 @@ export default function MapPage() {
 
   const flyToLocation = (loc: typeof locations[0]) => {
     if (mapRef.current) {
-      mapRef.current.flyTo([loc.coords[1], loc.coords[0]], 0, {
+      mapRef.current.flyTo([IMAGE_HEIGHT - loc.coords[1], loc.coords[0]], 0.5, {
         duration: 1,
       })
       setSelectedLocation(loc)
@@ -201,7 +241,13 @@ export default function MapPage() {
                 >
                   <div className="flex items-center gap-2">
                     <Icon 
-                      icon={loc.type === 'Vila' ? 'game-icons:village' : loc.type === 'Porto' ? 'game-icons:anchor' : 'game-icons:castle'} 
+                      icon={
+                        loc.type === 'Vila' ? 'game-icons:village' : 
+                        loc.type === 'Floresta' ? 'game-icons:forest' :
+                        loc.type === 'Fortaleza' ? 'game-icons:tower-bridge' :
+                        loc.type === 'Landmark' ? 'game-icons:waterfall' :
+                        loc.type === 'Porto' ? 'game-icons:anchor' : 'game-icons:castle'
+                      } 
                       className="w-4 h-4 text-amber-500" 
                     />
                     <span className="text-white font-medium text-sm">{loc.name}</span>
@@ -358,7 +404,13 @@ export default function MapPage() {
                     >
                       <div className="flex items-center gap-3">
                         <Icon 
-                          icon={loc.type === 'Vila' ? 'game-icons:village' : loc.type === 'Porto' ? 'game-icons:anchor' : 'game-icons:castle'} 
+                          icon={
+                            loc.type === 'Vila' ? 'game-icons:village' : 
+                            loc.type === 'Floresta' ? 'game-icons:forest' :
+                            loc.type === 'Fortaleza' ? 'game-icons:tower-bridge' :
+                            loc.type === 'Landmark' ? 'game-icons:waterfall' :
+                            loc.type === 'Porto' ? 'game-icons:anchor' : 'game-icons:castle'
+                          } 
                           className="w-6 h-6 text-amber-500" 
                         />
                         <div>
