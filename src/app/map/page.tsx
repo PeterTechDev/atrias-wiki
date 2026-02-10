@@ -164,6 +164,18 @@ export default function MapPage() {
         `)
       })
 
+      // Debug: click to get coordinates
+      map.on('click', (e: any) => {
+        const x = Math.round(e.latlng.lng)
+        const y = Math.round(IMAGE_HEIGHT - e.latlng.lat)
+        const coordStr = `[${x}, ${y}]`
+        navigator.clipboard?.writeText(coordStr)
+        L.popup()
+          .setLatLng(e.latlng)
+          .setContent(`<div style="font-family:monospace;font-size:14px"><b>coords: ${coordStr}</b><br/><small>x=${x}, y=${y} (copied!)</small></div>`)
+          .openOn(map)
+      })
+
       mapRef.current = map
       setIsLoading(false)
     }
