@@ -91,7 +91,7 @@ export default async function ItemPage({ params }: PageProps) {
                 )}
               </div>
               <h1 className="font-cinzel text-4xl text-amber-400 mb-2">{item.name}</h1>
-              <p className="text-slate-300 font-crimson text-lg italic">{item.description || 'Um item misterioso aguardando para ser descoberto.'}</p>
+              <div className="text-slate-300 font-crimson text-lg italic space-y-4">{(item.description || 'Um item misterioso aguardando para ser descoberto.').split('\n\n').map((p, i) => (<p key={i}>{p}</p>))}</div>
             </div>
           </div>
         </div>

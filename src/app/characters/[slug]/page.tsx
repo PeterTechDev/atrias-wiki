@@ -112,9 +112,11 @@ export default async function CharacterPage({ params }: PageProps) {
               )}
 
               {/* Description */}
-              <p className="text-slate-700 font-crimson text-lg leading-relaxed mb-4">
-                {character.description || 'Um personagem misterioso do mundo de Atrias.'}
-              </p>
+              <div className="text-slate-700 font-crimson text-lg leading-relaxed mb-4 space-y-4">
+                {(character.description || 'Um personagem misterioso do mundo de Atrias.').split('\n\n').map((paragraph, i) => (
+                  <p key={i}>{paragraph}</p>
+                ))}
+              </div>
 
               {/* Quick Stats Toggle */}
               <DetailsToggle items={[

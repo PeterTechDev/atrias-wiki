@@ -96,7 +96,7 @@ export default async function MonsterPage({ params }: PageProps) {
                 )}
               </div>
               <h1 className="font-cinzel text-4xl text-amber-400 mb-2">{monster.name}</h1>
-              <p className="text-slate-300 font-crimson text-lg italic">{monster.description || 'Uma criatura misteriosa aguardando para ser documentada.'}</p>
+              <div className="text-slate-300 font-crimson text-lg italic space-y-4">{(monster.description || 'Uma criatura misteriosa aguardando para ser documentada.').split('\n\n').map((p, i) => (<p key={i}>{p}</p>))}</div>
               {monster.habitat && (
                 <p className="text-slate-400 text-sm mt-2">
                   <Icon icon="game-icons:compass" className="w-4 h-4 inline mr-1" />

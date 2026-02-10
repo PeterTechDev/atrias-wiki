@@ -84,7 +84,7 @@ export default async function FactionPage({ params }: PageProps) {
                 )}
               </div>
               <h1 className="font-cinzel text-4xl text-amber-400 mb-2">{faction.name}</h1>
-              <p className="text-slate-300 font-crimson text-lg italic">{faction.description || 'Uma organizacao influente em Atrias.'}</p>
+              <div className="text-slate-300 font-crimson text-lg italic space-y-4">{(faction.description || 'Uma organizacao influente em Atrias.').split('\n\n').map((p, i) => (<p key={i}>{p}</p>))}</div>
             </div>
           </div>
         </div>

@@ -128,9 +128,11 @@ export default async function PlacePage({ params }: PageProps) {
               )}
 
               {/* Description */}
-              <p className="text-slate-700 font-crimson text-lg leading-relaxed mb-4">
-                {place.description || 'Um lugar misterioso aguardando para ser explorado.'}
-              </p>
+              <div className="text-slate-700 font-crimson text-lg leading-relaxed mb-4 space-y-4">
+                {(place.description || 'Um lugar misterioso aguardando para ser explorado.').split('\n\n').map((paragraph, i) => (
+                  <p key={i}>{paragraph}</p>
+                ))}
+              </div>
 
               {/* Quick Stats Toggle */}
               <DetailsToggle
