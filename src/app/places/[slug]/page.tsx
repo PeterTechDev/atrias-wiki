@@ -53,7 +53,7 @@ export default async function PlacePage({ params }: PageProps) {
     function: data.function || '',
     design: data.design || '',
     notableLocations: data.notableLocations || [],
-    contributor: 'AI Extraction',
+    contributor: 'Thaveus, O Escriba',
     lastUpdated: entity.updatedAt?.toISOString().split('T')[0] || '',
   }
 
@@ -371,8 +371,8 @@ export default async function PlacePage({ params }: PageProps) {
         <div className="mt-8 pt-6 border-t border-amber-300/50 flex items-center justify-between text-sm">
           <div className="flex items-center gap-2 text-slate-500">
             <Icon icon="game-icons:quill-ink" className="w-4 h-4" />
-            <span>Adicionado por:</span>
-            <span className="text-slate-700 font-medium">{place.contributor}</span>
+            <span>Registrado por:</span>
+            <Link href="/characters/thaveus" className="text-slate-700 font-medium hover:text-amber-600 transition-colors">{place.contributor}</Link>
           </div>
           {place.lastUpdated && (
             <div className="text-slate-500">
