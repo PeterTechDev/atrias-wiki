@@ -113,7 +113,7 @@ export default async function SessionLogPage({ params }: PageProps) {
                 <Icon icon="game-icons:quill-ink" className="w-5 h-5 text-amber-400" />
                 <span className="text-amber-200/80 font-crimson text-sm italic">Ouvir narração de Thaveus</span>
                 <audio controls className="h-8" preload="none">
-                  <source src="/audio/session-1.mp3" type="audio/mpeg" />
+                  <source src={`/audio/${campaign.slug}/chapter-${sessionLog.chapterNumber}.mp3`} type="audio/mpeg" />
                 </audio>
               </div>
             </div>
