@@ -7,8 +7,10 @@ import { Icon } from '@iconify/react'
 export default function SiteNav() {
   const pathname = usePathname()
 
-  // The landing page has its own full-screen hero; keep it clean.
-  if (pathname === '/') return null
+  // Every entity/list page has its own header; SiteNav only shows on pages without one.
+  // For now, hide on all pages since all current pages have built-in headers.
+  // TODO: migrate page headers to use SiteNav exclusively
+  return null
 
   return (
     <header className="bg-[#0a1628] text-white py-3 px-6">
