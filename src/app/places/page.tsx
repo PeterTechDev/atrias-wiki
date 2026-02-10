@@ -34,9 +34,6 @@ export default async function PlacesPage() {
             <Icon icon="game-icons:book-cover" className="w-6 h-6" />
             <span className="font-cinzel text-lg tracking-wider">WIKI ATRIAS</span>
           </Link>
-          <Link href="/" className="flex items-center gap-2 text-amber-400 hover:text-amber-300">
-            <Icon icon="game-icons:house" className="w-5 h-5" />
-            <span>Return Home</span>
           </Link>
         </div>
       </header>
