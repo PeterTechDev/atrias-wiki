@@ -107,13 +107,13 @@ export default async function SessionLogPage({ params }: PageProps) {
           </div>
 
           {/* Audio narrator button */}
-          {log.chapterNumber === 1 && (
+          {(
             <div className="flex justify-center mb-8">
               <div className="inline-flex items-center gap-3 bg-[#0a1628] rounded-full px-6 py-3 shadow-lg">
                 <Icon icon="game-icons:quill-ink" className="w-5 h-5 text-amber-400" />
                 <span className="text-amber-200/80 font-crimson text-sm italic">Ouvir narração de Thaveus</span>
                 <audio controls className="h-8" preload="none">
-                  <source src={`/audio/${campaign.slug}/chapter-${sessionLog.chapterNumber}.mp3`} type="audio/mpeg" />
+                  <source src={`/audio/${campaign.slug}/chapter-${log.chapterNumber}.mp3`} type="audio/mpeg" />
                 </audio>
               </div>
             </div>
