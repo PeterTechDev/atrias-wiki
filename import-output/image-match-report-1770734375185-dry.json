@@ -1,0 +1,3062 @@
+{
+  "dryRun": true,
+  "foundImages": 216,
+  "loadedEntities": 176,
+  "initialMatches": 5,
+  "finalMatches": 4,
+  "collisions": 1,
+  "ignored": 17,
+  "unmatched": 194,
+  "ops": [
+    {
+      "kind": "image",
+      "srcRel": "Imagens-20260203T174515Z-3-001/Imagens/Akos.jpg",
+      "entity": {
+        "id": "0669a550-5456-4442-bd25-f9921c0943e6",
+        "type": "character",
+        "slug": "akos",
+        "name": "Akos"
+      },
+      "publicUrl": "/images/characters/akos.jpg",
+      "score": 1
+    },
+    {
+      "kind": "map",
+      "srcRel": "Mapas de Atrias-20260203T174932Z-3-001/Mapas de Atrias/Norbria Mapa.jpg",
+      "entity": {
+        "id": "b6f84ed9-c1c1-412b-a304-e0cd928e2183",
+        "type": "place",
+        "slug": "norbria",
+        "name": "Norbria"
+      },
+      "publicUrl": "/images/maps/norbria.jpg",
+      "score": 0.75
+    },
+    {
+      "kind": "map",
+      "srcRel": "Mapas de Atrias-20260203T174932Z-3-001/Mapas de Atrias/Pedra Luna.jpg",
+      "entity": {
+        "id": "58f5942a-4bd2-4f96-ac62-17aa1ae07daa",
+        "type": "place",
+        "slug": "pedraluna",
+        "name": "Pedraluna"
+      },
+      "publicUrl": "/images/maps/pedraluna.jpg",
+      "score": 1
+    },
+    {
+      "kind": "map",
+      "srcRel": "Mapas de Atrias-20260203T174932Z-3-001/Mapas de Atrias/Sol Manso.jpg",
+      "entity": {
+        "id": "3524f2df-73ba-4a13-a363-74b4a9c8794a",
+        "type": "place",
+        "slug": "sol-manso",
+        "name": "Sol Manso"
+      },
+      "publicUrl": "/images/maps/sol-manso.jpg",
+      "score": 1
+    }
+  ],
+  "ignoredList": [
+    {
+      "rel": "Imagens-20260203T174515Z-3-001/Imagens/35e2ac0919813c82e5914b994ec1aa96.jpg",
+      "reason": "looks-generated"
+    },
+    {
+      "rel": "Imagens-20260203T174515Z-3-001/Imagens/_1aac4578-4c17-40bc-9838-b7d6d7a02a1f.jpg",
+      "reason": "looks-generated"
+    },
+    {
+      "rel": "Imagens-20260203T174515Z-3-001/Imagens/_a2008673-5d1c-4040-ae49-fbe3bc96de21.jpg",
+      "reason": "looks-generated"
+    },
+    {
+      "rel": "Imagens-20260203T174515Z-3-001/Imagens/generated_image_1719408829512.png",
+      "reason": "looks-generated"
+    },
+    {
+      "rel": "Imagens-20260203T174515Z-3-001/Imagens/generated_image_1721654370829.png",
+      "reason": "looks-generated"
+    },
+    {
+      "rel": "Imagens-20260203T174515Z-3-001/Imagens/generated_image_1727185371141.png",
+      "reason": "looks-generated"
+    },
+    {
+      "rel": "Imagens-20260203T174515Z-3-001/Imagens/generated_image_1727790368039.png",
+      "reason": "looks-generated"
+    },
+    {
+      "rel": "Imagens-fgd-3-001/Imagens/35e2ac0919813c82e5914b994ec1aa96.jpg",
+      "reason": "looks-generated"
+    },
+    {
+      "rel": "Imagens-fgd-3-001/Imagens/_1aac4578-4c17-40bc-9838-b7d6d7a02a1f.jpg",
+      "reason": "looks-generated"
+    },
+    {
+      "rel": "Imagens-fgd-3-001/Imagens/_a2008673-5d1c-4040-ae49-fbe3bc96de21.jpg",
+      "reason": "looks-generated"
+    },
+    {
+      "rel": "Imagens-fgd-3-001/Imagens/generated_image_1719408829512.png",
+      "reason": "looks-generated"
+    },
+    {
+      "rel": "Imagens-fgd-3-001/Imagens/generated_image_1721654370829.png",
+      "reason": "looks-generated"
+    },
+    {
+      "rel": "Imagens-fgd-3-001/Imagens/generated_image_1727185371141.png",
+      "reason": "looks-generated"
+    },
+    {
+      "rel": "Imagens-fgd-3-001/Imagens/generated_image_1727790368039.png",
+      "reason": "looks-generated"
+    },
+    {
+      "rel": "Monstros Unicos-20260203T174720Z-3-001/Monstros Unicos/_659fd6ed-e95e-4db0-9e03-987f51a4fb94.jpg",
+      "reason": "looks-generated"
+    },
+    {
+      "rel": "Monstros Unicos-20260203T174720Z-3-001/Monstros Unicos/generated_image_1719408829512.png",
+      "reason": "looks-generated"
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Hecatombe/ab3fb1b583ef9784884024e6f01d0e3b.jpg",
+      "reason": "looks-generated"
+    }
+  ],
+  "unmatchedList": [
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Antes-Depois.png",
+      "base": "Antes-Depois",
+      "isMap": false,
+      "best": {
+        "score": 0.4,
+        "entity": {
+          "id": "02a390ba-6848-409c-9c7f-b5d661f44ce0",
+          "type": "faction",
+          "name": "Gigantes do Trovão",
+          "slug": "gigantes-do-trovao"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Hadouts/Carta LD.png",
+      "base": "Carta LD",
+      "isMap": false,
+      "best": {
+        "score": 0.5,
+        "entity": {
+          "id": "2d9c5c77-8b30-4de8-9c81-4090d5d6ad33",
+          "type": "faction",
+          "name": "Alta'Arcanas",
+          "slug": "alta-arcanas"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Hadouts/Contrato Cavensidh.png",
+      "base": "Contrato Cavensidh",
+      "isMap": false,
+      "best": {
+        "score": 0.35714285714285715,
+        "entity": {
+          "id": "57ca74ac-18c4-4dbb-bd4a-6ae9ea4c6c48",
+          "type": "faction",
+          "name": "Corja Traidora",
+          "slug": "corja-traidora"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Hadouts/Contrato Lobos.png",
+      "base": "Contrato Lobos",
+      "isMap": false,
+      "best": {
+        "score": 0.35714285714285715,
+        "entity": {
+          "id": "08ef852f-521d-4dd7-81f0-4a1be30d519d",
+          "type": "faction",
+          "name": "Crocodilos Atrozes",
+          "slug": "crocodilos-atrozes"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Hadouts/Contrato do Monstro.png",
+      "base": "Contrato do Monstro",
+      "isMap": false,
+      "best": {
+        "score": 0.35714285714285715,
+        "entity": {
+          "id": "57ca74ac-18c4-4dbb-bd4a-6ae9ea4c6c48",
+          "type": "faction",
+          "name": "Corja Traidora",
+          "slug": "corja-traidora"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Hadouts/Cosmologia Átrias.png",
+      "base": "Cosmologia Átrias",
+      "isMap": false,
+      "best": {
+        "score": 0.5,
+        "entity": {
+          "id": "4081af56-f38f-453e-97df-08bbc3cbc91d",
+          "type": "place",
+          "name": "Átrias",
+          "slug": "atrias"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Hadouts/Diagrama Hadryllis.jpg",
+      "base": "Diagrama Hadryllis",
+      "isMap": false,
+      "best": {
+        "score": 0.3478260869565218,
+        "entity": {
+          "id": "e1eaee0a-14f9-4bd0-8200-bc9bfe5b422c",
+          "type": "lore",
+          "name": "Pedra-Mãe",
+          "slug": "pedra-mae"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Hadouts/Mapa Ensanguentado.png",
+      "base": "Mapa Ensanguentado",
+      "isMap": true,
+      "best": {
+        "score": 0.2608695652173913,
+        "entity": {
+          "id": "3524f2df-73ba-4a13-a363-74b4a9c8794a",
+          "type": "place",
+          "name": "Sol Manso",
+          "slug": "sol-manso"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Hadouts/Mosca de Ébano Retrato.png",
+      "base": "Mosca de Ébano Retrato",
+      "isMap": false,
+      "best": {
+        "score": 0.38888888888888895,
+        "entity": {
+          "id": "a9e0ba10-f296-4e60-ba5c-0068d3d0c8d7",
+          "type": "item",
+          "name": "Nós de Arvid-Retorcida",
+          "slug": "nos-de-arvid-retorcida"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Hadouts/Pergaminho Mapa.png",
+      "base": "Pergaminho Mapa",
+      "isMap": false,
+      "best": {
+        "score": 0.30000000000000004,
+        "entity": {
+          "id": "e1eaee0a-14f9-4bd0-8200-bc9bfe5b422c",
+          "type": "lore",
+          "name": "Pedra-Mãe",
+          "slug": "pedra-mae"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Hadouts/Pergaminho PHC.png",
+      "base": "Pergaminho PHC",
+      "isMap": false,
+      "best": {
+        "score": 0.3076923076923077,
+        "entity": {
+          "id": "a22c0a5e-fcb3-47db-8a2a-80b27053238a",
+          "type": "character",
+          "name": "Amergin Ghalbath",
+          "slug": "amergin-ghalbath"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Hadouts/Porta Labirinto.jpg",
+      "base": "Porta Labirinto",
+      "isMap": false,
+      "best": {
+        "score": 0.4,
+        "entity": {
+          "id": "441aabce-f688-4e57-a6e3-28065a208b3e",
+          "type": "place",
+          "name": "Mortalha",
+          "slug": "mortalha"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Hadouts/Skeld Envelhecido.png",
+      "base": "Skeld Envelhecido",
+      "isMap": false,
+      "best": {
+        "score": 0.5454545454545454,
+        "entity": {
+          "id": "c798f780-d346-46df-9e2c-920d885e66ab",
+          "type": "faction",
+          "name": "Skeldens",
+          "slug": "skeldens"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Hadouts/Vento Gélido Mapa.png",
+      "base": "Vento Gélido Mapa",
+      "isMap": false,
+      "best": {
+        "score": 0.3846153846153847,
+        "entity": {
+          "id": "f7ecd341-e01b-49c2-a20f-3e9c2d4a2dba",
+          "type": "character",
+          "name": "Regente do jogo",
+          "slug": "regente-do-jogo"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Hierarquia Oas.png",
+      "base": "Hierarquia Oas",
+      "isMap": false,
+      "best": {
+        "score": 0.27586206896551724,
+        "entity": {
+          "id": "7f72f1a9-da1c-426e-b21d-a16fd05c5f71",
+          "type": "item",
+          "name": "Margarida Temerária",
+          "slug": "margarida-temeraria"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Mapas da Campanha/0047_gothic_gyroscopicGrove-day_v001-gridless-PRINT.jpg",
+      "base": "0047_gothic_gyroscopicGrove-day_v001-gridless-PRINT",
+      "isMap": true,
+      "best": {
+        "score": 0.16949152542372883,
+        "entity": {
+          "id": "5890862e-6436-4e44-919c-2c4ddb7848b5",
+          "type": "place",
+          "name": "Torres principais",
+          "slug": "torres-principais"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Mapas da Campanha/Altar.png",
+      "base": "Altar",
+      "isMap": true,
+      "best": {
+        "score": 0.36363636363636365,
+        "entity": {
+          "id": "441aabce-f688-4e57-a6e3-28065a208b3e",
+          "type": "place",
+          "name": "Mortalha",
+          "slug": "mortalha"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Mapas da Campanha/Batalha Muralha.jpg",
+      "base": "Batalha Muralha",
+      "isMap": true,
+      "best": {
+        "score": 0.4,
+        "entity": {
+          "id": "441aabce-f688-4e57-a6e3-28065a208b3e",
+          "type": "place",
+          "name": "Mortalha",
+          "slug": "mortalha"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Mapas da Campanha/Batalha de Videnserg 3.jpg",
+      "base": "Batalha de Videnserg 3",
+      "isMap": true,
+      "best": {
+        "score": 0.375,
+        "entity": {
+          "id": "1854454b-80d6-41b9-8e45-5a1177fb85e6",
+          "type": "place",
+          "name": "baía de Hardenfor",
+          "slug": "baia-de-hardenfor"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Mapas da Campanha/Battle of Vindenserg.jpg",
+      "base": "Battle of Vindenserg",
+      "isMap": true,
+      "best": {
+        "score": 0.3478260869565218,
+        "entity": {
+          "id": "cd0fc59f-c7bd-4ce3-b115-fe6689e81f6b",
+          "type": "place",
+          "name": "Elendel",
+          "slug": "elendel"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Mapas da Campanha/CronoMap.jpg",
+      "base": "CronoMap",
+      "isMap": true,
+      "best": {
+        "score": 0.23529411764705882,
+        "entity": {
+          "id": "90071229-95a4-4a71-83f6-ccd9091fcdc8",
+          "type": "place",
+          "name": "Camarote VIP",
+          "slug": "camarote-vip"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Mapas da Campanha/Eye Tyrant Lair.jpg",
+      "base": "Eye Tyrant Lair",
+      "isMap": true,
+      "best": {
+        "score": 0.3157894736842105,
+        "entity": {
+          "id": "5a0cd6e3-fb52-4213-82ba-1d56fafdf1eb",
+          "type": "place",
+          "name": "Falandir",
+          "slug": "falandir"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Mapas da Campanha/Floresta Nevada Batalha.jpg",
+      "base": "Floresta Nevada Batalha",
+      "isMap": true,
+      "best": {
+        "score": 0.37037037037037035,
+        "entity": {
+          "id": "441aabce-f688-4e57-a6e3-28065a208b3e",
+          "type": "place",
+          "name": "Mortalha",
+          "slug": "mortalha"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Mapas da Campanha/Floresta Nevada.jpg",
+      "base": "Floresta Nevada",
+      "isMap": true,
+      "best": {
+        "score": 0.29411764705882354,
+        "entity": {
+          "id": "12702dd6-d51b-4cc4-822c-d6edc3e5c0f2",
+          "type": "place",
+          "name": "Casa de Variedades Feller",
+          "slug": "casa-de-variedades-feller"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Mapas da Campanha/Fronze Dragon.jpg",
+      "base": "Fronze Dragon",
+      "isMap": true,
+      "best": {
+        "score": 0.3157894736842105,
+        "entity": {
+          "id": "58f5942a-4bd2-4f96-ac62-17aa1ae07daa",
+          "type": "place",
+          "name": "Pedraluna",
+          "slug": "pedraluna"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Mapas da Campanha/Heindalltarn.png",
+      "base": "Heindalltarn",
+      "isMap": true,
+      "best": {
+        "score": 0.375,
+        "entity": {
+          "id": "98c97694-6e41-4523-bb7b-c5fc7ac1dcc4",
+          "type": "place",
+          "name": "Kandar",
+          "slug": "kandar"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Mapas da Campanha/Mina Parte 1.jpg",
+      "base": "Mina Parte 1",
+      "isMap": true,
+      "best": {
+        "score": 0.3076923076923077,
+        "entity": {
+          "id": "3fad43ae-d8d3-4eb8-8086-22c780078a5b",
+          "type": "place",
+          "name": "ARENA",
+          "slug": "arena"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Mapas da Campanha/Torre Balestra.jpg",
+      "base": "Torre Balestra",
+      "isMap": true,
+      "best": {
+        "score": 0.4166666666666667,
+        "entity": {
+          "id": "f3b2ecbe-200c-4254-ac88-91aadba59e99",
+          "type": "place",
+          "name": "Terra dos Vales",
+          "slug": "terra-dos-vales"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Mapas da Campanha/Videnserg Battle.jpg",
+      "base": "Videnserg Battle",
+      "isMap": true,
+      "best": {
+        "score": 0.30000000000000004,
+        "entity": {
+          "id": "cd0fc59f-c7bd-4ce3-b115-fe6689e81f6b",
+          "type": "place",
+          "name": "Elendel",
+          "slug": "elendel"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Mapas da Campanha/Videnserg.jpg",
+      "base": "Videnserg",
+      "isMap": true,
+      "best": {
+        "score": 0.2857142857142857,
+        "entity": {
+          "id": "cd0fc59f-c7bd-4ce3-b115-fe6689e81f6b",
+          "type": "place",
+          "name": "Elendel",
+          "slug": "elendel"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Mapas da Campanha/Winter Village 2.jpg",
+      "base": "Winter Village 2",
+      "isMap": true,
+      "best": {
+        "score": 0.2857142857142857,
+        "entity": {
+          "id": "d0c14b10-97ee-42d6-91b9-ad59b645716c",
+          "type": "place",
+          "name": "Estalagem da Lua Crescente",
+          "slug": "estalagem-da-lua-crescente"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Mapas da Campanha/Zombie Attack by Spooky.jpg",
+      "base": "Zombie Attack by Spooky",
+      "isMap": true,
+      "best": {
+        "score": 0.13636363636363635,
+        "entity": {
+          "id": "2b6e3b54-7022-4a99-a2fb-2cb851e5b1f1",
+          "type": "place",
+          "name": "Acampamento dos Patrulheiros",
+          "slug": "acampamento-dos-patrulheiros"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Mapas da Campanha/center.jpg",
+      "base": "center",
+      "isMap": true,
+      "best": {
+        "score": 0.35294117647058826,
+        "entity": {
+          "id": "fe1e4169-f845-4915-bb0f-e7072c6f0757",
+          "type": "place",
+          "name": "Centro da arena",
+          "slug": "centro-da-arena"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Mapas da Campanha/giganteskeleto.jpg",
+      "base": "giganteskeleto",
+      "isMap": true,
+      "best": {
+        "score": 0.35294117647058826,
+        "entity": {
+          "id": "0fc934ec-5719-4450-be89-36b13551d28a",
+          "type": "place",
+          "name": "Skeld",
+          "slug": "skeld"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Mapas da Campanha/jotun-map.jpg",
+      "base": "jotun-map",
+      "isMap": true,
+      "best": {
+        "score": 0.23529411764705882,
+        "entity": {
+          "id": "90071229-95a4-4a71-83f6-ccd9091fcdc8",
+          "type": "place",
+          "name": "Camarote VIP",
+          "slug": "camarote-vip"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Mapas da Campanha/jotunbase.jpg",
+      "base": "jotunbase",
+      "isMap": true,
+      "best": {
+        "score": 0.18181818181818182,
+        "entity": {
+          "id": "0644531a-7a9e-4778-ace8-bef39b66e3a0",
+          "type": "place",
+          "name": "Descanso Fortuno",
+          "slug": "descanso-fortuno"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Mapas da Campanha/labirinto sem grid.jpg",
+      "base": "labirinto sem grid",
+      "isMap": true,
+      "best": {
+        "score": 0.2,
+        "entity": {
+          "id": "2b6e3b54-7022-4a99-a2fb-2cb851e5b1f1",
+          "type": "place",
+          "name": "Acampamento dos Patrulheiros",
+          "slug": "acampamento-dos-patrulheiros"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Mapas da Campanha/ntirzg99uyo7rryfmy43pay0rz5m.jpg",
+      "base": "ntirzg99uyo7rryfmy43pay0rz5m",
+      "isMap": true,
+      "best": {
+        "score": 0.11538461538461539,
+        "entity": {
+          "id": "2b6e3b54-7022-4a99-a2fb-2cb851e5b1f1",
+          "type": "place",
+          "name": "Acampamento dos Patrulheiros",
+          "slug": "acampamento-dos-patrulheiros"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Mapas da Campanha/templo do pantano.png",
+      "base": "templo do pantano",
+      "isMap": true,
+      "best": {
+        "score": 0.36363636363636365,
+        "entity": {
+          "id": "1dd427a2-56b5-46fc-8eac-4f03c639d2da",
+          "type": "place",
+          "name": "Templos da Chama Branca",
+          "slug": "templos-da-chama-branca"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Personagens/Alan Kendra-portrait2.png",
+      "base": "Alan Kendra-portrait2",
+      "isMap": false,
+      "best": {
+        "score": 0.3333333333333333,
+        "entity": {
+          "id": "57ca74ac-18c4-4dbb-bd4a-6ae9ea4c6c48",
+          "type": "faction",
+          "name": "Corja Traidora",
+          "slug": "corja-traidora"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Personagens/Arannis Portrait.png",
+      "base": "Arannis Portrait",
+      "isMap": false,
+      "best": {
+        "score": 0.3846153846153847,
+        "entity": {
+          "id": "57ca74ac-18c4-4dbb-bd4a-6ae9ea4c6c48",
+          "type": "faction",
+          "name": "Corja Traidora",
+          "slug": "corja-traidora"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Personagens/Cap Eobald-portrait.png",
+      "base": "Cap Eobald-portrait",
+      "isMap": false,
+      "best": {
+        "score": 0.32432432432432434,
+        "entity": {
+          "id": "ed70a515-be35-48a4-8e7d-3cd3bd6f75c6",
+          "type": "character",
+          "name": "Capitã Thalia Corçanegra",
+          "slug": "capita-thalia-corcanegra"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Personagens/Crono Elemental.png",
+      "base": "Crono Elemental",
+      "isMap": false,
+      "best": {
+        "score": 0.5161290322580645,
+        "entity": {
+          "id": "b1a99735-9e98-4945-b8a1-cd5607515396",
+          "type": "faction",
+          "name": "Baluartes do Elemento",
+          "slug": "baluartes-do-elemento"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Personagens/Dark Ionius- Portrait.png",
+      "base": "Dark Ionius- Portrait",
+      "isMap": false,
+      "best": {
+        "score": 0.27586206896551724,
+        "entity": {
+          "id": "57ca74ac-18c4-4dbb-bd4a-6ae9ea4c6c48",
+          "type": "faction",
+          "name": "Corja Traidora",
+          "slug": "corja-traidora"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Personagens/Eibjolf-Portrait.png",
+      "base": "Eibjolf-Portrait",
+      "isMap": false,
+      "best": {
+        "score": 0.3076923076923077,
+        "entity": {
+          "id": "57ca74ac-18c4-4dbb-bd4a-6ae9ea4c6c48",
+          "type": "faction",
+          "name": "Corja Traidora",
+          "slug": "corja-traidora"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Personagens/Fahrur.png",
+      "base": "Fahrur",
+      "isMap": false,
+      "best": {
+        "score": 0.36363636363636365,
+        "entity": {
+          "id": "03d88d2f-66f2-4a0e-9c76-f2cd7de96c92",
+          "type": "lore",
+          "name": "Ruptura",
+          "slug": "ruptura"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Personagens/Galahad Retrato.png",
+      "base": "Galahad Retrato",
+      "isMap": false,
+      "best": {
+        "score": 0.3448275862068966,
+        "entity": {
+          "id": "c2f87330-7964-4f20-ac72-98ea92c9789a",
+          "type": "character",
+          "name": "Adjutores Naturais",
+          "slug": "adjutores-naturais"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Personagens/Galahad-Wendigo.png",
+      "base": "Galahad-Wendigo",
+      "isMap": false,
+      "best": {
+        "score": 0.4,
+        "entity": {
+          "id": "5a0cd6e3-fb52-4213-82ba-1d56fafdf1eb",
+          "type": "place",
+          "name": "Falandir",
+          "slug": "falandir"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Personagens/Gibson.png",
+      "base": "Gibson",
+      "isMap": false,
+      "best": {
+        "score": 0.26666666666666666,
+        "entity": {
+          "id": "f89e4d2a-7d0f-40b6-9719-dd8da1f42958",
+          "type": "character",
+          "name": "Gilmond Vern",
+          "slug": "gilmond-vern"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Personagens/Gordan-portrait.png",
+      "base": "Gordan-portrait",
+      "isMap": false,
+      "best": {
+        "score": 0.4,
+        "entity": {
+          "id": "57ca74ac-18c4-4dbb-bd4a-6ae9ea4c6c48",
+          "type": "faction",
+          "name": "Corja Traidora",
+          "slug": "corja-traidora"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Personagens/Gordom DK.png",
+      "base": "Gordom DK",
+      "isMap": false,
+      "best": {
+        "score": 0.46153846153846156,
+        "entity": {
+          "id": "a94a74a6-bcd0-4f0d-81f7-a5143fb931b8",
+          "type": "item",
+          "name": "Bordões",
+          "slug": "bordoes"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Personagens/Grão Artificer Klaus.png",
+      "base": "Grão Artificer Klaus",
+      "isMap": false,
+      "best": {
+        "score": 0.23529411764705882,
+        "entity": {
+          "id": "88d35780-9c95-4169-9c93-ceeedd38bc77",
+          "type": "character",
+          "name": "Augustinus Clifford",
+          "slug": "augustinus-clifford"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Personagens/IzurNovo-portrait.png",
+      "base": "IzurNovo-portrait",
+      "isMap": false,
+      "best": {
+        "score": 0.2962962962962963,
+        "entity": {
+          "id": "57ca74ac-18c4-4dbb-bd4a-6ae9ea4c6c48",
+          "type": "faction",
+          "name": "Corja Traidora",
+          "slug": "corja-traidora"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Personagens/Misterio-portrait.png",
+      "base": "Misterio-portrait",
+      "isMap": false,
+      "best": {
+        "score": 0.36363636363636365,
+        "entity": {
+          "id": "47a43506-6488-417a-ad0f-f23efa7fade6",
+          "type": "lore",
+          "name": "Superior",
+          "slug": "superior"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Personagens/Morveindren-Winged.png",
+      "base": "Morveindren-Winged",
+      "isMap": false,
+      "best": {
+        "score": 0.29411764705882354,
+        "entity": {
+          "id": "7cfe2066-08e0-412f-a87b-d4af3a194cb2",
+          "type": "faction",
+          "name": "Seguidores de Mordred",
+          "slug": "seguidores-de-mordred"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Personagens/Rasmusen Portrait.png",
+      "base": "Rasmusen Portrait",
+      "isMap": false,
+      "best": {
+        "score": 0.37037037037037035,
+        "entity": {
+          "id": "57ca74ac-18c4-4dbb-bd4a-6ae9ea4c6c48",
+          "type": "faction",
+          "name": "Corja Traidora",
+          "slug": "corja-traidora"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Personagens/Rhogar.png",
+      "base": "Rhogar",
+      "isMap": false,
+      "best": {
+        "score": 0.36363636363636365,
+        "entity": {
+          "id": "7b6ffe49-f4cd-4423-be89-11dd69f3f533",
+          "type": "monster",
+          "name": "Nidhogg",
+          "slug": "nidhogg"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Personagens/Stibjorn-portrait.png",
+      "base": "Stibjorn-portrait",
+      "isMap": false,
+      "best": {
+        "score": 0.37037037037037035,
+        "entity": {
+          "id": "57ca74ac-18c4-4dbb-bd4a-6ae9ea4c6c48",
+          "type": "faction",
+          "name": "Corja Traidora",
+          "slug": "corja-traidora"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Personagens/Tal Rasha.png",
+      "base": "Tal Rasha",
+      "isMap": false,
+      "best": {
+        "score": 0.42857142857142855,
+        "entity": {
+          "id": "441aabce-f688-4e57-a6e3-28065a208b3e",
+          "type": "place",
+          "name": "Mortalha",
+          "slug": "mortalha"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Personagens/Ulfgar-portrait2.png",
+      "base": "Ulfgar-portrait2",
+      "isMap": false,
+      "best": {
+        "score": 0.3076923076923077,
+        "entity": {
+          "id": "57ca74ac-18c4-4dbb-bd4a-6ae9ea4c6c48",
+          "type": "faction",
+          "name": "Corja Traidora",
+          "slug": "corja-traidora"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Personagens/Uthred- portrait2.png",
+      "base": "Uthred- portrait2",
+      "isMap": false,
+      "best": {
+        "score": 0.3333333333333333,
+        "entity": {
+          "id": "c2f87330-7964-4f20-ac72-98ea92c9789a",
+          "type": "character",
+          "name": "Adjutores Naturais",
+          "slug": "adjutores-naturais"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Personagens/Vasili Retrato.png",
+      "base": "Vasili Retrato",
+      "isMap": false,
+      "best": {
+        "score": 0.35294117647058826,
+        "entity": {
+          "id": "4081af56-f38f-453e-97df-08bbc3cbc91d",
+          "type": "place",
+          "name": "Átrias",
+          "slug": "atrias"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Personagens/Yurdra-Portrait.png",
+      "base": "Yurdra-Portrait",
+      "isMap": false,
+      "best": {
+        "score": 0.4,
+        "entity": {
+          "id": "57ca74ac-18c4-4dbb-bd4a-6ae9ea4c6c48",
+          "type": "faction",
+          "name": "Corja Traidora",
+          "slug": "corja-traidora"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Personagens/folkvar-portrait.png",
+      "base": "folkvar-portrait",
+      "isMap": false,
+      "best": {
+        "score": 0.3076923076923077,
+        "entity": {
+          "id": "57ca74ac-18c4-4dbb-bd4a-6ae9ea4c6c48",
+          "type": "faction",
+          "name": "Corja Traidora",
+          "slug": "corja-traidora"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Personagens/mygo foto.png",
+      "base": "mygo foto",
+      "isMap": false,
+      "best": {
+        "score": 0.25,
+        "entity": {
+          "id": "093a2fc1-ea72-49cf-98b0-9569b48fc775",
+          "type": "place",
+          "name": "Lago Teamor",
+          "slug": "lago-teamor"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Personagens/wfr-bruiser-pt.png",
+      "base": "wfr-bruiser-pt",
+      "isMap": false,
+      "best": {
+        "score": 0.26666666666666666,
+        "entity": {
+          "id": "78028b9a-3e67-46fc-b6b4-44c81bdfa839",
+          "type": "character",
+          "name": "Sêren",
+          "slug": "seren"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/grupo.jpg",
+      "base": "grupo",
+      "isMap": false,
+      "best": {
+        "score": 0.4,
+        "entity": {
+          "id": "03d88d2f-66f2-4a0e-9c76-f2cd7de96c92",
+          "type": "lore",
+          "name": "Ruptura",
+          "slug": "ruptura"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Furias de Videnserg-20260203T174421Z-3-001/CdA Furias de Videnserg/Átrias (Mapa Antigo).jpg",
+      "base": "Átrias (Mapa Antigo)",
+      "isMap": false,
+      "best": {
+        "score": 0.5,
+        "entity": {
+          "id": "4081af56-f38f-453e-97df-08bbc3cbc91d",
+          "type": "place",
+          "name": "Átrias",
+          "slug": "atrias"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Improvaveis de Solaria-20260203T174512Z-3-001/CdA Improvaveis de Solaria/Season 03/Guardião Arcano.jpg",
+      "base": "Guardião Arcano",
+      "isMap": false,
+      "best": {
+        "score": 0.5384615384615384,
+        "entity": {
+          "id": "5fd363e1-e0ec-4183-90b9-557f77ed09dd",
+          "type": "character",
+          "name": "Guardiã da ordem",
+          "slug": "guardia-da-ordem"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Improvaveis de Solaria-20260203T174512Z-3-001/CdA Improvaveis de Solaria/Season 03/Sumidouro Ruinas.jpg",
+      "base": "Sumidouro Ruinas",
+      "isMap": false,
+      "best": {
+        "score": 0.375,
+        "entity": {
+          "id": "fed391c6-0d7d-4875-a59a-229447d48cd7",
+          "type": "character",
+          "name": "Thrandorin Dobra'ouro",
+          "slug": "thrandorin-dobra-ouro"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Improvaveis de Solaria-20260203T174512Z-3-001/CdA Improvaveis de Solaria/Season 2/Apparatus_of_kwalish_5e.png",
+      "base": "Apparatus_of_kwalish_5e",
+      "isMap": false,
+      "best": {
+        "score": 0.2790697674418605,
+        "entity": {
+          "id": "80db4f32-fb43-416d-82e8-36ded7aca848",
+          "type": "item",
+          "name": "Tentáculo de Dros'eara Pálida",
+          "slug": "tentaculo-de-dros-eara-palida"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Improvaveis de Solaria-20260203T174512Z-3-001/CdA Improvaveis de Solaria/Season 2/Ashyra.png",
+      "base": "Ashyra",
+      "isMap": false,
+      "best": {
+        "score": 0.36363636363636365,
+        "entity": {
+          "id": "1b28b78b-040f-46c8-9dce-89ed32f3ba79",
+          "type": "item",
+          "name": "anforas",
+          "slug": "anforas"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Improvaveis de Solaria-20260203T174512Z-3-001/CdA Improvaveis de Solaria/Season 2/Forja 1.jpg",
+      "base": "Forja 1",
+      "isMap": false,
+      "best": {
+        "score": 0.36363636363636365,
+        "entity": {
+          "id": "1b28b78b-040f-46c8-9dce-89ed32f3ba79",
+          "type": "item",
+          "name": "anforas",
+          "slug": "anforas"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Improvaveis de Solaria-20260203T174512Z-3-001/CdA Improvaveis de Solaria/Season 2/Forja 2.jpg",
+      "base": "Forja 2",
+      "isMap": false,
+      "best": {
+        "score": 0.36363636363636365,
+        "entity": {
+          "id": "1b28b78b-040f-46c8-9dce-89ed32f3ba79",
+          "type": "item",
+          "name": "anforas",
+          "slug": "anforas"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Improvaveis de Solaria-20260203T174512Z-3-001/CdA Improvaveis de Solaria/Season 2/Hierarquia Oas.png",
+      "base": "Hierarquia Oas",
+      "isMap": false,
+      "best": {
+        "score": 0.27586206896551724,
+        "entity": {
+          "id": "7f72f1a9-da1c-426e-b21d-a16fd05c5f71",
+          "type": "item",
+          "name": "Margarida Temerária",
+          "slug": "margarida-temeraria"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Improvaveis de Solaria-20260203T174512Z-3-001/CdA Improvaveis de Solaria/Season 2/Leonardo_Phoenix_Create_the_image_of_a_magical_creature_It_is_1.jpg",
+      "base": "Leonardo_Phoenix_Create_the_image_of_a_magical_creature_It_is_1",
+      "isMap": false,
+      "best": {
+        "score": 0.22580645161290322,
+        "entity": {
+          "id": "0fa04e3b-971d-4100-8fb9-1fe0f0b45c16",
+          "type": "lore",
+          "name": "A Magia Arcana",
+          "slug": "a-magia-arcana"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Improvaveis de Solaria-20260203T174512Z-3-001/CdA Improvaveis de Solaria/Season 2/Manifestação da Violência Ficha Branco.png",
+      "base": "Manifestação da Violência Ficha Branco",
+      "isMap": false,
+      "best": {
+        "score": 0.44,
+        "entity": {
+          "id": "004b790f-730b-4eea-be24-de11a5581edf",
+          "type": "lore",
+          "name": "Dogma da Chama Branca",
+          "slug": "dogma-da-chama-branca"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Improvaveis de Solaria-20260203T174512Z-3-001/CdA Improvaveis de Solaria/Season 2/Mokkog .png",
+      "base": "Mokkog ",
+      "isMap": false,
+      "best": {
+        "score": 0.25,
+        "entity": {
+          "id": "0669a550-5456-4442-bd25-f9921c0943e6",
+          "type": "character",
+          "name": "Akos",
+          "slug": "akos"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Improvaveis de Solaria-20260203T174512Z-3-001/CdA Improvaveis de Solaria/Season 2/Turmog.png",
+      "base": "Turmog",
+      "isMap": false,
+      "best": {
+        "score": 0.36363636363636365,
+        "entity": {
+          "id": "03d88d2f-66f2-4a0e-9c76-f2cd7de96c92",
+          "type": "lore",
+          "name": "Ruptura",
+          "slug": "ruptura"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Improvaveis de Solaria-20260203T174512Z-3-001/CdA Improvaveis de Solaria/Season 2/Vorlak.png",
+      "base": "Vorlak",
+      "isMap": false,
+      "best": {
+        "score": 0.3333333333333333,
+        "entity": {
+          "id": "29dbd3bc-4ec0-409b-9b5e-8064d751f2b0",
+          "type": "character",
+          "name": "Lançador",
+          "slug": "lancador"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "CdA Improvaveis de Solaria-20260203T174512Z-3-001/CdA Improvaveis de Solaria/Season 2/Warforged_3e.webp",
+      "base": "Warforged_3e",
+      "isMap": false,
+      "best": {
+        "score": 0.2857142857142857,
+        "entity": {
+          "id": "e7e4cb60-5b1e-4b8a-9ded-2b19c8b874ab",
+          "type": "lore",
+          "name": "Teste de Força",
+          "slug": "teste-de-forca"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Imagens-20260203T174515Z-3-001/Imagens/Balsa Longa.jpg",
+      "base": "Balsa Longa",
+      "isMap": false,
+      "best": {
+        "score": 0.2857142857142857,
+        "entity": {
+          "id": "bbaaf521-63b4-4a42-a258-d6a4c7959ca7",
+          "type": "item",
+          "name": "Casa Haralskin",
+          "slug": "casa-haralskin"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Imagens-20260203T174515Z-3-001/Imagens/Besouro Lampídeo.png",
+      "base": "Besouro Lampídeo",
+      "isMap": false,
+      "best": {
+        "score": 0.3478260869565218,
+        "entity": {
+          "id": "800770ae-cb81-466a-94a2-e2ac97f54b95",
+          "type": "faction",
+          "name": "Sol Dourado",
+          "slug": "sol-dourado"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Imagens-20260203T174515Z-3-001/Imagens/Broche.jpg",
+      "base": "Broche",
+      "isMap": false,
+      "best": {
+        "score": 0.4444444444444444,
+        "entity": {
+          "id": "bc3e2b48-4be5-480c-916f-90dcdc09da69",
+          "type": "character",
+          "name": "Bromm",
+          "slug": "bromm"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Imagens-20260203T174515Z-3-001/Imagens/Campanario Monasterio.png",
+      "base": "Campanario Monasterio",
+      "isMap": false,
+      "best": {
+        "score": 0.3448275862068966,
+        "entity": {
+          "id": "2d9c5c77-8b30-4de8-9c81-4090d5d6ad33",
+          "type": "faction",
+          "name": "Alta'Arcanas",
+          "slug": "alta-arcanas"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Imagens-20260203T174515Z-3-001/Imagens/Claustro Monastério.png",
+      "base": "Claustro Monastério",
+      "isMap": false,
+      "best": {
+        "score": 0.32258064516129037,
+        "entity": {
+          "id": "5c31e8d3-eeda-417d-8a3f-c5bb3447ecab",
+          "type": "character",
+          "name": "Lorian Augustine",
+          "slug": "lorian-augustine"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Imagens-20260203T174515Z-3-001/Imagens/Drows Infectados.png",
+      "base": "Drows Infectados",
+      "isMap": false,
+      "best": {
+        "score": 0.26666666666666666,
+        "entity": {
+          "id": "5da9308c-bc53-4b5c-9a7d-80e87abc39f0",
+          "type": "place",
+          "name": "Rochedos de Baldren",
+          "slug": "rochedos-de-baldren"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Imagens-20260203T174515Z-3-001/Imagens/Dutos Monastério.png",
+      "base": "Dutos Monastério",
+      "isMap": false,
+      "best": {
+        "score": 0.36363636363636365,
+        "entity": {
+          "id": "0b862d49-ac82-4177-98d2-98272fd8028b",
+          "type": "character",
+          "name": "Andrastos",
+          "slug": "andrastos"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Imagens-20260203T174515Z-3-001/Imagens/Gorgona Monastério.png",
+      "base": "Gorgona Monastério",
+      "isMap": false,
+      "best": {
+        "score": 0.4,
+        "entity": {
+          "id": "093a2fc1-ea72-49cf-98b0-9569b48fc775",
+          "type": "place",
+          "name": "Lago Teamor",
+          "slug": "lago-teamor"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Imagens-20260203T174515Z-3-001/Imagens/Monastério do Coro Silente.png",
+      "base": "Monastério do Coro Silente",
+      "isMap": false,
+      "best": {
+        "score": 0.4444444444444444,
+        "entity": {
+          "id": "ebd37861-7fe3-4541-8a07-fa737674cb02",
+          "type": "lore",
+          "name": "CONTENDA DO COURO",
+          "slug": "contenda-do-couro"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Imagens-20260203T174515Z-3-001/Imagens/Monge do Coro Silente.png",
+      "base": "Monge do Coro Silente",
+      "isMap": false,
+      "best": {
+        "score": 0.5161290322580645,
+        "entity": {
+          "id": "ebd37861-7fe3-4541-8a07-fa737674cb02",
+          "type": "lore",
+          "name": "CONTENDA DO COURO",
+          "slug": "contenda-do-couro"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Imagens-20260203T174515Z-3-001/Imagens/Nova Sala do Sino.png",
+      "base": "Nova Sala do Sino",
+      "isMap": false,
+      "best": {
+        "score": 0.4,
+        "entity": {
+          "id": "f3b2ecbe-200c-4254-ac88-91aadba59e99",
+          "type": "place",
+          "name": "Terra dos Vales",
+          "slug": "terra-dos-vales"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Imagens-20260203T174515Z-3-001/Imagens/Vila Carvalho Quebrado.jpg",
+      "base": "Vila Carvalho Quebrado",
+      "isMap": false,
+      "best": {
+        "score": 0.35714285714285715,
+        "entity": {
+          "id": "86efc6a4-9e8c-40d4-bf0d-d1302970c68c",
+          "type": "item",
+          "name": "Seiva Clara",
+          "slug": "seiva-clara"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Imagens-20260203T174515Z-3-001/Imagens/Vila de Kanoa.png",
+      "base": "Vila de Kanoa",
+      "isMap": false,
+      "best": {
+        "score": 0.46153846153846156,
+        "entity": {
+          "id": "80a35c91-93f8-4775-acc0-cd2220887b13",
+          "type": "place",
+          "name": "Noan",
+          "slug": "noan"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Imagens-20260203T174515Z-3-001/Imagens/WhatsApp Image 2024-03-14 at 12.51.25.jpeg",
+      "base": "WhatsApp Image 2024-03-14 at 12.51.25",
+      "isMap": false,
+      "best": {
+        "score": 0.2,
+        "entity": {
+          "id": "048903b2-91b5-449d-a533-b1c200a130d3",
+          "type": "faction",
+          "name": "Martelos Ágeis",
+          "slug": "martelos-ageis"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Imagens-20260203T174515Z-3-001/Imagens/Zercrom.png",
+      "base": "Zercrom",
+      "isMap": false,
+      "best": {
+        "score": 0.4,
+        "entity": {
+          "id": "bc3e2b48-4be5-480c-916f-90dcdc09da69",
+          "type": "character",
+          "name": "Bromm",
+          "slug": "bromm"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Imagens-fgd-3-001/Imagens/Balsa Longa.jpg",
+      "base": "Balsa Longa",
+      "isMap": false,
+      "best": {
+        "score": 0.2857142857142857,
+        "entity": {
+          "id": "bbaaf521-63b4-4a42-a258-d6a4c7959ca7",
+          "type": "item",
+          "name": "Casa Haralskin",
+          "slug": "casa-haralskin"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Imagens-fgd-3-001/Imagens/Besouro Lampídeo.png",
+      "base": "Besouro Lampídeo",
+      "isMap": false,
+      "best": {
+        "score": 0.3478260869565218,
+        "entity": {
+          "id": "800770ae-cb81-466a-94a2-e2ac97f54b95",
+          "type": "faction",
+          "name": "Sol Dourado",
+          "slug": "sol-dourado"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Imagens-fgd-3-001/Imagens/Broche.jpg",
+      "base": "Broche",
+      "isMap": false,
+      "best": {
+        "score": 0.4444444444444444,
+        "entity": {
+          "id": "bc3e2b48-4be5-480c-916f-90dcdc09da69",
+          "type": "character",
+          "name": "Bromm",
+          "slug": "bromm"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Imagens-fgd-3-001/Imagens/Campanario Monasterio.png",
+      "base": "Campanario Monasterio",
+      "isMap": false,
+      "best": {
+        "score": 0.3448275862068966,
+        "entity": {
+          "id": "2d9c5c77-8b30-4de8-9c81-4090d5d6ad33",
+          "type": "faction",
+          "name": "Alta'Arcanas",
+          "slug": "alta-arcanas"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Imagens-fgd-3-001/Imagens/Claustro Monastério.png",
+      "base": "Claustro Monastério",
+      "isMap": false,
+      "best": {
+        "score": 0.32258064516129037,
+        "entity": {
+          "id": "5c31e8d3-eeda-417d-8a3f-c5bb3447ecab",
+          "type": "character",
+          "name": "Lorian Augustine",
+          "slug": "lorian-augustine"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Imagens-fgd-3-001/Imagens/Drows Infectados.png",
+      "base": "Drows Infectados",
+      "isMap": false,
+      "best": {
+        "score": 0.26666666666666666,
+        "entity": {
+          "id": "5da9308c-bc53-4b5c-9a7d-80e87abc39f0",
+          "type": "place",
+          "name": "Rochedos de Baldren",
+          "slug": "rochedos-de-baldren"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Imagens-fgd-3-001/Imagens/Dutos Monastério.png",
+      "base": "Dutos Monastério",
+      "isMap": false,
+      "best": {
+        "score": 0.36363636363636365,
+        "entity": {
+          "id": "0b862d49-ac82-4177-98d2-98272fd8028b",
+          "type": "character",
+          "name": "Andrastos",
+          "slug": "andrastos"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Imagens-fgd-3-001/Imagens/Gorgona Monastério.png",
+      "base": "Gorgona Monastério",
+      "isMap": false,
+      "best": {
+        "score": 0.4,
+        "entity": {
+          "id": "093a2fc1-ea72-49cf-98b0-9569b48fc775",
+          "type": "place",
+          "name": "Lago Teamor",
+          "slug": "lago-teamor"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Imagens-fgd-3-001/Imagens/Monastério do Coro Silente.png",
+      "base": "Monastério do Coro Silente",
+      "isMap": false,
+      "best": {
+        "score": 0.4444444444444444,
+        "entity": {
+          "id": "ebd37861-7fe3-4541-8a07-fa737674cb02",
+          "type": "lore",
+          "name": "CONTENDA DO COURO",
+          "slug": "contenda-do-couro"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Imagens-fgd-3-001/Imagens/Monge do Coro Silente.png",
+      "base": "Monge do Coro Silente",
+      "isMap": false,
+      "best": {
+        "score": 0.5161290322580645,
+        "entity": {
+          "id": "ebd37861-7fe3-4541-8a07-fa737674cb02",
+          "type": "lore",
+          "name": "CONTENDA DO COURO",
+          "slug": "contenda-do-couro"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Imagens-fgd-3-001/Imagens/Nova Sala do Sino.png",
+      "base": "Nova Sala do Sino",
+      "isMap": false,
+      "best": {
+        "score": 0.4,
+        "entity": {
+          "id": "f3b2ecbe-200c-4254-ac88-91aadba59e99",
+          "type": "place",
+          "name": "Terra dos Vales",
+          "slug": "terra-dos-vales"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Imagens-fgd-3-001/Imagens/Vila Carvalho Quebrado.jpg",
+      "base": "Vila Carvalho Quebrado",
+      "isMap": false,
+      "best": {
+        "score": 0.35714285714285715,
+        "entity": {
+          "id": "86efc6a4-9e8c-40d4-bf0d-d1302970c68c",
+          "type": "item",
+          "name": "Seiva Clara",
+          "slug": "seiva-clara"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Imagens-fgd-3-001/Imagens/Vila de Kanoa.png",
+      "base": "Vila de Kanoa",
+      "isMap": false,
+      "best": {
+        "score": 0.46153846153846156,
+        "entity": {
+          "id": "80a35c91-93f8-4775-acc0-cd2220887b13",
+          "type": "place",
+          "name": "Noan",
+          "slug": "noan"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Imagens-fgd-3-001/Imagens/WhatsApp Image 2024-03-14 at 12.51.25.jpeg",
+      "base": "WhatsApp Image 2024-03-14 at 12.51.25",
+      "isMap": false,
+      "best": {
+        "score": 0.2,
+        "entity": {
+          "id": "048903b2-91b5-449d-a533-b1c200a130d3",
+          "type": "faction",
+          "name": "Martelos Ágeis",
+          "slug": "martelos-ageis"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Imagens-fgd-3-001/Imagens/Zercrom.png",
+      "base": "Zercrom",
+      "isMap": false,
+      "best": {
+        "score": 0.4,
+        "entity": {
+          "id": "bc3e2b48-4be5-480c-916f-90dcdc09da69",
+          "type": "character",
+          "name": "Bromm",
+          "slug": "bromm"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Mapas de Atrias-20260203T174932Z-3-001/Mapas de Atrias/Akos.jpg",
+      "base": "Akos",
+      "isMap": true,
+      "best": {
+        "score": 0.4,
+        "entity": {
+          "id": "6e46e567-fa7b-4285-ae9f-ca7e11bdd1c1",
+          "type": "place",
+          "name": "Vigília de Akos",
+          "slug": "vigilia-de-akos"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Mapas de Atrias-20260203T174932Z-3-001/Mapas de Atrias/Arena Paragon.jpg",
+      "base": "Arena Paragon",
+      "isMap": true,
+      "best": {
+        "score": 0.5333333333333333,
+        "entity": {
+          "id": "3fad43ae-d8d3-4eb8-8086-22c780078a5b",
+          "type": "place",
+          "name": "ARENA",
+          "slug": "arena"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Mapas de Atrias-20260203T174932Z-3-001/Mapas de Atrias/Balsa Longa.jpg",
+      "base": "Balsa Longa",
+      "isMap": true,
+      "best": {
+        "score": 0.18181818181818182,
+        "entity": {
+          "id": "3e6914d3-bcfc-4ddc-95c5-383c31c3cd14",
+          "type": "place",
+          "name": "Casa Hospitalar",
+          "slug": "casa-hospitalar"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Mapas de Atrias-20260203T174932Z-3-001/Mapas de Atrias/Cidade Nerânia.jpg",
+      "base": "Cidade Nerânia",
+      "isMap": true,
+      "best": {
+        "score": 0.358974358974359,
+        "entity": {
+          "id": "dac75709-a091-4770-8504-3d9541d80ada",
+          "type": "place",
+          "name": "Companhia de Comércio Augustine",
+          "slug": "companhia-de-comercio-augustine"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Mapas de Atrias-20260203T174932Z-3-001/Mapas de Atrias/Cidade de Elwic.jpg",
+      "base": "Cidade de Elwic",
+      "isMap": true,
+      "best": {
+        "score": 0.36363636363636365,
+        "entity": {
+          "id": "12702dd6-d51b-4cc4-822c-d6edc3e5c0f2",
+          "type": "place",
+          "name": "Casa de Variedades Feller",
+          "slug": "casa-de-variedades-feller"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Mapas de Atrias-20260203T174932Z-3-001/Mapas de Atrias/Coldwind.jpg",
+      "base": "Coldwind",
+      "isMap": true,
+      "best": {
+        "score": 0.18181818181818182,
+        "entity": {
+          "id": "0fc934ec-5719-4450-be89-36b13551d28a",
+          "type": "place",
+          "name": "Skeld",
+          "slug": "skeld"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Mapas de Atrias-20260203T174932Z-3-001/Mapas de Atrias/Humma Mapa.png",
+      "base": "Humma Mapa",
+      "isMap": true,
+      "best": {
+        "score": 0.6666666666666666,
+        "entity": {
+          "id": "5ff54c15-99af-4fd8-be31-de954313515f",
+          "type": "place",
+          "name": "Humma",
+          "slug": "humma"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Mapas de Atrias-20260203T174932Z-3-001/Mapas de Atrias/Mundo de Atrias Margem.png",
+      "base": "Mundo de Atrias Margem",
+      "isMap": true,
+      "best": {
+        "score": 0.4347826086956522,
+        "entity": {
+          "id": "4081af56-f38f-453e-97df-08bbc3cbc91d",
+          "type": "place",
+          "name": "Átrias",
+          "slug": "atrias"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Mapas de Atrias-20260203T174932Z-3-001/Mapas de Atrias/Ninho do Grifo.jpg",
+      "base": "Ninho do Grifo",
+      "isMap": true,
+      "best": {
+        "score": 0.15384615384615385,
+        "entity": {
+          "id": "5890862e-6436-4e44-919c-2c4ddb7848b5",
+          "type": "place",
+          "name": "Torres principais",
+          "slug": "torres-principais"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Mapas de Atrias-20260203T174932Z-3-001/Mapas de Atrias/Porto Leal.png",
+      "base": "Porto Leal",
+      "isMap": true,
+      "best": {
+        "score": 0.4,
+        "entity": {
+          "id": "441aabce-f688-4e57-a6e3-28065a208b3e",
+          "type": "place",
+          "name": "Mortalha",
+          "slug": "mortalha"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Mapas de Atrias-20260203T174932Z-3-001/Mapas de Atrias/Região Solaria.jpg",
+      "base": "Região Solaria",
+      "isMap": true,
+      "best": {
+        "score": 0.25,
+        "entity": {
+          "id": "3fad43ae-d8d3-4eb8-8086-22c780078a5b",
+          "type": "place",
+          "name": "ARENA",
+          "slug": "arena"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Mapas de Atrias-20260203T174932Z-3-001/Mapas de Atrias/Skeld em escala.jpg",
+      "base": "Skeld em escala",
+      "isMap": true,
+      "best": {
+        "score": 0.5,
+        "entity": {
+          "id": "0fc934ec-5719-4450-be89-36b13551d28a",
+          "type": "place",
+          "name": "Skeld",
+          "slug": "skeld"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Mapas de Atrias-20260203T174932Z-3-001/Mapas de Atrias/Solaria.jpg",
+      "base": "Solaria",
+      "isMap": true,
+      "best": {
+        "score": 0.36363636363636365,
+        "entity": {
+          "id": "4081af56-f38f-453e-97df-08bbc3cbc91d",
+          "type": "place",
+          "name": "Átrias",
+          "slug": "atrias"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Mapas de Atrias-20260203T174932Z-3-001/Mapas de Atrias/World of Atrias 4.1.jpg",
+      "base": "World of Atrias 4.1",
+      "isMap": true,
+      "best": {
+        "score": 0.5263157894736842,
+        "entity": {
+          "id": "4081af56-f38f-453e-97df-08bbc3cbc91d",
+          "type": "place",
+          "name": "Átrias",
+          "slug": "atrias"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Mapas de Atrias-20260203T174932Z-3-001/Mapas de Atrias/World of Atrias Rescale 1.0.jpg",
+      "base": "World of Atrias Rescale 1.0",
+      "isMap": true,
+      "best": {
+        "score": 0.3846153846153847,
+        "entity": {
+          "id": "4081af56-f38f-453e-97df-08bbc3cbc91d",
+          "type": "place",
+          "name": "Átrias",
+          "slug": "atrias"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Monstros Unicos-20260203T174720Z-3-001/Monstros Unicos/Manifestação da Violência Ficha Branco.png",
+      "base": "Manifestação da Violência Ficha Branco",
+      "isMap": false,
+      "best": {
+        "score": 0.44,
+        "entity": {
+          "id": "004b790f-730b-4eea-be24-de11a5581edf",
+          "type": "lore",
+          "name": "Dogma da Chama Branca",
+          "slug": "dogma-da-chama-branca"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Monstros Unicos-20260203T174720Z-3-001/Monstros Unicos/Mokkog .png",
+      "base": "Mokkog ",
+      "isMap": false,
+      "best": {
+        "score": 0.25,
+        "entity": {
+          "id": "0669a550-5456-4442-bd25-f9921c0943e6",
+          "type": "character",
+          "name": "Akos",
+          "slug": "akos"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "Monstros Unicos-20260203T174720Z-3-001/Monstros Unicos/Vorlak.png",
+      "base": "Vorlak",
+      "isMap": false,
+      "best": {
+        "score": 0.3333333333333333,
+        "entity": {
+          "id": "29dbd3bc-4ec0-409b-9b5e-8064d751f2b0",
+          "type": "character",
+          "name": "Lançador",
+          "slug": "lancador"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Glitterdoom/Entrada Ravina.jpg",
+      "base": "Entrada Ravina",
+      "isMap": false,
+      "best": {
+        "score": 0.5,
+        "entity": {
+          "id": "fe1e4169-f845-4915-bb0f-e7072c6f0757",
+          "type": "place",
+          "name": "Centro da arena",
+          "slug": "centro-da-arena"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Glitterdoom/Glitterdoom 2.jpg",
+      "base": "Glitterdoom 2",
+      "isMap": false,
+      "best": {
+        "score": 0.3157894736842105,
+        "entity": {
+          "id": "2161a08e-ca21-4e2d-9a7f-bbc6352874b2",
+          "type": "place",
+          "name": "Sverdflis",
+          "slug": "sverdflis"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Glitterdoom/Glitterdoom.jpg",
+      "base": "Glitterdoom",
+      "isMap": false,
+      "best": {
+        "score": 0.3333333333333333,
+        "entity": {
+          "id": "2161a08e-ca21-4e2d-9a7f-bbc6352874b2",
+          "type": "place",
+          "name": "Sverdflis",
+          "slug": "sverdflis"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Glitterdoom/Imagem Entrada.jpg",
+      "base": "Imagem Entrada",
+      "isMap": false,
+      "best": {
+        "score": 0.37037037037037035,
+        "entity": {
+          "id": "fc68c1b5-dba9-415d-892a-dead664cf3f3",
+          "type": "item",
+          "name": "Semente de Lavanda",
+          "slug": "semente-de-lavanda"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Glitterdoom/salão 1-1.jpg",
+      "base": "salão 1-1",
+      "isMap": false,
+      "best": {
+        "score": 0.3157894736842105,
+        "entity": {
+          "id": "3e6914d3-bcfc-4ddc-95c5-383c31c3cd14",
+          "type": "place",
+          "name": "Casa Hospitalar",
+          "slug": "casa-hospitalar"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Hecatombe/A.png",
+      "base": "A",
+      "isMap": false,
+      "best": {
+        "score": 0,
+        "entity": {
+          "id": "c2f87330-7964-4f20-ac72-98ea92c9789a",
+          "type": "character",
+          "name": "Adjutores Naturais",
+          "slug": "adjutores-naturais"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Hecatombe/Anão Zealot.png",
+      "base": "Anão Zealot",
+      "isMap": false,
+      "best": {
+        "score": 0.3157894736842105,
+        "entity": {
+          "id": "2d9c5c77-8b30-4de8-9c81-4090d5d6ad33",
+          "type": "faction",
+          "name": "Alta'Arcanas",
+          "slug": "alta-arcanas"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Hecatombe/Arbeyach.png",
+      "base": "Arbeyach",
+      "isMap": false,
+      "best": {
+        "score": 0.25,
+        "entity": {
+          "id": "86efc6a4-9e8c-40d4-bf0d-d1302970c68c",
+          "type": "item",
+          "name": "Seiva Clara",
+          "slug": "seiva-clara"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Hecatombe/Argabesh.png",
+      "base": "Argabesh",
+      "isMap": false,
+      "best": {
+        "score": 0.30000000000000004,
+        "entity": {
+          "id": "f8f21150-01a6-456a-9163-598f5c7a28ca",
+          "type": "faction",
+          "name": "Garanhões Reais",
+          "slug": "garanhoes-reais"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Hecatombe/B.png",
+      "base": "B",
+      "isMap": false,
+      "best": {
+        "score": 0,
+        "entity": {
+          "id": "c2f87330-7964-4f20-ac72-98ea92c9789a",
+          "type": "character",
+          "name": "Adjutores Naturais",
+          "slug": "adjutores-naturais"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Hecatombe/C.png",
+      "base": "C",
+      "isMap": false,
+      "best": {
+        "score": 0,
+        "entity": {
+          "id": "c2f87330-7964-4f20-ac72-98ea92c9789a",
+          "type": "character",
+          "name": "Adjutores Naturais",
+          "slug": "adjutores-naturais"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Hecatombe/Druida.png",
+      "base": "Druida",
+      "isMap": false,
+      "best": {
+        "score": 0.36363636363636365,
+        "entity": {
+          "id": "e169a8a4-c88a-4717-a79a-6c74cde120df",
+          "type": "monster",
+          "name": "Ner'drul",
+          "slug": "ner-drul"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Hecatombe/E.png",
+      "base": "E",
+      "isMap": false,
+      "best": {
+        "score": 0,
+        "entity": {
+          "id": "c2f87330-7964-4f20-ac72-98ea92c9789a",
+          "type": "character",
+          "name": "Adjutores Naturais",
+          "slug": "adjutores-naturais"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Hecatombe/Elemental da Fortuna.png",
+      "base": "Elemental da Fortuna",
+      "isMap": false,
+      "best": {
+        "score": 0.45714285714285713,
+        "entity": {
+          "id": "b1a99735-9e98-4945-b8a1-cd5607515396",
+          "type": "faction",
+          "name": "Baluartes do Elemento",
+          "slug": "baluartes-do-elemento"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Hecatombe/GL_HydraLair_Tiamat_Day.jpg",
+      "base": "GL_HydraLair_Tiamat_Day",
+      "isMap": false,
+      "best": {
+        "score": 0.3076923076923077,
+        "entity": {
+          "id": "e1eaee0a-14f9-4bd0-8200-bc9bfe5b422c",
+          "type": "lore",
+          "name": "Pedra-Mãe",
+          "slug": "pedra-mae"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Hecatombe/H.png",
+      "base": "H",
+      "isMap": false,
+      "best": {
+        "score": 0,
+        "entity": {
+          "id": "c2f87330-7964-4f20-ac72-98ea92c9789a",
+          "type": "character",
+          "name": "Adjutores Naturais",
+          "slug": "adjutores-naturais"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Hecatombe/Hecatombem Completo.png",
+      "base": "Hecatombem Completo",
+      "isMap": false,
+      "best": {
+        "score": 0.2777777777777778,
+        "entity": {
+          "id": "ad76f032-1e2b-4bcd-a90d-05c2b51237d8",
+          "type": "character",
+          "name": "Recém-chegado da Tutela",
+          "slug": "recem-chegado-da-tutela"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Hecatombe/Ia_Affrat imagem.png",
+      "base": "Ia_Affrat imagem",
+      "isMap": false,
+      "best": {
+        "score": 0.3333333333333333,
+        "entity": {
+          "id": "7f72f1a9-da1c-426e-b21d-a16fd05c5f71",
+          "type": "item",
+          "name": "Margarida Temerária",
+          "slug": "margarida-temeraria"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Hecatombe/Ia_Affrayt.png",
+      "base": "Ia_Affrayt",
+      "isMap": false,
+      "best": {
+        "score": 0.2105263157894737,
+        "entity": {
+          "id": "0fa04e3b-971d-4100-8fb9-1fe0f0b45c16",
+          "type": "lore",
+          "name": "A Magia Arcana",
+          "slug": "a-magia-arcana"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Hecatombe/M.png",
+      "base": "M",
+      "isMap": false,
+      "best": {
+        "score": 0,
+        "entity": {
+          "id": "c2f87330-7964-4f20-ac72-98ea92c9789a",
+          "type": "character",
+          "name": "Adjutores Naturais",
+          "slug": "adjutores-naturais"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Hecatombe/Mammon.png",
+      "base": "Mammon",
+      "isMap": false,
+      "best": {
+        "score": 0.4444444444444444,
+        "entity": {
+          "id": "5ff54c15-99af-4fd8-be31-de954313515f",
+          "type": "place",
+          "name": "Humma",
+          "slug": "humma"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Hecatombe/Monge.png",
+      "base": "Monge",
+      "isMap": false,
+      "best": {
+        "score": 0.2857142857142857,
+        "entity": {
+          "id": "f89e4d2a-7d0f-40b6-9719-dd8da1f42958",
+          "type": "character",
+          "name": "Gilmond Vern",
+          "slug": "gilmond-vern"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Hecatombe/O.png",
+      "base": "O",
+      "isMap": false,
+      "best": {
+        "score": 0,
+        "entity": {
+          "id": "c2f87330-7964-4f20-ac72-98ea92c9789a",
+          "type": "character",
+          "name": "Adjutores Naturais",
+          "slug": "adjutores-naturais"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Hecatombe/Pecado da Avareza.png",
+      "base": "Pecado da Avareza",
+      "isMap": false,
+      "best": {
+        "score": 0.3846153846153847,
+        "entity": {
+          "id": "fe1e4169-f845-4915-bb0f-e7072c6f0757",
+          "type": "place",
+          "name": "Centro da arena",
+          "slug": "centro-da-arena"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Hecatombe/Pecado.png",
+      "base": "Pecado",
+      "isMap": false,
+      "best": {
+        "score": 0.5,
+        "entity": {
+          "id": "29dbd3bc-4ec0-409b-9b5e-8064d751f2b0",
+          "type": "character",
+          "name": "Lançador",
+          "slug": "lancador"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Hecatombe/Quiltalla.png",
+      "base": "Quiltalla",
+      "isMap": false,
+      "best": {
+        "score": 0.3333333333333333,
+        "entity": {
+          "id": "2d9c5c77-8b30-4de8-9c81-4090d5d6ad33",
+          "type": "faction",
+          "name": "Alta'Arcanas",
+          "slug": "alta-arcanas"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Hecatombe/Ranger.png",
+      "base": "Ranger",
+      "isMap": false,
+      "best": {
+        "score": 0.36363636363636365,
+        "entity": {
+          "id": "1b28b78b-040f-46c8-9dce-89ed32f3ba79",
+          "type": "item",
+          "name": "anforas",
+          "slug": "anforas"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Hecatombe/Sarendar.png",
+      "base": "Sarendar",
+      "isMap": false,
+      "best": {
+        "score": 0.7142857142857143,
+        "entity": {
+          "id": "1853fea3-e797-4e85-8400-c04c4cbf2589",
+          "type": "faction",
+          "name": "Landaren",
+          "slug": "landaren"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Hecatombe/Sorcerer.png",
+      "base": "Sorcerer",
+      "isMap": false,
+      "best": {
+        "score": 0.4444444444444444,
+        "entity": {
+          "id": "7416050a-0b4c-4c15-af38-f884b338b7ce",
+          "type": "monster",
+          "name": "Orc",
+          "slug": "orc"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Hecatombe/T.png",
+      "base": "T",
+      "isMap": false,
+      "best": {
+        "score": 0,
+        "entity": {
+          "id": "c2f87330-7964-4f20-ac72-98ea92c9789a",
+          "type": "character",
+          "name": "Adjutores Naturais",
+          "slug": "adjutores-naturais"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Hecatombe/Taros.png",
+      "base": "Taros",
+      "isMap": false,
+      "best": {
+        "score": 0.6666666666666666,
+        "entity": {
+          "id": "f959a1f2-225c-4b02-a4d3-f9a62107b3ee",
+          "type": "item",
+          "name": "Aro",
+          "slug": "aro"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Hecatombe/Throne Room.jpg",
+      "base": "Throne Room",
+      "isMap": false,
+      "best": {
+        "score": 0.3076923076923077,
+        "entity": {
+          "id": "bc3e2b48-4be5-480c-916f-90dcdc09da69",
+          "type": "character",
+          "name": "Bromm",
+          "slug": "bromm"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Hecatombe/Tiama Token 1.png",
+      "base": "Tiama Token 1",
+      "isMap": false,
+      "best": {
+        "score": 0.2857142857142857,
+        "entity": {
+          "id": "0fa04e3b-971d-4100-8fb9-1fe0f0b45c16",
+          "type": "lore",
+          "name": "A Magia Arcana",
+          "slug": "a-magia-arcana"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Hecatombe/Token Anão.png",
+      "base": "Token Anão",
+      "isMap": false,
+      "best": {
+        "score": 0.3333333333333333,
+        "entity": {
+          "id": "3fad43ae-d8d3-4eb8-8086-22c780078a5b",
+          "type": "place",
+          "name": "ARENA",
+          "slug": "arena"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Hecatombe/Token Druida.png",
+      "base": "Token Druida",
+      "isMap": false,
+      "best": {
+        "score": 0.35294117647058826,
+        "entity": {
+          "id": "1853fea3-e797-4e85-8400-c04c4cbf2589",
+          "type": "faction",
+          "name": "Landaren",
+          "slug": "landaren"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Hecatombe/Token Feiticeiro.png",
+      "base": "Token Feiticeiro",
+      "isMap": false,
+      "best": {
+        "score": 0.38095238095238093,
+        "entity": {
+          "id": "9ac2b45a-4747-4021-991d-cc0a7aec3936",
+          "type": "faction",
+          "name": "ferreiro",
+          "slug": "ferreiro"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Hecatombe/Token Monge.png",
+      "base": "Token Monge",
+      "isMap": false,
+      "best": {
+        "score": 0.25,
+        "entity": {
+          "id": "c798f780-d346-46df-9e2c-920d885e66ab",
+          "type": "faction",
+          "name": "Skeldens",
+          "slug": "skeldens"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Hecatombe/Token Ranger.png",
+      "base": "Token Ranger",
+      "isMap": false,
+      "best": {
+        "score": 0.3333333333333333,
+        "entity": {
+          "id": "0b862d49-ac82-4177-98d2-98272fd8028b",
+          "type": "character",
+          "name": "Andrastos",
+          "slug": "andrastos"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Hecatombe/Totivillus.png",
+      "base": "Totivillus",
+      "isMap": false,
+      "best": {
+        "score": 0.25,
+        "entity": {
+          "id": "4a965cb0-7087-4135-a01d-380a78c87ca2",
+          "type": "character",
+          "name": "Silvanus",
+          "slug": "silvanus"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Hecatombe/Tottivilus.png",
+      "base": "Tottivilus",
+      "isMap": false,
+      "best": {
+        "score": 0.25,
+        "entity": {
+          "id": "4a965cb0-7087-4135-a01d-380a78c87ca2",
+          "type": "character",
+          "name": "Silvanus",
+          "slug": "silvanus"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Hecatombe/Zaxor.png",
+      "base": "Zaxor",
+      "isMap": false,
+      "best": {
+        "score": 0.3333333333333333,
+        "entity": {
+          "id": "7416050a-0b4c-4c15-af38-f884b338b7ce",
+          "type": "monster",
+          "name": "Orc",
+          "slug": "orc"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Hecatombe/arbeyach imagem.jpg",
+      "base": "arbeyach imagem",
+      "isMap": false,
+      "best": {
+        "score": 0.32000000000000006,
+        "entity": {
+          "id": "048903b2-91b5-449d-a533-b1c200a130d3",
+          "type": "faction",
+          "name": "Martelos Ágeis",
+          "slug": "martelos-ageis"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Hecatombe/dpl.png",
+      "base": "dpl",
+      "isMap": false,
+      "best": {
+        "score": 0.13333333333333333,
+        "entity": {
+          "id": "b7e7f161-d003-4669-b221-fc1f5643a5f9",
+          "type": "item",
+          "name": "Junco Esplendor",
+          "slug": "junco-esplendor"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Hecatombe/ec9b60003db05363784efbb1ada9bc5d (1).jpg",
+      "base": "ec9b60003db05363784efbb1ada9bc5d (1)",
+      "isMap": false,
+      "best": {
+        "score": 0.11764705882352941,
+        "entity": {
+          "id": "ad76f032-1e2b-4bcd-a90d-05c2b51237d8",
+          "type": "character",
+          "name": "Recém-chegado da Tutela",
+          "slug": "recem-chegado-da-tutela"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Infâmia/Abandoned Hideout 2.jpg",
+      "base": "Abandoned Hideout 2",
+      "isMap": false,
+      "best": {
+        "score": 0.26666666666666666,
+        "entity": {
+          "id": "ebd37861-7fe3-4541-8a07-fa737674cb02",
+          "type": "lore",
+          "name": "CONTENDA DO COURO",
+          "slug": "contenda-do-couro"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Infâmia/Abandoned Hideout.jpg",
+      "base": "Abandoned Hideout",
+      "isMap": false,
+      "best": {
+        "score": 0.27586206896551724,
+        "entity": {
+          "id": "ebd37861-7fe3-4541-8a07-fa737674cb02",
+          "type": "lore",
+          "name": "CONTENDA DO COURO",
+          "slug": "contenda-do-couro"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Infâmia/Bill Bafo de Sangue Humano-portrait.png",
+      "base": "Bill Bafo de Sangue Humano-portrait",
+      "isMap": false,
+      "best": {
+        "score": 0.35555555555555557,
+        "entity": {
+          "id": "81700911-1bea-4b1c-8350-5315603423f9",
+          "type": "faction",
+          "name": "Caçadores de Sangue",
+          "slug": "cacadores-de-sangue"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Infâmia/Bill Bafo de Sangue Rato.png",
+      "base": "Bill Bafo de Sangue Rato",
+      "isMap": false,
+      "best": {
+        "score": 0.4,
+        "entity": {
+          "id": "81700911-1bea-4b1c-8350-5315603423f9",
+          "type": "faction",
+          "name": "Caçadores de Sangue",
+          "slug": "cacadores-de-sangue"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Infâmia/Bill Bafo de Sangue-Token.png",
+      "base": "Bill Bafo de Sangue-Token",
+      "isMap": false,
+      "best": {
+        "score": 0.38888888888888895,
+        "entity": {
+          "id": "81700911-1bea-4b1c-8350-5315603423f9",
+          "type": "faction",
+          "name": "Caçadores de Sangue",
+          "slug": "cacadores-de-sangue"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Infâmia/Dinna Token.png",
+      "base": "Dinna Token",
+      "isMap": false,
+      "best": {
+        "score": 0.3076923076923077,
+        "entity": {
+          "id": "3fad43ae-d8d3-4eb8-8086-22c780078a5b",
+          "type": "place",
+          "name": "ARENA",
+          "slug": "arena"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Infâmia/Dr. Jenkil.png",
+      "base": "Dr. Jenkil",
+      "isMap": false,
+      "best": {
+        "score": 0.2,
+        "entity": {
+          "id": "5dbbb594-a709-48f8-b170-a117ae510fc8",
+          "type": "item",
+          "name": "A Trilha Ardente",
+          "slug": "a-trilha-ardente"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Infâmia/GL_CityRooftopChase_Original_Day.jpg",
+      "base": "GL_CityRooftopChase_Original_Day",
+      "isMap": false,
+      "best": {
+        "score": 0.26666666666666666,
+        "entity": {
+          "id": "d96e0ddf-ef94-4a0e-97ae-65ac3c524606",
+          "type": "character",
+          "name": "Investigador da Base",
+          "slug": "investigador-da-base"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Infâmia/Grovag Token.png",
+      "base": "Grovag Token",
+      "isMap": false,
+      "best": {
+        "score": 0.26666666666666666,
+        "entity": {
+          "id": "7bcc862a-02b0-4259-9cde-38d2956573de",
+          "type": "place",
+          "name": "Vallen",
+          "slug": "vallen"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Infâmia/Grovag.png",
+      "base": "Grovag",
+      "isMap": false,
+      "best": {
+        "score": 0.30000000000000004,
+        "entity": {
+          "id": "547be7ca-5a54-41e1-bfde-5a211b0dc9cf",
+          "type": "faction",
+          "name": "Dragões Valorosos",
+          "slug": "dragoes-valorosos"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Infâmia/Heist Map.jpg",
+      "base": "Heist Map",
+      "isMap": false,
+      "best": {
+        "score": 0.3157894736842105,
+        "entity": {
+          "id": "048903b2-91b5-449d-a533-b1c200a130d3",
+          "type": "faction",
+          "name": "Martelos Ágeis",
+          "slug": "martelos-ageis"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Infâmia/Jenkil Token.png",
+      "base": "Jenkil Token",
+      "isMap": false,
+      "best": {
+        "score": 0.23529411764705882,
+        "entity": {
+          "id": "c798f780-d346-46df-9e2c-920d885e66ab",
+          "type": "faction",
+          "name": "Skeldens",
+          "slug": "skeldens"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Infâmia/Madame Dinna.png",
+      "base": "Madame Dinna",
+      "isMap": false,
+      "best": {
+        "score": 0.35294117647058826,
+        "entity": {
+          "id": "e1eaee0a-14f9-4bd0-8200-bc9bfe5b422c",
+          "type": "lore",
+          "name": "Pedra-Mãe",
+          "slug": "pedra-mae"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Infâmia/Webs Token.png",
+      "base": "Webs Token",
+      "isMap": false,
+      "best": {
+        "score": 0.26666666666666666,
+        "entity": {
+          "id": "58270953-b9e9-4442-bdac-c6de09b13b28",
+          "type": "character",
+          "name": "Quínewen",
+          "slug": "quinewen"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Infâmia/Webs.png",
+      "base": "Webs",
+      "isMap": false,
+      "best": {
+        "score": 0.2,
+        "entity": {
+          "id": "58270953-b9e9-4442-bdac-c6de09b13b28",
+          "type": "character",
+          "name": "Quínewen",
+          "slug": "quinewen"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Infâmia/Wererat token 1.png",
+      "base": "Wererat token 1",
+      "isMap": false,
+      "best": {
+        "score": 0.375,
+        "entity": {
+          "id": "78028b9a-3e67-46fc-b6b4-44c81bdfa839",
+          "type": "character",
+          "name": "Sêren",
+          "slug": "seren"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Infâmia/Wererat token 2.png",
+      "base": "Wererat token 2",
+      "isMap": false,
+      "best": {
+        "score": 0.375,
+        "entity": {
+          "id": "78028b9a-3e67-46fc-b6b4-44c81bdfa839",
+          "type": "character",
+          "name": "Sêren",
+          "slug": "seren"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Infâmia/deck inferio 2.png",
+      "base": "deck inferio 2",
+      "isMap": false,
+      "best": {
+        "score": 0.3333333333333333,
+        "entity": {
+          "id": "47a43506-6488-417a-ad0f-f23efa7fade6",
+          "type": "lore",
+          "name": "Superior",
+          "slug": "superior"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Infâmia/deck superior 2.png",
+      "base": "deck superior 2",
+      "isMap": false,
+      "best": {
+        "score": 0.7368421052631579,
+        "entity": {
+          "id": "47a43506-6488-417a-ad0f-f23efa7fade6",
+          "type": "lore",
+          "name": "Superior",
+          "slug": "superior"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Tumba dos Valentes/3275748-TombOfTheValiant_HD_Map.png",
+      "base": "3275748-TombOfTheValiant_HD_Map",
+      "isMap": false,
+      "best": {
+        "score": 0.25,
+        "entity": {
+          "id": "ed70a515-be35-48a4-8e7d-3cd3bd6f75c6",
+          "type": "character",
+          "name": "Capitã Thalia Corçanegra",
+          "slug": "capita-thalia-corcanegra"
+        }
+      },
+      "reason": null
+    },
+    {
+      "rel": "One-Shots Atrias-20260203T174743Z-3-001/One-Shots Atrias/Tumba dos Valentes/Mapa Tumba.png",
+      "base": "Mapa Tumba",
+      "isMap": true,
+      "best": {
+        "score": 0.3333333333333333,
+        "entity": {
+          "id": "5ff54c15-99af-4fd8-be31-de954313515f",
+          "type": "place",
+          "name": "Humma",
+          "slug": "humma"
+        }
+      },
+      "reason": null
+    }
+  ],
+  "collisionsSample": [
+    {
+      "entity": {
+        "id": "0669a550-5456-4442-bd25-f9921c0943e6",
+        "name": "Akos",
+        "slug": "akos",
+        "type": "character"
+      },
+      "kept": {
+        "rel": "Imagens-20260203T174515Z-3-001/Imagens/Akos.jpg",
+        "score": 1
+      },
+      "dropped": {
+        "rel": "Imagens-fgd-3-001/Imagens/Akos.jpg",
+        "score": 1
+      }
+    }
+  ],
+  "applied": null,
+  "errors": []
+}
