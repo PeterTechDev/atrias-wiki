@@ -23,7 +23,7 @@ export default async function FactionsPage() {
   })
 
   return (
-    <main className="min-h-screen bg-[#e8dcc8]">
+    <main className="min-h-screen flex flex-col bg-[#e8dcc8]">
       {/* Header */}
       <header className="bg-[#0a1628] text-white py-4 px-6">
         <div className="max-w-6xl mx-auto flex justify-between items-center">
@@ -118,7 +118,7 @@ export default async function FactionsPage() {
       </div>
 
       {/* Footer */}
-      <footer className="bg-[#0a1628] text-white py-8 px-6">
+      <footer className="mt-auto bg-[#0a1628] text-white py-8 px-6">
         <div className="max-w-6xl mx-auto text-center">
           <p className="text-amber-400/60 font-crimson italic">
             "Lealdade e a moeda mais valiosa entre aqueles que servem a uma causa maior."
