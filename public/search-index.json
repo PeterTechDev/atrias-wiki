@@ -12,7 +12,7 @@
     "type": "lore",
     "slug": "a-ruptura",
     "name": "A Ruptura",
-    "description": "A cataclysmic event caused by a mortal's attempt to gain divinity, resulting in the fall of divine entities and the rise of Infernal Lords.",
+    "description": "A Ruptura é o cataclismo que marcou a história mágica de Átrias: um período de conflito entre potências cósmicas desencadeado quando mortais e arcanistas se tornaram poderosos o bastante para desafiar o divino. A tradição relata que barganhas antigas com Lordes Infernais iniciaram a disseminação do conhecimento arcano; com o tempo, a ambição levou a tentativas de usurpar a divindade, provocando a queda de múltiplas entidades divinas.\n\nO choque entre forças celestiais e infernais culminou no confronto liderado por Khay'zam contra o Lorde Supremo Drawghar Mototh. O cataclismo resultante teria literalmente dividido continentes, devastado cidades e nações e, por um período, permitido que infernais absorvessem a essência de divindades caídas. Após a vitória e o selamento de Mototh, nasce a política de contenção da magia: as Alta'Arcanas são fundadas para preservar o saber e impedir um novo desastre.",
     "image": null
   },
   {
@@ -29,7 +29,7 @@
     "slug": "arena",
     "name": "ARENA",
     "description": "The oval playing field where the game takes place, featuring various structures and obstacles.",
-    "image": null
+    "image": "/images/maps/arena-paragon.jpg"
   },
   {
     "id": "2b6e3b54-7022-4a99-a2fb-2cb851e5b1f1",
@@ -53,7 +53,7 @@
     "slug": "akdai",
     "name": "Akdai",
     "description": "A distinct-looking half-elf who manages the Caravançará, reflecting his background as a trader.",
-    "image": null
+    "image": "/images/characters/akdai.jpg"
   },
   {
     "id": "0669a550-5456-4442-bd25-f9921c0943e6",
@@ -61,14 +61,22 @@
     "slug": "akos",
     "name": "Akos",
     "description": "A legendary knight whose legacy has left a significant mark on the Vigil of Akos.",
-    "image": null
+    "image": "/images/characters/akos.jpg"
+  },
+  {
+    "id": "e5ada846-b338-4d9c-9b59-9cc6a4f2ef41",
+    "type": "character",
+    "slug": "alan-kendra",
+    "name": "Alan Kendra",
+    "description": "Aliado dos Ursos-Negros (Coldwind). Reúne-se com Eibjolf e Izur como homem de confiança do Martelo-de-Vento; invoca forças da natureza em combate.",
+    "image": "/images/characters/Alan Kendra-portrait2.jpg"
   },
   {
     "id": "2d9c5c77-8b30-4de8-9c81-4090d5d6ad33",
     "type": "faction",
     "slug": "alta-arcanas",
     "name": "Alta'Arcanas",
-    "description": "An organization founded by Khay'zam to contain and disseminate magical knowledge while monitoring its use to prevent future catastrophes.",
+    "description": "As Alta'Arcanas são pináculos (torres) criados para preservar, ensinar e vigiar o conhecimento mágico após a Ruptura. Fundadas pelo mago humano Khay'zam, elas funcionam como centros de estudo restrito: a magia deve ser disseminada com segurança e sob um código rígido, para evitar que seus praticantes sucumbam à Marca da Ambição — uma maldição ligada ao legado de poder e cataclismo do passado.\n\nDiz-se que três torres foram erguidas, uma em cada um dos novos continentes: em Kandar (o continente árido), em Eledhel (a nação féerica) e ao norte, na grande ilha de Skeld. Rumores persistem sobre uma quarta torre no suposto epicentro da Ruptura, jamais confirmada.\n\nEntre seus instrumentos de controle estão os Caçadores de Sangue: uma força marcial treinada desde cedo e submetida a um ritual que altera a própria biologia, destinada a caçar e julgar usuários de magia fora de controle — podendo até nulificá-los, arrancando-lhes o domínio arcano.",
     "image": null
   },
   {
@@ -84,7 +92,7 @@
     "type": "character",
     "slug": "amergin-ghalbath",
     "name": "Amergin Ghalbath",
-    "description": "Amergin Ghalbath is portrayed as an ordinary man who becomes a significant figure after a transformative experience. He is described as a fisherman, shepherd, and possibly a baker, whose past is shrouded in mystery.",
+    "description": "Amergin Ghalbath é a figura central do mito de origem associado a Ghalbaht. Sua vida anterior é descrita como comum e incerta — pescador, pastor, padeiro — mas seu passado teria sido apagado (ou “transmutado”). No período pré-Ruptura, ao socorrer um homem mortalmente ferido, Amergin afirma sentir o lamento do mundo: a terra, o vento, a água e o sol pareciam sofrer com aquela morte.\n\nO moribundo revela-se Silvanus, então deus da natureza e dos elementos. Para proteger Amergin do que viria, Silvanus arrebata sua alma e a envia aos Planos Interiores, para que ouvisse a voz do mundo. Imbuído da essência vital do deus, Amergin vaga por décadas entre os quatro Planos Elementais: sua alma atravessa o Ar, é forjada no Fogo, moldada na Terra e renascida na Água. Entre djinns, elementais e para-elementais, ele aprende e compreende a necessidade de cicatrizar as feridas do mundo para que o ciclo continue.\n\nSeu retorno a Átrias é narrado como um prodígio: cinzas ao vento se aglomeram e tomam a forma de um homem, enquanto madeira queimada revive e brotos surgem — sinal de que Ghalbath volta não mais como um homem comum.",
     "image": null
   },
   {
@@ -92,7 +100,7 @@
     "type": "character",
     "slug": "andrastos",
     "name": "Andrastos",
-    "description": "The ruler of Vallen who initially proposed an alliance with the Skeldens and later died in battle against the Horda.",
+    "description": "Andrastos foi o governante de Vallen durante a escalada das invasões skeldianas ao norte da Terra dos Vales. Ao encontrar um porto e uma cidade rudimentar nos Rochedos de Baldren, escolheu a diplomacia e propôs um acordo com um clã invasor: concessão de terras e títulos em troca da proteção do norte de Humma.\n\nO trato desencadeou a reação de Skeld e a formação da primeira Horda. Para proteger o continente Oeste, Andrastos liderou a marcha do Pacto de Ociddens ao norte, acompanhado da Guarda Argêntea e de Cavaleiros de Nerânia. O Pacto venceu após dias de combate, mas Andrastos morreu na batalha. Sua memória permaneceu como símbolo de união e resistência.",
     "image": null
   },
   {
@@ -100,7 +108,7 @@
     "type": "character",
     "slug": "andrastos-o-unificador",
     "name": "Andrastos O Unificador",
-    "description": "The title given to Andrastos posthumously, celebrated annually in his honor.",
+    "description": "“Andrastos, o Unificador” é o título dado ao governante de Vallen que enfrentou a crise da primeira Horda skelden. Ele liderou, com a Guarda Argêntea e apoio dos Cavaleiros de Nerânia, o esforço do Pacto de Ociddens que salvou o continente Oeste. Andrastos morreu na campanha; anualmente, no dia de sua morte, celebra-se um festival em sua homenagem em Norbria e em Vallen.",
     "image": null
   },
   {
@@ -110,6 +118,14 @@
     "name": "Anões da Grande Ilha",
     "description": "The Anões da Grande Ilha refers to the dwarves of the Great Island, who once held sovereignty over their lands. Their pride and unity have been severely diminished due to the events that transpired in Khal'Guldur.",
     "image": null
+  },
+  {
+    "id": "21e3783b-b2ed-4b66-a0a4-a69cfea86380",
+    "type": "character",
+    "slug": "arannis",
+    "name": "Arannis",
+    "description": "Aventureiro do grupo das Fúrias de Videnserg. Protege Knut na travessia do rio e chega a se oferecer como campeão em um holmgang contra Folkvar; é ferido e perdido em meio ao caos do massacre de Videnserg.",
+    "image": "/images/characters/Arannis Portrait.jpg"
   },
   {
     "id": "a6e5f325-f89d-41fa-8c5d-56a73597011f",
@@ -126,6 +142,14 @@
     "name": "Aro",
     "description": "The target area that players aim to score points by launching the ball through it.",
     "image": null
+  },
+  {
+    "id": "48f4bd3e-4110-4e46-b409-fa4ec8bb6279",
+    "type": "character",
+    "slug": "ashyra",
+    "name": "Ashyra",
+    "description": "Personagem de Átrias (informações ainda não catalogadas nos documentos extraídos).",
+    "image": "/images/characters/Ashyra.jpg"
   },
   {
     "id": "88d35780-9c95-4169-9c93-ceeedd38bc77",
@@ -152,6 +176,14 @@
     "image": null
   },
   {
+    "id": "d820580d-d47d-4ad7-9ce1-c98d55a51589",
+    "type": "character",
+    "slug": "barao-van-klaus",
+    "name": "Barão Van Klaus",
+    "description": "Grão-Artífice dos Cruzados de Oas. Confronta as Fúrias em um forte de mineração e volta a enfrentá-los em Coldwind com um forjado bélico.",
+    "image": "/images/characters/Grão Artificer Klaus.jpg"
+  },
+  {
     "id": "a94a74a6-bcd0-4f0d-81f7-a5143fb931b8",
     "type": "item",
     "slug": "bordoes",
@@ -164,7 +196,7 @@
     "type": "item",
     "slug": "botao-de-locinto",
     "name": "Botão de Locinto",
-    "description": "A vibrant orange plant found in the depths of jungles, quickly developing from a bud into a full plant.",
+    "description": "Botão de uma planta laranja vibrante encontrada nas profundezas das selvas. Armazena energia ao sugar nutrientes do ambiente; o botão amadurece rapidamente. Espremido, libera um líquido amarelo que deixa uma criatura revigorada.",
     "image": null
   },
   {
@@ -172,7 +204,7 @@
     "type": "item",
     "slug": "brasa-espinhosa",
     "name": "Brasa Espinhosa",
-    "description": "A slow-growing orange flower with a black stripe on each petal, thriving in volcanic ash and solidified magma.",
+    "description": "Flor laranja de crescimento lento, com uma faixa preta em cada pétala. Cresce em cinzas quentes e magma solidificado de origem vulcânica. Suas raízes grossas e espinhosas enterram-se na pedra macia para consumir nutrientes internos.",
     "image": null
   },
   {
@@ -204,7 +236,7 @@
     "type": "item",
     "slug": "bulbo-de-kraken-kelp",
     "name": "Bulbo de Kraken-Kelp",
-    "description": "An extremely tall algae that grows at the edges of extreme margins, sometimes visible from beaches in wave valleys.",
+    "description": "Bulbo de uma alga extremamente alta (Kraken-Kelp) que cresce em margens muito íngremes. As algas podem ser vistas de praias em vales costeiros; os bulbos costumam se soltar e chegar à costa.",
     "image": null
   },
   {
@@ -228,7 +260,7 @@
     "type": "lore",
     "slug": "contenda-do-couro",
     "name": "CONTENDA DO COURO",
-    "description": "A game of combat, strategy, speed, and luck played by teams.",
+    "description": "A Contenda do Couro (Leather Strife) é um jogo-espetáculo de combate, estratégia, velocidade e sorte, disputado por dois times numerosos em uma arena oval repleta de obstáculos, plataformas e estruturas elevadas. Cada time possui 44 jogadores (com 20 em campo) divididos em funções especializadas: carregadores, corredores, baleiros, guardas e batedores.\n\nA partida é regida por uma grande ampulheta de aproximadamente 20 minutos. Em momentos marcados (a cada 5 minutos), sacos de estopa suspensos são liberados, espalhando bolas coloridas de pontuação e bolas especiais, o que desloca o foco do combate pela arena. A pontuação é somada ao final, na plataforma central, com contagem de bolas e verificação do mecanismo de carretilha (um “cabo de guerra” acionado por alvos, que concede bônus).\n\nAlém da coleta de bolas, times marcam pontos destruindo ânforas do adversário (alvos para baleiros) e disputando o controle da carretilha por acertos de batedores. O evento conta com comissão de arbitragem (12 árbitros internos/externos, com apitos que podem parar o tempo) e comissão médica e de resgate para remoção e substituição de jogadores contundidos.",
     "image": null
   },
   {
@@ -262,6 +294,14 @@
     "name": "Capitão",
     "description": "The player with the commanding voice, responsible for coordinating the team and can freely act on the sides.",
     "image": null
+  },
+  {
+    "id": "b15aacce-19ee-41e0-b3e8-d3d5d42dca70",
+    "type": "character",
+    "slug": "captain-eobald",
+    "name": "Captain Eobald",
+    "description": "Personagem de Átrias (informações ainda não catalogadas nos documentos extraídos).",
+    "image": "/images/characters/Cap Eobald-portrait.jpg"
   },
   {
     "id": "321227a7-2cd0-451b-9edb-7ea20d3d715a",
@@ -300,7 +340,7 @@
     "type": "faction",
     "slug": "cavaleiros-de-nerania",
     "name": "Cavaleiros de Nerânia",
-    "description": "A battalion that accompanied Andrastos to face the Horda.",
+    "description": "Os Cavaleiros de Nerânia formaram um batalhão que acompanhou Andrastos e a Guarda Argêntea rumo ao norte, durante a guerra contra a primeira Horda skelden no continente Oeste. Sua participação é lembrada como parte do esforço unificado do Pacto de Ociddens.",
     "image": null
   },
   {
@@ -308,7 +348,7 @@
     "type": "faction",
     "slug": "cacadores-de-sangue",
     "name": "Caçadores de Sangue",
-    "description": "A martial force trained to control rogue magic users and maintain the integrity of the Alta'Arcanas.",
+    "description": "Os Caçadores de Sangue são uma força marcial ligada às Alta'Arcanas. Humanos treinados desde cedo nos conhecimentos ocultos, são submetidos a um ritual que altera sua biologia para torná-los caçadores perfeitos. Sua função é perseguir usuários de magia que saem de controle e levá-los a julgamento, inclusive com a possibilidade de nulificação — a perda do controle e do acesso às forças arcanas.",
     "image": null
   },
   {
@@ -324,7 +364,7 @@
     "type": "place",
     "slug": "cernizza",
     "name": "Cernizza",
-    "description": "A location that was established as the Skeldens expanded their territory.",
+    "description": "Cernizza é mencionada como um limite alcançado pela expansão territorial skelden no norte da Terra dos Vales, antes da formação da primeira Horda. Seu nome aparece como referência geográfica na cronologia de tensões que culmina nos eventos de Norbria.",
     "image": null
   },
   {
@@ -332,7 +372,7 @@
     "type": "faction",
     "slug": "chama-branca",
     "name": "Chama Branca",
-    "description": "A faith dedicated to justice and order, symbolizing purity and radiance.",
+    "description": "A Chama Branca é uma fé dedicada à justiça e à ordem: uma luz pura que expõe a corrupção e guia o julgamento. Ao contrário de deuses antropomórficos, raramente é descrita com forma física — um símbolo de que a justiça deve alcançar todos os povos. Seus fiéis a invocam como defensora dos oprimidos e árbitra de conflitos, buscando sempre que a verdade prevaleça.\n\nO clero é conhecido como Luminares, organizado em graus (Vigilante, Luminar da Sentença e Luminar Elevado). Seus templos variam de grandes santuários a instalações civis vinculadas ao ideal de ordem (quartéis, prisões e salões de comuna), funcionando também como centros comunitários e de restauração da lei. Em rituais, a presença da Chama costuma ser evocada por lanternas e velas brancas, lembrando a busca por clareza espiritual, esperança e transformação.",
     "image": null
   },
   {
@@ -348,7 +388,7 @@
     "type": "item",
     "slug": "cogumelo-pingo-rubro",
     "name": "Cogumelo Pingo-Rubro",
-    "description": "A white mushroom with small red spots that grows in humidity and prefers low light or dark areas.",
+    "description": "Cogumelo branco com pequenas manchas vermelhas no chapéu. Cresce em locais úmidos e pouco iluminados, com frequência perto de águas subterrâneas. Inalar seus esporos aguça os sentidos por breve período; doses altas podem causar alucinações.",
     "image": null
   },
   {
@@ -382,6 +422,22 @@
     "name": "Crocodilos Atrozes",
     "description": "Giant Crocs are a faction that embodies ferocity and strength, possibly in aquatic or swampy terrains.",
     "image": null
+  },
+  {
+    "id": "245d3742-9b7a-4c74-846f-6446a6138684",
+    "type": "character",
+    "slug": "crono-elemental",
+    "name": "Crono Elemental",
+    "description": "Entidade/ser elemental (informações ainda não catalogadas nos documentos extraídos).",
+    "image": "/images/characters/Crono Elemental.jpg"
+  },
+  {
+    "id": "24246f91-7f3c-4dfa-8e94-117946d13f13",
+    "type": "character",
+    "slug": "dark-ionius",
+    "name": "Dark Ionius",
+    "description": "Feiticeiro corrompido por um poder sombrio (ligado a Raga). Enfrenta Uthred em Videnserg e, após cair, seu sangue desencadeia um plano que incita a destruição da cidade.",
+    "image": "/images/characters/Dark Ionius- Portrait.jpg"
   },
   {
     "id": "f72ded2f-619e-4d10-bd61-6c61aad4f61b",
@@ -420,7 +476,7 @@
     "type": "lore",
     "slug": "dogma-da-chama-branca",
     "name": "Dogma da Chama Branca",
-    "description": "The guiding principles of the faith, emphasizing truth, justice, and order.",
+    "description": "\"Revele a verdade, puna os culpados, corrija o erro e seja sempre verdadeiro e justo em suas ações. A ordem é o caminho que trilhamos em comunhão para promover o bem-estar de todos.\"",
     "image": null
   },
   {
@@ -436,7 +492,7 @@
     "type": "character",
     "slug": "drawghar-mototh",
     "name": "Drawghar Mototh",
-    "description": "An entity that guided humans in a ritual, leading to their corruption and the rise of the Maldição da Ambição.",
+    "description": "Drawghar Mototh é descrito como um Lorde Infernal Supremo cuja horda foi libertada em sua forma plena durante os eventos que cercam a Ruptura. Derrotado a um grande custo pela coalizão liderada por Khay'zam, Mototh teria sido selado e suas forças banidas para o esquecimento, tornando-se um símbolo do risco existencial que a magia e a ambição desmedida podem desencadear.",
     "image": null
   },
   {
@@ -446,6 +502,14 @@
     "name": "Drika",
     "description": "The family member who assists Eoban Feller in managing the inn.",
     "image": null
+  },
+  {
+    "id": "fd6f64f5-ca6b-413c-a13c-9ae8214b027a",
+    "type": "character",
+    "slug": "eibjolf",
+    "name": "Eibjolf",
+    "description": "Filho de Urdrolf Martelo-de-Vento, Jarl de Coldwind. Lidera guerreiros acompanhados por Ursos Negros e coopera com as Fúrias na guerra em Skeld.",
+    "image": "/images/characters/Eibjolf-Portrait.jpg"
   },
   {
     "id": "632606ce-92e9-4481-9e1a-2151089d0ade",
@@ -512,11 +576,19 @@
     "image": null
   },
   {
+    "id": "bcfd1a25-6a6b-4a54-80e7-c1d294e69e0f",
+    "type": "character",
+    "slug": "fahrur",
+    "name": "Fahrur",
+    "description": "Ferreiro kandariano e amigo do grupo. Ajuda Strauss a tratar Uthred e explica o envenenamento por Marat Alruh (\"espelho da alma\"), associado à Ordem de Sasere.",
+    "image": "/images/characters/Fahrur.jpg"
+  },
+  {
     "id": "5a0cd6e3-fb52-4213-82ba-1d56fafdf1eb",
     "type": "place",
     "slug": "falandir",
     "name": "Falandir",
-    "description": "Falandir is a region mentioned in the narrative, specifically in the context of an event involving the use of magic.",
+    "description": "Falandir é uma das coroas do continente Oeste e membro do Pacto de Ociddens, aliança erguida para enfrentar a primeira Horda skelden e impedir que a invasão se tornasse uma ameaça existencial ao continente.",
     "image": null
   },
   {
@@ -528,12 +600,28 @@
     "image": null
   },
   {
+    "id": "5ed7d132-5b60-4b6c-a506-f16b166305e9",
+    "type": "character",
+    "slug": "folkvar-bico-sangrento",
+    "name": "Folkvar Bico-Sangrento",
+    "description": "Líder do Clã do Corvo e rei de Skeld. Ocupa Videnserg com suas forças, entra em conflito com Stibjorn e incita a guerra que culmina no massacre da cidade.",
+    "image": "/images/characters/folkvar-portrait.jpg"
+  },
+  {
     "id": "38390e8f-851c-4664-8fa3-bac81569bee8",
     "type": "item",
     "slug": "fruta-gelida-azul",
     "name": "Fruta Gélida Azul",
-    "description": "A naturally blue rose that has the ability to neutralize poisons, though not very effectively.",
+    "description": "Uma rosa/fruta naturalmente azul capaz de neutralizar venenos de forma limitada. É resistente e pode ser forrageada em regiões árticas, mas também aparece em prados, planícies e pântanos.",
     "image": null
+  },
+  {
+    "id": "0a905db3-ffec-4724-b030-0bde5ef61691",
+    "type": "character",
+    "slug": "galahad",
+    "name": "Galahad",
+    "description": "Companheiro das Fúrias; caçador de sentidos aguçados. Torna-se hospedeiro do espírito Wendigo e assume forma bestial em combate.",
+    "image": "/images/characters/Galahad Retrato.jpg"
   },
   {
     "id": "f8f21150-01a6-456a-9163-598f5c7a28ca",
@@ -548,8 +636,16 @@
     "type": "character",
     "slug": "ghalbath",
     "name": "Ghalbath",
-    "description": "The founder of the Order of Ghalbaht, who believed in the importance of balance and the use of shields instead of weapons.",
+    "description": "Ghalbath é lembrado como um druida lendário ligado à fundação e aos ideais da Ordem de Ghalbaht. A tradição reforça seu repúdio ao uso de armas ofensivas e a centralidade do escudo como símbolo de defesa do círculo e da ordem natural. Também é associado ao mito de Amergin Ghalbath, no qual uma alma é moldada pelos quatro Planos Elementais para ouvir a voz do mundo e retornar como agente de equilíbrio.",
     "image": null
+  },
+  {
+    "id": "01231384-2323-4f68-869d-2207f523ac79",
+    "type": "character",
+    "slug": "gibson",
+    "name": "Gibson",
+    "description": "Halfling do grupo das Fúrias. Decifra cartas criptografadas, prepara tônicos e atua como combatente ágil, frequentemente atacando pelos flancos.",
+    "image": "/images/characters/Gibson.jpg"
   },
   {
     "id": "02a390ba-6848-409c-9c7f-b5d661f44ce0",
@@ -584,11 +680,19 @@
     "image": null
   },
   {
+    "id": "288e07ed-407c-47bf-ac04-c196f6a29803",
+    "type": "character",
+    "slug": "gordan",
+    "name": "Gordan",
+    "description": "Paladino que acompanhou o grupo no passado. Retorna como um Algoz ligado às forças sombrias (Sentinela Negro), com capacidade de invocar Dargheists.",
+    "image": "/images/characters/Gordan-portrait.jpg"
+  },
+  {
     "id": "07203ea8-6228-4104-9204-5c1bb68e8501",
     "type": "item",
     "slug": "grama-lunar",
     "name": "Grama Lunar",
-    "description": "Grass with silver stripes on the edges, found growing in cold regions through snow and on the tops of high mountains.",
+    "description": "Fios de grama com faixas prateadas nas bordas, encontrados em regiões frias e até no topo de montanhas elevadas. Quando sua fumaça é inalada, os vapores ajudam os olhos a se adaptarem à escuridão.",
     "image": null
   },
   {
@@ -612,7 +716,7 @@
     "type": "faction",
     "slug": "guarda-argentea",
     "name": "Guarda Argêntea",
-    "description": "The elite guard accompanying Andrastos during his campaign against the Horda.",
+    "description": "A Guarda Argêntea é a guarda de elite associada a Andrastos durante a campanha contra a primeira Horda skelden. Marchou ao norte ao lado de um batalhão de Cavaleiros de Nerânia para enfrentar a invasão e integrar o esforço do Pacto de Ociddens.",
     "image": null
   },
   {
@@ -628,7 +732,7 @@
     "type": "item",
     "slug": "hibisco-rubi",
     "name": "Hibisco Rubi",
-    "description": "A bright red flower famous for its pleasant smell but terrible taste, offering beneficial effects despite its rarity.",
+    "description": "Flor vermelha brilhante conhecida pelo aroma agradável e pelo gosto ruim. Apesar disso, oferece efeitos benéficos ao corpo. Pode crescer em quase qualquer floresta, mas é rara: cerca de um em cada cem botões floresce como hibisco rubi.",
     "image": null
   },
   {
@@ -652,8 +756,8 @@
     "type": "place",
     "slug": "humma",
     "name": "Humma",
-    "description": "One of the crowns that formed the Pacto de Ociddens to protect against Skeldian invasions.",
-    "image": null
+    "description": "Humma é uma das coroas do continente Oeste e integrante do Pacto de Ociddens. Na crise da primeira Horda skelden, o norte de Humma era alvo de invasões sazonais; após a guerra, skeldens passaram a se estabelecer na região sob seu estandarte, conforme o acordo mantido por Quínewen.",
+    "image": "/images/maps/humma.jpg"
   },
   {
     "id": "fa77c001-629e-4d19-99c1-80d8ab327e80",
@@ -680,11 +784,19 @@
     "image": null
   },
   {
+    "id": "8a929b5c-e389-4cae-b624-abe92b83f26f",
+    "type": "character",
+    "slug": "izur",
+    "name": "Izur",
+    "description": "Aliado das Fúrias e homem de confiança do Martelo-de-Vento. Luta na linha de frente em Torngard e chega a se sacrificar para deter inimigos durante a batalha de Coldwind.",
+    "image": "/images/characters/IzurNovo-portrait.jpg"
+  },
+  {
     "id": "b7e7f161-d003-4669-b221-fc1f5643a5f9",
     "type": "item",
     "slug": "junco-esplendor",
     "name": "Junco Esplendor",
-    "description": "A modest stem growing on the edges of cool water surfaces, often overlooked due to its normal appearance.",
+    "description": "Caule modesto que cresce nas margens e na superfície fresca das águas. Muitas vezes é ignorado por parecer uma planta comum, apesar de ter valor como ingrediente.",
     "image": null
   },
   {
@@ -716,7 +828,7 @@
     "type": "character",
     "slug": "khay-zam",
     "name": "Khay'zam",
-    "description": "A human mage who united the remaining divine avatars to combat the Infernal Lords during the Ruptura.",
+    "description": "Khay'zam é um mago humano lendário associado ao período imediatamente posterior à Ruptura. Em meio ao avanço infernal e às divindades caídas e enfraquecidas, ele reuniu os poucos avatares divinos restantes e liderou forças celestiais contra as hordas do Lorde Supremo Drawghar Mototh. A vitória — obtida a alto custo — culminou no selamento de Mototh e na expulsão de sua horda.\n\nApós o conflito, as divindades sobreviventes teriam imbuído Khay'zam com parte de seu poder e conhecimento para que protegesse e vigiasse o mundo. Com esse legado, ele fundou as Alta'Arcanas, torres destinadas a concentrar o saber arcano e impedir que a magia voltasse a desencadear um cataclismo como o da Ruptura.",
     "image": null
   },
   {
@@ -732,7 +844,7 @@
     "type": "place",
     "slug": "lago-teamor",
     "name": "Lago Teamor",
-    "description": "A lake that served as a landing point for invasions and the site of significant battles.",
+    "description": "O Lago Teamor é um grande lago no norte do continente Oeste, às margens do qual surgiu a antiga vila pesqueira que daria origem a Norbria. Por sua posição estratégica — conectando-se ao Mar do Norte por uma passagem protegida por montanhas — tornou-se palco do desembarque de invasões skeldianas e do massacre associado à primeira Horda.",
     "image": null
   },
   {
@@ -788,7 +900,7 @@
     "type": "character",
     "slug": "luminares",
     "name": "Luminares",
-    "description": "The clergy of A Chama Branca, dedicated to promoting justice and order.",
+    "description": "Luminares é o nome dado ao clero da Chama Branca. Seus membros atuam como guardiões da lei, da ordem e da luz, conduzindo ritos, julgamentos e atos de restauração quando a corrupção se espalha. A tradição descreve uma progressão de graus: Vigilante, Luminar da Sentença e Luminar Elevado.\n\nEm muitas comunidades, os Luminares não se distinguem por uma vestimenta única — preferem sinais discretos ligados à vigilância e à justiça (como balanças, velas e a espada longa cruzada), refletindo a ideia de que a justiça deve existir em qualquer cultura.",
     "image": null
   },
   {
@@ -812,7 +924,7 @@
     "type": "item",
     "slug": "margarida-temeraria",
     "name": "Margarida Temerária",
-    "description": "Rose petals found on the Temerária Daisy that inhibit fear when properly consumed, useful for aspiring adventurers.",
+    "description": "Erva de pétalas rosadas encontrada em florestas. Quando devidamente consumida, seu composto inibe o medo — útil para aventureiros.",
     "image": null
   },
   {
@@ -820,7 +932,7 @@
     "type": "item",
     "slug": "margarida-encharcada-de-orvalho",
     "name": "Margarida-Encharcada-de-Orvalho",
-    "description": "A purple daisy with a white dotted pattern that can be consumed to cure almost all poisons except the deadliest ones.",
+    "description": "Margarida roxa com padrão branco pontilhado que lembra gotas de orvalho. Pode ser consumida para curar quase todos os venenos, exceto os mais mortais. Cresce em bordas de montanhas, onde as encostas encontram margens de florestas.",
     "image": null
   },
   {
@@ -830,6 +942,22 @@
     "name": "Martelos Ágeis",
     "description": "The Nimble Hammers are a faction known for their quick and precise actions, likely in combat or craftsmanship.",
     "image": null
+  },
+  {
+    "id": "b896d50a-f86a-48ef-a87c-9f997f3aca81",
+    "type": "character",
+    "slug": "misterio",
+    "name": "Mistério",
+    "description": "Personagem de Átrias (informações ainda não catalogadas nos documentos extraídos).",
+    "image": "/images/characters/Misterio-portrait.jpg"
+  },
+  {
+    "id": "bbeb14b8-b104-43e6-9b1d-ea1e8a1ae5f9",
+    "type": "character",
+    "slug": "mokkog",
+    "name": "Mokkog",
+    "description": "Personagem de Átrias (informações ainda não catalogadas nos documentos extraídos).",
+    "image": "/images/characters/Mokkog .jpg"
   },
   {
     "id": "441aabce-f688-4e57-a6e3-28065a208b3e",
@@ -860,7 +988,7 @@
     "type": "place",
     "slug": "noan",
     "name": "Noan",
-    "description": "Another crown that was part of the Pacto de Ociddens.",
+    "description": "Noan é uma das coroas do continente Oeste e compõe, junto de Humma e Falandir, o Pacto de Ociddens — aliança criada para conter a ameaça da primeira Horda skelden e proteger a região setentrional.",
     "image": null
   },
   {
@@ -868,15 +996,15 @@
     "type": "place",
     "slug": "norbria",
     "name": "Norbria",
-    "description": "A city that emerged from a fishing village, named in honor of those killed in the first attack by the Horda.",
-    "image": null
+    "description": "Norbria (“Sangue Nórdico”) nasceu de uma história de invasões e pactos no norte do continente Oeste. O local era, originalmente, uma vila pesqueira às margens do Lago Teamor. Sua geografia — acesso direto ao Mar do Norte, protegido por cadeias de montanhas em ambos os lados — tornou a região um ponto de desembarque ideal para incursões skeldianas.\n\nEnquanto líderes costeiros tentavam conter saques, clãs skeldens se estabeleciam ao norte da Terra dos Vales e expandiam território. Andrastos, então governante de Vallen, avançou para retomar domínios e encontrou nos Rochedos de Baldren uma cidade rudimentar e um porto já funcionando. Em vez de expulsar os invasores, propôs um acordo: cederia terras e títulos, e o clã protegeria o norte de Humma contra futuras invasões sazonais.\n\nA notícia do trato provocou reação em Skeld: clãs se uniram e formaram a primeira Horda, que devastou a região do Lago Teamor e massacrou os descendentes dos primeiros colonos. Para enfrentar a ameaça, as coroas de Humma, Noan e Falandir formaram o Pacto de Ociddens. A guerra durou dias; o Pacto venceu, mas Andrastos morreu em batalha.\n\nQuínewen, filha de Andrastos, assumiu a coroa de Vallen e manteve o acordo: skeldens permaneceriam ao norte sob o estandarte de Humma. Para impedir novos ataques, Vallen financiou um forte numa ilha ao norte, na baía de Hardenfor. Com os anos, a segurança trouxe prosperidade, e a cidade passou a ser conhecida como Norbria em homenagem aos mortos do primeiro ataque da Horda. Andrastos recebeu o título de “O Unificador”; todo ano, no dia de sua morte, celebra-se um festival em Norbria e em Vallen.",
+    "image": "/images/maps/norbria.jpg"
   },
   {
     "id": "a9e0ba10-f296-4e60-ba5c-0068d3d0c8d7",
     "type": "item",
     "slug": "nos-de-arvid-retorcida",
     "name": "Nós de Arvid-Retorcida",
-    "description": "A caqui-colored nut typically found inside trees near water sources, known for its large size and twisted roots.",
+    "description": "Noz cáqui encontrada dentro de árvores próximas a fontes de água, no centro de uma massa de raízes grossas que se retorcem e se dobram. A maioria cresce até o tamanho de um palmo, mas registros falam de exemplares com mais de 1,5 metro de diâmetro.",
     "image": null
   },
   {
@@ -900,7 +1028,7 @@
     "type": "faction",
     "slug": "ordem-de-ghalbaht",
     "name": "Ordem de Ghalbaht",
-    "description": "A faction of druids focused on maintaining the natural balance and harmony of the world. They utilize their powers based on the four elements and emphasize the use of shields over weapons.",
+    "description": "A Ordem de Ghalbaht é uma organização druídica espalhada pelos quatro cantos de Átrias, dedicada a manter o equilíbrio e a ordem natural do mundo. Seus membros se veem como balanças: cada escolha tem dois lados e cada criatura ocupa um papel no ciclo. Baseando-se nos quatro elementos (Terra, Fogo, Água e Ar), os ordenados buscam garantir que o ciclo da natureza tenha início, meio e fim — e que interferências corrompidas sejam contidas.\n\nUma marca distintiva da Ordem é o uso do escudo, símbolo de defesa do círculo e de proteção do equilíbrio. Seus membros costumam evitar armas ofensivas, seguindo o exemplo atribuído a Ghalbaht: a proteção é o que importa. O treinamento passa por provações; após elas, o druida torna-se um Baluarte do Elemento e pode elementalizar e decorar seu escudo. Nos níveis mais altos, a Ordem descreve a diferença entre manipular e dominar um elemento: domínio pleno concede vantagens únicas.\n\nA Ordem também reconhece ameaças internas e externas: a Corja Traidora (ex-membros que se corromperam), os Seguidores de Mordred (druidas criados em magia negra) e, em termos amplos, os Portadores de Armas — quaisquer criaturas que interfiram no equilíbrio ou usem magia negra.",
     "image": null
   },
   {
@@ -908,7 +1036,7 @@
     "type": "faction",
     "slug": "pacto-de-ociddens",
     "name": "Pacto de Ociddens",
-    "description": "An alliance formed to protect the Western continent from Skeldian invasions, consisting of the crowns of Humma, Noan, and Falandir.",
+    "description": "O Pacto de Ociddens é uma aliança formada para proteger o continente Oeste da ameaça skelden durante a crise da primeira Horda. É composto pelas coroas de Humma, Noan e Falandir. O Pacto venceu a campanha que conteve a Horda ao custo da vida de Andrastos, governante de Vallen.",
     "image": null
   },
   {
@@ -949,14 +1077,14 @@
     "slug": "pedraluna",
     "name": "Pedraluna",
     "description": "A small village with a population of approximately 500 people, mostly humans. It is located near the Gawain river and around the Elengil lake, characterized by its mild climate and abundant vegetation.",
-    "image": null
+    "image": "/images/maps/pedraluna.jpg"
   },
   {
     "id": "40db0366-4c56-4530-ac8b-cf13f9215699",
     "type": "item",
     "slug": "planta-cantaro-mamute",
     "name": "Planta Cântaro-Mamute",
-    "description": "A huge plant with dark brown veins found in most jungles and tropical forests, feeding on insects that land inside it.",
+    "description": "Planta de grande porte com “cântaro” (cabeça em forma de caneca) e veias marrom-escuras e bordô. Vive em selvas e florestas tropicais, alimentando-se de insetos que pousam em seu interior. Frequentemente coleta água utilizada pela vida selvagem local.",
     "image": null
   },
   {
@@ -996,7 +1124,7 @@
     "type": "lore",
     "slug": "proverbios-da-chama-branca",
     "name": "Provérbios da Chama Branca",
-    "description": "Proverbs that encapsulate the teachings and values of the Chama Branca.",
+    "description": "Provérbios tradicionais associados à Chama Branca:\n\n• \"A verdade ilumina o caminho, mas a justiça é a luz que guia nossos passos.\"\n• \"Onde há ordem, a paz prospera; onde há paz, a justiça se estabelece.\"\n• \"O bem comum é uma chama que se alimenta do serviço e da solidariedade.\"\n• \"Em cada ato de justiça, a luz da Chama Branca brilha mais intensamente.\"\n• \"A sabedoria é o farol que orienta a jornada daqueles que buscam a iluminação.\"\n• \"A redenção é a chama que renova o espírito, permitindo que cada passo dado seja um avanço em direção à luz.\"",
     "image": null
   },
   {
@@ -1012,7 +1140,7 @@
     "type": "item",
     "slug": "petala-de-cacto-lamica-azul",
     "name": "Pétala de Cacto-Lamica Azul",
-    "description": "A common cactus found in deserts and dunes, with bright blue flowers that store rare cold rainwater.",
+    "description": "Pétala grossa e bulbosa do cacto Blue Lamica, comum em desertos e dunas. Suas flores azuis brilhantes facilitam a identificação. As pétalas armazenam água de chuva rara e fria e podem ser aplicadas à pele para resfriar alguém.",
     "image": null
   },
   {
@@ -1020,8 +1148,16 @@
     "type": "character",
     "slug": "quinewen",
     "name": "Quínewen",
-    "description": "The daughter of Andrastos who took the crown of Vallen and honored her father's agreement with the Skeldens.",
+    "description": "Quínewen é a filha de Andrastos e sucessora no trono de Vallen após a guerra contra a primeira Horda skelden. Ela honrou o acordo firmado por seu pai, permitindo que skeldens se estabelecessem ao norte sob o estandarte de Humma, e consolidou a política de defesa que levaria à construção do forte de Hardenfor e à prosperidade de Norbria.",
     "image": null
+  },
+  {
+    "id": "6164567b-61e5-4a8b-8f1b-c22927aedf0e",
+    "type": "character",
+    "slug": "rasmusen",
+    "name": "Rasmusen",
+    "description": "Viajante e contador de histórias (conhecido como Rasmus). Revela informações sobre as Mid-Frosts e o Gjallarhorn, além da origem e significado dos Vestígios.",
+    "image": "/images/characters/Rasmusen Portrait.jpg"
   },
   {
     "id": "ad76f032-1e2b-4bcd-a90d-05c2b51237d8",
@@ -1048,11 +1184,19 @@
     "image": null
   },
   {
+    "id": "e1acf80e-8450-4937-8a84-6bbfb48ffb8c",
+    "type": "character",
+    "slug": "rhogar",
+    "name": "Rhogar",
+    "description": "Feiticeiro das Fúrias de Videnserg. Usa magia destrutiva e, mais tarde, carrega essência dracônica (incluindo Akatash) após rituais com Morveindren.",
+    "image": "/images/characters/Rhogar.jpg"
+  },
+  {
     "id": "5da9308c-bc53-4b5c-9a7d-80e87abc39f0",
     "type": "place",
     "slug": "rochedos-de-baldren",
     "name": "Rochedos de Baldren",
-    "description": "A region where Andrastos encountered a rudimentary city and port established by the Skeldens.",
+    "description": "Os Rochedos de Baldren são uma região costeira rochosa no norte do continente Oeste. Foi ali que Andrastos encontrou um assentamento skelden já consolidado, com porto e embarcações, levando-o a propor um acordo em vez de uma expulsão imediata — um ponto de inflexão que antecede a formação da primeira Horda.",
     "image": null
   },
   {
@@ -1060,7 +1204,7 @@
     "type": "lore",
     "slug": "ruptura",
     "name": "Ruptura",
-    "description": "The Ruptura refers to a significant event in the history of the dwarves, marking a time of great external threats and challenges. It is during this time that Thrandorin's leadership was crucial.",
+    "description": "Ruptura é o nome dado ao grande cataclismo ligado ao auge do conflito entre magia e divindades em Átrias. Relatos atribuem sua origem à ambição arcana: após séculos de disseminação do conhecimento mágico, mortais desafiaram o divino e desencadearam a queda de entidades, a ascensão de forças infernais e desastres que devastaram regiões inteiras. O período termina com a derrota e o selamento do Lorde Infernal Drawghar Mototh por forças lideradas por Khay'zam e com a criação das Alta'Arcanas como resposta institucional para vigiar e limitar o uso do arcano.",
     "image": null
   },
   {
@@ -1076,7 +1220,7 @@
     "type": "item",
     "slug": "seiva-clara",
     "name": "Seiva Clara",
-    "description": "A crystal-clear sap collected from large trees found in forests along mountain ranges, difficult to find due to its visual quality.",
+    "description": "Seiva cristalina coletada de grandes árvores em florestas próximas a cadeias de montanhas. Por sua aparência límpida, é difícil de encontrar. Quando devidamente infundida, concede benefícios não naturais à visão.",
     "image": null
   },
   {
@@ -1084,7 +1228,7 @@
     "type": "item",
     "slug": "seiva-pedra-fogo",
     "name": "Seiva Pedra-Fogo",
-    "description": "An amber-colored thick sap commonly harvested from trees deep in the forest, known for its rich and sweet flavor.",
+    "description": "Seiva espessa cor de âmbar, com sabor rico e doce, colhida de árvores nas profundezas da floresta. É usada como adoçante e ingrediente de preparo.",
     "image": null
   },
   {
@@ -1092,7 +1236,7 @@
     "type": "item",
     "slug": "semente-vitalin",
     "name": "Semente Vitalin",
-    "description": "A brown seed speckled with small pink dots, known for its pleasantly sour taste and ability to prevent terrible diseases.",
+    "description": "Semente marrom salpicada com pequenos pontos rosados, de sabor agradavelmente ácido. Pode prevenir a progressão até mesmo de doenças terríveis. É encontrada em florestas densas ou muito esparsas, espalhada pelo solo sob grandes árvores Vitaloans.",
     "image": null
   },
   {
@@ -1100,7 +1244,7 @@
     "type": "item",
     "slug": "semente-de-lavanda",
     "name": "Semente de Lavanda",
-    "description": "Lavender seeds scattered across meadows, plains, and sandy coasts, easily detectable due to their purple flower tips.",
+    "description": "Sementes de lavanda encontradas em prados, planícies e costas arenosas. São fáceis de detectar pelas hastes com flores roxas.",
     "image": null
   },
   {
@@ -1116,15 +1260,15 @@
     "type": "place",
     "slug": "skeld",
     "name": "Skeld",
-    "description": "The northern island where the last of the Alta'Arcanas towers was constructed.",
-    "image": null
+    "description": "Skeld é uma grande ilha ao norte de Átrias e lar de diversos clãs skeldens. Também é lembrada como um dos locais onde Khay'zam ergueu uma torre das Alta'Arcanas, no esforço de vigiar e controlar a magia após a Ruptura.",
+    "image": "/images/maps/skeld.jpg"
   },
   {
     "id": "c798f780-d346-46df-9e2c-920d885e66ab",
     "type": "faction",
     "slug": "skeldens",
     "name": "Skeldens",
-    "description": "The people who invaded the continent, leading to the formation of the Horda.",
+    "description": "Skeldens são povos/clãs vindos de Skeld, conhecidos por incursões sazonais e grandes invasões ao continente Oeste. A tradição registra que, insatisfeitos com um acordo local proposto por Andrastos, clãs se uniram e formaram a primeira Horda, devastando a região do Lago Teamor. Após a derrota da Horda pelo Pacto de Ociddens, parte dos skeldens passou a se estabelecer ao norte sob o estandarte de Humma.",
     "image": null
   },
   {
@@ -1141,15 +1285,23 @@
     "slug": "sol-manso",
     "name": "Sol Manso",
     "description": "A quiet village known for its simple wooden structures and a peaceful atmosphere, located along the imperial road.",
-    "image": null
+    "image": "/images/maps/sol-manso.jpg"
   },
   {
     "id": "59d11dac-ef68-4897-b789-d45e172428ee",
     "type": "item",
     "slug": "sonhador-chamuscado",
     "name": "Sonhador Chamuscado",
-    "description": "A dark purple flower resembling a lily that feeds on nearby plants, emitting a strong sweet aroma.",
+    "description": "Flor roxa escura, semelhante a um lírio, com bordas marcadas nas pétalas. Surge apenas em locais específicos: suas raízes se entrelaçam em plantas próximas, das quais extrai nutrientes, matando o que cresce perto demais. Exala aroma forte e doce; é fácil de localizar, mas difícil de colher sem danificar as raízes.",
     "image": null
+  },
+  {
+    "id": "15f100eb-afa7-4e36-9bb4-3e988c504641",
+    "type": "character",
+    "slug": "stibjorn",
+    "name": "Stibjorn",
+    "description": "Líder do orgulhoso Clã Presa de Javali em Skeld. Entra em conflito com Folkvar e o desafia a um holmgang após a carnificina em Videnserg.",
+    "image": "/images/characters/Stibjorn-portrait.jpg"
   },
   {
     "id": "47a43506-6488-417a-ad0f-f23efa7fade6",
@@ -1184,6 +1336,14 @@
     "image": null
   },
   {
+    "id": "7166d5f3-89aa-4b44-bd08-c2b256cc5346",
+    "type": "character",
+    "slug": "tal-rasha",
+    "name": "Tal Rasha",
+    "description": "Mago das Fúrias. Toca uma orbe poderosa, é ligado ao espírito Morgana e usa um cetro/artefato para teletransportar o grupo durante a batalha de Coldwind.",
+    "image": "/images/characters/Tal Rasha.jpg"
+  },
+  {
     "id": "d872ccdd-ab05-40d3-88b4-6634e1e5b88a",
     "type": "character",
     "slug": "targrim-ferrocanela",
@@ -1204,7 +1364,7 @@
     "type": "place",
     "slug": "templos-da-chama-branca",
     "name": "Templos da Chama Branca",
-    "description": "Sacred places reflecting the light, justice, and order of the Chama Branca.",
+    "description": "Os templos da Chama Branca são concebidos para refletir luz, justiça e ordem. Além de locais de adoração, atuam como centros de comunidade e de restauração do direito — faróis de esperança em tempos de abuso ou corrupção.\n\nSua forma varia conforme a região: de grandes templos dedicados à causa a estruturas ligadas à vida civil, como quartéis, prisões e salões de comuna. Em geral, velas e lanternas brancas são usadas como símbolos constantes da vigilância e do compromisso com a verdade.",
     "image": null
   },
   {
@@ -1212,7 +1372,7 @@
     "type": "item",
     "slug": "tentaculo-de-dros-eara-palida",
     "name": "Tentáculo de Dros'eara Pálida",
-    "description": "A large and rare carnivorous plant with tentacle-like extrusions that secrete a sweet aroma to attract insects.",
+    "description": "O Tentáculo de Drosêra Pálida vem de uma planta carnívora grande e rara, cujas extrusões semelhantes a tentáculos secretam um aroma doce que atrai insetos. Uma enzima viscosa os cola e começa a dissolvê-los; a planta então absorve e digere a “sopa” nutritiva. Encontrar uma Drosêra Pálida é considerado sinal de boa sorte.",
     "image": null
   },
   {
@@ -1220,7 +1380,7 @@
     "type": "place",
     "slug": "terra-dos-vales",
     "name": "Terra dos Vales",
-    "description": "A region where the Skeldens expanded their territory, north of which significant events took place.",
+    "description": "A Terra dos Vales é uma região do continente Oeste cuja porção norte foi pressionada pela expansão de clãs skeldens antes e durante a crise da primeira Horda. A área ao norte da Terra dos Vales tornou-se zona de estabelecimento e disputa, ligada à história de Norbria e às campanhas lideradas por Vallen.",
     "image": null
   },
   {
@@ -1256,12 +1416,44 @@
     "image": null
   },
   {
+    "id": "8465af09-dfe8-4eb8-ad5d-3c0e2f586007",
+    "type": "character",
+    "slug": "turmog",
+    "name": "Turmog",
+    "description": "Personagem de Átrias (informações ainda não catalogadas nos documentos extraídos).",
+    "image": "/images/characters/Turmog.jpg"
+  },
+  {
+    "id": "9cfe4d7c-8128-425c-905c-05f4eddbad94",
+    "type": "character",
+    "slug": "ulfgar",
+    "name": "Ulfgar",
+    "description": "Anão devoto de Thor. Realiza rituais e milagres para salvar aliados (incluindo um ritual perigoso para curar Vasili) e lidera atos de fé durante a guerra em Skeld.",
+    "image": "/images/characters/Ulfgar-portrait2.jpg"
+  },
+  {
+    "id": "5a137a06-9d7c-4438-bbbd-9215940839f4",
+    "type": "character",
+    "slug": "uthred",
+    "name": "Uthred",
+    "description": "Guerreiro bárbaro das Fúrias. Sofre efeitos do veneno Marat Alruh e enfrenta o corrompido Ionius em Videnserg.",
+    "image": "/images/characters/Uthred- portrait2.jpg"
+  },
+  {
     "id": "7bcc862a-02b0-4259-9cde-38d2956573de",
     "type": "place",
     "slug": "vallen",
     "name": "Vallen",
-    "description": "The realm ruled by Andrastos and later by his daughter Quínewen.",
+    "description": "Vallen é uma coroa/território do continente Oeste ligada à defesa do norte contra incursões skeldianas. Foi governada por Andrastos no período das primeiras invasões, e depois por sua filha Quínewen. Vallen financiou a fortificação de Hardenfor e mantém, anualmente, um festival em homenagem a Andrastos, \"O Unificador\".",
     "image": null
+  },
+  {
+    "id": "d424dc4b-9439-4cfc-95cc-b0a462bc6998",
+    "type": "character",
+    "slug": "vasili",
+    "name": "Vasili",
+    "description": "Bardo das Fúrias, usa magia de suporte e transformação (chega a transformar Gibson em mamute). Adoece gravemente e é salvo por um ritual arriscado conduzido por Ulfgar.",
+    "image": "/images/characters/Vasili Retrato.jpg"
   },
   {
     "id": "10d63de2-cab7-482d-bffb-526c015e70cb",
@@ -1277,7 +1469,23 @@
     "slug": "vigilia-de-akos",
     "name": "Vigília de Akos",
     "description": "A trading post situated in the heart of the Mortalha forest, founded by the knight Akos to protect travelers.",
-    "image": null
+    "image": "/images/maps/akos.jpg"
+  },
+  {
+    "id": "38c5fc0a-e986-4779-81e0-c2be62e52143",
+    "type": "character",
+    "slug": "vorlak",
+    "name": "Vorlak",
+    "description": "Personagem de Átrias (informações ainda não catalogadas nos documentos extraídos).",
+    "image": "/images/characters/Vorlak.jpg"
+  },
+  {
+    "id": "28354156-3c10-42a0-8749-3f4556068bd8",
+    "type": "character",
+    "slug": "yurdra",
+    "name": "Yurdra",
+    "description": "Ferreira (com forja improvisada) ligada aos Ursos-Negros. Pede ao grupo para recuperar diagramas do pai em Torngard e acaba envolvida em uma possessão/ligação demoníaca.",
+    "image": "/images/characters/Yurdra-Portrait.jpg"
   },
   {
     "id": "1b28b78b-040f-46c8-9dce-89ed32f3ba79",
@@ -1292,7 +1500,7 @@
     "type": "place",
     "slug": "baia-de-hardenfor",
     "name": "baía de Hardenfor",
-    "description": "A bay where a fort was constructed to repel future attacks from the Skeldens.",
+    "description": "A baía de Hardenfor é uma enseada ao norte da região de Norbria. Após a vitória do Pacto de Ociddens sobre a primeira Horda, Vallen financiou a construção de um forte em uma ilha na baía, para repelir futuras incursões skeldianas e proteger o continente Oeste.",
     "image": null
   },
   {
@@ -1405,6 +1613,6 @@
     "slug": "atrias",
     "name": "Átrias",
     "description": "Átrias is the world setting where the events of the narrative take place, characterized by its dark times following a cataclysm.",
-    "image": null
+    "image": "/images/maps/world-map-hires.jpg"
   }
 ]

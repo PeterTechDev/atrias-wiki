@@ -28,6 +28,7 @@ export interface PlaceData {
   function?: string
   design?: string
   notableLocations?: string[]
+  map?: string
 }
 
 export interface FactionData {
