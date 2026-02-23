@@ -3,15 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --no-turbopack",
+    "dev": "next dev",
     "build": "npm run generate:search && next build",
     "start": "next start",
     "lint": "eslint",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
     "db:seed": "tsx scripts/seed-database.ts",
-    "generate:search": "tsx scripts/generate-search-index.ts",
-    "dev:turbo": "next dev"
+    "generate:search": "tsx scripts/generate-search-index.ts"
   },
   "dependencies": {
     "@iconify/react": "^6.0.2",
