@@ -12,6 +12,27 @@ import { Icon } from '@iconify/react'
 
 type InputMode = 'quick' | 'text' | 'audio' | 'manual'
 
+function FeatherIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z" />
+      <line x1="16" y1="8" x2="2" y2="22" />
+      <line x1="17.5" y1="15" x2="9" y2="15" />
+    </svg>
+  )
+}
+
 type MatchedEntity = {
   id: string
   name: string
@@ -644,17 +665,14 @@ export default function NewSessionPage() {
                 {isProcessing ? (
                   <>
                     <Icon icon="game-icons:spinning-blades" className="w-5 h-5 animate-spin" />
-                    <span>
-                      {inputMode === 'audio'
-                        ? 'Transcrevendo áudio... isso pode levar até 1 minuto.'
-                        : 'A AI está processando...'
-                      }
+                    <span className="whitespace-pre-line">
+                      {'Thaveus desperta de seu bolsão extradimensional...\nA Pena começa a se mover.'}
                     </span>
                   </>
                 ) : (
                   <>
-                    <Icon icon="game-icons:magic-swirl" className="w-5 h-5" />
-                    <span>Gerar com IA</span>
+                    <FeatherIcon className="w-5 h-5" />
+                    <span>Despertar a Pena</span>
                   </>
                 )}
               </button>
@@ -673,15 +691,36 @@ export default function NewSessionPage() {
             </h2>
 
             <div className="bg-[#faf8f5] rounded-lg p-6 border border-amber-200">
-              <h3 className="font-cinzel text-2xl text-slate-800 mb-2">{generatedContent.title}</h3>
-              <p className="text-slate-700 font-crimson text-lg mb-4">{generatedContent.summary}</p>
+              <h3 className="font-cinzel text-2xl text-slate-800 mb-2 quill-reveal quill-reveal-1">
+                {generatedContent.title}
+              </h3>
+
+              <div className="mb-4 quill-reveal quill-reveal-2">
+                {generatedContent.summary
+                  .split(/\n\s*\n/)
+                  .map((p) => p.trim())
+                  .filter(Boolean)
+                  .map((p, i) => (
+                    <p
+                      key={i}
+                      className="text-slate-700 font-crimson text-lg mb-3 quill-reveal"
+                      style={{ animationDelay: `${0.2 + i * 0.12}s`, opacity: 0 }}
+                    >
+                      {p}
+                    </p>
+                  ))}
+              </div>
 
               {generatedContent.keyEvents.length > 0 && (
-                <div className="mb-4">
+                <div className="mb-4 quill-reveal quill-reveal-3">
                   <h4 className="font-cinzel text-sm text-slate-600 mb-2">Eventos Principais</h4>
                   <ul className="list-disc list-inside text-slate-700 space-y-1">
                     {generatedContent.keyEvents.map((event, i) => (
-                      <li key={i} className="font-crimson">
+                      <li
+                        key={i}
+                        className="font-crimson quill-reveal"
+                        style={{ animationDelay: `${0.25 + i * 0.1}s`, opacity: 0 }}
+                      >
                         {event}
                       </li>
                     ))}
@@ -700,28 +739,29 @@ export default function NewSessionPage() {
                 </div>
               )}
 
+              {generatedContent.cliffhanger && (
+                <div className="mt-4 p-3 bg-amber-50 rounded-lg border-l-4 border-amber-400 quill-reveal quill-reveal-4">
+                  <p className="text-sm text-amber-800 font-crimson italic">
+                    Próxima sessão: {generatedContent.cliffhanger}
+                  </p>
+                </div>
+              )}
+
               {generatedContent.matchedEntities.length > 0 && (
-                <div className="mb-4">
+                <div className="mt-4 quill-reveal quill-reveal-5">
                   <h4 className="font-cinzel text-sm text-slate-600 mb-2">Entidades detectadas</h4>
                   <div className="flex flex-wrap gap-2">
-                    {generatedContent.matchedEntities.map((m) => (
+                    {generatedContent.matchedEntities.map((m, i) => (
                       <span
                         key={m.id}
-                        className="text-xs font-semibold text-amber-900 bg-amber-100 border border-amber-200 px-2 py-1 rounded-full"
+                        className="text-xs font-semibold text-amber-900 bg-amber-100 border border-amber-200 px-2 py-1 rounded-full quill-reveal"
+                        style={{ animationDelay: `${0.3 + i * 0.06}s`, opacity: 0 }}
                         title={`${m.type} • ${m.slug}`}
                       >
                         {m.name}
                       </span>
                     ))}
                   </div>
-                </div>
-              )}
-
-              {generatedContent.cliffhanger && (
-                <div className="mt-4 p-3 bg-amber-50 rounded-lg border-l-4 border-amber-400">
-                  <p className="text-sm text-amber-800 font-crimson italic">
-                    Próxima sessão: {generatedContent.cliffhanger}
-                  </p>
                 </div>
               )}
             </div>

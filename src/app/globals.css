@@ -70,3 +70,18 @@ input[type="date"]::-webkit-datetime-edit-day-field,
 input[type="date"]::-webkit-datetime-edit-year-field {
   color: #78716c;
 }
+
+@keyframes quillWrite {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.quill-reveal {
+  animation: quillWrite 0.5s ease forwards;
+}
+
+.quill-reveal-1 { animation-delay: 0.1s; opacity: 0; }
+.quill-reveal-2 { animation-delay: 0.3s; opacity: 0; }
+.quill-reveal-3 { animation-delay: 0.5s; opacity: 0; }
+.quill-reveal-4 { animation-delay: 0.7s; opacity: 0; }
+.quill-reveal-5 { animation-delay: 0.9s; opacity: 0; }
