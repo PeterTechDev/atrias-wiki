@@ -132,7 +132,7 @@ export default async function CampaignPage({ params }: PageProps) {
 
                       <div className="flex items-center gap-3 shrink-0">
                         <span className={`text-xs px-2 py-1 rounded-full ${badgeClass}`}>
-                          {ch.status}
+                          {ch.status === 'published' ? 'publicado' : 'rascunho'}
                         </span>
                         <Icon
                           icon="game-icons:arrow-scope"

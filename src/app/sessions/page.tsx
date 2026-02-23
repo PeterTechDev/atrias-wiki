@@ -35,12 +35,22 @@ export default async function SessionsCampaignsPage() {
       {/* Page Header */}
       <div className="max-w-6xl mx-auto px-6 mb-8">
         <div className="bg-white/80 rounded-lg shadow-lg p-8">
-          <div className="flex items-center gap-4">
-            <Icon icon="game-icons:scroll-quill" className="w-12 h-12 text-amber-700" />
-            <div>
-              <h1 className="font-cinzel text-4xl text-slate-800">Crônicas das Sessões</h1>
-              <p className="text-slate-600 font-crimson italic">Campanhas e capítulos publicados</p>
+          <div className="flex items-start justify-between gap-6">
+            <div className="flex items-center gap-4">
+              <Icon icon="game-icons:scroll-quill" className="w-12 h-12 text-amber-700" />
+              <div>
+                <h1 className="font-cinzel text-4xl text-slate-800">Crônicas das Sessões</h1>
+                <p className="text-slate-600 font-crimson italic">Campanhas e capítulos publicados</p>
+              </div>
             </div>
+
+            <Link
+              href="/sessions/new"
+              className="shrink-0 inline-flex items-center gap-2 bg-amber-700 hover:bg-amber-800 text-white px-4 py-2 rounded-lg transition-colors font-cinzel"
+            >
+              <Icon icon="game-icons:scroll-unfurled" className="w-5 h-5" />
+              <span>Nova Sessão</span>
+            </Link>
           </div>
 
           <p className="mt-4 text-slate-700 font-crimson text-lg">

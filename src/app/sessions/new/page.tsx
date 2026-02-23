@@ -404,7 +404,7 @@ export default function NewSessionPage() {
           </h2>
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Campanha</label>
+              <label className="block text-sm font-medium text-slate-700 mb-1">Campanha <span className="text-red-500">*</span></label>
               <select
                 value={campaign}
                 onChange={(e) => setCampaign(e.target.value)}
@@ -419,7 +419,7 @@ export default function NewSessionPage() {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Número da Sessão</label>
+              <label className="block text-sm font-medium text-slate-700 mb-1">Número da Sessão <span className="text-red-500">*</span></label>
               <input
                 type="number"
                 value={sessionNumber}
@@ -429,7 +429,7 @@ export default function NewSessionPage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Data da Sessão</label>
+              <label className="block text-sm font-medium text-slate-700 mb-1">Data da Sessão <span className="text-red-500">*</span></label>
               <input
                 type="date"
                 value={playDate}
@@ -438,6 +438,7 @@ export default function NewSessionPage() {
               />
             </div>
           </div>
+          <p className="text-sm text-slate-500 mt-4">* Campos obrigatórios</p>
 
           {error && (
             <div className="mt-4 p-3 bg-red-50 rounded-lg border border-red-200 text-red-800 text-sm">
@@ -608,7 +609,7 @@ export default function NewSessionPage() {
               <p className="text-sm text-slate-600 mb-4">Escreva o log da sessão do seu jeito.</p>
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Título da Sessão</label>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Título da Sessão <span className="text-red-500">*</span></label>
                   <input
                     type="text"
                     value={manualTitle}
@@ -618,7 +619,7 @@ export default function NewSessionPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Resumo da Sessão</label>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Resumo da Sessão <span className="text-red-500">*</span></label>
                   <textarea
                     value={manualSummary}
                     onChange={(e) => setManualSummary(e.target.value)}
@@ -628,6 +629,7 @@ export default function NewSessionPage() {
                   />
                 </div>
               </div>
+              <p className="text-sm text-slate-500 mt-4">* Campos obrigatórios</p>
             </>
           )}
 
@@ -677,6 +679,17 @@ export default function NewSessionPage() {
                       <li key={i} className="font-crimson">
                         {event}
                       </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {generatedContent.quotes.length > 0 && (
+                <div className="mb-4">
+                  <h4 className="font-cinzel text-sm text-slate-600 mb-2">Citações Memoráveis</h4>
+                  <ul className="list-disc list-inside text-slate-700 space-y-1">
+                    {generatedContent.quotes.map((q, i) => (
+                      <li key={i} className="font-crimson italic">{`"${q}"`}</li>
                     ))}
                   </ul>
                 </div>

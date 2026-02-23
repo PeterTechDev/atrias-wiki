@@ -83,7 +83,9 @@ export async function POST(req: Request) {
 
   if (!sanitizedCampaign) return badRequest('campaign must contain at least one alphanumeric character.')
 
-  const slug = `campanha-${sanitizedCampaign}-${sessionNumber}`
+  // Avoid double-prefix when campaign already starts with "campanha-"
+  const cleanedCampaign = sanitizedCampaign.replace(/^campanha-/, '')
+  const slug = `campanha-${cleanedCampaign}-${sessionNumber}`
 
   const uuidV4Re = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
   const validMatchedEntities = matchedEntities.filter((m) => uuidV4Re.test(m.id))

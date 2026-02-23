@@ -44,9 +44,12 @@ Guild chapter audio uses clean narration v2. Dynamic audio paths per campaign/ch
 ---
 
 ## Open / What's Next
+- [x] Atrias Session Intake Pipeline — Ego review passed and 4 blocking UI issues fixed (2026-02-23)
+- [x] Status badge translated to Portuguese in chapter list
+- [x] Required field indicators added to /sessions/new form
 - [ ] Hyperbolic Time Chamber was built then reverted — Peter needs to decide if it should come back and what it should do
 - [ ] 176 entities in Sanity — unclear which are complete vs stubs
-- [ ] No recent code activity — this is effectively paused
+- [ ] No recent code activity — this is effectively paused (except for these recent UI fixes)
 - [ ] Peter's D&D is Tuesdays 8 PM — natural time to ask "anything to add to the wiki from last session?"
 
 ---

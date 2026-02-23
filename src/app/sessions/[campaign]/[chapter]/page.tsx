@@ -27,6 +27,15 @@ function formatDate(date: unknown) {
   }
 }
 
+function humanizeCampaignSlug(value: string) {
+  const base = value.replace(/^campanha-/, '')
+  return base
+    .split('-')
+    .filter(Boolean)
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(' ')
+}
+
 function MetadataToggle({ label, items }: { label: string; items: string[] | null | undefined }) {
   if (!items || items.length === 0) return null
   return (
@@ -225,6 +234,9 @@ export default async function SessionLogPage({ params }: PageProps) {
   const played = formatDate(typeof data.playDate === 'string' ? data.playDate : null)
   const transcript = typeof data.transcript === 'string' ? data.transcript : ''
 
+  const campaign = await getCampaignBySlug(slug)
+  const campaignDisplayName = campaign?.name ?? humanizeCampaignSlug(slug)
+
   return (
     <main className="min-h-screen flex flex-col bg-[#e8dcc8]">
       {/* Header */}
@@ -236,7 +248,7 @@ export default async function SessionLogPage({ params }: PageProps) {
           </Link>
           <Link href={`/sessions/${slug}`} className="flex items-center gap-2 text-amber-400 hover:text-amber-300">
             <Icon icon="game-icons:flag-objective" className="w-5 h-5" />
-            <span>{slug}</span>
+            <span>{campaignDisplayName}</span>
           </Link>
         </div>
       </header>
@@ -248,7 +260,7 @@ export default async function SessionLogPage({ params }: PageProps) {
           <span>›</span>
           <Link href="/sessions" className="hover:text-amber-700">Sessões</Link>
           <span>›</span>
-          <Link href={`/sessions/${slug}`} className="hover:text-amber-700">{slug}</Link>
+          <Link href={`/sessions/${slug}`} className="hover:text-amber-700">{campaignDisplayName}</Link>
           <span>›</span>
           <span className="text-slate-800">{sessionEntity.name}</span>
         </nav>
