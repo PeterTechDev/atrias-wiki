@@ -56,3 +56,9 @@ body {
 }
 
 /* Comet animations now handled by CinematicComet component */
+
+/* Placeholder contrast fix */
+::placeholder {
+  color: #78716c; /* stone-500 — readable on cream background */
+  opacity: 1;
+}
