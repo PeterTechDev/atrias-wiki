@@ -408,7 +408,7 @@ export default function NewSessionPage() {
               <select
                 value={campaign}
                 onChange={(e) => setCampaign(e.target.value)}
-                className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:border-amber-500 focus:ring-1 focus:ring-amber-500"
+                className={`w-full px-3 py-2 rounded-lg border border-slate-300 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 ${campaign ? 'text-slate-700' : 'text-stone-500'}`}
               >
                 <option value="">Selecione...</option>
                 {campaigns.map((c) => (

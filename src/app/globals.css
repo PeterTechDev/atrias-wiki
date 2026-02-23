@@ -62,3 +62,11 @@ body {
   color: #78716c; /* stone-500 — readable on cream background */
   opacity: 1;
 }
+
+/* Date input placeholder (browser-native) */
+input[type="date"]::-webkit-datetime-edit-text,
+input[type="date"]::-webkit-datetime-edit-month-field,
+input[type="date"]::-webkit-datetime-edit-day-field,
+input[type="date"]::-webkit-datetime-edit-year-field {
+  color: #78716c;
+}
