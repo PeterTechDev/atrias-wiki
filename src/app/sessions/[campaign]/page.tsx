@@ -118,7 +118,7 @@ export default async function CampaignPage({ params }: PageProps) {
                     <div className="flex items-start justify-between gap-4">
                       <div className="min-w-0">
                         <h3 className="font-cinzel text-lg text-slate-800 group-hover:text-amber-800 transition-colors truncate">
-                          Capítulo {ch.chapterNumber} — {ch.title}
+                          {ch.title.startsWith(`Capítulo ${ch.chapterNumber} — `) ? ch.title : `Capítulo ${ch.chapterNumber} — ${ch.title}`}
                         </h3>
                         <div className="mt-2 flex flex-wrap gap-3 text-xs text-slate-500">
                           {played && (

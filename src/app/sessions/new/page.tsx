@@ -644,7 +644,12 @@ export default function NewSessionPage() {
                 {isProcessing ? (
                   <>
                     <Icon icon="game-icons:spinning-blades" className="w-5 h-5 animate-spin" />
-                    <span>A AI está processando...</span>
+                    <span>
+                      {inputMode === 'audio'
+                        ? 'Transcrevendo áudio... isso pode levar até 1 minuto.'
+                        : 'A AI está processando...'
+                      }
+                    </span>
                   </>
                 ) : (
                   <>
