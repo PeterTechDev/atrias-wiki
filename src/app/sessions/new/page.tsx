@@ -5,33 +5,56 @@
 
 'use client'
 
-import { useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { Icon } from '@iconify/react'
 
-type InputMode = 'quick' | 'text' | 'manual'
+type InputMode = 'quick' | 'text' | 'audio' | 'manual'
+
+type MatchedEntity = {
+  id: string
+  name: string
+  type: 'character' | 'place' | 'faction' | 'item' | 'lore' | 'monster' | 'session'
+  slug: string
+}
+
+type GeneratedContent = {
+  title: string
+  summary: string
+  keyEvents: string[]
+  quotes: string[]
+  cliffhanger: string
+  transcript?: string
+  matchedEntities: MatchedEntity[]
+}
 
 const campaigns = [
   { id: 'campanha-principal', name: 'Campanha Principal' },
   { id: 'campanha-secundaria', name: 'Campanha Secundária' },
 ]
 
+function formatBytes(bytes: number): string {
+  if (bytes < 1024) return `${bytes} B`
+  const kb = bytes / 1024
+  if (kb < 1024) return `${kb.toFixed(1)} KB`
+  const mb = kb / 1024
+  return `${mb.toFixed(1)} MB`
+}
+
 export default function NewSessionPage() {
+  const router = useRouter()
+
   const [inputMode, setInputMode] = useState<InputMode>('quick')
   const [isProcessing, setIsProcessing] = useState(false)
-  const [generatedContent, setGeneratedContent] = useState<{
-    title: string
-    summary: string
-    keyEvents: string[]
-    quotes: string[]
-    cliffhanger: string
-  } | null>(null)
+  const [error, setError] = useState<string | null>(null)
+  const [generatedContent, setGeneratedContent] = useState<GeneratedContent | null>(null)
 
   // Form state
   const [campaign, setCampaign] = useState('')
   const [sessionNumber, setSessionNumber] = useState<number | ''>('')
   const [playDate, setPlayDate] = useState('')
-  
+
   // Quick mode state
   const [quickWhat, setQuickWhat] = useState('')
   const [quickWho, setQuickWho] = useState('')
@@ -41,44 +64,238 @@ export default function NewSessionPage() {
   // Text mode state
   const [rawText, setRawText] = useState('')
 
+  // Audio mode state
+  const [audioFile, setAudioFile] = useState<File | null>(null)
+  const fileInputRef = useRef<HTMLInputElement | null>(null)
+
   // Manual mode state
   const [manualTitle, setManualTitle] = useState('')
   const [manualSummary, setManualSummary] = useState('')
 
-  const handleGenerate = async () => {
-    setIsProcessing(true)
-    
-    // Simulate AI processing (will be replaced with actual API call)
-    await new Promise(resolve => setTimeout(resolve, 2000))
-    
-    // Mock generated content
-    if (inputMode === 'quick') {
-      setGeneratedContent({
-        title: 'O Encontro na Taverna',
-        summary: `Os aventureiros se reuniram após ${quickWhat || 'uma longa jornada'}. ${quickWho ? `Estavam presentes ${quickWho}.` : ''} A noite foi marcada por revelações importantes e novos desafios à vista.`,
-        keyEvents: [
-          quickWhat || 'Eventos da sessão',
-          quickFound ? `Descobriram: ${quickFound}` : 'Novos itens adquiridos',
-        ].filter(Boolean),
-        quotes: [],
-        cliffhanger: quickNext || 'O que aguarda nossos heróis na próxima sessão?',
-      })
-    } else if (inputMode === 'text') {
-      setGeneratedContent({
-        title: 'Sessão Estruturada',
-        summary: rawText.slice(0, 500) + (rawText.length > 500 ? '...' : ''),
-        keyEvents: ['Evento extraído do texto', 'Outro evento importante'],
-        quotes: [],
-        cliffhanger: 'Continuará...',
-      })
+  const audioMeta = useMemo(() => {
+    if (!audioFile) return null
+    return { name: audioFile.name, size: formatBytes(audioFile.size) }
+  }, [audioFile])
+
+  const validateAudio = (file: File): string | null => {
+    const maxBytes = 25 * 1024 * 1024
+    if (file.size > maxBytes) return 'Arquivo muito grande (máx. 25MB).'
+
+    const name = file.name.toLowerCase()
+    const okExt = name.endsWith('.mp3') || name.endsWith('.m4a') || name.endsWith('.wav') || name.endsWith('.ogg')
+    if (!okExt) return 'Formato não suportado. Use .mp3, .m4a, .wav, ou .ogg.'
+
+    return null
+  }
+
+  const onPickAudio = (file: File | null) => {
+    setError(null)
+    setGeneratedContent(null)
+
+    if (!file) {
+      setAudioFile(null)
+      return
     }
-    
-    setIsProcessing(false)
+
+    const err = validateAudio(file)
+    if (err) {
+      setAudioFile(null)
+      setError(err)
+      return
+    }
+
+    setAudioFile(file)
+  }
+
+  const handleGenerate = async () => {
+    setError(null)
+    setGeneratedContent(null)
+
+    if (!campaign) {
+      setError('Selecione uma campanha.')
+      return
+    }
+    if (!sessionNumber) {
+      setError('Informe o número da sessão.')
+      return
+    }
+    if (!playDate) {
+      setError('Informe a data da sessão.')
+      return
+    }
+
+    if (inputMode === 'text' && !rawText.trim()) {
+      setError('Cole algum texto para a AI estruturar.')
+      return
+    }
+
+    if (inputMode === 'audio' && !audioFile) {
+      setError('Selecione um arquivo de áudio.')
+      return
+    }
+
+    if (inputMode === 'quick') {
+      const hasAny = [quickWhat, quickWho, quickFound, quickNext].some((s) => s.trim().length > 0)
+      if (!hasAny) {
+        setError('Preencha pelo menos um dos campos do modo rápido.')
+        return
+      }
+    }
+
+    setIsProcessing(true)
+
+    try {
+      const form = new FormData()
+      form.set('mode', inputMode)
+      form.set('campaign', campaign)
+      form.set('sessionNumber', String(sessionNumber))
+      form.set('playDate', playDate)
+
+      if (inputMode === 'audio' && audioFile) {
+        form.set('audio', audioFile)
+      }
+
+      if (inputMode === 'text') {
+        form.set('rawText', rawText)
+      }
+
+      if (inputMode === 'quick') {
+        form.set('quickWhat', quickWhat)
+        form.set('quickWho', quickWho)
+        form.set('quickFound', quickFound)
+        form.set('quickNext', quickNext)
+      }
+
+      const res = await fetch('/api/sessions/process', {
+        method: 'POST',
+        body: form,
+      })
+
+      const json: unknown = await res.json()
+      if (!res.ok) {
+        const msg = (json && typeof json === 'object' && 'error' in json && typeof json.error === 'string')
+          ? json.error
+          : 'Falha ao processar.'
+        throw new Error(msg)
+      }
+
+      if (!json || typeof json !== 'object') throw new Error('Resposta inválida da API.')
+      const data = json as Partial<GeneratedContent>
+
+      const title = typeof data.title === 'string' ? data.title : ''
+      const summary = typeof data.summary === 'string' ? data.summary : ''
+      const keyEvents = Array.isArray(data.keyEvents) ? data.keyEvents.filter((x): x is string => typeof x === 'string') : []
+      const quotes = Array.isArray(data.quotes) ? data.quotes.filter((x): x is string => typeof x === 'string') : []
+      const cliffhanger = typeof data.cliffhanger === 'string' ? data.cliffhanger : ''
+      const transcript = typeof data.transcript === 'string' ? data.transcript : undefined
+
+      const matchedEntities = Array.isArray(data.matchedEntities)
+        ? data.matchedEntities.filter((m): m is MatchedEntity => {
+            if (!m || typeof m !== 'object') return false
+            const mm = m as Partial<MatchedEntity>
+            return Boolean(
+              typeof mm.id === 'string' &&
+                typeof mm.name === 'string' &&
+                typeof mm.slug === 'string' &&
+                typeof mm.type === 'string'
+            )
+          })
+        : []
+
+      if (!title || !summary) throw new Error('A AI não retornou título/resumo válidos.')
+
+      setGeneratedContent({ title, summary, keyEvents, quotes, cliffhanger, transcript, matchedEntities })
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Erro desconhecido')
+    } finally {
+      setIsProcessing(false)
+    }
   }
 
   const handleSave = async () => {
-    // TODO: Save to Sanity
-    alert('Funcionalidade em desenvolvimento! A sessão será salva no Sanity.')
+    setError(null)
+
+    // Manual mode saves without AI.
+    if (inputMode === 'manual') {
+      if (!campaign) return setError('Selecione uma campanha.')
+      if (!sessionNumber) return setError('Informe o número da sessão.')
+      if (!playDate) return setError('Informe a data da sessão.')
+      if (!manualTitle.trim()) return setError('Informe um título.')
+      if (!manualSummary.trim()) return setError('Informe um resumo.')
+
+      try {
+        const res = await fetch('/api/sessions/save', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            campaign,
+            sessionNumber: Number(sessionNumber),
+            playDate,
+            title: manualTitle.trim(),
+            summary: manualSummary.trim(),
+            keyEvents: [],
+            quotes: [],
+            cliffhanger: '',
+            matchedEntities: [],
+          }),
+        })
+
+        const json: unknown = await res.json()
+        if (!res.ok) {
+          const msg = (json && typeof json === 'object' && 'error' in json && typeof json.error === 'string')
+            ? json.error
+            : 'Falha ao salvar.'
+          throw new Error(msg)
+        }
+
+        const slug = (json && typeof json === 'object' && 'slug' in json && typeof json.slug === 'string') ? json.slug : null
+        if (!slug) throw new Error('Resposta inválida ao salvar.')
+        router.push(`/sessions/${campaign}/${slug}`)
+      } catch (e) {
+        setError(e instanceof Error ? e.message : 'Erro desconhecido')
+      }
+
+      return
+    }
+
+    if (!generatedContent) {
+      setError('Gere o log com AI antes de salvar.')
+      return
+    }
+
+    try {
+      const res = await fetch('/api/sessions/save', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          campaign,
+          sessionNumber: typeof sessionNumber === 'number' ? sessionNumber : Number(sessionNumber),
+          playDate,
+          title: generatedContent.title,
+          summary: generatedContent.summary,
+          keyEvents: generatedContent.keyEvents,
+          quotes: generatedContent.quotes,
+          cliffhanger: generatedContent.cliffhanger,
+          transcript: generatedContent.transcript,
+          matchedEntities: generatedContent.matchedEntities,
+        }),
+      })
+
+      const json: unknown = await res.json()
+      if (!res.ok) {
+        const msg = (json && typeof json === 'object' && 'error' in json && typeof json.error === 'string')
+          ? json.error
+          : 'Falha ao salvar.'
+        throw new Error(msg)
+      }
+
+      const slug = (json && typeof json === 'object' && 'slug' in json && typeof json.slug === 'string') ? json.slug : null
+      if (!slug) throw new Error('Resposta inválida ao salvar.')
+
+      router.push(`/sessions/${campaign}/${slug}`)
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Erro desconhecido')
+    }
   }
 
   return (
@@ -123,7 +340,7 @@ export default function NewSessionPage() {
 
       {/* Input Mode Selector */}
       <div className="max-w-4xl mx-auto px-6 mb-6">
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-4 gap-4">
           <button
             onClick={() => setInputMode('quick')}
             className={`p-4 rounded-lg border-2 transition-all ${
@@ -148,6 +365,19 @@ export default function NewSessionPage() {
             <Icon icon="game-icons:scroll-unfurled" className="w-8 h-8 mx-auto mb-2 text-amber-600" />
             <p className="font-cinzel text-sm text-slate-800">Texto Livre</p>
             <p className="text-xs text-slate-500 mt-1">Cole notas, AI estrutura</p>
+          </button>
+
+          <button
+            onClick={() => setInputMode('audio')}
+            className={`p-4 rounded-lg border-2 transition-all ${
+              inputMode === 'audio'
+                ? 'border-amber-500 bg-amber-50'
+                : 'border-transparent bg-white/80 hover:border-amber-300'
+            }`}
+          >
+            <Icon icon="game-icons:audio-cassette" className="w-8 h-8 mx-auto mb-2 text-amber-600" />
+            <p className="font-cinzel text-sm text-slate-800">Áudio</p>
+            <p className="text-xs text-slate-500 mt-1">Upload → transcrição</p>
           </button>
 
           <button
@@ -182,7 +412,9 @@ export default function NewSessionPage() {
               >
                 <option value="">Selecione...</option>
                 {campaigns.map((c) => (
-                  <option key={c.id} value={c.id}>{c.name}</option>
+                  <option key={c.id} value={c.id}>
+                    {c.name}
+                  </option>
                 ))}
               </select>
             </div>
@@ -191,7 +423,7 @@ export default function NewSessionPage() {
               <input
                 type="number"
                 value={sessionNumber}
-                onChange={(e) => setSessionNumber(e.target.value ? parseInt(e.target.value) : '')}
+                onChange={(e) => setSessionNumber(e.target.value ? Number.parseInt(e.target.value, 10) : '')}
                 placeholder="Ex: 42"
                 className="w-full px-3 py-2 rounded-lg border border-slate-300 focus:border-amber-500 focus:ring-1 focus:ring-amber-500"
               />
@@ -206,6 +438,12 @@ export default function NewSessionPage() {
               />
             </div>
           </div>
+
+          {error && (
+            <div className="mt-4 p-3 bg-red-50 rounded-lg border border-red-200 text-red-800 text-sm">
+              {error}
+            </div>
+          )}
         </div>
       </div>
 
@@ -235,9 +473,7 @@ export default function NewSessionPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
-                    Quem estava presente?
-                  </label>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Quem estava presente?</label>
                   <input
                     type="text"
                     value={quickWho}
@@ -247,9 +483,7 @@ export default function NewSessionPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
-                    O que descobriram/encontraram?
-                  </label>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">O que descobriram/encontraram?</label>
                   <input
                     type="text"
                     value={quickFound}
@@ -259,9 +493,7 @@ export default function NewSessionPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
-                    O que ficou para a próxima sessão?
-                  </label>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">O que ficou para a próxima sessão?</label>
                   <input
                     type="text"
                     value={quickNext}
@@ -293,15 +525,87 @@ export default function NewSessionPage() {
             </>
           )}
 
+          {inputMode === 'audio' && (
+            <>
+              <h2 className="font-cinzel text-lg text-slate-800 mb-4 flex items-center gap-2">
+                <Icon icon="game-icons:audio-cassette" className="w-5 h-5 text-amber-600" />
+                Upload de Áudio
+              </h2>
+              <p className="text-sm text-slate-600 mb-4">
+                Arraste um arquivo aqui (ou clique para selecionar). Máximo 25MB.
+              </p>
+
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept=".mp3,.m4a,.wav,.ogg,audio/*"
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files && e.target.files.length > 0 ? e.target.files[0] : null
+                  onPickAudio(file)
+                }}
+              />
+
+              <div
+                onClick={() => fileInputRef.current?.click()}
+                onDragOver={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                }}
+                onDrop={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  const file = e.dataTransfer.files && e.dataTransfer.files.length > 0 ? e.dataTransfer.files[0] : null
+                  onPickAudio(file)
+                }}
+                className="cursor-pointer bg-[#faf8f5] rounded-lg p-6 border-2 border-dashed border-amber-300 hover:border-amber-400 transition-colors"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-lg bg-amber-100 flex items-center justify-center">
+                    <Icon icon="game-icons:cloud-upload" className="w-7 h-7 text-amber-700" />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-slate-800 font-medium">Clique para enviar ou arraste e solte</p>
+                    <p className="text-slate-600 text-sm">.mp3 • .m4a • .wav • .ogg</p>
+                  </div>
+                  {audioFile ? (
+                    <Icon icon="game-icons:check-mark" className="w-6 h-6 text-green-700" />
+                  ) : (
+                    <Icon icon="game-icons:cursor" className="w-6 h-6 text-slate-500" />
+                  )}
+                </div>
+
+                {audioMeta && (
+                  <div className="mt-4 p-3 bg-white/70 rounded-lg border border-amber-200 flex items-center justify-between gap-4">
+                    <div className="min-w-0">
+                      <p className="text-slate-800 text-sm font-medium truncate">{audioMeta.name}</p>
+                      <p className="text-slate-600 text-xs">{audioMeta.size}</p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.preventDefault()
+                        e.stopPropagation()
+                        setAudioFile(null)
+                      }}
+                      className="flex items-center gap-2 text-slate-600 hover:text-slate-800 text-sm"
+                    >
+                      <Icon icon="game-icons:trash-can" className="w-4 h-4" />
+                      Remover
+                    </button>
+                  </div>
+                )}
+              </div>
+            </>
+          )}
+
           {inputMode === 'manual' && (
             <>
               <h2 className="font-cinzel text-lg text-slate-800 mb-4 flex items-center gap-2">
                 <Icon icon="game-icons:feather" className="w-5 h-5 text-amber-600" />
                 Escrita Manual
               </h2>
-              <p className="text-sm text-slate-600 mb-4">
-                Escreva o log da sessão do seu jeito.
-              </p>
+              <p className="text-sm text-slate-600 mb-4">Escreva o log da sessão do seu jeito.</p>
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-slate-700 mb-1">Título da Sessão</label>
@@ -343,7 +647,7 @@ export default function NewSessionPage() {
                 ) : (
                   <>
                     <Icon icon="game-icons:magic-swirl" className="w-5 h-5" />
-                    <span>Gerar Log com AI</span>
+                    <span>Gerar com IA</span>
                   </>
                 )}
               </button>
@@ -362,28 +666,43 @@ export default function NewSessionPage() {
             </h2>
 
             <div className="bg-[#faf8f5] rounded-lg p-6 border border-amber-200">
-              <h3 className="font-cinzel text-2xl text-slate-800 mb-2">
-                {generatedContent.title}
-              </h3>
-              <p className="text-slate-700 font-crimson text-lg mb-4">
-                {generatedContent.summary}
-              </p>
+              <h3 className="font-cinzel text-2xl text-slate-800 mb-2">{generatedContent.title}</h3>
+              <p className="text-slate-700 font-crimson text-lg mb-4">{generatedContent.summary}</p>
 
               {generatedContent.keyEvents.length > 0 && (
                 <div className="mb-4">
                   <h4 className="font-cinzel text-sm text-slate-600 mb-2">Eventos Principais</h4>
                   <ul className="list-disc list-inside text-slate-700 space-y-1">
                     {generatedContent.keyEvents.map((event, i) => (
-                      <li key={i} className="font-crimson">{event}</li>
+                      <li key={i} className="font-crimson">
+                        {event}
+                      </li>
                     ))}
                   </ul>
+                </div>
+              )}
+
+              {generatedContent.matchedEntities.length > 0 && (
+                <div className="mb-4">
+                  <h4 className="font-cinzel text-sm text-slate-600 mb-2">Entidades detectadas</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {generatedContent.matchedEntities.map((m) => (
+                      <span
+                        key={m.id}
+                        className="text-xs font-semibold text-amber-900 bg-amber-100 border border-amber-200 px-2 py-1 rounded-full"
+                        title={`${m.type} • ${m.slug}`}
+                      >
+                        {m.name}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               )}
 
               {generatedContent.cliffhanger && (
                 <div className="mt-4 p-3 bg-amber-50 rounded-lg border-l-4 border-amber-400">
                   <p className="text-sm text-amber-800 font-crimson italic">
-                    🎯 Próxima sessão: {generatedContent.cliffhanger}
+                    Próxima sessão: {generatedContent.cliffhanger}
                   </p>
                 </div>
               )}
@@ -421,19 +740,6 @@ export default function NewSessionPage() {
           </button>
         </div>
       )}
-
-      {/* Coming Soon: Audio */}
-      <div className="max-w-4xl mx-auto px-6 mb-12">
-        <div className="bg-slate-100/80 rounded-lg p-4 border border-slate-300 border-dashed">
-          <div className="flex items-center gap-3 text-slate-500">
-            <Icon icon="game-icons:audio-cassette" className="w-6 h-6" />
-            <div>
-              <p className="font-medium">Em breve: Upload de Áudio</p>
-              <p className="text-sm">Envie gravações da sessão — transcrevemos e estruturamos automaticamente!</p>
-            </div>
-          </div>
-        </div>
-      </div>
 
       {/* Footer */}
       <footer className="bg-[#0a1628] text-white py-8 px-6">

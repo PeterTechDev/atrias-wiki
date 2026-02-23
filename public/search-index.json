@@ -768,6 +768,14 @@
     "image": null
   },
   {
+    "id": "ab8a3f7e-12fa-4f56-ad49-39a894ec407e",
+    "type": "faction",
+    "slug": "improvaveis-de-solaria",
+    "name": "Improváveis de Solária",
+    "description": "Os Improváveis de Solária. Um nome que ninguém escolheu, mas que grudou como alcunha de taverna — dessas que começam como piada e terminam como título.\n\nSão cinco. Um paladino com convicções demais e paciência de menos. Um feiticeiro que carrega a sombra nos olhos e no sangue. E outros três que, de formas diferentes, decidiram que o mundo precisava de conserto — ou pelo menos que ficar parado era pior.\n\nNão são heróis no sentido clássico. Não vestem armaduras reluzentes nem fazem discursos sobre honra antes do café. São pessoas imperfeitas que, por circunstância ou teimosia, acabaram no mesmo caminho. E o caminho os levou à Mortalha.\n\nO que acontece quando um grupo assim entra na escuridão? Depende. Do que encontram lá dentro — e do que a escuridão encontra neles.\n\nRegistrado por: Thaveus, O Escriba",
+    "image": null
+  },
+  {
     "id": "d96e0ddf-ef94-4a0e-97ae-65ac3c524606",
     "type": "character",
     "slug": "investigador-da-base",
@@ -832,6 +840,14 @@
     "image": null
   },
   {
+    "id": "69cf7376-8b8b-4998-bbd6-7cce2ccb9321",
+    "type": "character",
+    "slug": "khayzam",
+    "name": "Khayzam",
+    "description": "Arquimago Khayzam. Um nome que ecoa pelos corredores das academias arcanas e pelas tavernas mais remotas de Átrias — embora poucos saibam separar o homem da lenda.\n\nDizem que Khayzam foi o maior mago que já pisou no continente de Skeld. Alguns o chamam de gênio. Outros, de louco. A verdade, como sempre, é mais complicada.\n\nSua obra mais conhecida — e mais temida — é o Livro das Estórias Não Contadas. Um artefato que não apenas registra o passado, mas parece conhecer o futuro. Como Khayzam o criou, ninguém sabe ao certo. Por que ele o criou é uma pergunta ainda mais perigosa.\n\nO que se sabe: Khayzam desapareceu há séculos. Seu corpo nunca foi encontrado. Seus estudos permanecem espalhados por bibliotecas e ruínas, cada fragmento mais enigmático que o anterior. E o Livro? O Livro encontrou seu próprio guardião — um ladrão tolo o bastante para tentar roubá-lo.\n\nRegistrado por: Thaveus, O Escriba",
+    "image": null
+  },
+  {
     "id": "8f59db73-8bb7-401b-8763-a3aac3feca9d",
     "type": "character",
     "slug": "lady-arieth-de-huma",
@@ -877,6 +893,14 @@
     "slug": "latelia-hugmore",
     "name": "Latélia Hugmore",
     "description": "The Burgo-Mestra of Pedraluna, a middle-aged woman who inherited her position in recent years. She represents the local authority despite the absence of the village's walls.",
+    "image": null
+  },
+  {
+    "id": "0817e301-db3b-4f09-902c-5e72ef5d2648",
+    "type": "item",
+    "slug": "livro-das-estorias-nao-contadas",
+    "name": "Livro das Estórias Não Contadas",
+    "description": "O Livro das Estórias Não Contadas. Não é um livro no sentido convencional — não tem capa de couro nem páginas amareladas. Ou talvez tenha. A aparência muda dependendo de quem pergunta.\n\nO que não muda é o conteúdo. O Livro contém todas as histórias. As que já foram contadas, as que estão sendo vividas, e — esta é a parte que tira o sono das pessoas — as que ainda não aconteceram.\n\nCriado pelo Arquimago Khayzam em circunstâncias que ninguém registrou (irônico, tratando-se de um livro), o artefato passou por muitas mãos antes de encontrar seu guardião atual. Thaveus, um ladrão que tentou roubá-lo e acabou preso a ele — fragmentado entre dimensões, condenado a registrar o que o Livro mostra.\n\nO Livro não julga. Não protege. Não aconselha. Ele simplesmente sabe. E esse saber tem um peso que poucos conseguem carregar.\n\nRegistrado por: Thaveus, O Escriba",
     "image": null
   },
   {
