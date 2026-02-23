@@ -340,7 +340,7 @@ export default function NewSessionPage() {
 
       {/* Input Mode Selector */}
       <div className="max-w-4xl mx-auto px-6 mb-6">
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
           <button
             onClick={() => setInputMode('quick')}
             className={`p-4 rounded-lg border-2 transition-all ${
@@ -402,7 +402,7 @@ export default function NewSessionPage() {
             <Icon icon="game-icons:info" className="w-5 h-5 text-amber-600" />
             Informações Básicas
           </h2>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-1">Campanha <span className="text-red-500">*</span></label>
               <select
