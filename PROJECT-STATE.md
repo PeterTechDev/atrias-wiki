@@ -51,6 +51,7 @@ Guild chapter audio uses clean narration v2. Dynamic audio paths per campaign/ch
 - [x] "Capítulo" double prefix bug in chapter list fixed
 - [x] Inconsistent section icon colors addressed (already amber-600)
 - [ ] Hyperbolic Time Chamber was built then reverted — Peter needs to decide if it should come back and what it should do
+- [x] Test narration audio file for 'test-campaign' chapter 1 created at `/public/audio/test-campaign/chapter-1.mp3` (browser verification blocked)
 - [ ] 176 entities in Sanity — unclear which are complete vs stubs
 - [ ] No recent code activity — this is effectively paused (except for these recent UI fixes)
 - [ ] Peter's D&D is Tuesdays 8 PM — natural time to ask "anything to add to the wiki from last session?"
