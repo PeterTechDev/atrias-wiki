@@ -1,15 +1,22 @@
 # PROJECT-STATE.md — Átrias Wiki
-*Last updated: 2026-02-23 by Kuroko 👻*
+*Last updated: 2026-02-25 by Kuroko 👻*
 
 ## Vision
-A D&D wiki gift for Peter's Tuesday night campaign. 176 entities across 7 continents. Narrated by Thaveus. Built to feel like lore Peter and the players can actually explore.
+A D&D wiki gift for Peter's Tuesday night campaign. 176 entities across 7 continents. Narrated by Thaveus Aeliorist. Two pillars: The World (linked entities) + The Log (voice → AI → wiki page).
+
+Live: https://atrias-wiki.vercel.app
+Repo: github.com/PeterTechDev/atrias-wiki
 
 ---
 
 ## Stack
-- Next.js (App Router), TypeScript
-- Sanity CMS (content backend)
-- Audio narration per chapter/session
+- Next.js 16.1.6 (App Router), TypeScript
+- Tailwind CSS 4
+- **@iconify/react** (icons — NOT Lucide)
+- Drizzle ORM + Neon PostgreSQL (pgvector 1536)
+- OpenAI gpt-4o-mini (session processing) + Whisper (transcription)
+- ElevenLabs George voice (narration audio)
+- Dev: `PORT=3002 npm run dev:stable` (next build && next start — Turbopack + Tailscale crashes)
 
 ---
 
@@ -21,55 +28,30 @@ A D&D wiki gift for Peter's Tuesday night campaign. 176 entities across 7 contin
 | `/factions/[slug]` | ✅ | Faction detail pages |
 | `/items/[slug]` | ✅ | Item detail pages |
 | `/lore/[slug]` | ✅ | Lore pages |
-| `/map` | ✅ | Interactive map with collapsible sidebar categories |
+| `/map` | ✅ | Interactive map with collapsible sidebar |
 | `/monsters/[slug]` | ✅ | Monster entries |
 | `/places/[slug]` | ✅ | Places/locations |
-| `/sessions/[campaign]/[chapter]` | ✅ | Session recap pages with audio |
+| `/sessions/[campaign]/[chapter]` | ✅ | Session recaps with audio narration |
+| `/sessions/new` | ✅ | Session intake pipeline (Pena Mágica) |
 | `/browse` | ✅ | Browse all entities |
 | `/search` | ✅ | Search |
-| `Hyperbolic Time Chamber (/chamber)` | ❌ Reverted | Was a D&D session prep hub — reverted (reason unclear) |
+| `/timeline` | ✅ | Timeline view |
 
-### Audio
-Guild chapter audio uses clean narration v2. Dynamic audio paths per campaign/chapter.
+## DB Schema
+- `entities` (type, slug, name, description, data, embedding vector(1536))
+- `entityRelations` (source → target with relationship type)
+- `knowledgeChunks` (pgvector search)
+- `campaigns` (Missões da Guilda, Improváveis de Solária)
+- `sessionLogs` (chapter narrations, raw recaps, metadata)
 
----
+## Recent Work
+- Chapter 1 "Cartão de Visitas" — published with audio
+- Chapter 2 "O Verso do Cartão" — published Feb 24 with audio (commit af70bcc)
+- Session intake pipeline (Pena Mágica) — built, Marvin + Ego cleared
+- Thaveus voice: system prompt with full backstory, temp 0.7, quill-reveal CSS animation
+- Responsive fixes for mobile (commit 5307780, 470459e)
 
-## Key Decisions (don't relitigate)
-- **Thaveus as narrator** — all narration is from Thaveus's POV
-- **"Certa vez"** — only for standalone stories, NOT for serial chapters
-- **Don't add titles to already-known characters** — e.g. if they're known as "Mira", don't call them "Lady Mira"
-- **Peter is VERY particular** about tone, timeline accuracy, and character representation. Check with him before writing lore.
-- **Sanity CMS** — content lives in Sanity, not in code files
-
----
-
-## Open / What's Next
-- [x] Atrias Session Intake Pipeline — Ego review passed and 4 blocking UI issues fixed (2026-02-23)
-- [x] Status badge translated to Portuguese in chapter list
-- [x] Required field indicators added to /sessions/new form
-- [x] Improved audio processing feedback message
-- [x] "Capítulo" double prefix bug in chapter list fixed
-- [x] Inconsistent section icon colors addressed (already amber-600)
-- [ ] Hyperbolic Time Chamber was built then reverted — Peter needs to decide if it should come back and what it should do
-- [x] Test narration audio file for 'test-campaign' chapter 1 created at `/public/audio/test-campaign/chapter-1.mp3` (browser verification blocked)
-- [ ] 176 entities in Sanity — unclear which are complete vs stubs
-- [ ] No recent code activity — this is effectively paused (except for these recent UI fixes)
-- [ ] Peter's D&D is Tuesdays 8 PM — natural time to ask "anything to add to the wiki from last session?"
-
----
-
-## Running Locally
-```bash
-cd ~/projects/atrias-wiki
-npm run dev
-# Needs SANITY_* env vars — check .env.local
-```
-
----
-
-## Content Rules (Critical)
-These exist because Peter caught errors before and was unhappy:
-1. Never invent lore without Peter's sign-off
-2. Timeline accuracy matters — check session order before writing recaps
-3. Character voices must match how they've been played at the table
-4. "Certa vez" (once upon a time) = standalone stories only
+## Open Items
+- [ ] Live test session intake with real voice recording
+- [ ] Phase 2: relationship graph (characters/factions/places linked visually)
+- [ ] Hyperbolic Time Chamber (session prep hub) — was built, reverted, needs redesign
