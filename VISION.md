@@ -69,13 +69,13 @@ The party opens it, laughs at the recap, finds something they forgot, and someon
 ---
 
 ## Current State (Feb 2026)
-- ✅ 176+ entities in PostgreSQL
+- ✅ 176+ entities in PostgreSQL (Drizzle ORM + Neon)
 - ✅ pgvector installed and ready
 - ✅ Character, faction, place, item, lore, monster pages
 - ✅ Interactive map (Leaflet)
-- ✅ Session recap pages with audio
+- ✅ Session recap pages with audio (Ch 1 + Ch 2 live)
 - ✅ Pre-generated search index
-- ❌ No AI features yet
-- ❌ No session intake pipeline
-- ❌ No relationship graph
-- ❌ No voice input
+- ✅ Session intake pipeline shipped (Pena Mágica / Thaveus voice) — Phase 1 done
+- ✅ Audio narration via ElevenLabs (George voice)
+- ❌ No relationship graph (Phase 2)
+- ❌ No character conversations (Phase 3)
