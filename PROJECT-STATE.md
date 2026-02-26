@@ -52,6 +52,6 @@ Repo: github.com/PeterTechDev/atrias-wiki
 - Responsive fixes for mobile (commit 5307780, 470459e)
 
 ## Open Items
-- [ ] Live test session intake with real voice recording
+- [x] Live test session intake — **PASSED** (Feb 25). API tested directly: quick mode returns 200 with full Thaveus narrative, entity matching, key events. Save route exists. Audio/text modes untested (need real recording). Note: service runs on port **3456**, not 3002.
 - [ ] Phase 2: relationship graph (characters/factions/places linked visually)
 - [ ] Hyperbolic Time Chamber (session prep hub) — was built, reverted, needs redesign
