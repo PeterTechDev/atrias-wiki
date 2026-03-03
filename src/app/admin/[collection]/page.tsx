@@ -4,18 +4,15 @@ import { Icon } from '@iconify/react'
 import { getEntitiesByType } from '@/db/queries/entities'
 import { AdminShell } from '../_components/AdminShell'
 import { AdminEntityTable } from '../_components/AdminEntityTable'
+import { AdminSuccessBanner } from '../_components/AdminSuccessBanner'
 import { collectionLabels, collectionToEntityType, isAdminCollection } from '../_lib/entityTypes'
 
 export default async function AdminCollectionPage({
   params,
-  searchParams,
 }: {
   params: Promise<{ collection: string }>
-  searchParams?: Promise<{ success?: string }>
 }) {
   const { collection } = await params
-  const sp = (await searchParams) ?? {}
-  const success = sp.success
 
   if (!isAdminCollection(collection)) notFound()
 
@@ -31,15 +28,9 @@ export default async function AdminCollectionPage({
       backHref="/admin"
       backLabel="Back to dashboard"
     >
-      {success ? (
-        <div className="mb-5 rounded border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900">
-          {success === 'created'
-            ? 'Created successfully.'
-            : success === 'updated'
-              ? 'Saved successfully.'
-              : 'Success.'}
-        </div>
-      ) : null}
+      <div className="mb-5">
+        <AdminSuccessBanner />
+      </div>
 
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-5">
         <div className="text-sm text-slate-600">
