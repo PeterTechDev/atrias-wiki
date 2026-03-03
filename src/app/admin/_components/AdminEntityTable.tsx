@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Icon } from '@iconify/react'
 import type { Entity } from '@/db/schema'
+import { collectionLabels, isAdminCollection } from '../_lib/entityTypes'
 
 export function AdminEntityTable({
   collection,
@@ -15,7 +16,7 @@ export function AdminEntityTable({
   const router = useRouter()
 
   async function onDelete(entity: Entity) {
-    if (!confirm(`Delete "${entity.name}"? This cannot be undone.`)) return
+    if (!confirm(`Are you sure you want to delete ${entity.name}? This cannot be undone.`)) return
 
     const res = await fetch(`/api/admin/entities/${entity.id}`, {
       method: 'DELETE',
@@ -80,7 +81,19 @@ export function AdminEntityTable({
       {entities.length === 0 ? (
         <div className="text-center py-10 text-slate-600">
           <Icon icon="game-icons:empty-hourglass" className="w-12 h-12 mx-auto text-slate-400 mb-3" />
-          Nothing here yet.
+          {(() => {
+            const label = isAdminCollection(collection) ? collectionLabels[collection] : 'Entries'
+            return (
+              <div className="space-y-2">
+                <p className="text-sm">
+                  No {label.toLowerCase()} found.{' '}
+                  <Link href={`/admin/${collection}/new`} className="text-amber-700 hover:text-amber-800 font-semibold">
+                    Add the first one.
+                  </Link>
+                </p>
+              </div>
+            )
+          })()}
         </div>
       ) : null}
     </div>

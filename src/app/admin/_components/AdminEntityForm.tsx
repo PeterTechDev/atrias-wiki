@@ -1,9 +1,11 @@
 'use client'
 
 import { useMemo, useState } from 'react'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Icon } from '@iconify/react'
 import type { EntityStatus, EntityType } from '@/db/schema'
+import { collectionLabels, isAdminCollection } from '../_lib/entityTypes'
 
 function slugify(input: string) {
   return input
@@ -42,23 +44,33 @@ export function AdminEntityForm({
 
   const canAutoSlug = useMemo(() => mode === 'create', [mode])
 
+  const jsonInvalid = useMemo(() => {
+    const text = values.dataText.trim()
+    if (!text) return false
+    try {
+      JSON.parse(text)
+      return false
+    } catch {
+      return true
+    }
+  }, [values.dataText])
+
   function update<K extends keyof AdminEntityFormValues>(key: K, value: AdminEntityFormValues[K]) {
     setValues((v) => ({ ...v, [key]: value }))
   }
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault()
+
+    if (jsonInvalid) {
+      setError('Invalid JSON')
+      return
+    }
+
     setIsSaving(true)
     setError(null)
 
-    let data: unknown
-    try {
-      data = values.dataText.trim() ? JSON.parse(values.dataText) : {}
-    } catch {
-      setIsSaving(false)
-      setError('Data must be valid JSON.')
-      return
-    }
+    const data = values.dataText.trim() ? JSON.parse(values.dataText) : {}
 
     const payload = {
       type: values.type,
@@ -85,12 +97,23 @@ export function AdminEntityForm({
       return
     }
 
-    router.push(`/admin/${collection}`)
+    const success = mode === 'create' ? 'created' : 'updated'
+    router.push(`/admin/${collection}?success=${success}`)
     router.refresh()
   }
 
+  const label = isAdminCollection(collection) ? collectionLabels[collection] : collection
+
   return (
     <form onSubmit={onSubmit} className="space-y-5">
+      <nav className="text-sm text-slate-600">
+        <Link href="/admin" className="hover:underline">Admin</Link>
+        <span className="mx-2 text-slate-400">→</span>
+        <Link href={`/admin/${collection}`} className="hover:underline">{label}</Link>
+        <span className="mx-2 text-slate-400">→</span>
+        <span className="text-slate-800 font-semibold">{mode === 'create' ? 'New' : 'Edit'}</span>
+      </nav>
+
       {error ? (
         <div className="rounded border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-800">
           {error}
@@ -161,14 +184,19 @@ export function AdminEntityForm({
         <textarea
           value={values.dataText}
           onChange={(e) => update('dataText', e.target.value)}
-          className="mt-1 w-full min-h-56 rounded border border-slate-300 bg-white px-3 py-2 font-mono text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+          className={`mt-1 w-full min-h-56 rounded border bg-white px-3 py-2 font-mono text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500 ${
+            jsonInvalid ? 'border-red-400 focus:ring-red-400' : 'border-slate-300'
+          }`}
           placeholder={'{\n  "status": "Vivo"\n}'}
         />
+        {jsonInvalid ? (
+          <p className="mt-2 text-sm text-red-700">Invalid JSON</p>
+        ) : null}
       </label>
 
       <div className="flex flex-col sm:flex-row gap-3 sm:items-center">
         <button
-          disabled={isSaving}
+          disabled={isSaving || jsonInvalid}
           className="inline-flex items-center justify-center gap-2 rounded bg-[#0a1628] px-4 py-2 text-sm font-semibold text-amber-300 hover:text-amber-200 disabled:opacity-60"
         >
           <Icon icon="game-icons:save" className="w-5 h-5" />

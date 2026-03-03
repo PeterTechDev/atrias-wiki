@@ -12,8 +12,12 @@ function unauthorized() {
 export function middleware(req: NextRequest) {
   const secret = process.env.ADMIN_SECRET
 
-  // If not configured, don't block (dev friendliness)
-  if (!secret) return NextResponse.next()
+  // Never allow open access to admin routes in production.
+  if (!secret) {
+    if (process.env.NODE_ENV === 'production') return unauthorized()
+    // If not configured, don't block (dev friendliness)
+    return NextResponse.next()
+  }
 
   const auth = req.headers.get('authorization')
   if (!auth || !auth.startsWith('Basic ')) return unauthorized()
