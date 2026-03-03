@@ -77,5 +77,5 @@ The party opens it, laughs at the recap, finds something they forgot, and someon
 - ✅ Pre-generated search index
 - ✅ Session intake pipeline shipped (Pena Mágica / Thaveus voice) — Phase 1 done
 - ✅ Audio narration via ElevenLabs (George voice)
-- ❌ No relationship graph (Phase 2)
-- ❌ No character conversations (Phase 3)
+- ⏳ Relationship graph not yet built (Phase 2 — data ready, frontend pending)
+- ⏳ Character conversations not yet built (Phase 3 — after Phase 2)

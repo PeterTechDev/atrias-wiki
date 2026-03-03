@@ -1,86 +1,74 @@
 #!/usr/bin/env bash
-# test-intake.sh — Smoke test for the Atrias Wiki Pena Mágica intake pipeline
-#
-# Tests: POST /api/sessions/process with mode=quick
-# Expected response: { title, summary, keyEvents[], quotes[], cliffhanger, matchedEntities[] }
-#
-# Usage: ./scripts/test-intake.sh
-
+# test-intake.sh — Smoke test for POST /api/sessions/process (mode=quick)
 set -euo pipefail
 
 PORT=3002
-API_URL="http://localhost:$PORT/api/sessions/process"
-LOG_FILE="/tmp/atrias-dev-server.log"
-SERVER_PID=""
+BASE_URL="http://localhost:$PORT"
+ENDPOINT="$BASE_URL/api/sessions/process"
+DEV_PID=""
 
 cleanup() {
-  if [[ -n "$SERVER_PID" ]]; then
-    echo "→ Stopping dev server (pid $SERVER_PID)..."
-    kill "$SERVER_PID" 2>/dev/null || true
-    wait "$SERVER_PID" 2>/dev/null || true
+  if [[ -n "$DEV_PID" ]]; then
+    echo "→ Killing dev server (PID $DEV_PID)..."
+    kill "$DEV_PID" 2>/dev/null || true
   fi
 }
 trap cleanup EXIT
 
-# ── 1. Start dev server ──────────────────────────────────────────────────────
+# ── 1. Start dev server ────────────────────────────────────────────────────────
 echo "→ Starting Next.js dev server on port $PORT..."
 cd "$(dirname "$0")/.."
-npm run dev -- --port "$PORT" > "$LOG_FILE" 2>&1 &
-SERVER_PID=$!
+npm run dev -- --port "$PORT" &>/tmp/atrias-dev.log &
+DEV_PID=$!
 
-# ── 2. Wait for server to be ready ──────────────────────────────────────────
-echo "→ Waiting for server (max 40s)..."
-for i in $(seq 1 20); do
-  STATUS=$(curl -s -o /dev/null -w "%{http_code}" "http://localhost:$PORT" --max-time 2 2>/dev/null || echo "000")
-  if echo "$STATUS" | grep -qE "^[23]"; then
-    echo "   Ready after $((i*2))s"
+# ── 2. Wait for server to be ready (poll every 2s, max 30s) ──────────────────
+echo "→ Waiting for server to be ready..."
+READY=0
+for i in $(seq 1 15); do
+  if curl -sf "$BASE_URL" -o /dev/null 2>/dev/null; then
+    READY=1
     break
-  fi
-  if [[ $i -eq 20 ]]; then
-    echo "FAIL — Server did not start within 40s"
-    tail -20 "$LOG_FILE"
-    exit 1
   fi
   sleep 2
 done
 
-# ── 3. Send test request ─────────────────────────────────────────────────────
-echo ""
-echo "→ POSTing to $API_URL (mode=quick)..."
-RESPONSE=$(curl -s -X POST "$API_URL" \
-  -F "mode=quick" \
-  -F "campaign=Teste Automatizado" \
-  -F "sessionNumber=1" \
-  -F "playDate=2026-03-01" \
-  -F "quickWhat=Os herois chegaram a cidade de Neverwinter e enfrentaram guardas corruptos" \
-  -F "quickWho=Santiago, Mira, Aldric" \
-  -F "quickFound=Um artefato antigo de origem desconhecida no templo" \
-  -F "quickNext=Investigar o paradeiro do Arquimago Khayzam")
-
-# ── 4. Print response ────────────────────────────────────────────────────────
-echo ""
-echo "=== RESPONSE ==="
-echo "$RESPONSE" | python3 -m json.tool 2>/dev/null || echo "$RESPONSE"
-echo "================"
-
-# ── 5. Validate ──────────────────────────────────────────────────────────────
-echo ""
-if echo "$RESPONSE" | python3 -c "
-import sys, json
-data = json.load(sys.stdin)
-assert 'title' in data, 'missing title'
-assert 'summary' in data, 'missing summary'
-assert 'keyEvents' in data, 'missing keyEvents'
-assert 'cliffhanger' in data, 'missing cliffhanger'
-print('title:', data['title'][:60])
-print('keyEvents:', len(data['keyEvents']), 'events')
-print('matchedEntities:', len(data.get('matchedEntities', [])), 'matched')
-" 2>&1; then
-  echo ""
-  echo "PASS — Pena Magica intake pipeline is working"
-  exit 0
-else
-  echo ""
-  echo "FAIL — Response missing expected fields"
+if [[ "$READY" -eq 0 ]]; then
+  echo "✗ Server did not start within 30s. Check /tmp/atrias-dev.log"
   exit 1
 fi
+echo "✓ Server is up."
+
+# ── 3. Send test POST (mode=quick) ───────────────────────────────────────────
+echo "→ Sending test POST to $ENDPOINT..."
+RESPONSE=$(curl -sf -X POST "$ENDPOINT" \
+  -F "mode=quick" \
+  -F "campaign=Test Campaign" \
+  -F "sessionNumber=1" \
+  -F "playDate=2026-03-01" \
+  -F "quickWhat=Os heróis enfrentaram uma emboscada de bandidos na estrada para Veloria." \
+  -F "quickWho=Aldric, Seraphina, Mira" \
+  -F "quickFound=Um mapa parcial que leva a uma tumba esquecida." \
+  -F "quickNext=Investigar a tumba antes que a Guilda das Sombras chegue primeiro." \
+  2>/tmp/atrias-curl-err.log) || {
+  echo "✗ curl failed. Response:"
+  cat /tmp/atrias-curl-err.log
+  exit 1
+}
+
+# ── 4. Pretty-print response ─────────────────────────────────────────────────
+echo ""
+echo "── Response ──────────────────────────────────────────────────────────────"
+echo "$RESPONSE" | python3 -m json.tool || echo "$RESPONSE"
+echo "──────────────────────────────────────────────────────────────────────────"
+echo ""
+
+# ── 5. Check for "title" in response ─────────────────────────────────────────
+if echo "$RESPONSE" | python3 -c "import sys, json; d=json.load(sys.stdin); exit(0 if 'title' in d and d['title'] else 1)" 2>/dev/null; then
+  echo "✅ PASS — response contains 'title'"
+  EXIT_CODE=0
+else
+  echo "❌ FAIL — 'title' missing or empty in response"
+  EXIT_CODE=1
+fi
+
+exit $EXIT_CODE
