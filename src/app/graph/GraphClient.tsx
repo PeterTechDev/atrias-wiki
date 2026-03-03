@@ -179,12 +179,12 @@ export default function GraphClient() {
   useEffect(() => {
     if (!payload) return
 
-    const container = containerRef.current
-    const canvas = canvasRef.current
-    if (!container || !canvas) return
+    if (!containerRef.current || !canvasRef.current) return
 
-    const ctx = canvas.getContext('2d')
-    if (!ctx) return
+    const container = containerRef.current!
+    const canvas = canvasRef.current!
+
+    const ctx = canvas.getContext('2d')!
 
     // Filter down to the entity types we can navigate + keep lore/etc.
     // Also drop edges that reference missing nodes (defensive for partial data).
