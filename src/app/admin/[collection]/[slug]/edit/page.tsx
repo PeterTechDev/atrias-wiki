@@ -38,7 +38,7 @@ export default async function AdminEditEntityPage({
           slug: entity.slug,
           description: entity.description ?? '',
           status: entity.status ?? 'published',
-          dataText: JSON.stringify(entity.data ?? {}, null, 2),
+          data: (entity.data ?? {}) as Record<string, unknown>,
         }}
       />
     </AdminShell>

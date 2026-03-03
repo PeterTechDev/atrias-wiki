@@ -32,7 +32,7 @@ export default async function AdminNewEntityPage({
           slug: '',
           description: '',
           status: 'published',
-          dataText: '{\n  \n}',
+          data: {},
         }}
       />
     </AdminShell>
