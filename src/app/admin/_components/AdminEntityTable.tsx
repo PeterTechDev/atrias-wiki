@@ -37,19 +37,29 @@ export function AdminEntityTable({
         <table className="min-w-full text-sm">
           <thead className="bg-slate-100/70 text-slate-700">
             <tr>
-              <th className="text-left px-4 py-3 font-semibold">Name</th>
-              <th className="text-left px-4 py-3 font-semibold">Slug</th>
-              <th className="text-left px-4 py-3 font-semibold">Status</th>
-              <th className="text-right px-4 py-3 font-semibold">Actions</th>
+              <th className="text-left px-4 py-3 font-semibold font-cinzel">Name</th>
+              <th className="hidden sm:table-cell text-left px-4 py-3 font-semibold font-cinzel">Slug</th>
+              <th className="text-left px-4 py-3 font-semibold font-cinzel">Status</th>
+              <th className="text-right px-4 py-3 font-semibold font-cinzel">Actions</th>
             </tr>
           </thead>
           <tbody>
             {entities.map((e) => (
               <tr key={e.id} className="border-t border-slate-200">
                 <td className="px-4 py-3 font-medium text-slate-900">{e.name}</td>
-                <td className="px-4 py-3 text-slate-700">{e.slug}</td>
+                <td className="hidden sm:table-cell px-4 py-3 text-slate-700">{e.slug}</td>
                 <td className="px-4 py-3">
-                  <span className="inline-flex items-center rounded-full bg-slate-900/5 px-2 py-1 text-xs text-slate-700">
+                  <span
+                    className={`inline-flex items-center rounded-full px-2 py-1 text-xs ${
+                      e.status === 'draft'
+                        ? 'bg-slate-100 text-slate-600'
+                        : e.status === 'review'
+                          ? 'bg-amber-100 text-amber-700'
+                          : e.status === 'published'
+                            ? 'bg-green-100 text-green-700'
+                            : 'bg-slate-100 text-slate-700'
+                    }`}
+                  >
                     {e.status}
                   </span>
                 </td>
@@ -57,7 +67,7 @@ export function AdminEntityTable({
                   <div className="flex justify-end gap-2">
                     <Link
                       href={`/admin/${collection}/${e.slug}/edit`}
-                      className="inline-flex items-center gap-1 rounded bg-[#0a1628] px-3 py-2 text-xs font-semibold text-amber-300 hover:text-amber-200"
+                      className="inline-flex items-center gap-1 rounded bg-[#0a1628] px-3 py-3 text-xs font-semibold text-amber-300 hover:text-amber-200"
                     >
                       <Icon icon="game-icons:quill" className="w-4 h-4" />
                       Edit
@@ -65,7 +75,7 @@ export function AdminEntityTable({
                     <button
                       type="button"
                       onClick={() => onDelete(e)}
-                      className="inline-flex items-center gap-1 rounded bg-red-900/80 px-3 py-2 text-xs font-semibold text-white hover:bg-red-800"
+                      className="inline-flex items-center gap-1 rounded bg-red-900/80 px-3 py-3 text-xs font-semibold text-white hover:bg-red-800"
                     >
                       <Icon icon="game-icons:trash-can" className="w-4 h-4" />
                       Delete

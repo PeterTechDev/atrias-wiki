@@ -55,7 +55,7 @@ export default async function AdminDashboardPage() {
           <Link
             key={c.href}
             href={c.href}
-            className="group rounded-lg border border-slate-200 bg-white/70 p-5 hover:bg-white hover:border-amber-400 transition-colors"
+            className="group rounded-lg border border-amber-200 bg-[#e8dcc8]/50 p-5 hover:bg-[#e8dcc8]/70 hover:border-amber-400 transition-colors"
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
