@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Icon } from '@iconify/react'
+import { AlertCircle, Loader2 } from 'lucide-react'
 import type { EntityStatus, EntityType } from '@/db/schema'
 import { collectionLabels, isAdminCollection } from '../_lib/entityTypes'
 
@@ -418,6 +419,7 @@ export function AdminEntityForm({
 
   const [isMagicPenLoading, setIsMagicPenLoading] = useState(false)
   const [magicPenError, setMagicPenError] = useState<string | null>(null)
+  const [magicPenSuccessStage, setMagicPenSuccessStage] = useState<'hidden' | 'shown' | 'fading'>('hidden')
 
   const canAutoSlug = useMemo(() => mode === 'create', [mode])
 
@@ -460,6 +462,10 @@ export function AdminEntityForm({
       if (!result) throw new Error('Magic Pen returned an empty result.')
 
       update('description', result)
+
+      setMagicPenSuccessStage('shown')
+      setTimeout(() => setMagicPenSuccessStage('fading'), 2000)
+      setTimeout(() => setMagicPenSuccessStage('hidden'), 2400)
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Unknown error'
       setMagicPenError(message)
@@ -549,26 +555,47 @@ export function AdminEntityForm({
       </div>
 
       <label className="block">
-        <span className="inline-flex items-center gap-2 text-sm font-semibold text-slate-700">
-          Description
+        <div className="flex items-center justify-between">
+          <span className="text-sm font-semibold text-slate-700">Description</span>
           <button
             type="button"
             onClick={onMagicPen}
             disabled={isMagicPenLoading || !values.name.trim()}
-            className="inline-flex items-center gap-2 rounded bg-amber-500/15 px-2 py-1 text-xs font-semibold text-amber-300 hover:bg-amber-500/20 disabled:opacity-60"
+            className="inline-flex shrink-0 items-center gap-2 rounded bg-amber-500/15 px-3 py-2 text-xs font-semibold text-amber-300 hover:bg-amber-500/20 disabled:opacity-60"
             title={values.description.trim() ? 'Enhance in Thaveus\'s voice' : 'Generate a draft in Thaveus\'s voice'}
           >
-            <Icon icon="game-icons:quill-ink" className="h-4 w-4" />
-            {isMagicPenLoading ? 'Writing…' : 'Magic Pen'}
+            {isMagicPenLoading ? (
+              <>
+                <Loader2 className="h-3 w-3 animate-spin" />
+                <span>Writing…</span>
+              </>
+            ) : (
+              <>
+                <Icon icon="game-icons:quill-ink" className="h-4 w-4" />
+                <span>Magic Pen</span>
+              </>
+            )}
           </button>
-        </span>
+        </div>
         <textarea
           value={values.description}
           onChange={(e) => update('description', e.target.value)}
           className="mt-1 w-full min-h-24 rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
         />
+        {magicPenSuccessStage !== 'hidden' ? (
+          <div
+            className={`mt-2 inline-flex items-center rounded border border-amber-200 bg-amber-50 px-2 py-1 text-xs font-semibold text-amber-900 transition-opacity duration-300 ${
+              magicPenSuccessStage === 'shown' ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
+            Written by Thaveus ✓
+          </div>
+        ) : null}
         {magicPenError ? (
-          <p className="mt-2 text-sm text-red-700">{magicPenError}</p>
+          <p className="mt-2 flex items-center gap-2 text-sm text-red-700">
+            <AlertCircle className="h-4 w-4" />
+            <span>{magicPenError}</span>
+          </p>
         ) : null}
       </label>
 
@@ -601,57 +628,7 @@ export function AdminEntityForm({
         <div className="rounded border border-slate-200 bg-white p-4">
           <h3 className="mb-3 text-sm font-semibold text-slate-800">Character details</h3>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <label className="block">
-              <span className="text-sm font-semibold text-slate-700">Race</span>
-              <input
-                value={(dataFields as CharacterFields).race}
-                onChange={(e) => updateDataField('race', e.target.value)}
-                className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
-              />
-            </label>
-
-            <label className="block">
-              <span className="text-sm font-semibold text-slate-700">Class</span>
-              <input
-                value={(dataFields as CharacterFields).class}
-                onChange={(e) => updateDataField('class', e.target.value)}
-                className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
-              />
-            </label>
-
-            <label className="block">
-              <span className="text-sm font-semibold text-slate-700">Status</span>
-              <select
-                value={(dataFields as CharacterFields).status}
-                onChange={(e) => updateDataField('status', e.target.value as CharacterStatus)}
-                className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
-              >
-                <option value="active">active</option>
-                <option value="deceased">deceased</option>
-                <option value="unknown">unknown</option>
-                <option value="missing">missing</option>
-              </select>
-            </label>
-
-            <label className="block">
-              <span className="text-sm font-semibold text-slate-700">Titles (comma-separated)</span>
-              <input
-                value={(dataFields as CharacterFields).titles}
-                onChange={(e) => updateDataField('titles', e.target.value)}
-                className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
-              />
-            </label>
-
-            <label className="block">
-              <span className="text-sm font-semibold text-slate-700">Affiliation</span>
-              <input
-                value={(dataFields as CharacterFields).affiliation}
-                onChange={(e) => updateDataField('affiliation', e.target.value)}
-                className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
-              />
-            </label>
-
+          <div className="grid grid-cols-1 gap-4">
             <label className="block">
               <span className="text-sm font-semibold text-slate-700">Image URL</span>
               <input
@@ -661,41 +638,106 @@ export function AdminEntityForm({
               />
             </label>
 
-            <label className="block">
-              <span className="text-sm font-semibold text-slate-700">Alignment</span>
-              <input
-                value={(dataFields as CharacterFields).alignment}
-                onChange={(e) => updateDataField('alignment', e.target.value)}
-                className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
-              />
-            </label>
+            <div className="rounded border border-slate-200 bg-slate-50 p-3">
+              <h4 className="mb-2 text-sm font-semibold text-slate-800">Identity</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <label className="block">
+                  <span className="text-sm font-semibold text-slate-700">Race</span>
+                  <input
+                    value={(dataFields as CharacterFields).race}
+                    onChange={(e) => updateDataField('race', e.target.value)}
+                    className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  />
+                </label>
 
-            <label className="block">
-              <span className="text-sm font-semibold text-slate-700">Hierarchy (comma-separated)</span>
-              <input
-                value={(dataFields as CharacterFields).hierarchy}
-                onChange={(e) => updateDataField('hierarchy', e.target.value)}
-                className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
-              />
-            </label>
+                <label className="block">
+                  <span className="text-sm font-semibold text-slate-700">Class</span>
+                  <input
+                    value={(dataFields as CharacterFields).class}
+                    onChange={(e) => updateDataField('class', e.target.value)}
+                    className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  />
+                </label>
 
-            <label className="block md:col-span-2">
-              <span className="text-sm font-semibold text-slate-700">Abilities (comma-separated)</span>
-              <input
-                value={(dataFields as CharacterFields).abilities}
-                onChange={(e) => updateDataField('abilities', e.target.value)}
-                className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
-              />
-            </label>
+                <label className="block">
+                  <span className="text-sm font-semibold text-slate-700">Alignment</span>
+                  <input
+                    value={(dataFields as CharacterFields).alignment}
+                    onChange={(e) => updateDataField('alignment', e.target.value)}
+                    className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  />
+                </label>
 
-            <label className="block md:col-span-2">
-              <span className="text-sm font-semibold text-slate-700">Weaknesses (comma-separated)</span>
-              <input
-                value={(dataFields as CharacterFields).weaknesses}
-                onChange={(e) => updateDataField('weaknesses', e.target.value)}
-                className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
-              />
-            </label>
+                <label className="block">
+                  <span className="text-sm font-semibold text-slate-700">Status</span>
+                  <select
+                    value={(dataFields as CharacterFields).status}
+                    onChange={(e) => updateDataField('status', e.target.value as CharacterStatus)}
+                    className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  >
+                    <option value="active">active</option>
+                    <option value="deceased">deceased</option>
+                    <option value="unknown">unknown</option>
+                    <option value="missing">missing</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+
+            <div className="rounded border border-slate-200 bg-slate-50 p-3">
+              <h4 className="mb-2 text-sm font-semibold text-slate-800">Lore</h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <label className="block">
+                  <span className="text-sm font-semibold text-slate-700">Titles (comma-separated)</span>
+                  <input
+                    value={(dataFields as CharacterFields).titles}
+                    onChange={(e) => updateDataField('titles', e.target.value)}
+                    className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  />
+                </label>
+
+                <label className="block">
+                  <span className="text-sm font-semibold text-slate-700">Affiliation</span>
+                  <input
+                    value={(dataFields as CharacterFields).affiliation}
+                    onChange={(e) => updateDataField('affiliation', e.target.value)}
+                    className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  />
+                </label>
+
+                <label className="block md:col-span-2">
+                  <span className="text-sm font-semibold text-slate-700">Hierarchy (comma-separated)</span>
+                  <input
+                    value={(dataFields as CharacterFields).hierarchy}
+                    onChange={(e) => updateDataField('hierarchy', e.target.value)}
+                    className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  />
+                </label>
+              </div>
+            </div>
+
+            <div className="rounded border border-slate-200 bg-slate-50 p-3">
+              <h4 className="mb-2 text-sm font-semibold text-slate-800">Traits</h4>
+              <div className="grid grid-cols-1 gap-4">
+                <label className="block">
+                  <span className="text-sm font-semibold text-slate-700">Abilities (comma-separated)</span>
+                  <input
+                    value={(dataFields as CharacterFields).abilities}
+                    onChange={(e) => updateDataField('abilities', e.target.value)}
+                    className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  />
+                </label>
+
+                <label className="block">
+                  <span className="text-sm font-semibold text-slate-700">Weaknesses (comma-separated)</span>
+                  <input
+                    value={(dataFields as CharacterFields).weaknesses}
+                    onChange={(e) => updateDataField('weaknesses', e.target.value)}
+                    className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  />
+                </label>
+              </div>
+            </div>
           </div>
 
           <div className="mt-4 rounded border border-slate-200 bg-slate-50 p-3">
