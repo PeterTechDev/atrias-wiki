@@ -5,7 +5,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { Icon } from '@iconify/react'
-import { getEntityBySlug, getEntitiesByType } from '@/db/queries/entities'
+import { getEntityBySlug } from '@/db/queries/entities'
 import type { ItemData } from '@/types/entities'
 import { WikiContributionActions } from '@/components/WikiContributionActions'
 import { WikiLastEdited } from '@/components/WikiLastEdited'
@@ -19,11 +19,6 @@ const rarityColors: Record<string, string> = {
   'Raro': 'bg-blue-600/20 text-blue-400',
   'Epico': 'bg-purple-600/20 text-purple-400',
   'Lendario': 'bg-amber-600/30 text-amber-400',
-}
-
-export async function generateStaticParams() {
-  const items = await getEntitiesByType('item')
-  return items.map((i) => ({ slug: i.slug }))
 }
 
 interface PageProps {

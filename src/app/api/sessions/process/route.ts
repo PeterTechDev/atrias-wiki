@@ -4,6 +4,7 @@ import { toFile } from 'openai/uploads'
 import { and, ilike, inArray, isNull, or } from 'drizzle-orm'
 import { db } from '@/db'
 import { entities, type EntityType } from '@/db/schema'
+import { entityVisibility } from '@/lib/wikiPermissions'
 
 type InputMode = 'quick' | 'text' | 'audio'
 
@@ -188,6 +189,7 @@ async function matchEntities(mentions: MentionedEntity[]): Promise<MatchedEntity
         and(
           inArray(entities.type, [mention.type]),
           isNull(entities.archivedAt),
+          entityVisibility(),
           or(ilike(entities.name, pattern), ilike(entities.slug, pattern))
         )
       )

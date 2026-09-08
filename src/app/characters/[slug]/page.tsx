@@ -8,19 +8,13 @@ import { notFound } from 'next/navigation'
 import { Icon } from '@iconify/react'
 import DetailsToggle from '@/components/DetailsToggle'
 import ImageGallery from '@/components/ImageGallery'
-import { getEntityBySlug, getEntitiesByType } from '@/db/queries/entities'
+import { getEntityBySlug } from '@/db/queries/entities'
 import type { CharacterData } from '@/types/entities'
 import { WikiContributionActions } from '@/components/WikiContributionActions'
 import { WikiLastEdited } from '@/components/WikiLastEdited'
 import { WikiFavoriteButton } from '@/components/WikiFavoriteButton'
 
 export const dynamic = 'force-dynamic'
-
-// Generate static params for all characters
-export async function generateStaticParams() {
-  const characters = await getEntitiesByType('character')
-  return characters.map((char) => ({ slug: char.slug }))
-}
 
 interface PageProps {
   params: Promise<{ slug: string }>

@@ -1,11 +1,12 @@
 'use client'
 
-import { createContext, useContext, useEffect, useRef, useState } from 'react'
+import { Fragment, createContext, useContext, useEffect, useRef, useState } from 'react'
 import type { User } from '@supabase/supabase-js'
 import Link from 'next/link'
 import Image from 'next/image'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { avatars, authError, supabase, supabaseUrl } from '@/lib/supabase'
+import { syncWikiSession } from '@/lib/wikiSession'
 
 const AuthContext = createContext<{ user: User | null; loading: boolean }>({ user: null, loading: true })
 export const useAuth = () => useContext(AuthContext)
@@ -19,6 +20,7 @@ export function Avatar({ value }: { value?: string }) {
 
 export default function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
+  const router = useRouter()
   const [loading, setLoading] = useState(true)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
@@ -31,13 +33,20 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
   const triggerRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
+    let active = true
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user && !session.user.is_anonymous ? session.user : null)
       setMenuPath(null)
-      setLoading(false)
+      void syncWikiSession(session).then(() => {
+        if (!active) return
+        if (_event === 'SIGNED_OUT') { window.location.replace('/'); return }
+        setUser(session?.user && !session.user.is_anonymous ? session.user : null)
+        router.refresh()
+      }).catch(error => {
+        if (active) { setUser(null); setError(error instanceof Error ? error.message : 'Não foi possível carregar a sessão.') }
+      }).finally(() => { if (active) setLoading(false) })
     })
-    return () => subscription.unsubscribe()
-  }, [])
+    return () => { active = false; subscription.unsubscribe() }
+  }, [router])
 
   useEffect(() => {
     function close(event: MouseEvent) { if (menuRef.current && !menuRef.current.contains(event.target as Node)) setMenuPath(null) }
@@ -78,6 +87,6 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
       </> : <Link href="/login" className="rounded border border-amber-200/40 px-4 py-2 hover:bg-amber-100/10">Entrar / Criar conta</Link>}
       {error && <p role="alert" className="w-full text-right text-red-300">{error}</p>}
     </nav>
-    {children}
+    <Fragment key={user?.id ?? 'visitor'}>{children}</Fragment>
   </AuthContext.Provider>
 }

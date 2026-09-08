@@ -391,6 +391,8 @@ const categoryConfig: Record<string, { icon: string; label: string; color: strin
   politics: { icon: 'game-icons:throne-king', label: 'Política', color: '#9C27B0' },
 }
 
+const particle = (index: number, salt: number, max = 100) => (index * salt) % max
+
 // Parallax background components for each era style
 function CosmicBackground() {
   return (
@@ -402,10 +404,10 @@ function CosmicBackground() {
           key={i}
           className="absolute w-1 h-1 bg-white rounded-full animate-pulse"
           style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-            animationDelay: `${Math.random() * 3}s`,
-            opacity: Math.random() * 0.8 + 0.2,
+            left: `${particle(i, 37)}%`,
+            top: `${particle(i, 61)}%`,
+            animationDelay: `${particle(i, 17, 300) / 100}s`,
+            opacity: particle(i, 37, 80) / 100 + 0.2,
           }}
         />
       ))}
@@ -427,10 +429,10 @@ function GoldenBackground() {
           key={i}
           className="absolute w-2 h-2 bg-amber-400/40 rounded-full animate-float"
           style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-            animationDelay: `${Math.random() * 5}s`,
-            animationDuration: `${3 + Math.random() * 4}s`,
+            left: `${particle(i, 47)}%`,
+            top: `${particle(i, 71)}%`,
+            animationDelay: `${particle(i, 19, 500) / 100}s`,
+            animationDuration: `${3 + particle(i, 13, 400) / 100}s`,
           }}
         />
       ))}
@@ -472,10 +474,10 @@ function DestructionBackground() {
           key={i}
           className="absolute w-1 h-1 bg-orange-500 rounded-full animate-ember"
           style={{
-            left: `${Math.random() * 100}%`,
+            left: `${particle(i, 43)}%`,
             bottom: '0%',
-            animationDelay: `${Math.random() * 3}s`,
-            animationDuration: `${2 + Math.random() * 3}s`,
+            animationDelay: `${particle(i, 23, 300) / 100}s`,
+            animationDuration: `${2 + particle(i, 17, 300) / 100}s`,
           }}
         />
       ))}
@@ -503,10 +505,10 @@ function DarkBackground() {
           key={i}
           className="absolute w-2 h-2 bg-gray-600/30 rounded-full animate-fall"
           style={{
-            left: `${Math.random() * 100}%`,
+            left: `${particle(i, 53)}%`,
             top: `-5%`,
-            animationDelay: `${Math.random() * 5}s`,
-            animationDuration: `${5 + Math.random() * 5}s`,
+            animationDelay: `${particle(i, 29, 500) / 100}s`,
+            animationDuration: `${5 + particle(i, 31, 500) / 100}s`,
           }}
         />
       ))}
@@ -526,9 +528,9 @@ function HopeBackground() {
           key={i}
           className="absolute text-2xl animate-sway"
           style={{
-            left: `${Math.random() * 100}%`,
-            bottom: `${Math.random() * 30}%`,
-            animationDelay: `${Math.random() * 2}s`,
+            left: `${particle(i, 59)}%`,
+            bottom: `${particle(i, 7, 30)}%`,
+            animationDelay: `${particle(i, 11, 200) / 100}s`,
           }}
         >
           🌿
@@ -619,12 +621,6 @@ export default function TimelinePage() {
     }
 
     const currentEvent = events[witnessIndex]
-    const eraIndex = timelineData.eras.findIndex((e) => e.id === currentEvent.era)
-    setCurrentEraIndex(eraIndex)
-
-    // Auto-expand current event
-    setExpandedEvent(currentEvent.id)
-
     // Scroll to event
     const eventElement = document.getElementById(`event-${currentEvent.id}`)
     if (eventElement) {
@@ -662,7 +658,11 @@ export default function TimelinePage() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [witnessMode])
 
-  const CurrentBackground = backgrounds[timelineData.eras[currentEraIndex]?.bgStyle || 'cosmic']
+  const activeEraIndex = witnessMode
+    ? timelineData.eras.findIndex((era) => era.id === timelineData.events[witnessIndex]?.era)
+    : currentEraIndex
+  const activeExpandedEvent = witnessMode ? timelineData.events[witnessIndex]?.id : expandedEvent
+  const CurrentBackground = backgrounds[timelineData.eras[activeEraIndex]?.bgStyle || 'cosmic']
 
   return (
     <main className="min-h-screen relative">
@@ -719,13 +719,13 @@ export default function TimelinePage() {
                       className="flex-1 h-2 rounded-full transition-all duration-500"
                       style={{
                         backgroundColor:
-                          i <= currentEraIndex ? era.color : 'rgba(255,255,255,0.1)',
+                          i <= activeEraIndex ? era.color : 'rgba(255,255,255,0.1)',
                       }}
                     />
                   ))}
                 </div>
                 <p className="text-center mt-2 text-amber-100/60 text-sm">
-                  {timelineData.eras[currentEraIndex]?.name} — {timelineData.eras[currentEraIndex]?.description}
+                  {timelineData.eras[activeEraIndex]?.name} — {timelineData.eras[activeEraIndex]?.description}
                 </p>
               </div>
             )}
@@ -886,7 +886,8 @@ export default function TimelinePage() {
                   {/* Events */}
                   <div className="space-y-6">
                     {eraEvents.map((event) => {
-                      const isExpanded = expandedEvent === event.id
+                      const isExpanded = activeExpandedEvent === event.id
+                      const relatedFactions = 'relatedFactions' in event ? event.relatedFactions : undefined
                       const catConfig = categoryConfig[event.category]
                       const isWitnessing = witnessMode && timelineData.events[witnessIndex]?.id === event.id
 
@@ -986,7 +987,7 @@ export default function TimelinePage() {
                                 {/* Related Links */}
                                 {(event.relatedCharacters?.length > 0 ||
                                   event.relatedPlaces?.length > 0 ||
-                                  (event as any).relatedFactions?.length > 0) && (
+                                  (relatedFactions?.length ?? 0) > 0) && (
                                   <div className="flex flex-wrap gap-4 pt-4 border-t border-white/10">
                                     {event.relatedCharacters?.length > 0 && (
                                       <div>
@@ -1026,13 +1027,13 @@ export default function TimelinePage() {
                                         </div>
                                       </div>
                                     )}
-                                    {(event as any).relatedFactions?.length > 0 && (
+                                    {(relatedFactions?.length ?? 0) > 0 && (
                                       <div>
                                         <span className="text-amber-100/50 text-xs uppercase">
                                           Facções:
                                         </span>
                                         <div className="flex flex-wrap gap-1 mt-1">
-                                          {(event as any).relatedFactions.map((faction: string) => (
+                                          {relatedFactions?.map((faction) => (
                                             <Link
                                               key={faction}
                                               href={`/factions/${faction.toLowerCase().replace(/\s+/g, '-')}`}

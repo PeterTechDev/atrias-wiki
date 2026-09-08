@@ -59,7 +59,7 @@ export default async function BrowsePage() {
               <p className="text-slate-600 font-crimson italic">Tudo que foi registrado pelo Escriba</p>
             </div>
             </div>
-            {process.env.WIKI_EDITING_ENABLED !== 'false' && <Link href="/login?next=/wiki/others/new" className="rounded border border-amber-700 bg-amber-700 px-4 py-2 font-semibold text-white hover:bg-amber-800">Adicionar registro</Link>}
+            {process.env.WIKI_EDITING_ENABLED !== 'false' && <Link href="/wiki/others/new" className="rounded border border-amber-700 bg-amber-700 px-4 py-2 font-semibold text-white hover:bg-amber-800">Adicionar registro</Link>}
           </div>
         </div>
       </div>

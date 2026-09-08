@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation'
+import { getWikiRequestDM } from '@/lib/wikiRequest'
 import { getEntityBySlug } from '@/db/queries/entities'
 import { AdminShell } from '@/app/admin/_components/AdminShell'
 import { AdminEntityForm } from '@/app/admin/_components/AdminEntityForm'
@@ -29,6 +30,7 @@ export default async function AdminEditEntityPage({
       backLabel={`Back to ${label}`}
     >
       <AdminEntityForm
+        isDM={await getWikiRequestDM()}
         mode="edit"
         collection={collection}
         initial={{
@@ -39,6 +41,7 @@ export default async function AdminEditEntityPage({
           description: entity.description ?? '',
           status: entity.status ?? 'published',
           revision: entity.revision,
+          isSpoiler: entity.isSpoiler === true,
           data: (entity.data ?? {}) as Record<string, unknown>,
         }}
       />

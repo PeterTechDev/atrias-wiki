@@ -49,6 +49,27 @@ página. RLS bloqueia acesso direto pela Data API; as APIs usam a conexão de se
 
 Execute `npm run test:wiki-favorites` com `DATABASE_URL` em `.env.local`: o teste usa tabelas temporárias e rollback para verificar isolamento, idempotência, integridade, arquivamento e configuração de RLS, sem alterar dados persistidos.
 
+### Spoilers e permissão de mestre
+
+Aplique `supabase/migrations/20260908165107_wiki_dm_spoilers.sql` no banco de conteúdo
+(`DATABASE_URL`) antes de publicar. A conexão do servidor precisa ser proprietária das
+tabelas ou ter BYPASSRLS; acesso direto pela Data API fica bloqueado.
+`npm run db:push` não substitui as políticas da migration.
+
+Em `/admin/users`, o administrador autenticado por `ADMIN_SECRET` concede ou remove DM.
+Um DM entra com sua conta normal e marca **Spoiler / Restrito ao DM** no formulário de
+criação/edição. Desmarcar libera o post. A edição continua colaborativa entre membros;
+DM não concede acesso ao painel administrativo. O próprio perfil não altera permissões.
+
+A sessão é validada no servidor e a permissão é consultada no banco a cada requisição.
+Posts restritos são filtrados de detalhes, listas, busca, grafo, favoritos e arquivados.
+Respostas não usam cache compartilhado; a exportação de índice JSON estático foi removida.
+Não coloque segredos em arquivos de `public/`, URLs externas ou no texto de outros posts
+públicos: a classificação protege o registro, não revoga cópias ou arquivos já públicos.
+
+Execute `npm run test:wiki-spoilers`: usa tabelas temporárias e rollback, sem alterar os
+posts nem as permissões existentes.
+
 ## Tech Stack
 
 - **Frontend**: Next.js 16 (App Router)
@@ -116,13 +137,13 @@ Open [http://localhost:3000](http://localhost:3000) to see the wiki.
 | Script | Description |
 |--------|-------------|
 | `npm run dev` | Start development server |
-| `npm run build` | Build for production (generates search index) |
+| `npm run build` | Build for production |
 | `npm run start` | Start production server |
 | `npm run db:push` | Push schema changes to database |
 | `npm run db:studio` | Open Drizzle Studio (database GUI) |
 | `npm run db:seed` | Seed database from entities.json |
 | `npm run test:wiki-favorites` | Verify favorites isolation, idempotence and cascade |
-| `npm run generate:search` | Generate search index JSON |
+| `npm run test:wiki-spoilers` | Verify DM access and spoiler restrictions |
 
 ## Adding Entity Images
 
@@ -134,10 +155,7 @@ Open [http://localhost:3000](http://localhost:3000) to see the wiki.
    ```
    Set the `image` field to `/images/characters/akdai.jpg`
 
-3. Regenerate search index:
-   ```bash
-   npm run generate:search
-   ```
+3. A busca consulta o banco em cada requisição; não há índice público para regenerar.
 
 ## Project Structure
 
@@ -161,7 +179,6 @@ atrias-wiki/
 │       └── entities.ts      # TypeScript type definitions
 ├── scripts/
 │   ├── seed-database.ts     # Database seeding script
-│   └── generate-search-index.ts  # Legacy search export utility
 ├── public/
 │   ├── images/              # Entity images
 ├── docker/
@@ -186,7 +203,7 @@ See `src/db/schema.ts` for full schema details.
 ## Features
 
 - **176+ entities** extracted from DM's documents
-- **Client-side search** with instant filtering (static export compatible)
+- **Search** with server-side visibility filtering
 - **Entity type icons** from game-icons with custom image support
 - **Dark fantasy theme** inspired by Baldur's Gate / Elden Ring
 - **Mobile responsive** design

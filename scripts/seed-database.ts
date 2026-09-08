@@ -83,7 +83,7 @@ async function seed() {
       // Insert entities
       console.log('Inserting entities...')
       for (const raw of rawEntities) {
-        let baseSlug = slugify(raw.name)
+        const baseSlug = slugify(raw.name)
 
         // Handle duplicate slugs
         const count = slugCounts.get(baseSlug) ?? 0

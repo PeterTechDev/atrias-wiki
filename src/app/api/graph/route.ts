@@ -3,6 +3,7 @@ import { db } from '@/db'
 import { entities, entityRelations } from '@/db/schema'
 import { and, inArray, isNull } from 'drizzle-orm'
 import { wikiEntityTypes } from '@/db/queries/entities'
+import { readVisibility } from '@/lib/wikiRequest'
 
 export const dynamic = 'force-dynamic'
 
@@ -53,7 +54,7 @@ export async function GET() {
         type: entities.type,
       })
       .from(entities)
-      .where(and(inArray(entities.type, wikiEntityTypes), isNull(entities.archivedAt)))
+      .where(and(inArray(entities.type, wikiEntityTypes), isNull(entities.archivedAt), await readVisibility()))
 
     const edges = await db
       .select({

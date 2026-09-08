@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation'
+import { getWikiRequestDM } from '@/lib/wikiRequest'
 import { AdminEntityForm } from '@/app/admin/_components/AdminEntityForm'
 import { AdminShell } from '@/app/admin/_components/AdminShell'
 import { collectionLabels, collectionSingularLabels, collectionToEntityType, isAdminCollection } from '@/app/admin/_lib/entityTypes'
@@ -10,6 +11,7 @@ export default async function WikiNewEntityPage({ params }: { params: Promise<{ 
   return (
     <AdminShell variant="wiki" title={`Adicionar ${collectionSingularLabels[collection]}`} subtitle={`Criar uma página em ${collectionLabels[collection]}`} backHref={`/${collection}`} backLabel={`Voltar para ${collectionLabels[collection]}`}>
       <AdminEntityForm
+        isDM={await getWikiRequestDM()}
         mode="create"
         audience="member"
         collection={collection}

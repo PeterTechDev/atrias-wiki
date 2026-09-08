@@ -71,10 +71,16 @@ export const entities = pgTable(
     index('entities_name_idx').on(table.name),
     index('entities_archived_at_idx').on(table.archivedAt),
   ]
-)
+).enableRLS()
 
 export type Entity = typeof entities.$inferSelect
 export type NewEntity = typeof entities.$inferInsert
+
+// Auth lives in Supabase; content may live in a separate PostgreSQL database.
+export const wikiDMs = pgTable('wiki_dms', {
+  userId: uuid('user_id').primaryKey(),
+  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+}).enableRLS()
 
 export const entityFavorites = pgTable(
   'entity_favorites',
@@ -106,7 +112,7 @@ export const entityRelations = pgTable(
     index('entity_relations_target_idx').on(table.targetId),
     index('entity_relations_type_idx').on(table.relationType),
   ]
-)
+).enableRLS()
 
 export type EntityRelation = typeof entityRelations.$inferSelect
 export type NewEntityRelation = typeof entityRelations.$inferInsert
@@ -126,7 +132,7 @@ export const knowledgeChunks = pgTable(
   (table) => [
     index('knowledge_chunks_source_idx').on(table.source),
   ]
-)
+).enableRLS()
 
 export type KnowledgeChunk = typeof knowledgeChunks.$inferSelect
 export type NewKnowledgeChunk = typeof knowledgeChunks.$inferInsert
@@ -144,7 +150,7 @@ export const ingestionJobs = pgTable('ingestion_jobs', {
   error: text('error'),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
-})
+}).enableRLS()
 
 export type IngestionJob = typeof ingestionJobs.$inferSelect
 export type NewIngestionJob = typeof ingestionJobs.$inferInsert

@@ -3,6 +3,8 @@ import { Icon } from '@iconify/react'
 import { getEntityCounts } from '@/db/queries/entities'
 import { AdminShell } from './_components/AdminShell'
 
+export const dynamic = 'force-dynamic'
+
 export default async function AdminDashboardPage() {
   const counts = await getEntityCounts()
 
@@ -56,6 +58,7 @@ export default async function AdminDashboardPage() {
       title="Admin Dashboard"
       subtitle="Content management for the Átrias Wiki"
     >
+      <Link href="/admin/users" className="mb-6 inline-block rounded bg-slate-900 px-4 py-2 text-amber-200">Permissões de mestre (DM)</Link>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {cards.map((c) => (
           <Link

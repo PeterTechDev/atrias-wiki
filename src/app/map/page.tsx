@@ -8,6 +8,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { Icon } from '@iconify/react'
+import type { LeafletMouseEvent, Map as LeafletMap } from 'leaflet'
 
 // Map markers for known locations
 // coords: [x, y] where x=horizontal from left, y=from TOP of image
@@ -42,7 +43,7 @@ const locations = [
 
 export default function MapPage() {
   const mapContainer = useRef<HTMLDivElement>(null)
-  const mapRef = useRef<any>(null)
+  const mapRef = useRef<LeafletMap | null>(null)
   const [selectedLocation, setSelectedLocation] = useState<typeof locations[0] | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [showMobileLocations, setShowMobileLocations] = useState(false)
@@ -154,7 +155,7 @@ export default function MapPage() {
       })
 
       // Debug: click to get coordinates
-      map.on('click', (e: any) => {
+      map.on('click', (e: LeafletMouseEvent) => {
         const x = Math.round(e.latlng.lng)
         const y = Math.round(IMAGE_HEIGHT - e.latlng.lat)
         const coordStr = `[${x}, ${y}]`

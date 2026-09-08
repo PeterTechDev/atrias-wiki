@@ -1,10 +1,11 @@
 import { NextResponse } from 'next/server'
 import { createEntity, EntityWriteError, getArchivedEntityBySlug, type WikiEntityType, wikiEntityTypes } from '@/db/queries/entities'
 import { getWikiMember, wikiEditingDisabled } from '@/lib/wikiAuth'
+import { isWikiDM } from '@/lib/wikiPermissions'
 
 function errorResponse(error: unknown) {
   if (error instanceof EntityWriteError) {
-    const status = error.code === 'invalid' ? 400 : error.code === 'not_found' ? 404 : 409
+    const status = error.code === 'forbidden' ? 403 : error.code === 'invalid' ? 400 : error.code === 'not_found' ? 404 : 409
     return NextResponse.json({ error: error.message }, { status })
   }
   console.error('POST /api/wiki/entities failed:', error)
@@ -18,7 +19,7 @@ export async function POST(req: Request) {
   if (!user) return NextResponse.json({ error: 'Authentication required.' }, { status: 401 })
 
   try {
-    let body: { type?: WikiEntityType; name?: string; slug?: string; description?: string; data?: Record<string, unknown> }
+    let body: { type?: WikiEntityType; name?: string; slug?: string; description?: string; data?: Record<string, unknown>; isSpoiler?: boolean }
     try {
       body = await req.json()
     } catch {
@@ -33,6 +34,7 @@ export async function POST(req: Request) {
       slug: body.slug,
       description: body.description,
       data: body.data,
+      isSpoiler: body.isSpoiler,
     }, { source: 'member', userId: user.id })
     return NextResponse.json({ id: entity.id, slug: entity.slug }, { status: 201 })
   } catch (error) {
@@ -49,7 +51,7 @@ export async function GET(req: Request) {
   if (!type || !slug || !(wikiEntityTypes as readonly string[]).includes(type)) {
     return NextResponse.json({ error: 'type and slug are required.' }, { status: 400 })
   }
-  const entity = await getArchivedEntityBySlug(type as WikiEntityType, slug)
+  const entity = await getArchivedEntityBySlug(type as WikiEntityType, slug, await isWikiDM(user.id))
   if (!entity) return NextResponse.json({ error: 'Entity not found.' }, { status: 404 })
   return NextResponse.json({ entity })
 }

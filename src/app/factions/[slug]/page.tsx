@@ -5,18 +5,13 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { Icon } from '@iconify/react'
-import { getEntityBySlug, getEntitiesByType } from '@/db/queries/entities'
+import { getEntityBySlug } from '@/db/queries/entities'
 import type { FactionData } from '@/types/entities'
 import { WikiContributionActions } from '@/components/WikiContributionActions'
 import { WikiLastEdited } from '@/components/WikiLastEdited'
 import { WikiFavoriteButton } from '@/components/WikiFavoriteButton'
 
 export const dynamic = 'force-dynamic'
-
-export async function generateStaticParams() {
-  const factions = await getEntitiesByType('faction')
-  return factions.map((f) => ({ slug: f.slug }))
-}
 
 interface PageProps {
   params: Promise<{ slug: string }>
