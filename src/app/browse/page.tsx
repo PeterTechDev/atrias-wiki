@@ -4,9 +4,7 @@
 
 import Link from 'next/link'
 import { Icon } from '@iconify/react'
-import { db } from '@/db'
-import { entities } from '@/db/schema'
-import { sql } from 'drizzle-orm'
+import { getEntityCounts } from '@/db/queries/entities'
 
 export const dynamic = 'force-dynamic'
 
@@ -25,16 +23,8 @@ const extras = [
 ]
 
 export default async function BrowsePage() {
-  // Get counts per type
-  const counts = await db
-    .select({ type: entities.type, count: sql<number>`count(*)` })
-    .from(entities)
-    .groupBy(entities.type)
-
-  const countMap: Record<string, number> = {}
-  for (const row of counts) {
-    countMap[row.type] = Number(row.count)
-  }
+  const stats = await getEntityCounts()
+  const countMap: Record<string, number> = { character: stats.characters, place: stats.places, faction: stats.factions, item: stats.items, lore: stats.lore, monster: stats.monsters }
 
   return (
     <main className="min-h-screen flex flex-col bg-[#e8dcc8]">

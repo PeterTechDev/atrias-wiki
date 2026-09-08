@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server'
 import { db } from '@/db'
 import { entities, entityRelations } from '@/db/schema'
+import { and, inArray, isNull } from 'drizzle-orm'
+import { wikiEntityTypes } from '@/db/queries/entities'
 
 export const dynamic = 'force-dynamic'
 
@@ -51,6 +53,7 @@ export async function GET() {
         type: entities.type,
       })
       .from(entities)
+      .where(and(inArray(entities.type, wikiEntityTypes), isNull(entities.archivedAt)))
 
     const edges = await db
       .select({
@@ -60,12 +63,15 @@ export async function GET() {
       })
       .from(entityRelations)
 
+    const activeIds = new Set(nodes.map((node) => node.id))
+    const visibleEdges = edges.filter((edge) => activeIds.has(edge.sourceId) && activeIds.has(edge.targetId))
+
     // If the DB exists but has no relations yet, show a small example so the page isn't empty.
-    if (!nodes.length || !edges.length) {
+    if (!nodes.length || !visibleEdges.length) {
       return NextResponse.json(sampleGraph())
     }
 
-    return NextResponse.json({ nodes, edges })
+    return NextResponse.json({ nodes, edges: visibleEdges })
   } catch (err: unknown) {
     // DB not configured or connection failure: fall back to sample data.
     const details =

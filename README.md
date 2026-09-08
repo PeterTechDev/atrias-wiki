@@ -36,6 +36,11 @@ O check local da preservação de dados é `npm run test:wiki`. Para uma publica
 Next.js, configure `DATABASE_URL`, as variáveis públicas do Supabase e execute `npm run lint`
 e `npm run build` no preview antes de habilitar a escrita.
 
+O arquivamento de páginas usa `supabase/migrations/20260908090000_wiki_entity_archiving.sql`.
+Membros podem arquivar páginas pelo detalhe e excluir uma ou várias páginas em `/wiki/archived`.
+O check local de validação dos lotes é `npm run test:wiki-archiving`. A busca consulta o banco
+dinamicamente e páginas arquivadas permanecem invisíveis para visitantes.
+
 ## Tech Stack
 
 - **Frontend**: Next.js 16 (App Router)
@@ -147,10 +152,9 @@ atrias-wiki/
 │       └── entities.ts      # TypeScript type definitions
 ├── scripts/
 │   ├── seed-database.ts     # Database seeding script
-│   └── generate-search-index.ts  # Search index generator
+│   └── generate-search-index.ts  # Legacy search export utility
 ├── public/
 │   ├── images/              # Entity images
-│   └── search-index.json    # Generated search data
 ├── docker/
 │   └── init/                # PostgreSQL init scripts
 ├── docker-compose.yml       # PostgreSQL + pgvector

@@ -177,7 +177,7 @@ export default async function FactionPage({ params }: PageProps) {
         </div>
 
         <WikiLastEdited entity={entity} />
-        <div className="mt-4 flex justify-end"><WikiContributionActions collection="factions" slug={slug} enabled={process.env.WIKI_EDITING_ENABLED !== 'false'} /></div>
+        <div className="mt-4 flex justify-end"><WikiContributionActions collection="factions" slug={slug} entityId={entity.id} enabled={process.env.WIKI_EDITING_ENABLED !== 'false'} /></div>
       </div>
 
       {/* Footer */}

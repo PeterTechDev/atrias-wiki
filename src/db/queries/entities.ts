@@ -1,8 +1,8 @@
-import { and, count, eq, sql } from 'drizzle-orm'
+import { and, count, eq, inArray, isNull, sql } from 'drizzle-orm'
 import { db } from '@/db'
 import { entities, type Entity, type EntityStatus, type EntityType } from '@/db/schema'
 import type { EntityCounts } from '@/types/entities'
-import { mergeEntityData } from './entityEditing'
+import { mergeEntityData, normalizeArchivedIds } from './entityEditing'
 
 export const wikiEntityTypes = ['character', 'place', 'faction', 'item', 'lore', 'monster'] as const
 export type WikiEntityType = (typeof wikiEntityTypes)[number]
@@ -158,7 +158,7 @@ export async function getEntityBySlug(
     const result = await db
       .select()
       .from(entities)
-      .where(and(eq(entities.type, type), eq(entities.slug, slug)))
+      .where(and(eq(entities.type, type), eq(entities.slug, slug), isNull(entities.archivedAt)))
       .limit(1)
 
     return result[0] ?? null
@@ -173,7 +173,7 @@ export async function getEntitiesByType(type: EntityType): Promise<Entity[]> {
     return await db
       .select()
       .from(entities)
-      .where(eq(entities.type, type))
+      .where(and(eq(entities.type, type), isNull(entities.archivedAt)))
       .orderBy(entities.name)
   } catch (error) {
     console.error(`Failed to fetch entities of type "${type}":`, error)
@@ -183,7 +183,7 @@ export async function getEntitiesByType(type: EntityType): Promise<Entity[]> {
 
 export async function getAllEntities(): Promise<Entity[]> {
   try {
-    return await db.select().from(entities).orderBy(entities.name)
+    return await db.select().from(entities).where(isNull(entities.archivedAt)).orderBy(entities.name)
   } catch (error) {
     console.error('Failed to fetch all entities:', error)
     throw new Error('Unable to load entities. Please try again later.')
@@ -195,7 +195,7 @@ export async function getEntityById(id: string): Promise<Entity | null> {
     const result = await db
       .select()
       .from(entities)
-      .where(eq(entities.id, id))
+      .where(and(eq(entities.id, id), isNull(entities.archivedAt)))
       .limit(1)
 
     return result[0] ?? null
@@ -213,6 +213,7 @@ export async function getEntityCounts(): Promise<EntityCounts> {
         count: count(),
       })
       .from(entities)
+      .where(isNull(entities.archivedAt))
       .groupBy(entities.type)
 
     const countMap: Record<string, number> = {}
@@ -237,4 +238,46 @@ export async function getEntityCounts(): Promise<EntityCounts> {
     console.error('Failed to fetch entity counts:', error)
     throw new Error('Unable to load statistics. Please try again later.')
   }
+}
+
+export async function getArchivedEntities() {
+  return db.select().from(entities).where(and(inArray(entities.type, wikiEntityTypes), sql`${entities.archivedAt} is not null`)).orderBy(entities.archivedAt, entities.name)
+}
+
+export async function getArchivedEntityBySlug(type: WikiEntityType, slug: string) {
+  const [entity] = await db.select().from(entities).where(and(eq(entities.type, type), eq(entities.slug, slug), sql`${entities.archivedAt} is not null`)).limit(1)
+  return entity ?? null
+}
+
+export async function getEntityIncludingArchived(id: string) {
+  const [entity] = await db.select().from(entities).where(eq(entities.id, id)).limit(1)
+  return entity ?? null
+}
+
+export async function archiveEntity(id: string, userId: string) {
+  if (!isUuid(id) || !isUuid(userId)) throw new EntityWriteError('invalid', 'Invalid entity id.')
+  const [updated] = await db.update(entities).set({
+    archivedAt: new Date(),
+    updatedAt: new Date(),
+    updatedBy: userId,
+    updatedBySource: 'member',
+    revision: sql`${entities.revision} + 1`,
+  }).where(and(eq(entities.id, id), inArray(entities.type, wikiEntityTypes), isNull(entities.archivedAt))).returning()
+  if (updated) return updated
+  const [existing] = await db.select().from(entities).where(eq(entities.id, id)).limit(1)
+  if (!existing || !isWikiType(existing.type)) throw new EntityWriteError('not_found', 'Entity not found.')
+  if (existing.archivedAt) return existing
+  throw new EntityWriteError('not_found', 'Entity not found.')
+}
+
+export async function deleteArchivedEntities(ids: string[]) {
+  let uniqueIds: string[]
+  try { uniqueIds = normalizeArchivedIds(ids) } catch { throw new EntityWriteError('invalid', 'ids must contain valid UUIDs.') }
+  return db.transaction(async (tx) => {
+    const found = await tx.select({ id: entities.id, archivedAt: entities.archivedAt, type: entities.type }).from(entities).where(inArray(entities.id, uniqueIds)).for('update')
+    if (found.length !== uniqueIds.length || found.some((entity) => !entity.archivedAt || !isWikiType(entity.type))) {
+      throw new EntityWriteError('conflict', 'All selected entities must exist and be archived.')
+    }
+    return tx.delete(entities).where(inArray(entities.id, uniqueIds)).returning({ id: entities.id })
+  })
 }

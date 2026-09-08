@@ -61,11 +61,13 @@ export const entities = pgTable(
     updatedBy: uuid('updated_by'),
     updatedBySource: text('updated_by_source').$type<'legacy' | 'admin' | 'member'>().notNull().default('legacy'),
     revision: integer('revision').notNull().default(1),
+    archivedAt: timestamp('archived_at', { withTimezone: true }),
   },
   (table) => [
     index('entities_type_idx').on(table.type),
     index('entities_slug_idx').on(table.slug),
     index('entities_name_idx').on(table.name),
+    index('entities_archived_at_idx').on(table.archivedAt),
   ]
 )
 

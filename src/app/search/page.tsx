@@ -5,7 +5,7 @@
  * Works with static export (no API routes needed)
  */
 
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Icon } from '@iconify/react'
 
@@ -75,38 +75,32 @@ const typeToPath: Record<string, string> = {
 
 export default function SearchPage() {
   const [query, setQuery] = useState('')
-  const [allEntities, setAllEntities] = useState<SearchableEntity[]>([])
+  const [results, setResults] = useState<SearchableEntity[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  // Load search index on mount
   useEffect(() => {
-    fetch('/search-index.json')
-      .then(res => {
-        if (!res.ok) throw new Error('Failed to load search index')
-        return res.json()
-      })
-      .then(data => {
-        setAllEntities(data)
-        setIsLoading(false)
-      })
-      .catch(err => {
-        console.error('Failed to load search index:', err)
+    const controller = new AbortController()
+    let active = true
+    void (async () => {
+      if (query.length < 2) { if (active) { setResults([]); setIsLoading(false) }; return }
+      setIsLoading(true)
+      setError(null)
+      try {
+        const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`, { signal: controller.signal })
+        if (!response.ok) throw new Error('Failed to load search results')
+        if (active) setResults(await response.json())
+      } catch (err) {
+        if (!active || (err instanceof DOMException && err.name === 'AbortError')) return
+        console.error('Failed to load search results:', err)
         setError('Failed to load search data. Please refresh the page.')
-        setIsLoading(false)
-      })
-  }, [])
-
-  // Client-side filtering
-  const results = useMemo(() => {
-    if (!query || query.length < 2) return []
-
-    const searchLower = query.toLowerCase()
-    return allEntities.filter(entity =>
-      entity.name.toLowerCase().includes(searchLower) ||
-      (entity.description?.toLowerCase().includes(searchLower) ?? false)
-    ).slice(0, 20)
-  }, [query, allEntities])
+        setResults([])
+      } finally {
+        if (active) setIsLoading(false)
+      }
+    })()
+    return () => { active = false; controller.abort() }
+  }, [query])
 
   return (
     <main className="min-h-screen bg-zinc-900 text-zinc-100">
@@ -126,7 +120,6 @@ export default function SearchPage() {
             onChange={(e) => setQuery(e.target.value)}
             className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 text-lg focus:outline-none focus:border-amber-400"
             autoFocus
-            disabled={isLoading}
           />
           {isLoading && (
             <div className="absolute right-4 top-1/2 -translate-y-1/2">

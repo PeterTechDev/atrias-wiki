@@ -338,7 +338,7 @@ export default async function CharacterPage({ params }: PageProps) {
         </div>
 
         <WikiLastEdited entity={entity} />
-        <div className="mt-4 flex justify-end"><WikiContributionActions collection="characters" slug={slug} enabled={process.env.WIKI_EDITING_ENABLED !== 'false'} /></div>
+        <div className="mt-4 flex justify-end"><WikiContributionActions collection="characters" slug={slug} entityId={entity.id} enabled={process.env.WIKI_EDITING_ENABLED !== 'false'} /></div>
       </div>
 
       {/* Footer */}

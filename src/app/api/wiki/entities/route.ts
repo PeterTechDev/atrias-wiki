@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { createEntity, EntityWriteError, type WikiEntityType } from '@/db/queries/entities'
+import { createEntity, EntityWriteError, getArchivedEntityBySlug, type WikiEntityType, wikiEntityTypes } from '@/db/queries/entities'
 import { getWikiMember, wikiEditingDisabled } from '@/lib/wikiAuth'
 
 function errorResponse(error: unknown) {
@@ -38,4 +38,18 @@ export async function POST(req: Request) {
   } catch (error) {
     return errorResponse(error)
   }
+}
+
+export async function GET(req: Request) {
+  const user = await getWikiMember(req)
+  if (!user) return NextResponse.json({ error: 'Authentication required.' }, { status: 401 })
+  const params = new URL(req.url).searchParams
+  const type = params.get('type')
+  const slug = params.get('slug')
+  if (!type || !slug || !(wikiEntityTypes as readonly string[]).includes(type)) {
+    return NextResponse.json({ error: 'type and slug are required.' }, { status: 400 })
+  }
+  const entity = await getArchivedEntityBySlug(type as WikiEntityType, slug)
+  if (!entity) return NextResponse.json({ error: 'Entity not found.' }, { status: 404 })
+  return NextResponse.json({ entity })
 }

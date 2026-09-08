@@ -8,6 +8,8 @@ import { Icon } from '@iconify/react'
 import CinematicComet from '@/components/CinematicComet'
 import { getEntityCounts, getEntitiesByType } from '@/db/queries/entities'
 
+export const dynamic = 'force-dynamic'
+
 export default async function Home() {
   const stats = await getEntityCounts()
   const places = await getEntitiesByType('place')
