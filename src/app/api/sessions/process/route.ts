@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import OpenAI from 'openai'
 import { toFile } from 'openai/uploads'
-import { and, ilike, inArray, or } from 'drizzle-orm'
+import { and, ilike, inArray, isNull, or } from 'drizzle-orm'
 import { db } from '@/db'
 import { entities, type EntityType } from '@/db/schema'
 
@@ -187,6 +187,7 @@ async function matchEntities(mentions: MentionedEntity[]): Promise<MatchedEntity
       .where(
         and(
           inArray(entities.type, [mention.type]),
+          isNull(entities.archivedAt),
           or(ilike(entities.name, pattern), ilike(entities.slug, pattern))
         )
       )

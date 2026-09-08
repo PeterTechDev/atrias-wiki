@@ -16,12 +16,16 @@ export function WikiContributionActions({ collection, slug, entityId, enabled = 
     if (!entityId) return
     setBusy(true)
     setMessage('')
-    const { data: { session } } = await supabase.auth.getSession()
-    const response = await fetch(`/api/wiki/entities/${entityId}/archive`, { method: 'POST', headers: { Authorization: `Bearer ${session?.access_token ?? ''}` } })
-    if (!response.ok) setMessage((await response.json()).error || 'Não foi possível arquivar.')
-    else { setMessage('Página arquivada.'); window.location.assign('/wiki/archived') }
-    setBusy(false)
-    if (response.ok) dialog.current?.close()
+    try {
+      const { data: { session } } = await supabase.auth.getSession()
+      const response = await fetch(`/api/wiki/entities/${entityId}/archive`, { method: 'POST', headers: { Authorization: `Bearer ${session?.access_token ?? ''}` } })
+      if (!response.ok) setMessage((await response.json()).error || 'Não foi possível arquivar.')
+      else { setMessage('Página arquivada.'); window.location.assign('/wiki/archived') }
+    } catch {
+      setMessage('Falha de rede. Tente novamente.')
+    } finally {
+      setBusy(false)
+    }
   }
 
   return (

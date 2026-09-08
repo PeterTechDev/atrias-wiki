@@ -80,22 +80,22 @@ export default function SearchPage() {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    if (query.length < 2) { setResults([]); setIsLoading(false); return }
-    setIsLoading(true)
-    fetch(`/api/search?q=${encodeURIComponent(query)}`)
-      .then(res => {
-        if (!res.ok) throw new Error('Failed to load search index')
-        return res.json()
-      })
-      .then(data => {
-        setResults(data)
-        setIsLoading(false)
-      })
-      .catch(err => {
-        console.error('Failed to load search index:', err)
+    void (async () => {
+      if (query.length < 2) { setResults([]); setIsLoading(false); return }
+      setIsLoading(true)
+      setError(null)
+      try {
+        const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`)
+        if (!response.ok) throw new Error('Failed to load search results')
+        setResults(await response.json())
+      } catch (err) {
+        console.error('Failed to load search results:', err)
         setError('Failed to load search data. Please refresh the page.')
+        setResults([])
+      } finally {
         setIsLoading(false)
-      })
+      }
+    })()
   }, [query])
 
   return (
@@ -116,7 +116,6 @@ export default function SearchPage() {
             onChange={(e) => setQuery(e.target.value)}
             className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-3 text-lg focus:outline-none focus:border-amber-400"
             autoFocus
-            disabled={isLoading}
           />
           {isLoading && (
             <div className="absolute right-4 top-1/2 -translate-y-1/2">
