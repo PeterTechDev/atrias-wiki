@@ -1,4 +1,4 @@
-import { ilike, or, and, inArray } from 'drizzle-orm'
+import { ilike, or, and, inArray, isNull } from 'drizzle-orm'
 import { db } from '@/db'
 import { entities, type EntityType } from '@/db/schema'
 import type { SearchResult } from '@/types/entities'
@@ -30,10 +30,10 @@ export async function searchEntities(
       })
       .from(entities)
       .where(
-        or(
+        and(isNull(entities.archivedAt), or(
           ilike(entities.name, searchPattern),
           ilike(entities.description, searchPattern)
-        )
+        ))
       )
       .orderBy(entities.name)
       .limit(limit)
@@ -70,6 +70,7 @@ export async function searchEntitiesByType(
       .where(
         and(
           inArray(entities.type, types),
+          isNull(entities.archivedAt),
           or(
             ilike(entities.name, searchPattern),
             ilike(entities.description, searchPattern)

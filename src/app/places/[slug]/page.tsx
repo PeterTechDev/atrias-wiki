@@ -368,7 +368,7 @@ export default async function PlacePage({ params }: PageProps) {
         )}
 
         <WikiLastEdited entity={entity} />
-        <div className="mt-4 flex justify-end"><WikiContributionActions collection="places" slug={slug} enabled={process.env.WIKI_EDITING_ENABLED !== 'false'} /></div>
+        <div className="mt-4 flex justify-end"><WikiContributionActions collection="places" slug={slug} entityId={entity.id} enabled={process.env.WIKI_EDITING_ENABLED !== 'false'} /></div>
       </div>
 
       {/* Footer */}

@@ -5,7 +5,7 @@
  * Works with static export (no API routes needed)
  */
 
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Icon } from '@iconify/react'
 
@@ -75,19 +75,20 @@ const typeToPath: Record<string, string> = {
 
 export default function SearchPage() {
   const [query, setQuery] = useState('')
-  const [allEntities, setAllEntities] = useState<SearchableEntity[]>([])
+  const [results, setResults] = useState<SearchableEntity[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  // Load search index on mount
   useEffect(() => {
-    fetch('/search-index.json')
+    if (query.length < 2) { setResults([]); setIsLoading(false); return }
+    setIsLoading(true)
+    fetch(`/api/search?q=${encodeURIComponent(query)}`)
       .then(res => {
         if (!res.ok) throw new Error('Failed to load search index')
         return res.json()
       })
       .then(data => {
-        setAllEntities(data)
+        setResults(data)
         setIsLoading(false)
       })
       .catch(err => {
@@ -95,18 +96,7 @@ export default function SearchPage() {
         setError('Failed to load search data. Please refresh the page.')
         setIsLoading(false)
       })
-  }, [])
-
-  // Client-side filtering
-  const results = useMemo(() => {
-    if (!query || query.length < 2) return []
-
-    const searchLower = query.toLowerCase()
-    return allEntities.filter(entity =>
-      entity.name.toLowerCase().includes(searchLower) ||
-      (entity.description?.toLowerCase().includes(searchLower) ?? false)
-    ).slice(0, 20)
-  }, [query, allEntities])
+  }, [query])
 
   return (
     <main className="min-h-screen bg-zinc-900 text-zinc-100">

@@ -46,6 +46,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
   return <AuthContext.Provider value={{ user, loading }}>
     <nav aria-label="Conta" className="relative z-40 flex min-h-16 flex-wrap items-center justify-end gap-3 border-b border-amber-200/10 bg-[#0a1628] px-4 py-2 text-sm text-amber-100 sm:px-6">
       {loading ? <span role="status">Carregando conta…</span> : user ? <>
+        <Link href="/wiki/archived" className="rounded border border-amber-200/40 px-3 py-2 hover:bg-amber-100/10">Páginas arquivadas</Link>
         <Link href="/login" className="flex min-w-0 items-center gap-2 rounded focus-visible:outline-2 focus-visible:outline-amber-400">
           <Avatar value={user.user_metadata.avatar} />
           <span className="max-w-40 truncate">{user.user_metadata.display_name || 'Meu perfil'}</span>
