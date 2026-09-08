@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Icon } from '@iconify/react'
@@ -8,7 +8,7 @@ import { AlertCircle, Loader2 } from 'lucide-react'
 import type { EntityStatus, EntityType } from '@/db/schema'
 import { useAuth } from '@/components/AuthProvider'
 import { supabase } from '@/lib/supabase'
-import { collectionLabels, isAdminCollection } from '../_lib/entityTypes'
+import { collectionLabels, entityTypeToCollection, isAdminCollection } from '../_lib/entityTypes'
 
 function slugify(input: string) {
   return input
@@ -86,6 +86,8 @@ type MonsterFields = {
   abilities: string
 }
 
+type OtherFields = Record<string, never>
+
 type DataFields = {
   character: CharacterFields
   place: PlaceFields
@@ -93,6 +95,7 @@ type DataFields = {
   item: ItemFields
   lore: LoreFields
   monster: MonsterFields
+  other: OtherFields
 }
 
 function asRecord(value: unknown): Record<string, unknown> {
@@ -206,6 +209,8 @@ function buildInitialFields(type: EntityType, data: Record<string, unknown>): Da
     } satisfies MonsterFields
   }
 
+  if (type === 'other') return {} satisfies OtherFields
+
   // Default (should never happen for admin collections)
   return {
     category: '',
@@ -301,6 +306,8 @@ function assembleData(type: EntityType, fields: DataFields[keyof DataFields]): R
       abilities: parseCommaList(f.abilities),
     }
   }
+
+  if (type === 'other') return {}
 
   return {}
 }
@@ -421,6 +428,7 @@ export function AdminEntityForm({
   const [dataFields, setDataFields] = useState<DataFields[keyof DataFields]>(
     buildInitialFields(initial.type, initial.data ?? {})
   )
+  const fieldsByType = useRef(new Map<EntityType, DataFields[keyof DataFields]>([[initial.type, buildInitialFields(initial.type, initial.data ?? {})]]))
 
   const [isSaving, setIsSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -436,10 +444,22 @@ export function AdminEntityForm({
   }
 
   function updateDataField(key: string, value: string | boolean) {
-    setDataFields((prev) => ({
+    setDataFields((prev) => {
+      const next = {
       ...(prev as Record<string, unknown>),
       [key]: value,
-    }) as DataFields[keyof DataFields])
+      } as DataFields[keyof DataFields]
+      fieldsByType.current.set(values.type, next)
+      return next
+    })
+  }
+
+  function changeType(type: EntityType) {
+    fieldsByType.current.set(values.type, dataFields)
+    const fields = fieldsByType.current.get(type) ?? buildInitialFields(type, {})
+    fieldsByType.current.set(type, fields)
+    update('type', type)
+    setDataFields(fields)
   }
 
   async function onMagicPen() {
@@ -490,6 +510,7 @@ export function AdminEntityForm({
 
     const payload = audience === 'member'
       ? {
+          ...(mode === 'create' ? { type: values.type, slug: values.slug.trim() } : {}),
           name: values.name.trim(),
           description: values.description.trim(),
           data: assembleData(values.type, dataFields),
@@ -535,7 +556,7 @@ export function AdminEntityForm({
     }
 
     if (audience === 'member') {
-      router.push(`/${collection}/${values.slug.trim()}`)
+      router.push(`/${entityTypeToCollection[values.type]}/${values.slug.trim()}`)
     } else {
       const success = mode === 'create' ? 'created' : 'updated'
       router.push(`/admin/${collection}?success=${success}`)
@@ -650,11 +671,9 @@ export function AdminEntityForm({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <label className="block">
           <span className="text-sm font-semibold text-slate-700">Type</span>
-          <input
-            value={values.type}
-            readOnly
-            className="mt-1 w-full rounded border border-slate-300 bg-slate-100 px-3 py-2 text-slate-700"
-          />
+          {mode === 'create' && audience === 'member' ? <select value={values.type} onChange={(e) => changeType(e.target.value as EntityType)} className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500">
+            <option value="character">Personagem</option><option value="place">Lugar</option><option value="faction">Facção</option><option value="item">Item</option><option value="lore">Conhecimento</option><option value="monster">Criatura</option><option value="other">Outros</option>
+          </select> : <input value={values.type} readOnly className="mt-1 w-full rounded border border-slate-300 bg-slate-100 px-3 py-2 text-slate-700" />}
         </label>
 
         {audience === 'admin' ? <label className="block">
@@ -1089,7 +1108,7 @@ export function AdminEntityForm({
         </button>
         <button
           type="button"
-          onClick={() => router.back()}
+          onClick={() => audience === 'member' && mode === 'create' ? router.push('/browse') : router.back()}
           className="inline-flex items-center justify-center gap-2 rounded border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
         >
           <Icon icon="game-icons:cancel" className="w-5 h-5" />

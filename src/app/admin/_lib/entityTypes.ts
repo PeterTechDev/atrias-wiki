@@ -7,6 +7,7 @@ export const adminCollections = [
   'lore',
   'items',
   'monsters',
+  'others',
 ] as const
 
 export type AdminCollection = (typeof adminCollections)[number]
@@ -18,6 +19,7 @@ export const collectionToEntityType: Record<AdminCollection, EntityType> = {
   lore: 'lore',
   items: 'item',
   monsters: 'monster',
+  others: 'other',
 }
 
 export const collectionLabels: Record<AdminCollection, string> = {
@@ -27,6 +29,7 @@ export const collectionLabels: Record<AdminCollection, string> = {
   lore: 'Lore',
   items: 'Items',
   monsters: 'Monsters',
+  others: 'Outros',
 }
 
 export const collectionSingularLabels: Record<AdminCollection, string> = {
@@ -36,6 +39,12 @@ export const collectionSingularLabels: Record<AdminCollection, string> = {
   lore: 'Lore Entry',
   items: 'Item',
   monsters: 'Monster',
+  others: 'Outro',
+}
+
+export const entityTypeToCollection: Record<EntityType, string> = {
+  character: 'characters', faction: 'factions', place: 'places', lore: 'lore',
+  item: 'items', monster: 'monsters', other: 'others', session: 'sessions',
 }
 
 export function isAdminCollection(value: string): value is AdminCollection {

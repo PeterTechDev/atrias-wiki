@@ -15,6 +15,7 @@ const categories = [
   { type: 'item', label: 'Itens', href: '/items', icon: 'game-icons:crossed-swords', description: 'Armas, relíquias e artefatos' },
   { type: 'lore', label: 'Conhecimento', href: '/lore', icon: 'game-icons:scroll-unfurled', description: 'Histórias, mitos e sabedoria antiga' },
   { type: 'monster', label: 'Criaturas', href: '/monsters', icon: 'game-icons:spiked-dragon-head', description: 'Bestas e monstros que espreitam Átrias' },
+  { type: 'other', label: 'Outros', href: '/others', icon: 'game-icons:archive-register', description: 'Registros que não se encaixam nas demais categorias' },
 ]
 
 const extras = [
@@ -24,7 +25,7 @@ const extras = [
 
 export default async function BrowsePage() {
   const stats = await getEntityCounts()
-  const countMap: Record<string, number> = { character: stats.characters, place: stats.places, faction: stats.factions, item: stats.items, lore: stats.lore, monster: stats.monsters }
+  const countMap: Record<string, number> = { character: stats.characters, place: stats.places, faction: stats.factions, item: stats.items, lore: stats.lore, monster: stats.monsters, other: stats.others }
 
   return (
     <main className="min-h-screen flex flex-col bg-[#e8dcc8]">
@@ -50,12 +51,15 @@ export default async function BrowsePage() {
       {/* Page Header */}
       <div className="max-w-6xl mx-auto px-6 mb-8">
         <div className="bg-white/80 rounded-lg shadow-lg p-8">
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-center gap-4">
             <Icon icon="game-icons:book-pile" className="w-12 h-12 text-amber-700" />
             <div>
               <h1 className="font-cinzel text-4xl text-slate-800">Arquivos de Átrias</h1>
               <p className="text-slate-600 font-crimson italic">Tudo que foi registrado pelo Escriba</p>
             </div>
+            </div>
+            {process.env.WIKI_EDITING_ENABLED !== 'false' && <Link href="/login?next=/wiki/others/new" className="rounded border border-amber-700 bg-amber-700 px-4 py-2 font-semibold text-white hover:bg-amber-800">Adicionar registro</Link>}
           </div>
         </div>
       </div>

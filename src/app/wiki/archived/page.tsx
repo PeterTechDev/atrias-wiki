@@ -6,7 +6,7 @@ import { useAuth } from '@/components/AuthProvider'
 import { supabase } from '@/lib/supabase'
 
 type ArchivedEntity = { id: string; type: string; slug: string; name: string; archivedAt: string }
-const paths: Record<string, string> = { character: 'characters', place: 'places', faction: 'factions', item: 'items', lore: 'lore', monster: 'monsters' }
+const paths: Record<string, string> = { character: 'characters', place: 'places', faction: 'factions', item: 'items', lore: 'lore', monster: 'monsters', other: 'others' }
 
 export default function ArchivedPages() {
   const { user, loading } = useAuth()
