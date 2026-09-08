@@ -80,22 +80,26 @@ export default function SearchPage() {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
+    const controller = new AbortController()
+    let active = true
     void (async () => {
-      if (query.length < 2) { setResults([]); setIsLoading(false); return }
+      if (query.length < 2) { if (active) { setResults([]); setIsLoading(false) }; return }
       setIsLoading(true)
       setError(null)
       try {
-        const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`)
+        const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`, { signal: controller.signal })
         if (!response.ok) throw new Error('Failed to load search results')
-        setResults(await response.json())
+        if (active) setResults(await response.json())
       } catch (err) {
+        if (!active || (err instanceof DOMException && err.name === 'AbortError')) return
         console.error('Failed to load search results:', err)
         setError('Failed to load search data. Please refresh the page.')
         setResults([])
       } finally {
-        setIsLoading(false)
+        if (active) setIsLoading(false)
       }
     })()
+    return () => { active = false; controller.abort() }
   }, [query])
 
   return (
