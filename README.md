@@ -19,6 +19,7 @@ os valores públicos do projeto no build. Nunca exponha credenciais administrati
 O conteúdo existente continua no PostgreSQL/Drizzle. O login de membros não concede
 acesso ao painel administrativo, que mantém sua autenticação atual. Atribuição automática
 do último editor será integrada às futuras operações de edição por membros.
+O teste da confirmação de senha do cadastro é `npm run test:signup-password`.
 
 ## Tech Stack
 

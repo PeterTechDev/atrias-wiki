@@ -10,6 +10,7 @@
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
     "db:seed": "tsx scripts/seed-database.ts",
+    "test:signup-password": "tsx tests/signup-password.test.ts",
     "generate:search": "tsx scripts/generate-search-index.ts",
     "dev:stable": "next build && next start"
   },
