@@ -45,7 +45,9 @@ dinamicamente e páginas arquivadas permanecem invisíveis para visitantes.
 
 Antes do rollout, aplique `supabase/migrations/20260908150000_entity_favorites.sql` no banco
 que contém `entities`. Ela cria favoritos isolados por usuário e remove referências ao excluir a
-página. O check local de validação do payload é `npm run test:wiki-favorites`.
+página. RLS bloqueia acesso direto pela Data API; as APIs usam a conexão de servidor proprietária da tabela (ou com BYPASSRLS). Reaplique a migration se a versão sem RLS já foi instalada.
+
+Execute `npm run test:wiki-favorites` com `DATABASE_URL` em `.env.local`: o teste usa tabelas temporárias e rollback para verificar isolamento, idempotência, integridade, arquivamento e configuração de RLS, sem alterar dados persistidos.
 
 ## Tech Stack
 
@@ -119,7 +121,7 @@ Open [http://localhost:3000](http://localhost:3000) to see the wiki.
 | `npm run db:push` | Push schema changes to database |
 | `npm run db:studio` | Open Drizzle Studio (database GUI) |
 | `npm run db:seed` | Seed database from entities.json |
-| `npm run test:wiki-favorites` | Verify favorites request validation |
+| `npm run test:wiki-favorites` | Verify favorites isolation, idempotence and cascade |
 | `npm run generate:search` | Generate search index JSON |
 
 ## Adding Entity Images

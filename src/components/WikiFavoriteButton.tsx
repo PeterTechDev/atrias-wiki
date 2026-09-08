@@ -3,34 +3,48 @@
 import { Star } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useAuth } from '@/components/AuthProvider'
-import { supabase } from '@/lib/supabase'
+import { favoriteRequest } from '@/lib/wikiFavorites'
 
 export function WikiFavoriteButton({ entityId }: { entityId: string }) {
   const { user, loading } = useAuth()
-  const [favorite, setFavorite] = useState(false)
+  if (loading || !user || user.is_anonymous) return null
+  return <FavoriteButton key={`${user.id}:${entityId}`} userId={user.id} entityId={entityId} />
+}
+
+function FavoriteButton({ userId, entityId }: { userId: string; entityId: string }) {
+  const [favorite, setFavorite] = useState<boolean | null>(null)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
+  const [attempt, setAttempt] = useState(0)
 
   useEffect(() => {
-    if (!user) { setFavorite(false); return }
     let active = true
-    void (async () => {
-      const token = (await supabase.auth.getSession()).data.session?.access_token
-      const response = await fetch(`/api/wiki/favorites/${entityId}`, { headers: { Authorization: `Bearer ${token ?? ''}` }, cache: 'no-store' })
-      if (active && response.ok) setFavorite((await response.json()).favorite)
-    })()
+    void favoriteRequest(userId, `/${entityId}`).then(data => {
+      if (active) setFavorite(data.favorite)
+    }).catch(() => {
+      if (active) setError('Não foi possível carregar o favorito.')
+    })
     return () => { active = false }
-  }, [user, entityId])
+  }, [userId, entityId, attempt])
 
-  if (loading || !user) return null
   async function toggle() {
-    setBusy(true); setError('')
+    setBusy(true)
+    setError('')
     try {
-      const token = (await supabase.auth.getSession()).data.session?.access_token
-      const response = await fetch(`/api/wiki/favorites/${entityId}`, { method: favorite ? 'DELETE' : 'PUT', headers: { Authorization: `Bearer ${token ?? ''}` } })
-      if (!response.ok) throw new Error()
-      setFavorite(!favorite)
-    } catch { setError('Não foi possível atualizar os favoritos. Tente novamente.') } finally { setBusy(false) }
+      const data = await favoriteRequest(userId, `/${entityId}`, favorite ? 'DELETE' : 'PUT')
+      setFavorite(data.favorite)
+    } catch {
+      setError('Não foi possível atualizar os favoritos. Tente novamente.')
+    } finally {
+      setBusy(false)
+    }
   }
-  return <div><button type="button" aria-pressed={favorite} aria-label={favorite ? 'Remover dos favoritos' : 'Adicionar aos favoritos'} title={favorite ? 'Remover dos favoritos' : 'Adicionar aos favoritos'} disabled={busy} onClick={toggle} className="rounded border border-amber-700 px-3 py-2 text-amber-700 hover:bg-amber-50 focus-visible:outline-2 focus-visible:outline-amber-500 disabled:opacity-50"><Star className="h-5 w-5" fill={favorite ? 'currentColor' : 'none'} /></button>{error && <p role="alert" className="mt-2 text-sm text-red-700">{error}</p>}</div>
+
+  const label = favorite === null ? 'Carregando favorito' : favorite ? 'Remover dos favoritos' : 'Adicionar aos favoritos'
+  return <div>
+    <button type="button" aria-pressed={favorite ?? false} aria-label={label} title={label} disabled={busy || favorite === null} onClick={toggle} className="rounded border border-amber-700 px-3 py-2 text-amber-700 hover:bg-amber-50 focus-visible:outline-2 focus-visible:outline-amber-500 disabled:opacity-50">
+      <Star aria-hidden="true" className="h-5 w-5" fill={favorite ? 'currentColor' : 'none'} />
+    </button>
+    {error && <p role="alert" className="mt-2 text-sm text-red-700">{error} {favorite === null && <button type="button" onClick={() => { setError(''); setAttempt(value => value + 1) }} className="underline">Tentar novamente</button>}</p>}
+  </div>
 }

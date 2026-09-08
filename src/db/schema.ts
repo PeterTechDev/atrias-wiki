@@ -84,7 +84,7 @@ export const entityFavorites = pgTable(
     createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
   },
   (table) => [primaryKey({ columns: [table.userId, table.entityId] }), index('entity_favorites_user_created_idx').on(table.userId, table.createdAt)]
-)
+).enableRLS()
 
 // Entity relations - graph connections
 export const entityRelations = pgTable(
