@@ -1,0 +1,11 @@
+project_id = "atrias-wiki"
+
+[auth]
+site_url = "https://atrias-wiki.vercel.app/login"
+additional_redirect_urls = ["https://atrias-wiki.vercel.app/login", "http://localhost:3000/login", "http://127.0.0.1:3000/login"]
+minimum_password_length = 8
+enable_signup = true
+
+[auth.email]
+enable_signup = true
+enable_confirmations = false

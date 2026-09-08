@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Cinzel_Decorative, Crimson_Pro, IM_Fell_English, Geist } from "next/font/google";
 import SiteNav from '@/components/SiteNav'
+import AuthProvider from '@/components/AuthProvider'
 import "./globals.css";
 
 // Ornate display font for titles (like Lovable)
@@ -41,12 +42,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="pt-BR" className="dark">
       <body
         className={`${cinzelDecorative.variable} ${crimsonPro.variable} ${imFellEnglish.variable} ${geist.variable} antialiased bg-zinc-900`}
       >
-        <SiteNav />
-        {children}
+        <AuthProvider>
+          <SiteNav />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

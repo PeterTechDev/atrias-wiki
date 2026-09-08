@@ -2,19 +2,37 @@
 
 A Wikipedia-style wiki for the Átrias RPG universe, built as a surprise gift for the DM who created this world.
 
+## Contas da mesa
+
+Em `/login`, membros podem criar uma conta com nome, sobrenome, nome público, email,
+senha e avatar padrão. O acesso é imediato, sem confirmação de email, por decisão do
+responsável pela mesa. Após entrar, é possível editar o perfil e enviar uma foto de até 2 MB.
+O menu superior mostra o perfil e permite sair. Recuperação de senha por email depende
+da futura configuração de SMTP.
+
+Supabase Auth gerencia as contas; `public.profiles` expõe apenas a identidade pública.
+As migrações e políticas de isolamento dos uploads estão em `supabase/`.
+Execute `npx supabase db query --linked -f supabase/tests/profiles.sql` para verificar as políticas.
+`NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` podem substituir
+os valores públicos do projeto no build. Nunca exponha credenciais administrativas.
+
+O conteúdo existente continua no PostgreSQL/Drizzle. O login de membros não concede
+acesso ao painel administrativo, que mantém sua autenticação atual. Atribuição automática
+do último editor será integrada às futuras operações de edição por membros.
+
 ## Tech Stack
 
-- **Frontend**: Next.js 15 (App Router) with static export
+- **Frontend**: Next.js 16 (App Router)
 - **Database**: PostgreSQL + pgvector
 - **ORM**: Drizzle ORM
 - **Styling**: Tailwind CSS
-- **Deployment**: GitHub Pages / Vercel
+- **Deployment**: Vercel
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js 18+
+- Node.js 22+
 - Docker & Docker Compose
 - npm/yarn/pnpm
 
