@@ -1,10 +1,11 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { User } from '@supabase/supabase-js'
 import Link from 'next/link'
 import { Avatar, useAuth } from '@/components/AuthProvider'
 import { avatars, authError, supabase } from '@/lib/supabase'
+import { signupPasswordError } from '@/lib/signupPassword'
 
 const inputClass = 'mt-1 w-full rounded border border-amber-200/30 bg-slate-950/50 px-3 py-2 text-white focus:border-amber-400 focus:outline-2 focus:outline-amber-400'
 const buttonClass = 'rounded bg-[#c6a862] px-5 py-3 font-semibold text-slate-950 hover:bg-amber-200 disabled:opacity-50'
@@ -39,6 +40,9 @@ export default function LoginPage() {
   const [busy, setBusy] = useState(false)
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmation, setShowConfirmation] = useState(false)
+  const confirmationRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.hash.slice(1))
@@ -52,12 +56,21 @@ export default function LoginPage() {
     event.preventDefault()
     const form = event.currentTarget
     const data = new FormData(form)
-    setBusy(true)
     setMessage('')
     setError('')
+    const email = String(data.get('email') || '').trim()
+    const password = String(data.get('password') || '')
+    const confirmation = String(data.get('confirm_password') || '')
+    if (!user && mode === 'signup') {
+      const passwordError = signupPasswordError(password, confirmation)
+      if (passwordError) {
+        setError(passwordError)
+        requestAnimationFrame(() => confirmationRef.current?.focus())
+        return
+      }
+    }
+    setBusy(true)
     try {
-      const email = String(data.get('email') || '').trim()
-      const password = String(data.get('password') || '')
       if (user || mode === 'signup') {
         const profile = {
           first_name: String(data.get('first_name') || '').trim(),
@@ -100,6 +113,8 @@ export default function LoginPage() {
           if (error) throw error
           setMessage(result.session ? 'Conta criada! Você já pode personalizar seu perfil.' : 'Cadastro recebido. Entre com seu email e senha. Se não conseguir acessar, fale com o administrador da wiki.')
           setMode('login')
+          setShowPassword(false)
+          setShowConfirmation(false)
           form.reset()
         }
       } else {
@@ -122,20 +137,21 @@ export default function LoginPage() {
         <p className="mt-3 text-sm text-slate-300">{user ? 'Sua identidade nas crônicas de Átrias.' : 'Faça parte das crônicas de Átrias. A leitura continua aberta a todos.'}</p>
         {loading ? <p role="status" className="mt-6">Carregando conta…</p> : <>
           {!user && <div className="my-6 flex gap-4" aria-label="Acesso à conta">
-            <button type="button" disabled={busy} aria-pressed={mode === 'login'} onClick={() => { setMode('login'); setError(''); setMessage('') }} className={mode === 'login' ? 'text-amber-300 underline underline-offset-8' : 'text-slate-300'}>Entrar</button>
-            <button type="button" disabled={busy} aria-pressed={mode === 'signup'} onClick={() => { setMode('signup'); setError(''); setMessage('') }} className={mode === 'signup' ? 'text-amber-300 underline underline-offset-8' : 'text-slate-300'}>Criar conta</button>
+            <button type="button" disabled={busy} aria-pressed={mode === 'login'} onClick={() => { setMode('login'); setShowPassword(false); setShowConfirmation(false); setError(''); setMessage('') }} className={mode === 'login' ? 'text-amber-300 underline underline-offset-8' : 'text-slate-300'}>Entrar</button>
+            <button type="button" disabled={busy} aria-pressed={mode === 'signup'} onClick={() => { setMode('signup'); setShowPassword(false); setShowConfirmation(false); setError(''); setMessage('') }} className={mode === 'signup' ? 'text-amber-300 underline underline-offset-8' : 'text-slate-300'}>Criar conta</button>
           </div>}
           <form key={user ? `${user.id}:${user.updated_at}` : mode} onSubmit={submit} className="mt-6 space-y-5">
             <fieldset disabled={busy} className="space-y-5">
               {(user || mode === 'signup') && <ProfileFields user={user || undefined} />}
               <label className="block">Email<input name="email" type="email" autoComplete="email" required maxLength={254} defaultValue={user?.email || ''} readOnly={!!user} className={inputClass} /></label>
-              {!user && <label className="block">Senha<input name="password" type="password" autoComplete={mode === 'signup' ? 'new-password' : 'current-password'} required minLength={mode === 'signup' ? 8 : undefined} maxLength={128} className={inputClass} />{mode === 'signup' && <span className="text-xs text-slate-300">Pelo menos 8 caracteres.</span>}</label>}
+              {!user && <div className="block"><label htmlFor="password">Senha</label><div className="relative mt-1"><input id="password" name="password" type={mode === 'signup' && showPassword ? 'text' : 'password'} autoComplete={mode === 'signup' ? 'new-password' : 'current-password'} required minLength={mode === 'signup' ? 8 : undefined} maxLength={128} className={`${inputClass}${mode === 'signup' ? ' pr-24' : ''}`} />{mode === 'signup' && <button type="button" onClick={() => setShowPassword(value => !value)} aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'} className="absolute right-2 top-1/2 -translate-y-1/2 rounded px-2 py-1 text-xs text-amber-300 hover:bg-amber-100/10 focus-visible:outline-2 focus-visible:outline-amber-400">{showPassword ? 'Ocultar' : 'Mostrar'}</button>}</div>{mode === 'signup' && <span className="text-xs text-slate-300">Pelo menos 8 caracteres.</span>}</div>}
+              {!user && mode === 'signup' && <div className="block"><label htmlFor="confirm_password">Confirmar senha</label><div className="relative mt-1"><input ref={confirmationRef} id="confirm_password" name="confirm_password" type={showConfirmation ? 'text' : 'password'} autoComplete="new-password" required minLength={8} maxLength={128} aria-invalid={error === 'As senhas não coincidem.'} aria-describedby={error === 'As senhas não coincidem.' ? 'confirm-password-error' : undefined} className={`${inputClass} pr-24`} /><button type="button" onClick={() => setShowConfirmation(value => !value)} aria-label={showConfirmation ? 'Ocultar confirmação de senha' : 'Mostrar confirmação de senha'} className="absolute right-2 top-1/2 -translate-y-1/2 rounded px-2 py-1 text-xs text-amber-300 hover:bg-amber-100/10 focus-visible:outline-2 focus-visible:outline-amber-400">{showConfirmation ? 'Ocultar' : 'Mostrar'}</button></div>{error === 'As senhas não coincidem.' && <span id="confirm-password-error" role="alert" className="mt-1 block text-sm text-red-200">As senhas não coincidem.</span>}</div>}
               {user ? <label className="block">Enviar foto de perfil<input name="photo" type="file" accept="image/jpeg,image/png,image/webp" className="mt-2 block w-full text-sm file:mr-3 file:rounded file:border-0 file:bg-amber-100 file:p-2 file:text-slate-900" /><span className="mt-1 block text-xs text-slate-300">JPG, PNG ou WebP, até 2 MB. A foto enviada substitui o avatar selecionado e será pública.</span></label> : mode === 'signup' && <p className="text-xs text-slate-300">O acesso é imediato, sem confirmação por email. Você poderá enviar sua foto no perfil após criar a conta.</p>}
               <button className={`${buttonClass} w-full`} disabled={busy}>{busy ? 'Aguarde…' : user ? 'Salvar perfil' : mode === 'signup' ? 'Criar conta' : 'Entrar'}</button>
             </fieldset>
           </form>
         </>}
-        {error && <p role="alert" className="mt-5 rounded border border-red-400/40 bg-red-950/30 p-3 text-sm text-red-200">{error}</p>}
+        {error && error !== 'As senhas não coincidem.' && <p role="alert" className="mt-5 rounded border border-red-400/40 bg-red-950/30 p-3 text-sm text-red-200">{error}</p>}
         {message && <p role="status" className="mt-5 rounded border border-green-400/30 bg-green-950/30 p-3 text-sm text-green-200">{message}</p>}
       </section>
     </div>
