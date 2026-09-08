@@ -10,6 +10,7 @@ import {
   customType,
   integer,
   date,
+  primaryKey,
 } from 'drizzle-orm/pg-core'
 
 // Custom type for pgvector
@@ -74,6 +75,16 @@ export const entities = pgTable(
 
 export type Entity = typeof entities.$inferSelect
 export type NewEntity = typeof entities.$inferInsert
+
+export const entityFavorites = pgTable(
+  'entity_favorites',
+  {
+    userId: uuid('user_id').notNull(),
+    entityId: uuid('entity_id').notNull().references(() => entities.id, { onDelete: 'cascade' }),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => [primaryKey({ columns: [table.userId, table.entityId] }), index('entity_favorites_user_created_idx').on(table.userId, table.createdAt)]
+)
 
 // Entity relations - graph connections
 export const entityRelations = pgTable(

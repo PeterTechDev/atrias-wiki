@@ -14,6 +14,7 @@
     "test:wiki": "tsx tests/wiki-editing.test.ts",
     "test:wiki-archiving": "tsx tests/wiki-archiving.test.ts",
     "test:wiki-entity-types": "tsx tests/wiki-entity-types.test.ts",
+    "test:wiki-favorites": "tsx tests/wiki-favorites.test.ts",
     "generate:search": "tsx scripts/generate-search-index.ts",
     "dev:stable": "next build && next start"
   },

@@ -41,6 +41,12 @@ Membros podem arquivar páginas pelo detalhe e excluir uma ou várias páginas e
 O check local de validação dos lotes é `npm run test:wiki-archiving`. A busca consulta o banco
 dinamicamente e páginas arquivadas permanecem invisíveis para visitantes.
 
+### Favoritos
+
+Antes do rollout, aplique `supabase/migrations/20260908150000_entity_favorites.sql` no banco
+que contém `entities`. Ela cria favoritos isolados por usuário e remove referências ao excluir a
+página. O check local de validação do payload é `npm run test:wiki-favorites`.
+
 ## Tech Stack
 
 - **Frontend**: Next.js 16 (App Router)
@@ -113,6 +119,7 @@ Open [http://localhost:3000](http://localhost:3000) to see the wiki.
 | `npm run db:push` | Push schema changes to database |
 | `npm run db:studio` | Open Drizzle Studio (database GUI) |
 | `npm run db:seed` | Seed database from entities.json |
+| `npm run test:wiki-favorites` | Verify favorites request validation |
 | `npm run generate:search` | Generate search index JSON |
 
 ## Adding Entity Images
