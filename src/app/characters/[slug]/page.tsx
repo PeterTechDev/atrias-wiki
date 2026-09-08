@@ -12,6 +12,7 @@ import { getEntityBySlug, getEntitiesByType } from '@/db/queries/entities'
 import type { CharacterData } from '@/types/entities'
 import { WikiContributionActions } from '@/components/WikiContributionActions'
 import { WikiLastEdited } from '@/components/WikiLastEdited'
+import { WikiFavoriteButton } from '@/components/WikiFavoriteButton'
 
 export const dynamic = 'force-dynamic'
 
@@ -338,7 +339,7 @@ export default async function CharacterPage({ params }: PageProps) {
         </div>
 
         <WikiLastEdited entity={entity} />
-        <div className="mt-4 flex justify-end"><WikiContributionActions collection="characters" slug={slug} entityId={entity.id} enabled={process.env.WIKI_EDITING_ENABLED !== 'false'} /></div>
+        <div className="mt-4 flex justify-end gap-2"><WikiFavoriteButton entityId={entity.id} /><WikiContributionActions collection="characters" slug={slug} entityId={entity.id} enabled={process.env.WIKI_EDITING_ENABLED !== 'false'} /></div>
       </div>
 
       {/* Footer */}
