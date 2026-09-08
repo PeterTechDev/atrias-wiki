@@ -6,12 +6,14 @@ export function AdminShell({
   subtitle,
   backHref,
   backLabel,
+  variant = 'admin',
   children,
 }: {
   title: string
   subtitle?: string
   backHref?: string
   backLabel?: string
+  variant?: 'admin' | 'wiki'
   children: React.ReactNode
 }) {
   return (
@@ -23,11 +25,11 @@ export function AdminShell({
             <span className="font-cinzel text-lg tracking-wider">WIKI ATRIAS</span>
           </Link>
           <Link
-            href="/admin"
+            href={variant === 'admin' ? '/admin' : '/'}
             className="text-sm text-amber-400/90 hover:text-amber-300 flex items-center gap-2"
           >
             <Icon icon="game-icons:shield" className="w-5 h-5" />
-            Admin
+            {variant === 'admin' ? 'Admin' : 'Wiki'}
           </Link>
         </div>
       </header>
@@ -55,7 +57,7 @@ export function AdminShell({
 
       <footer className="mt-auto bg-[#0a1628] text-white py-8 px-6 border-t border-amber-400/10">
         <div className="max-w-6xl mx-auto text-center">
-          <p className="text-amber-400/60 font-crimson italic">Admin tools — handle with care.</p>
+          <p className="text-amber-400/60 font-crimson italic">{variant === 'admin' ? 'Admin tools — handle with care.' : 'Contribuição da comunidade Átrias.'}</p>
         </div>
       </footer>
     </main>

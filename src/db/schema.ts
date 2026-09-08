@@ -56,8 +56,11 @@ export const entities = pgTable(
     isSpoiler: boolean('is_spoiler').default(false),
     status: text('status').$type<EntityStatus>().default('published'),
     sourceFile: text('source_file'),
-    createdAt: timestamp('created_at').defaultNow().notNull(),
-    updatedAt: timestamp('updated_at').defaultNow().notNull(),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+    updatedBy: uuid('updated_by'),
+    updatedBySource: text('updated_by_source').$type<'legacy' | 'admin' | 'member'>().notNull().default('legacy'),
+    revision: integer('revision').notNull().default(1),
   },
   (table) => [
     index('entities_type_idx').on(table.type),

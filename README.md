@@ -18,7 +18,22 @@ os valores públicos do projeto no build. Nunca exponha credenciais administrati
 
 O conteúdo existente continua no PostgreSQL/Drizzle. O login de membros não concede
 acesso ao painel administrativo, que mantém sua autenticação atual. Atribuição automática
-do último editor será integrada às futuras operações de edição por membros.
+do último editor é registrada pelas rotas `/api/wiki/entities` e aparece nas páginas públicas.
+
+### Edição por membros
+
+Antes do rollout, aplique `supabase/migrations/20260908083000_wiki_entity_editing.sql` no
+banco que contém `entities`. A migration converte os timestamps sem fuso legados assumindo
+UTC, adiciona `updated_by`, `updated_by_source` e `revision`, e não cria FK para Supabase.
+
+As páginas `/wiki/{collection}/new` e `/wiki/{collection}/{slug}/edit` exigem uma sessão
+Supabase não anônima. A API valida o bearer token no servidor, usa revisão otimista e preserva
+chaves desconhecidas de `data`. `WIKI_EDITING_ENABLED=false` bloqueia POST/PATCH com 503,
+mantendo a leitura pública; o valor padrão permite testar a funcionalidade antes do rollout.
+
+O check local da preservação de dados é `npm run test:wiki`. Para uma publicação com runtime
+Next.js, configure `DATABASE_URL`, as variáveis públicas do Supabase e execute `npm run lint`
+e `npm run build` no preview antes de habilitar a escrita.
 
 ## Tech Stack
 

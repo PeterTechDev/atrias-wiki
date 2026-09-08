@@ -7,6 +7,9 @@ import Link from 'next/link'
 import { Icon } from '@iconify/react'
 import { getEntitiesByType } from '@/db/queries/entities'
 import type { CharacterData } from '@/types/entities'
+import { WikiContributionActions } from '@/components/WikiContributionActions'
+
+export const dynamic = 'force-dynamic'
 
 export default async function CharactersPage() {
   const entities = await getEntitiesByType('character')
@@ -50,6 +53,7 @@ export default async function CharactersPage() {
       {/* Page Header */}
       <div className="max-w-6xl mx-auto px-6 mb-8">
         <div className="bg-white/80 rounded-lg shadow-lg p-8">
+          <div className="mb-4 flex justify-end"><WikiContributionActions collection="characters" enabled={process.env.WIKI_EDITING_ENABLED !== 'false'} /></div>
           <div className="flex items-center gap-4 mb-4">
             <Icon icon="game-icons:cowled" className="w-12 h-12 text-amber-700" />
             <div>
