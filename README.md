@@ -207,6 +207,7 @@ See `src/db/schema.ts` for full schema details.
 - **Entity type icons** from game-icons with custom image support
 - **Dark fantasy theme** inspired by Baldur's Gate / Elden Ring
 - **Mobile responsive** design
+- **3D dice table** at `/dice`: d4–d20 pools (up to 24 dice), signed modifiers, physical collisions, adjustable throw strength, White Flame/Obsidian dice and Sanctuary/Tavern surfaces. The last 100 rolls and up to 30 favorites stay in this browser; no login is required. Optional sound and an opt-in, sensitivity-adjustable mobile motion gesture are available (HTTPS and sensor permission required). Run `npm run test:dice` for notation, saved-data validation, sensor math and physical face checks. The motion gesture still needs testing on physical iOS/Android devices.
 
 ## Documentation
 

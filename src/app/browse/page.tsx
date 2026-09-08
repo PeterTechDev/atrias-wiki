@@ -19,6 +19,7 @@ const categories = [
 ]
 
 const extras = [
+  { label: 'Mesa de Dados', href: '/dice', icon: 'game-icons:rolling-dices', description: 'Role dados 3D, prepare combinações e invoque a sorte' },
   { label: 'Sessões', href: '/sessions', icon: 'game-icons:quill-ink', description: 'Crônicas das aventuras registradas por Thaveus' },
   { label: 'Mapa', href: '/map', icon: 'game-icons:treasure-map', description: 'O mapa do mundo de Átrias' },
 ]
