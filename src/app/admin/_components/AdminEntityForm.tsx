@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation'
 import { Icon } from '@iconify/react'
 import { AlertCircle, Loader2 } from 'lucide-react'
 import type { EntityStatus, EntityType } from '@/db/schema'
+import { useAuth } from '@/components/AuthProvider'
+import { supabase } from '@/lib/supabase'
 import { collectionLabels, isAdminCollection } from '../_lib/entityTypes'
 
 function slugify(input: string) {
@@ -396,6 +398,7 @@ export type AdminEntityFormValues = {
   slug: string
   description: string
   status: EntityStatus
+  revision?: number
   data?: Record<string, unknown>
 }
 
@@ -403,12 +406,17 @@ export function AdminEntityForm({
   mode,
   collection,
   initial,
+  audience = 'admin',
+  enabled = true,
 }: {
   mode: 'create' | 'edit'
   collection: string
   initial: AdminEntityFormValues
+  audience?: 'admin' | 'member'
+  enabled?: boolean
 }) {
   const router = useRouter()
+  const { user, loading: authLoading } = useAuth()
   const [values, setValues] = useState<AdminEntityFormValues>(initial)
   const [dataFields, setDataFields] = useState<DataFields[keyof DataFields]>(
     buildInitialFields(initial.type, initial.data ?? {})
@@ -480,21 +488,42 @@ export function AdminEntityForm({
     setIsSaving(true)
     setError(null)
 
-    const payload = {
-      type: values.type,
-      name: values.name.trim(),
-      slug: values.slug.trim(),
-      description: values.description.trim(),
-      status: values.status,
-      data: assembleData(values.type, dataFields),
+    const payload = audience === 'member'
+      ? {
+          name: values.name.trim(),
+          description: values.description.trim(),
+          data: assembleData(values.type, dataFields),
+          ...(mode === 'edit' ? { revision: values.revision } : {}),
+        }
+      : {
+          type: values.type,
+          name: values.name.trim(),
+          slug: values.slug.trim(),
+          description: values.description.trim(),
+          status: values.status,
+          data: assembleData(values.type, dataFields),
+          ...(values.revision ? { revision: values.revision } : {}),
+        }
+
+    let headers: HeadersInit = { 'content-type': 'application/json' }
+    if (audience === 'member') {
+      const { data } = await supabase.auth.getSession()
+      if (!data.session) {
+        setError('Sua sessão expirou. Entre novamente e tente salvar.')
+        setIsSaving(false)
+        return
+      }
+      headers = { ...headers, authorization: `Bearer ${data.session.access_token}` }
     }
 
-    const url = mode === 'create' ? '/api/admin/entities' : `/api/admin/entities/${values.id}`
+    const url = audience === 'member'
+      ? mode === 'create' ? '/api/wiki/entities' : `/api/wiki/entities/${values.id}`
+      : mode === 'create' ? '/api/admin/entities' : `/api/admin/entities/${values.id}`
     const method = mode === 'create' ? 'POST' : 'PATCH'
 
     const res = await fetch(url, {
       method,
-      headers: { 'content-type': 'application/json' },
+      headers,
       body: JSON.stringify(payload),
     })
 
@@ -505,19 +534,37 @@ export function AdminEntityForm({
       return
     }
 
-    const success = mode === 'create' ? 'created' : 'updated'
-    router.push(`/admin/${collection}?success=${success}`)
+    if (audience === 'member') {
+      router.push(`/${collection}/${values.slug.trim()}`)
+    } else {
+      const success = mode === 'create' ? 'created' : 'updated'
+      router.push(`/admin/${collection}?success=${success}`)
+    }
     router.refresh()
   }
 
   const label = isAdminCollection(collection) ? collectionLabels[collection] : collection
+  const basePath = audience === 'member' ? `/wiki/${collection}` : `/admin/${collection}`
+
+  if (audience === 'member' && !authLoading && !user) {
+    return (
+      <div className="rounded border border-amber-300 bg-amber-50 px-5 py-4 text-slate-800">
+        <p>Entre para criar e editar páginas.</p>
+        <Link href={`/login?next=/wiki/${collection}/${mode === 'edit' ? `${initial.slug}/edit` : 'new'}`} className="mt-3 inline-block font-semibold text-amber-800 underline">Entrar / Criar conta</Link>
+      </div>
+    )
+  }
+
+  if (audience === 'member' && !enabled) {
+    return <p className="rounded border border-amber-300 bg-amber-50 px-5 py-4 text-slate-800">A edição está temporariamente indisponível.</p>
+  }
 
   return (
     <form onSubmit={onSubmit} className="space-y-5">
       <nav className="text-sm text-slate-600">
-        <Link href="/admin" className="hover:underline">Admin</Link>
+        <Link href={audience === 'member' ? '/' : '/admin'} className="hover:underline">{audience === 'member' ? 'Wiki' : 'Admin'}</Link>
         <span className="mx-2 text-slate-400">→</span>
-        <Link href={`/admin/${collection}`} className="hover:underline">{label}</Link>
+        <Link href={basePath} className="hover:underline">{label}</Link>
         <span className="mx-2 text-slate-400">→</span>
         <span className="text-slate-800 font-semibold">{mode === 'create' ? 'New' : 'Edit'}</span>
       </nav>
@@ -548,6 +595,7 @@ export function AdminEntityForm({
           <input
             value={values.slug}
             onChange={(e) => update('slug', e.target.value)}
+            readOnly={audience === 'member' && mode === 'edit'}
             className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
             required
           />
@@ -557,7 +605,7 @@ export function AdminEntityForm({
       <label className="block">
         <div className="flex items-center justify-between">
           <span className="text-sm font-semibold text-slate-700">Description</span>
-          <button
+          {audience === 'admin' ? <button
             type="button"
             onClick={onMagicPen}
             disabled={isMagicPenLoading || !values.name.trim()}
@@ -575,7 +623,7 @@ export function AdminEntityForm({
                 <span>Magic Pen</span>
               </>
             )}
-          </button>
+          </button> : null}
         </div>
         <textarea
           value={values.description}
@@ -609,7 +657,7 @@ export function AdminEntityForm({
           />
         </label>
 
-        <label className="block">
+        {audience === 'admin' ? <label className="block">
           <span className="text-sm font-semibold text-slate-700">Status</span>
           <select
             value={values.status}
@@ -620,7 +668,7 @@ export function AdminEntityForm({
             <option value="review">review</option>
             <option value="published">published</option>
           </select>
-        </label>
+        </label> : null}
       </div>
 
       {/* Typed data fields */}
@@ -803,7 +851,7 @@ export function AdminEntityForm({
               <label key={key} className="block">
                 <span className="text-sm font-semibold text-slate-700">{label}</span>
                 <input
-                  value={(dataFields as any)[key] as string}
+                  value={String((dataFields as unknown as Record<string, unknown>)[key] ?? '')}
                   onChange={(e) => updateDataField(key, e.target.value)}
                   className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
                 />
@@ -1003,7 +1051,7 @@ export function AdminEntityForm({
               <label key={key} className="block">
                 <span className="text-sm font-semibold text-slate-700">{label}</span>
                 <input
-                  value={(dataFields as any)[key] as string}
+                  value={String((dataFields as unknown as Record<string, unknown>)[key] ?? '')}
                   onChange={(e) => updateDataField(key, e.target.value)}
                   className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
                 />

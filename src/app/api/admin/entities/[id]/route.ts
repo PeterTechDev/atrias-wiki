@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { eq } from 'drizzle-orm'
 import { db } from '@/db'
 import { entities, type EntityStatus } from '@/db/schema'
+import { EntityWriteError, updateEntity } from '@/db/queries/entities'
 
 type UpdateEntityBody = {
   name?: string
@@ -9,6 +10,7 @@ type UpdateEntityBody = {
   description?: string
   status?: EntityStatus
   data?: Record<string, unknown>
+  revision?: number
 }
 
 export async function PATCH(
@@ -24,29 +26,12 @@ export async function PATCH(
       return NextResponse.json({ error: 'Missing id.' }, { status: 400 })
     }
 
-    const updated = await db
-      .update(entities)
-      .set({
-        name: body.name,
-        slug: body.slug,
-        description: body.description ?? null,
-        status: body.status,
-        data: body.data,
-        updatedAt: new Date(),
-      })
-      .where(eq(entities.id, id))
-      .returning({ id: entities.id })
-
-    if (!updated[0]) {
-      return NextResponse.json({ error: 'Entity not found.' }, { status: 404 })
-    }
-
-    return NextResponse.json({ id: updated[0].id }, { status: 200 })
-  } catch (error: any) {
-    const message = typeof error?.message === 'string' ? error.message : ''
-
-    if (message.includes('duplicate key') || message.includes('unique') || message.includes('entities_slug')) {
-      return NextResponse.json({ error: 'Slug already exists.' }, { status: 409 })
+    const updated = await updateEntity({ id, ...body }, { source: 'admin' })
+    return NextResponse.json({ id: updated.id }, { status: 200 })
+  } catch (error) {
+    if (error instanceof EntityWriteError) {
+      const status = error.code === 'invalid' ? 400 : error.code === 'not_found' ? 404 : 409
+      return NextResponse.json({ error: error.message }, { status })
     }
 
     console.error(`PATCH /api/admin/entities/${id} failed:`, error)

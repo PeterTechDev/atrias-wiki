@@ -9,6 +9,10 @@ import { Icon } from '@iconify/react'
 import DetailsToggle from './DetailsToggle'
 import { getEntityBySlug, getEntitiesByType } from '@/db/queries/entities'
 import type { PlaceData } from '@/types/entities'
+import { WikiContributionActions } from '@/components/WikiContributionActions'
+import { WikiLastEdited } from '@/components/WikiLastEdited'
+
+export const dynamic = 'force-dynamic'
 
 // Generate static params for all places
 export async function generateStaticParams() {
@@ -53,8 +57,6 @@ export default async function PlacePage({ params }: PageProps) {
     function: data.function || '',
     design: data.design || '',
     notableLocations: data.notableLocations || [],
-    contributor: 'Thaveus, O Escriba',
-    lastUpdated: entity.updatedAt?.toISOString().split('T')[0] || '',
   }
 
   return (
@@ -365,19 +367,8 @@ export default async function PlacePage({ params }: PageProps) {
           </div>
         )}
 
-        {/* Contributor Attribution */}
-        <div className="mt-8 pt-6 border-t border-amber-300/50 flex items-center justify-between text-sm">
-          <div className="flex items-center gap-2 text-slate-500">
-            <Icon icon="game-icons:quill-ink" className="w-4 h-4" />
-            <span>Registrado por:</span>
-            <Link href="/characters/thaveus" className="text-slate-700 font-medium hover:text-amber-600 transition-colors">{place.contributor}</Link>
-          </div>
-          {place.lastUpdated && (
-            <div className="text-slate-500">
-              Atualizado em: {place.lastUpdated}
-            </div>
-          )}
-        </div>
+        <WikiLastEdited entity={entity} />
+        <div className="mt-4 flex justify-end"><WikiContributionActions collection="places" slug={slug} enabled={process.env.WIKI_EDITING_ENABLED !== 'false'} /></div>
       </div>
 
       {/* Footer */}
