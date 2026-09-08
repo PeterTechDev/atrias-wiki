@@ -4,7 +4,7 @@ import { entities, type Entity, type EntityStatus, type EntityType } from '@/db/
 import type { EntityCounts } from '@/types/entities'
 import { mergeEntityData, normalizeArchivedIds } from './entityEditing'
 
-export const wikiEntityTypes = ['character', 'place', 'faction', 'item', 'lore', 'monster'] as const
+export const wikiEntityTypes = ['character', 'place', 'faction', 'item', 'lore', 'monster', 'other'] as const
 export type WikiEntityType = (typeof wikiEntityTypes)[number]
 export type EntityWriter = { source: 'member' | 'admin'; userId?: string }
 
@@ -231,6 +231,7 @@ export async function getEntityCounts(): Promise<EntityCounts> {
       items: countMap['item'] ?? 0,
       lore: countMap['lore'] ?? 0,
       monsters: countMap['monster'] ?? 0,
+      others: countMap['other'] ?? 0,
       sessions: countMap['session'] ?? 0,
       total,
     }

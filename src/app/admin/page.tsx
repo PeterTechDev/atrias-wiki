@@ -43,6 +43,12 @@ export default async function AdminDashboardPage() {
       count: counts.monsters,
       icon: 'game-icons:hydra',
     },
+    {
+      href: '/admin/others',
+      label: 'Others',
+      count: counts.others,
+      icon: 'game-icons:archive-register',
+    },
   ]
 
   return (

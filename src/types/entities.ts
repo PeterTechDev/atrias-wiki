@@ -81,6 +81,7 @@ export type EntityDataMap = {
   item: ItemData
   lore: LoreData
   monster: MonsterData
+  other: Record<string, never>
   session: SessionData
 }
 
@@ -99,6 +100,7 @@ export interface EntityCounts {
   items: number
   lore: number
   monsters: number
+  others: number
   sessions: number
   total: number
 }

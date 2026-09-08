@@ -6,7 +6,7 @@ import { useParams } from 'next/navigation'
 import { useAuth } from '@/components/AuthProvider'
 import { supabase } from '@/lib/supabase'
 
-const types: Record<string, string> = { characters: 'character', places: 'place', factions: 'faction', items: 'item', lore: 'lore', monsters: 'monster' }
+const types: Record<string, string> = { characters: 'character', places: 'place', factions: 'faction', items: 'item', lore: 'lore', monsters: 'monster', others: 'other' }
 
 export default function ArchivedDetail() {
   const { collection, slug } = useParams<{ collection: string; slug: string }>()

@@ -43,6 +43,8 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmation, setShowConfirmation] = useState(false)
   const confirmationRef = useRef<HTMLInputElement>(null)
+  const next = typeof window === 'undefined' ? '/' : new URLSearchParams(window.location.search).get('next')
+  const nextPath = next?.startsWith('/') && !next.startsWith('//') ? next : '/'
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.hash.slice(1))
@@ -51,6 +53,10 @@ export default function LoginPage() {
       window.history.replaceState(null, '', window.location.pathname)
     }
   }, [])
+
+  useEffect(() => {
+    if (user && next) window.location.replace(nextPath)
+  }, [user, next, nextPath])
 
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -111,6 +117,7 @@ export default function LoginPage() {
         } else {
           const { data: result, error } = await supabase.auth.signUp({ email, password, options: { data: profile } })
           if (error) throw error
+          if (result.session) window.location.assign(nextPath)
           setMessage(result.session ? 'Conta criada! Você já pode personalizar seu perfil.' : 'Cadastro recebido. Entre com seu email e senha. Se não conseguir acessar, fale com o administrador da wiki.')
           setMode('login')
           setShowPassword(false)
@@ -120,7 +127,7 @@ export default function LoginPage() {
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password })
         if (error) throw error
-        setMessage('Você entrou na wiki.')
+        window.location.assign(nextPath)
       }
     } catch (error) {
       setError(authError(error))
