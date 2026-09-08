@@ -10,6 +10,10 @@ import DetailsToggle from '@/components/DetailsToggle'
 import ImageGallery from '@/components/ImageGallery'
 import { getEntityBySlug, getEntitiesByType } from '@/db/queries/entities'
 import type { CharacterData } from '@/types/entities'
+import { WikiContributionActions } from '@/components/WikiContributionActions'
+import { WikiLastEdited } from '@/components/WikiLastEdited'
+
+export const dynamic = 'force-dynamic'
 
 // Generate static params for all characters
 export async function generateStaticParams() {
@@ -53,8 +57,6 @@ export default async function CharacterPage({ params }: PageProps) {
     weaknesses: data.weaknesses || [],
     combat: data.combat,
     hierarchy: data.hierarchy || [],
-    contributor: 'Thaveus, O Escriba',
-    lastUpdated: entity.updatedAt?.toISOString().split('T')[0] || '',
   }
 
   return (
@@ -335,19 +337,8 @@ export default async function CharacterPage({ params }: PageProps) {
           </div>
         </div>
 
-        {/* Contributor Attribution */}
-        <div className="mt-8 pt-6 border-t border-amber-300/50 flex items-center justify-between text-sm">
-          <div className="flex items-center gap-2 text-slate-500">
-            <Icon icon="game-icons:quill-ink" className="w-4 h-4" />
-            <span>Registrado por:</span>
-            <Link href="/characters/thaveus" className="text-slate-700 font-medium hover:text-amber-600 transition-colors">{character.contributor}</Link>
-          </div>
-          {character.lastUpdated && (
-            <div className="text-slate-500">
-              Atualizado em: {character.lastUpdated}
-            </div>
-          )}
-        </div>
+        <WikiLastEdited entity={entity} />
+        <div className="mt-4 flex justify-end"><WikiContributionActions collection="characters" slug={slug} enabled={process.env.WIKI_EDITING_ENABLED !== 'false'} /></div>
       </div>
 
       {/* Footer */}

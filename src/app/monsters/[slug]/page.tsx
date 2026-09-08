@@ -7,6 +7,10 @@ import { notFound } from 'next/navigation'
 import { Icon } from '@iconify/react'
 import { getEntityBySlug, getEntitiesByType } from '@/db/queries/entities'
 import type { MonsterData } from '@/types/entities'
+import { WikiContributionActions } from '@/components/WikiContributionActions'
+import { WikiLastEdited } from '@/components/WikiLastEdited'
+
+export const dynamic = 'force-dynamic'
 
 const dangerColors: Record<string, string> = {
   'Baixo': 'bg-green-600/20 text-green-400',
@@ -44,8 +48,6 @@ export default async function MonsterPage({ params }: PageProps) {
     cr: data.cr || '',
     description: entity.description || '',
     abilities: data.abilities || [],
-    contributor: 'Thaveus, O Escriba',
-    lastUpdated: entity.updatedAt?.toISOString().split('T')[0] || '',
   }
 
   return (
@@ -158,19 +160,8 @@ export default async function MonsterPage({ params }: PageProps) {
           </div>
         </div>
 
-        {/* Contributor Attribution */}
-        <div className="mt-8 pt-6 border-t border-amber-300/50 flex items-center justify-between text-sm">
-          <div className="flex items-center gap-2 text-slate-500">
-            <Icon icon="game-icons:quill-ink" className="w-4 h-4" />
-            <span>Registrado por:</span>
-            <Link href="/characters/thaveus" className="text-slate-700 font-medium hover:text-amber-600 transition-colors">{monster.contributor}</Link>
-          </div>
-          {monster.lastUpdated && (
-            <div className="text-slate-500">
-              Atualizado em: {monster.lastUpdated}
-            </div>
-          )}
-        </div>
+        <WikiLastEdited entity={entity} />
+        <div className="mt-4 flex justify-end"><WikiContributionActions collection="monsters" slug={slug} enabled={process.env.WIKI_EDITING_ENABLED !== 'false'} /></div>
       </div>
 
       {/* Footer */}
