@@ -77,6 +77,10 @@ export default async function Home() {
               </svg>
               Ver o Mapa do Mundo
             </Link>
+            <Link href="/dice" className="inline-flex items-center justify-center gap-3 rounded-md border border-amber-400/30 bg-white/5 px-8 py-4 font-semibold text-amber-100 backdrop-blur-sm transition-all hover:-translate-y-1 hover:border-amber-400/60">
+              <Icon icon="game-icons:rolling-dices" className="h-5 w-5" />
+              Mesa de Dados
+            </Link>
           </div>
         </div>
 
