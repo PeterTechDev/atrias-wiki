@@ -5,7 +5,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { Icon } from '@iconify/react'
-import { getEntityBySlug, getEntitiesByType } from '@/db/queries/entities'
+import { getEntityBySlug } from '@/db/queries/entities'
 import type { MonsterData } from '@/types/entities'
 import { WikiContributionActions } from '@/components/WikiContributionActions'
 import { WikiLastEdited } from '@/components/WikiLastEdited'
@@ -18,11 +18,6 @@ const dangerColors: Record<string, string> = {
   'Medio': 'bg-yellow-600/20 text-yellow-400',
   'Alto': 'bg-orange-600/20 text-orange-400',
   'Extremo': 'bg-red-600/30 text-red-400',
-}
-
-export async function generateStaticParams() {
-  const monsters = await getEntitiesByType('monster')
-  return monsters.map((m) => ({ slug: m.slug }))
 }
 
 interface PageProps {

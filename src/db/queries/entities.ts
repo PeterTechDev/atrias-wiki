@@ -3,13 +3,15 @@ import { db } from '@/db'
 import { entities, type Entity, type EntityStatus, type EntityType } from '@/db/schema'
 import type { EntityCounts } from '@/types/entities'
 import { mergeEntityData, normalizeArchivedIds } from './entityEditing'
+import { isWikiDM, writerVisibility, entityVisibility, dmPermission } from '@/lib/wikiPermissions'
+import { readVisibility } from '@/lib/wikiRequest'
 
 export const wikiEntityTypes = ['character', 'place', 'faction', 'item', 'lore', 'monster', 'other'] as const
 export type WikiEntityType = (typeof wikiEntityTypes)[number]
 export type EntityWriter = { source: 'member' | 'admin'; userId?: string }
 
 export class EntityWriteError extends Error {
-  constructor(public code: 'invalid' | 'not_found' | 'conflict' | 'duplicate', message: string) {
+  constructor(public code: 'invalid' | 'not_found' | 'conflict' | 'duplicate' | 'forbidden', message: string) {
     super(message)
   }
 }
@@ -27,7 +29,7 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 }
 
 function validateText(value: string, label: string, max: number) {
-  if (!value.trim() || value.length > max) {
+  if (typeof value !== 'string' || !value.trim() || value.length > max) {
     throw new EntityWriteError('invalid', `${label} is invalid.`)
   }
 }
@@ -35,10 +37,10 @@ function validateText(value: string, label: string, max: number) {
 function validateEntityInput(input: { type: unknown; name: string; slug: string; description?: string | null; data?: unknown }) {
   if (!isWikiType(input.type)) throw new EntityWriteError('invalid', 'Invalid entity type.')
   validateText(input.name, 'Name', 200)
-  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(input.slug) || input.slug.length > 160) {
+  if (typeof input.slug !== 'string' || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(input.slug) || input.slug.length > 160) {
     throw new EntityWriteError('invalid', 'Slug must contain lowercase letters, numbers, and hyphens.')
   }
-  if (input.description !== undefined && input.description !== null && input.description.length > 100000) {
+  if (input.description !== undefined && input.description !== null && (typeof input.description !== 'string' || input.description.length > 100000)) {
     throw new EntityWriteError('invalid', 'Description is too long.')
   }
   if (input.data !== undefined && !isRecord(input.data)) throw new EntityWriteError('invalid', 'Data must be an object.')
@@ -54,10 +56,11 @@ function duplicateError(error: unknown) {
 }
 
 export async function createEntity(
-  input: { type: WikiEntityType; name: string; slug: string; description?: string | null; status?: EntityStatus; data?: Record<string, unknown> },
+  input: { type: WikiEntityType; name: string; slug: string; description?: string | null; status?: EntityStatus; data?: Record<string, unknown>; isSpoiler?: boolean },
   writer: EntityWriter
 ) {
   validateEntityInput(input)
+  await validateSpoiler(input.isSpoiler, writer)
   if (input.status !== undefined && !['draft', 'review', 'published'].includes(input.status)) {
     throw new EntityWriteError('invalid', 'Invalid entity status.')
   }
@@ -68,6 +71,7 @@ export async function createEntity(
   try {
     const [created] = await db.insert(entities).values({
       type: input.type,
+      isSpoiler: input.isSpoiler ?? false,
       name: input.name.trim(),
       slug: input.slug,
       description: input.description?.trim() || null,
@@ -93,8 +97,13 @@ export async function updateEntity(input: {
   status?: EntityStatus
   data?: Record<string, unknown>
   expectedRevision?: number
+  isSpoiler?: boolean
 }, writer: EntityWriter) {
   if (!isUuid(input.id)) throw new EntityWriteError('invalid', 'Invalid entity id.')
+  if (input.name !== undefined) validateText(input.name, 'Name', 200)
+  if (input.slug !== undefined && typeof input.slug !== 'string') throw new EntityWriteError('invalid', 'Invalid slug.')
+  if (input.description !== undefined && input.description !== null && typeof input.description !== 'string') throw new EntityWriteError('invalid', 'Invalid description.')
+  if (input.data !== undefined && !isRecord(input.data)) throw new EntityWriteError('invalid', 'Data must be an object.')
   if (writer.source === 'member' && (!writer.userId || !isUuid(writer.userId))) {
     throw new EntityWriteError('invalid', 'Invalid editor identity.')
   }
@@ -102,7 +111,8 @@ export async function updateEntity(input: {
     throw new EntityWriteError('invalid', 'Invalid revision.')
   }
 
-  const [current] = await db.select().from(entities).where(eq(entities.id, input.id)).limit(1)
+  await validateSpoiler(input.isSpoiler, writer)
+  const [current] = await db.select().from(entities).where(and(eq(entities.id, input.id), writerVisibility(writer.userId))).limit(1)
   if (!current) throw new EntityWriteError('not_found', 'Entity not found.')
   if (writer.source === 'member' && !isWikiType(current.type)) {
     throw new EntityWriteError('invalid', 'This entity cannot be edited by members.')
@@ -117,12 +127,14 @@ export async function updateEntity(input: {
     throw new EntityWriteError('invalid', 'Invalid entity status.')
   }
   const nextStatus = input.status ?? current.status
+  const nextSpoiler = input.isSpoiler ?? current.isSpoiler
 
-  if (current.name === nextName && current.slug === nextSlug && current.description === nextDescription && current.status === nextStatus && sameJson(current.data ?? {}, nextData)) {
+  if (current.isSpoiler === nextSpoiler && current.name === nextName && current.slug === nextSlug && current.description === nextDescription && current.status === nextStatus && sameJson(current.data ?? {}, nextData)) {
     return current
   }
 
-  const conditions = [eq(entities.id, input.id)]
+  const conditions = [eq(entities.id, input.id), writerVisibility(writer.userId)]
+  if (input.isSpoiler !== undefined) conditions.push(dmPermission(writer.userId))
   if (input.expectedRevision !== undefined) conditions.push(eq(entities.revision, input.expectedRevision))
 
   try {
@@ -131,6 +143,7 @@ export async function updateEntity(input: {
       slug: nextSlug,
       description: nextDescription,
       status: nextStatus,
+      ...(input.isSpoiler === undefined ? {} : { isSpoiler: nextSpoiler }),
       data: nextData,
       updatedAt: new Date(),
       updatedBy: writer.userId ?? null,
@@ -152,13 +165,14 @@ export async function updateEntity(input: {
 
 export async function getEntityBySlug(
   type: EntityType,
-  slug: string
+  slug: string,
+  isDM?: boolean
 ): Promise<Entity | null> {
   try {
     const result = await db
       .select()
       .from(entities)
-      .where(and(eq(entities.type, type), eq(entities.slug, slug), isNull(entities.archivedAt)))
+      .where(and(eq(entities.type, type), eq(entities.slug, slug), isNull(entities.archivedAt), await readVisibility(isDM)))
       .limit(1)
 
     return result[0] ?? null
@@ -168,12 +182,12 @@ export async function getEntityBySlug(
   }
 }
 
-export async function getEntitiesByType(type: EntityType): Promise<Entity[]> {
+export async function getEntitiesByType(type: EntityType, isDM?: boolean): Promise<Entity[]> {
   try {
     return await db
       .select()
       .from(entities)
-      .where(and(eq(entities.type, type), isNull(entities.archivedAt)))
+      .where(and(eq(entities.type, type), isNull(entities.archivedAt), await readVisibility(isDM)))
       .orderBy(entities.name)
   } catch (error) {
     console.error(`Failed to fetch entities of type "${type}":`, error)
@@ -181,21 +195,21 @@ export async function getEntitiesByType(type: EntityType): Promise<Entity[]> {
   }
 }
 
-export async function getAllEntities(): Promise<Entity[]> {
+export async function getAllEntities(isDM?: boolean): Promise<Entity[]> {
   try {
-    return await db.select().from(entities).where(isNull(entities.archivedAt)).orderBy(entities.name)
+    return await db.select().from(entities).where(and(isNull(entities.archivedAt), await readVisibility(isDM))).orderBy(entities.name)
   } catch (error) {
     console.error('Failed to fetch all entities:', error)
     throw new Error('Unable to load entities. Please try again later.')
   }
 }
 
-export async function getEntityById(id: string): Promise<Entity | null> {
+export async function getEntityById(id: string, isDM?: boolean): Promise<Entity | null> {
   try {
     const result = await db
       .select()
       .from(entities)
-      .where(and(eq(entities.id, id), isNull(entities.archivedAt)))
+      .where(and(eq(entities.id, id), isNull(entities.archivedAt), await readVisibility(isDM)))
       .limit(1)
 
     return result[0] ?? null
@@ -205,7 +219,7 @@ export async function getEntityById(id: string): Promise<Entity | null> {
   }
 }
 
-export async function getEntityCounts(): Promise<EntityCounts> {
+export async function getEntityCounts(isDM?: boolean): Promise<EntityCounts> {
   try {
     const counts = await db
       .select({
@@ -213,7 +227,7 @@ export async function getEntityCounts(): Promise<EntityCounts> {
         count: count(),
       })
       .from(entities)
-      .where(isNull(entities.archivedAt))
+      .where(and(isNull(entities.archivedAt), await readVisibility(isDM)))
       .groupBy(entities.type)
 
     const countMap: Record<string, number> = {}
@@ -241,17 +255,17 @@ export async function getEntityCounts(): Promise<EntityCounts> {
   }
 }
 
-export async function getArchivedEntities() {
-  return db.select().from(entities).where(and(inArray(entities.type, wikiEntityTypes), sql`${entities.archivedAt} is not null`)).orderBy(entities.archivedAt, entities.name)
+export async function getArchivedEntities(isDM = false) {
+  return db.select().from(entities).where(and(inArray(entities.type, wikiEntityTypes), sql`${entities.archivedAt} is not null`, entityVisibility(isDM))).orderBy(entities.archivedAt, entities.name)
 }
 
-export async function getArchivedEntityBySlug(type: WikiEntityType, slug: string) {
-  const [entity] = await db.select().from(entities).where(and(eq(entities.type, type), eq(entities.slug, slug), sql`${entities.archivedAt} is not null`)).limit(1)
+export async function getArchivedEntityBySlug(type: WikiEntityType, slug: string, isDM = false) {
+  const [entity] = await db.select().from(entities).where(and(eq(entities.type, type), eq(entities.slug, slug), sql`${entities.archivedAt} is not null`, entityVisibility(isDM))).limit(1)
   return entity ?? null
 }
 
-export async function getEntityIncludingArchived(id: string) {
-  const [entity] = await db.select().from(entities).where(eq(entities.id, id)).limit(1)
+export async function getEntityIncludingArchived(id: string, isDM = false) {
+  const [entity] = await db.select().from(entities).where(and(eq(entities.id, id), entityVisibility(isDM))).limit(1)
   return entity ?? null
 }
 
@@ -263,22 +277,28 @@ export async function archiveEntity(id: string, userId: string) {
     updatedBy: userId,
     updatedBySource: 'member',
     revision: sql`${entities.revision} + 1`,
-  }).where(and(eq(entities.id, id), inArray(entities.type, wikiEntityTypes), isNull(entities.archivedAt))).returning()
+  }).where(and(eq(entities.id, id), inArray(entities.type, wikiEntityTypes), isNull(entities.archivedAt), writerVisibility(userId))).returning()
   if (updated) return updated
-  const [existing] = await db.select().from(entities).where(eq(entities.id, id)).limit(1)
+  const [existing] = await db.select().from(entities).where(and(eq(entities.id, id), writerVisibility(userId))).limit(1)
   if (!existing || !isWikiType(existing.type)) throw new EntityWriteError('not_found', 'Entity not found.')
   if (existing.archivedAt) return existing
   throw new EntityWriteError('not_found', 'Entity not found.')
 }
 
-export async function deleteArchivedEntities(ids: string[]) {
+export async function deleteArchivedEntities(ids: string[], userId?: string) {
   let uniqueIds: string[]
   try { uniqueIds = normalizeArchivedIds(ids) } catch { throw new EntityWriteError('invalid', 'ids must contain valid UUIDs.') }
   return db.transaction(async (tx) => {
-    const found = await tx.select({ id: entities.id, archivedAt: entities.archivedAt, type: entities.type }).from(entities).where(inArray(entities.id, uniqueIds)).for('update')
+    const found = await tx.select({ id: entities.id, archivedAt: entities.archivedAt, type: entities.type }).from(entities).where(and(inArray(entities.id, uniqueIds), writerVisibility(userId))).for('update')
     if (found.length !== uniqueIds.length || found.some((entity) => !entity.archivedAt || !isWikiType(entity.type))) {
       throw new EntityWriteError('conflict', 'All selected entities must exist and be archived.')
     }
     return tx.delete(entities).where(inArray(entities.id, uniqueIds)).returning({ id: entities.id })
   })
+}
+
+async function validateSpoiler(value: unknown, writer: EntityWriter) {
+  if (value === undefined) return
+  if (typeof value !== 'boolean') throw new EntityWriteError('invalid', 'isSpoiler must be a boolean.')
+  if (!await isWikiDM(writer.userId)) throw new EntityWriteError('forbidden', 'Somente um DM pode alterar a restrição de spoilers.')
 }

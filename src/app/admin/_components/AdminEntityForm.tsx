@@ -406,6 +406,7 @@ export type AdminEntityFormValues = {
   description: string
   status: EntityStatus
   revision?: number
+  isSpoiler?: boolean
   data?: Record<string, unknown>
 }
 
@@ -415,12 +416,14 @@ export function AdminEntityForm({
   initial,
   audience = 'admin',
   enabled = true,
+  isDM = false,
 }: {
   mode: 'create' | 'edit'
   collection: string
   initial: AdminEntityFormValues
   audience?: 'admin' | 'member'
   enabled?: boolean
+  isDM?: boolean
 }) {
   const router = useRouter()
   const { user, loading: authLoading } = useAuth()
@@ -513,6 +516,7 @@ export function AdminEntityForm({
           ...(mode === 'create' ? { type: values.type, slug: values.slug.trim() } : {}),
           name: values.name.trim(),
           description: values.description.trim(),
+          ...(isDM ? { isSpoiler: values.isSpoiler === true } : {}),
           data: assembleData(values.type, dataFields),
           ...(mode === 'edit' ? { revision: values.revision } : {}),
         }
@@ -522,6 +526,7 @@ export function AdminEntityForm({
           slug: values.slug.trim(),
           description: values.description.trim(),
           status: values.status,
+          ...(isDM ? { isSpoiler: values.isSpoiler === true } : {}),
           data: assembleData(values.type, dataFields),
           ...(values.revision ? { revision: values.revision } : {}),
         }
@@ -691,6 +696,10 @@ export function AdminEntityForm({
       </div>
 
       {/* Typed data fields */}
+      {isDM && <label className="flex items-center gap-3 rounded border border-amber-400 bg-amber-50 p-4 text-slate-900">
+        <input type="checkbox" checked={values.isSpoiler === true} onChange={event => update('isSpoiler', event.target.checked)} className="h-5 w-5" />
+        <span><span className="block font-semibold">Spoiler / Restrito ao DM</span><span className="text-sm">Somente mestres podem acessar. Desmarque para liberar o post na wiki.</span></span>
+      </label>}
       {values.type === 'character' ? (
         <div className="rounded border border-slate-200 bg-white p-4">
           <h3 className="mb-3 text-sm font-semibold text-slate-800">Character details</h3>

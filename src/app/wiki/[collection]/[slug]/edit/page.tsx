@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation'
+import { getWikiRequestDM } from '@/lib/wikiRequest'
 import { getEntityBySlug } from '@/db/queries/entities'
 import { AdminEntityForm } from '@/app/admin/_components/AdminEntityForm'
 import { AdminShell } from '@/app/admin/_components/AdminShell'
@@ -14,11 +15,12 @@ export default async function WikiEditEntityPage({ params }: { params: Promise<{
   return (
     <AdminShell variant="wiki" title={`Editar ${collectionSingularLabels[collection]}`} subtitle={`Editar: ${entity.name}`} backHref={`/${collection}/${entity.slug}`} backLabel="Voltar para a página">
       <AdminEntityForm
+        isDM={await getWikiRequestDM()}
         mode="edit"
         audience="member"
         collection={collection}
         enabled={process.env.WIKI_EDITING_ENABLED !== 'false'}
-        initial={{ id: entity.id, type: entity.type, name: entity.name, slug: entity.slug, description: entity.description ?? '', status: entity.status ?? 'published', revision: entity.revision, data: (entity.data ?? {}) as Record<string, unknown> }}
+        initial={{ id: entity.id, type: entity.type, name: entity.name, slug: entity.slug, description: entity.description ?? '', status: entity.status ?? 'published', revision: entity.revision, isSpoiler: entity.isSpoiler === true, data: (entity.data ?? {}) as Record<string, unknown> }}
       />
     </AdminShell>
   )

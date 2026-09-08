@@ -10,7 +10,7 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
 
   const { id } = await params
   try {
-    let body: { name?: string; description?: string; data?: Record<string, unknown>; revision?: number }
+    let body: { name?: string; description?: string; data?: Record<string, unknown>; revision?: number; isSpoiler?: boolean }
     try {
       body = await req.json()
     } catch {
@@ -24,12 +24,13 @@ export async function PATCH(req: Request, { params }: { params: Promise<{ id: st
       name: body.name,
       description: body.description,
       data: body.data,
+      isSpoiler: body.isSpoiler,
       expectedRevision: body.revision,
     }, { source: 'member', userId: user.id })
     return NextResponse.json({ id: entity.id, slug: entity.slug, revision: entity.revision })
   } catch (error) {
     if (error instanceof EntityWriteError) {
-      const status = error.code === 'invalid' ? 400 : error.code === 'not_found' ? 404 : 409
+      const status = error.code === 'forbidden' ? 403 : error.code === 'invalid' ? 400 : error.code === 'not_found' ? 404 : 409
       return NextResponse.json({ error: error.message }, { status })
     }
     console.error(`PATCH /api/wiki/entities/${id} failed:`, error)

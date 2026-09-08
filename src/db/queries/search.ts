@@ -2,6 +2,7 @@ import { ilike, or, and, inArray, isNull } from 'drizzle-orm'
 import { db } from '@/db'
 import { entities, type EntityType } from '@/db/schema'
 import type { SearchResult } from '@/types/entities'
+import { entityVisibility } from '@/lib/wikiPermissions'
 
 // Escape SQL LIKE special characters to prevent unexpected behavior
 function escapeLikePattern(query: string): string {
@@ -10,7 +11,8 @@ function escapeLikePattern(query: string): string {
 
 export async function searchEntities(
   query: string,
-  limit = 20
+  limit = 20,
+  isDM = false
 ): Promise<SearchResult[]> {
   if (!query || query.length < 2) {
     return []
@@ -30,7 +32,7 @@ export async function searchEntities(
       })
       .from(entities)
       .where(
-        and(isNull(entities.archivedAt), or(
+        and(isNull(entities.archivedAt), entityVisibility(isDM), or(
           ilike(entities.name, searchPattern),
           ilike(entities.description, searchPattern)
         ))
@@ -48,7 +50,8 @@ export async function searchEntities(
 export async function searchEntitiesByType(
   query: string,
   types: EntityType[],
-  limit = 20
+  limit = 20,
+  isDM = false
 ): Promise<SearchResult[]> {
   if (!query || query.length < 2 || types.length === 0) {
     return []
@@ -71,6 +74,7 @@ export async function searchEntitiesByType(
         and(
           inArray(entities.type, types),
           isNull(entities.archivedAt),
+          entityVisibility(isDM),
           or(
             ilike(entities.name, searchPattern),
             ilike(entities.description, searchPattern)

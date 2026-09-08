@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation'
+import { getWikiRequestDM } from '@/lib/wikiRequest'
 import { AdminShell } from '../../_components/AdminShell'
 import { AdminEntityForm } from '../../_components/AdminEntityForm'
 import { collectionLabels, collectionSingularLabels, collectionToEntityType, isAdminCollection } from '../../_lib/entityTypes'
@@ -24,6 +25,7 @@ export default async function AdminNewEntityPage({
       backLabel={`Back to ${label}`}
     >
       <AdminEntityForm
+        isDM={await getWikiRequestDM()}
         mode="create"
         collection={collection}
         initial={{

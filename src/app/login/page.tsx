@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { Avatar, useAuth } from '@/components/AuthProvider'
 import { avatars, authError, supabase } from '@/lib/supabase'
 import { signupPasswordError } from '@/lib/signupPassword'
+import { syncWikiSession } from '@/lib/wikiSession'
 
 const inputClass = 'mt-1 w-full rounded border border-amber-200/30 bg-slate-950/50 px-3 py-2 text-white focus:border-amber-400 focus:outline-2 focus:outline-amber-400'
 const buttonClass = 'rounded bg-[#c6a862] px-5 py-3 font-semibold text-slate-950 hover:bg-amber-200 disabled:opacity-50'
@@ -117,7 +118,7 @@ export default function LoginPage() {
         } else {
           const { data: result, error } = await supabase.auth.signUp({ email, password, options: { data: profile } })
           if (error) throw error
-          if (result.session) window.location.assign(nextPath)
+          if (result.session) { await syncWikiSession(result.session); window.location.assign(nextPath) }
           setMessage(result.session ? 'Conta criada! Você já pode personalizar seu perfil.' : 'Cadastro recebido. Entre com seu email e senha. Se não conseguir acessar, fale com o administrador da wiki.')
           setMode('login')
           setShowPassword(false)
@@ -125,8 +126,9 @@ export default function LoginPage() {
           form.reset()
         }
       } else {
-        const { error } = await supabase.auth.signInWithPassword({ email, password })
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password })
         if (error) throw error
+        await syncWikiSession(data.session)
         window.location.assign(nextPath)
       }
     } catch (error) {

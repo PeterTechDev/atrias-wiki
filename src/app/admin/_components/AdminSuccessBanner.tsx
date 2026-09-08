@@ -34,19 +34,15 @@ export function AdminSuccessBanner() {
     return null
   }, [success])
 
-  const [visible, setVisible] = useState(true)
-
-  useEffect(() => {
-    // Reset visibility when navigating between lists.
-    setVisible(true)
-  }, [kind])
+  const [dismissedKind, setDismissedKind] = useState<SuccessKind | null>(null)
+  const visible = dismissedKind !== kind
 
   useEffect(() => {
     if (!kind) return
     if (!visible) return
 
     const t = window.setTimeout(() => {
-      setVisible(false)
+      setDismissedKind(kind)
     }, 3000)
 
     return () => window.clearTimeout(t)
@@ -70,7 +66,7 @@ export function AdminSuccessBanner() {
   return (
     <button
       type="button"
-      onClick={() => setVisible(false)}
+      onClick={() => setDismissedKind(kind)}
       className={`w-full rounded border px-4 py-3 text-left text-sm ${copy.className}`}
     >
       <div className="flex items-start gap-2">

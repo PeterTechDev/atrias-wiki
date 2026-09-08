@@ -7,19 +7,13 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { Icon } from '@iconify/react'
 import DetailsToggle from './DetailsToggle'
-import { getEntityBySlug, getEntitiesByType } from '@/db/queries/entities'
+import { getEntityBySlug } from '@/db/queries/entities'
 import type { PlaceData } from '@/types/entities'
 import { WikiContributionActions } from '@/components/WikiContributionActions'
 import { WikiLastEdited } from '@/components/WikiLastEdited'
 import { WikiFavoriteButton } from '@/components/WikiFavoriteButton'
 
 export const dynamic = 'force-dynamic'
-
-// Generate static params for all places
-export async function generateStaticParams() {
-  const places = await getEntitiesByType('place')
-  return places.map((place) => ({ slug: place.slug }))
-}
 
 interface PageProps {
   params: Promise<{ slug: string }>

@@ -5,7 +5,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { Icon } from '@iconify/react'
-import { getEntityBySlug, getEntitiesByType } from '@/db/queries/entities'
+import { getEntityBySlug } from '@/db/queries/entities'
 import type { LoreData } from '@/types/entities'
 import { WikiContributionActions } from '@/components/WikiContributionActions'
 import { WikiLastEdited } from '@/components/WikiLastEdited'
@@ -19,11 +19,6 @@ const categoryColors: Record<string, string> = {
   'Cosmologia': 'bg-purple-600/20 text-purple-400',
   'Cultura': 'bg-green-600/20 text-green-400',
   'Magia': 'bg-cyan-600/20 text-cyan-400',
-}
-
-export async function generateStaticParams() {
-  const loreEntries = await getEntitiesByType('lore')
-  return loreEntries.map((l) => ({ slug: l.slug }))
 }
 
 interface PageProps {

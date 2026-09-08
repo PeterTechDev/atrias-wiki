@@ -17,7 +17,7 @@ async function editorName(entity: Pick<Entity, 'updatedBy' | 'updatedBySource'>)
   return data?.display_name || 'Usuário removido'
 }
 
-export async function WikiLastEdited({ entity }: { entity: Pick<Entity, 'updatedAt' | 'updatedBy' | 'updatedBySource'> }) {
+export async function WikiLastEdited({ entity }: { entity: Pick<Entity, 'updatedAt' | 'updatedBy' | 'updatedBySource'> & { isSpoiler?: boolean | null } }) {
   const date = new Date(entity.updatedAt)
   const name = await editorName(entity)
   const formatted = new Intl.DateTimeFormat('pt-BR', {
@@ -28,6 +28,7 @@ export async function WikiLastEdited({ entity }: { entity: Pick<Entity, 'updated
 
   return (
     <div className="mt-8 border-t border-amber-300/50 pt-6 text-sm text-slate-500">
+      {entity.isSpoiler && <p className="mb-3 font-semibold text-amber-800">🔒 Spoiler / Restrito ao DM</p>}
       <span>Última alteração por {name} em </span>
       <time dateTime={date.toISOString()}>{formatted} (America/Bahia)</time>
     </div>

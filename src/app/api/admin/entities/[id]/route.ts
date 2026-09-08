@@ -1,8 +1,10 @@
 import { NextResponse } from 'next/server'
-import { eq } from 'drizzle-orm'
+import { and, eq } from 'drizzle-orm'
 import { db } from '@/db'
 import { entities, type EntityStatus } from '@/db/schema'
 import { EntityWriteError, updateEntity } from '@/db/queries/entities'
+import { getWikiRequestUser } from '@/lib/wikiRequest'
+import { writerVisibility } from '@/lib/wikiPermissions'
 
 type UpdateEntityBody = {
   name?: string
@@ -11,6 +13,7 @@ type UpdateEntityBody = {
   status?: EntityStatus
   data?: Record<string, unknown>
   revision?: number
+  isSpoiler?: boolean
 }
 
 export async function PATCH(
@@ -26,11 +29,11 @@ export async function PATCH(
       return NextResponse.json({ error: 'Missing id.' }, { status: 400 })
     }
 
-    const updated = await updateEntity({ id, ...body }, { source: 'admin' })
+    const updated = await updateEntity({ ...body, id, expectedRevision: body.revision }, { source: 'admin', userId: (await getWikiRequestUser())?.id })
     return NextResponse.json({ id: updated.id }, { status: 200 })
   } catch (error) {
     if (error instanceof EntityWriteError) {
-      const status = error.code === 'invalid' ? 400 : error.code === 'not_found' ? 404 : 409
+      const status = error.code === 'forbidden' ? 403 : error.code === 'invalid' ? 400 : error.code === 'not_found' ? 404 : 409
       return NextResponse.json({ error: error.message }, { status })
     }
 
@@ -52,7 +55,7 @@ export async function DELETE(
 
     const deleted = await db
       .delete(entities)
-      .where(eq(entities.id, id))
+      .where(and(eq(entities.id, id), writerVisibility((await getWikiRequestUser())?.id)))
       .returning({ id: entities.id })
 
     if (!deleted[0]) {

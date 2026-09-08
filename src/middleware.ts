@@ -10,13 +10,17 @@ function unauthorized() {
 }
 
 export function middleware(req: NextRequest) {
+  if (req.nextUrl.pathname === '/search-index.json') return new NextResponse(null, { status: 404, headers: { 'Cache-Control': 'private, no-store' } })
+  const response = NextResponse.next()
+  response.headers.set('Cache-Control', 'private, no-store')
+  if (!req.nextUrl.pathname.startsWith('/admin') && !req.nextUrl.pathname.startsWith('/api/admin')) return response
   const secret = process.env.ADMIN_SECRET
 
   // Never allow open access to admin routes in production.
   if (!secret) {
     if (process.env.NODE_ENV === 'production') return unauthorized()
     // If not configured, don't block (dev friendliness)
-    return NextResponse.next()
+    return response
   }
 
   const auth = req.headers.get('authorization')
@@ -29,12 +33,12 @@ export function middleware(req: NextRequest) {
 
     if (user !== 'admin' || pass !== secret) return unauthorized()
 
-    return NextResponse.next()
+    return response
   } catch {
     return unauthorized()
   }
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/api/admin/:path*'],
+  matcher: ['/((?!_next/|images/|favicon.ico).*)'],
 }

@@ -14,9 +14,10 @@ async function main() {
   Object.assign(globalThis, { pool })
   try {
     await pool.query('BEGIN')
+    await pool.query('DROP TABLE IF EXISTS pg_temp.entity_favorites, pg_temp.entity_relations, pg_temp.knowledge_chunks, pg_temp.ingestion_jobs, pg_temp.wiki_dms, pg_temp.entities')
     await pool.query(`CREATE TEMP TABLE entities (
       id uuid PRIMARY KEY, type text, slug text, name text, description text,
-      archived_at timestamptz, updated_at timestamptz DEFAULT now()
+      archived_at timestamptz, updated_at timestamptz DEFAULT now(), is_spoiler boolean DEFAULT false
     )`)
     await pool.query(readFileSync('supabase/migrations/20260908150000_entity_favorites.sql', 'utf8').replaceAll('public.', 'pg_temp.'))
     const { addFavorite, removeFavorite, isFavorite, listFavorites } = await import('../src/db/queries/favorites')
