@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "gray-on-color",
+        "value": "*",
+        "files": [
+          "src/components/WikiArchive.tsx"
+        ],
+        "createdAt": "2026-09-10T22:57:54.830Z",
+        "reason": "Agent review: findings conflate selection utilities with the main background. Dark text on light amber selection is intentional; parchment and slate preserve DESIGN.md."
+      }
+    ]
+  }
+}

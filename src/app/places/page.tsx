@@ -1,148 +1,17 @@
-/**
- * Places listing page
- * Beautiful fantasy-styled location gallery
- */
-
-import Link from 'next/link'
-import { Icon } from '@iconify/react'
 import { getEntitiesByType } from '@/db/queries/entities'
+import { WikiArchive } from '@/components/WikiArchive'
 import type { PlaceData } from '@/types/entities'
-import { WikiContributionActions } from '@/components/WikiContributionActions'
 
 export const dynamic = 'force-dynamic'
 
-export default async function PlacesPage() {
+export default async function ArchivePage() {
   const entities = await getEntitiesByType('place')
-
-  const places = entities.map((e) => {
-    const data = e.data as PlaceData
+  const entries = entities.map((e) => {
+    const data = (e.data ?? {}) as PlaceData
     return {
-      slug: e.slug,
-      name: e.name,
-      type: data.type || 'Local',
-      region: data.region || '',
-      kingdom: '',
-      dangerLevel: 'Desconhecido',
-      description: e.description || '',
-      image: e.image || (data.map as string) || '',
+      slug: e.slug, name: e.name, description: e.description,
+      image: e.image || data.map, metadata: [data.type, data.region],
     }
-  })
-
-  return (
-    <main className="min-h-screen flex flex-col bg-[#e8dcc8]">
-      {/* Header */}
-      <header className="bg-[#0a1628] text-white py-4 px-6">
-        <div className="max-w-6xl mx-auto flex justify-between items-center">
-          <Link href="/" className="flex items-center gap-2 text-amber-400 hover:text-amber-300">
-            <Icon icon="game-icons:book-cover" className="w-6 h-6" />
-            <span className="font-cinzel text-lg tracking-wider">WIKI ATRIAS</span>
-          </Link>
-        </div>
-      </header>
-
-      {/* Breadcrumb */}
-      <div className="max-w-6xl mx-auto px-6 py-4">
-        <nav className="flex items-center gap-2 text-sm text-slate-600">
-          <Link href="/" className="hover:text-amber-700">Home</Link>
-          <span>›</span>
-          <span className="text-slate-800">Lugares</span>
-        </nav>
-      </div>
-
-      {/* Page Header */}
-      <div className="max-w-6xl mx-auto px-6 mb-8">
-        <div className="bg-white/80 rounded-lg shadow-lg p-8">
-          <div className="mb-4 flex justify-end"><WikiContributionActions collection="places" enabled={process.env.WIKI_EDITING_ENABLED !== 'false'} /></div>
-          <div className="flex items-center gap-4 mb-4">
-            <Icon icon="game-icons:castle" className="w-12 h-12 text-amber-700" />
-            <div>
-              <h1 className="font-cinzel text-4xl text-slate-800">Lugares</h1>
-              <p className="text-slate-600 font-crimson italic">Reinos, cidades e terras misteriosas</p>
-            </div>
-          </div>
-          <p className="text-slate-700 font-crimson text-lg">
-            Explore os lugares que compoem o mundo de Atrias. De vilas pacificas a fortalezas imponentes,
-            cada local guarda seus proprios segredos e historias.
-          </p>
-        </div>
-      </div>
-
-      {/* Places Grid */}
-      <div className="max-w-6xl mx-auto px-6 pb-12">
-        {places.length === 0 ? (
-          <div className="text-center py-12">
-            <Icon icon="game-icons:treasure-map" className="w-16 h-16 text-slate-400 mx-auto mb-4" />
-            <p className="text-xl text-slate-600">Nenhum lugar encontrado</p>
-            <p className="text-slate-500 mt-2">Os lugares serao adicionados em breve.</p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {places.map((place) => (
-              <Link
-                key={place.slug}
-                href={`/places/${place.slug}`}
-                className="group bg-white/80 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all hover:-translate-y-1"
-              >
-                {/* Map/Image Preview */}
-                {place.image && (
-                  <div className="h-40 overflow-hidden">
-                    <img src={place.image} alt={place.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-                  </div>
-                )}
-
-                {/* Card Header */}
-                <div className="bg-[#0a1628] p-4">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs bg-emerald-600/20 text-emerald-400 px-2 py-1 rounded">
-                      {place.type}
-                    </span>
-                    <span className={`text-xs px-2 py-1 rounded ${
-                      place.dangerLevel === 'Baixo'
-                        ? 'bg-green-600/20 text-green-400'
-                        : place.dangerLevel === 'Medio'
-                        ? 'bg-yellow-600/20 text-yellow-400'
-                        : 'bg-slate-600/20 text-slate-400'
-                    }`}>
-                      {place.dangerLevel !== 'Desconhecido' ? `Perigo: ${place.dangerLevel}` : ''}
-                    </span>
-                  </div>
-                  <h2 className="font-cinzel text-xl text-amber-400 group-hover:text-amber-300 transition-colors">
-                    {place.name}
-                  </h2>
-                  {place.region && (
-                    <p className="text-slate-400 text-sm italic">{place.region}{place.kingdom ? `, ${place.kingdom}` : ''}</p>
-                  )}
-                </div>
-
-                {/* Card Body */}
-                <div className="p-4">
-                  <p className="text-slate-600 text-sm font-crimson line-clamp-3">
-                    {place.description || 'Um lugar misterioso aguardando para ser explorado.'}
-                  </p>
-                </div>
-
-                {/* Card Footer */}
-                <div className="px-4 pb-4">
-                  <span className="text-amber-700 text-sm font-medium group-hover:text-amber-600 flex items-center gap-1">
-                    Explorar local
-                    <Icon icon="game-icons:compass" className="w-4 h-4" />
-                  </span>
-                </div>
-              </Link>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* Footer */}
-      <footer className="mt-auto bg-[#0a1628] text-white py-8 px-6">
-        <div className="max-w-6xl mx-auto text-center">
-          <p className="text-amber-400/60 font-crimson italic">
-            "As cronicas de Atrias sao escritas pelo sangue dos herois e as lagrimas dos caidos."
-          </p>
-          <p className="text-slate-500 text-sm mt-4">Wiki Atrias &copy; 2026</p>
-        </div>
-      </footer>
-    </main>
-  )
+  }).sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'))
+  return <WikiArchive title="Lugares" subtitle="Reinos, cidades e terras misteriosas" icon="game-icons:castle" collection="places" entries={entries} />
 }

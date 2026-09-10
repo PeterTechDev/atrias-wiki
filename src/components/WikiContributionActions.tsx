@@ -5,7 +5,7 @@ import { useAuth } from '@/components/AuthProvider'
 import { useRef, useState } from 'react'
 import { supabase } from '@/lib/supabase'
 
-export function WikiContributionActions({ collection, slug, entityId, enabled = true }: { collection: string; slug?: string; entityId?: string; enabled?: boolean }) {
+export function WikiContributionActions({ collection, slug, entityId, enabled = true, subtle = false }: { collection: string; slug?: string; entityId?: string; enabled?: boolean; subtle?: boolean }) {
   const { user, loading } = useAuth()
   const dialog = useRef<HTMLDialogElement>(null)
   const [busy, setBusy] = useState(false)
@@ -30,7 +30,7 @@ export function WikiContributionActions({ collection, slug, entityId, enabled = 
 
   return (
     <div className="flex flex-wrap items-center gap-2">
-      <Link href={slug ? `/wiki/${collection}/${slug}/edit` : `/wiki/${collection}/new`} className="inline-flex items-center rounded border border-amber-700 bg-amber-700 px-3 py-2 text-sm font-semibold text-white hover:bg-amber-800">
+      <Link href={slug ? `/wiki/${collection}/${slug}/edit` : `/wiki/${collection}/new`} className={`inline-flex min-h-11 items-center rounded border px-3 py-2 text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-800 ${subtle ? 'border-amber-800/40 text-amber-800 hover:bg-white/40' : 'border-amber-700 bg-amber-700 text-white hover:bg-amber-800'}`}>
         {slug ? 'Editar página' : 'Adicionar página'}
       </Link>
       {entityId && slug && <>
