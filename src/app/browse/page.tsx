@@ -19,9 +19,9 @@ const categories = [
 ]
 
 const extras = [
-  { label: 'Mesa de Dados', href: '/dice', icon: 'game-icons:rolling-dices', description: 'Role dados 3D, prepare combinações e invoque a sorte' },
-  { label: 'Sessões', href: '/sessions', icon: 'game-icons:quill-ink', description: 'Crônicas das aventuras registradas por Thaveus' },
   { label: 'Mapa', href: '/map', icon: 'game-icons:treasure-map', description: 'O mapa do mundo de Átrias' },
+  { label: 'Sessões', href: '/sessions', icon: 'game-icons:quill-ink', description: 'Crônicas das aventuras registradas por Thaveus' },
+  { label: 'Mesa de Dados', href: '/dice', icon: 'game-icons:rolling-dices', description: 'Role dados 3D, prepare combinações e invoque a sorte' },
 ]
 
 export default async function BrowsePage() {
@@ -31,8 +31,8 @@ export default async function BrowsePage() {
   return (
     <main className="min-h-screen flex flex-col bg-[#e8dcc8]">
       {/* Header */}
-      <header className="bg-[#0a1628] text-white py-4 px-6">
-        <div className="max-w-6xl mx-auto flex justify-between items-center">
+      <header className="bg-[#0a1628] text-white py-4">
+        <div className="max-w-6xl mx-auto px-6 flex justify-between items-center">
           <Link href="/" className="flex items-center gap-2 text-amber-400 hover:text-amber-300">
             <Icon icon="game-icons:book-cover" className="w-6 h-6" />
             <span className="font-cinzel text-lg tracking-wider">WIKI ÁTRIAS</span>
@@ -40,91 +40,78 @@ export default async function BrowsePage() {
         </div>
       </header>
 
-      {/* Breadcrumb */}
-      <div className="max-w-6xl mx-auto px-6 py-4">
-        <nav className="flex items-center gap-2 text-sm text-slate-600">
+      <div className="w-full max-w-6xl mx-auto px-6 pt-6 pb-12 sm:pb-16">
+        {/* Breadcrumb */}
+        <nav aria-label="Navegação estrutural" className="mb-6 flex items-center gap-2 text-sm text-slate-600">
           <Link href="/" className="hover:text-amber-700">Home</Link>
           <span>›</span>
-          <span className="text-slate-800">Arquivos</span>
+          <span aria-current="page" className="text-slate-800">Arquivos</span>
         </nav>
-      </div>
 
-      {/* Page Header */}
-      <div className="max-w-6xl mx-auto px-6 mb-8">
-        <div className="bg-white/80 rounded-lg shadow-lg p-8">
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div className="flex items-center gap-4">
-            <Icon icon="game-icons:book-pile" className="w-12 h-12 text-amber-700" />
-            <div>
-              <h1 className="font-cinzel text-4xl text-slate-800">Arquivos de Átrias</h1>
-              <p className="text-slate-600 font-crimson italic">Tudo que foi registrado pelo Escriba</p>
-            </div>
-            </div>
-            {process.env.WIKI_EDITING_ENABLED !== 'false' && <Link href="/wiki/others/new" className="rounded border border-amber-700 bg-amber-700 px-4 py-2 font-semibold text-white hover:bg-amber-800">Adicionar registro</Link>}
+        {/* Page Header */}
+        <div className="mb-8 flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
+          <div className="min-w-0">
+            <h1 className="font-cinzel text-3xl leading-tight text-balance text-slate-800 sm:text-4xl">Arquivos de Átrias</h1>
+            <p className="mt-2 font-manuscript text-base leading-relaxed italic text-slate-600">Tudo que foi registrado pelo Escriba</p>
           </div>
+          {process.env.WIKI_EDITING_ENABLED !== 'false' && <Link href="/wiki/others/new" className="inline-flex min-h-11 shrink-0 items-center justify-center rounded border border-amber-800/40 px-4 py-2 font-semibold text-amber-800 hover:bg-white/40 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-800">Adicionar registro</Link>}
         </div>
-      </div>
 
-      {/* Entity Categories */}
-      <div className="max-w-6xl mx-auto px-6 pb-8">
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {/* Entity Categories */}
+        <nav aria-label="Categorias dos arquivos" className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {categories.map((cat) => (
             <Link
               key={cat.type}
               href={cat.href}
-              className="group bg-white/80 rounded-lg shadow-lg p-6 border border-amber-200 hover:border-amber-400 transition-all hover:-translate-y-1 hover:shadow-xl"
+              className="group bg-white/80 rounded-lg p-4 sm:p-6 border border-amber-800/20 hover:border-amber-700 hover:bg-white transition-colors last:col-span-full last:border-transparent last:bg-transparent last:py-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-800"
             >
               <div className="flex items-start gap-4">
-                <div className="bg-amber-100 rounded-lg p-3">
-                  <Icon icon={cat.icon} className="w-8 h-8 text-amber-800" />
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center justify-between">
-                    <h2 className="font-cinzel text-xl text-slate-800 group-hover:text-amber-800 transition-colors">
+                <Icon icon={cat.icon} className="mt-1 h-8 w-8 shrink-0 text-amber-800" />
+                <div className="min-w-0 flex-1">
+                  <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
+                    <h2 className="font-cinzel text-lg leading-snug sm:text-xl text-slate-800 group-hover:text-amber-800 transition-colors">
                       {cat.label}
                     </h2>
-                    <span className="text-xs bg-amber-100 text-amber-800 px-2 py-1 rounded-full font-semibold">
+                    <span className="shrink-0 text-sm leading-6 text-amber-800 tabular-nums">
                       {countMap[cat.type] || 0}
                     </span>
                   </div>
-                  <p className="text-slate-600 font-crimson text-sm mt-1">{cat.description}</p>
+                  <p className="mt-2 font-crimson text-base leading-6 text-slate-600">{cat.description}</p>
                 </div>
               </div>
             </Link>
           ))}
-        </div>
-      </div>
+        </nav>
 
-      {/* Extra sections */}
-      <div className="max-w-6xl mx-auto px-6 pb-12">
-        <div className="grid gap-4 md:grid-cols-2">
+        {/* Extra sections */}
+        <nav aria-label="Exploração e ferramentas" className="mt-6 grid gap-4 border-t border-amber-800/20 pt-6 md:grid-cols-2">
           {extras.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="group bg-[#0a1628] rounded-lg shadow-lg p-6 border border-amber-400/20 hover:border-amber-400/50 transition-all hover:-translate-y-1"
+              className="group rounded-lg p-4 sm:px-6 hover:bg-white/40 transition-colors last:col-span-full last:rounded-none last:border-t last:border-amber-800/20 last:pt-6 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-800"
             >
-              <div className="flex items-center gap-4">
-                <Icon icon={item.icon} className="w-8 h-8 text-amber-400" />
-                <div>
-                  <h2 className="font-cinzel text-xl text-amber-400 group-hover:text-amber-300 transition-colors">
+              <div className="flex items-start gap-4">
+                <Icon icon={item.icon} className="h-8 w-8 shrink-0 text-amber-800" />
+                <div className="min-w-0">
+                  <h2 className="font-cinzel text-lg leading-snug sm:text-xl text-slate-800 decoration-amber-800 underline-offset-4 group-hover:underline">
                     {item.label}
                   </h2>
-                  <p className="text-slate-400 font-crimson text-sm mt-1">{item.description}</p>
+                  <p className="mt-2 font-crimson text-base leading-6 text-slate-600">{item.description}</p>
                 </div>
               </div>
             </Link>
           ))}
-        </div>
+        </nav>
       </div>
 
       {/* Footer */}
       <footer className="mt-auto bg-[#0a1628] text-white py-8 px-6">
         <div className="max-w-6xl mx-auto text-center">
-          <p className="text-amber-400/60 font-crimson italic">
+          <p className="mx-auto max-w-prose font-manuscript text-base leading-relaxed italic text-amber-200/80">
             &quot;Cada entrada é uma página no Livro das Estórias Não Contadas.&quot;
           </p>
-          <p className="text-slate-500 text-sm mt-4">Wiki Átrias © 2026</p>
+          <p className="mt-4 text-sm leading-6 text-slate-400">Wiki Átrias © 2026</p>
         </div>
       </footer>
     </main>
