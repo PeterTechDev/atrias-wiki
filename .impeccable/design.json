@@ -1,0 +1,179 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-08T22:51:09.657Z",
+  "title": "Design System: Átrias Wiki",
+  "extensions": {
+    "colorMeta": {
+      "gold": {
+        "role": "primary",
+        "displayName": "gold",
+        "tonalRamp": [
+          "oklch(15% 0.08 86)",
+          "oklch(26% 0.08 86)",
+          "oklch(38% 0.08 86)",
+          "oklch(49% 0.08 86)",
+          "oklch(61% 0.08 86)",
+          "oklch(72% 0.08 86)",
+          "oklch(84% 0.08 86)",
+          "oklch(95% 0.08 86)"
+        ]
+      },
+      "gold-muted": {
+        "role": "primary",
+        "displayName": "gold-muted",
+        "tonalRamp": [
+          "oklch(15% 0.07 86)",
+          "oklch(26% 0.07 86)",
+          "oklch(38% 0.07 86)",
+          "oklch(49% 0.07 86)",
+          "oklch(61% 0.07 86)",
+          "oklch(72% 0.07 86)",
+          "oklch(84% 0.07 86)",
+          "oklch(95% 0.07 86)"
+        ]
+      },
+      "midnight": {
+        "role": "neutral",
+        "displayName": "midnight",
+        "tonalRamp": [
+          "oklch(15% 0.04 260)",
+          "oklch(26% 0.04 260)",
+          "oklch(38% 0.04 260)",
+          "oklch(49% 0.04 260)",
+          "oklch(61% 0.04 260)",
+          "oklch(72% 0.04 260)",
+          "oklch(84% 0.04 260)",
+          "oklch(95% 0.04 260)"
+        ]
+      },
+      "night-violet": {
+        "role": "neutral",
+        "displayName": "night-violet",
+        "tonalRamp": [
+          "oklch(15% 0.04 285)",
+          "oklch(26% 0.04 285)",
+          "oklch(38% 0.04 285)",
+          "oklch(49% 0.04 285)",
+          "oklch(61% 0.04 285)",
+          "oklch(72% 0.04 285)",
+          "oklch(84% 0.04 285)",
+          "oklch(95% 0.04 285)"
+        ]
+      },
+      "parchment": {
+        "role": "neutral",
+        "displayName": "parchment",
+        "tonalRamp": [
+          "oklch(15% 0.04 80)",
+          "oklch(26% 0.04 80)",
+          "oklch(38% 0.04 80)",
+          "oklch(49% 0.04 80)",
+          "oklch(61% 0.04 80)",
+          "oklch(72% 0.04 80)",
+          "oklch(84% 0.04 80)",
+          "oklch(95% 0.04 80)"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "paper",
+        "tonalRamp": [
+          "oklch(15% 0.025 80)",
+          "oklch(26% 0.025 80)",
+          "oklch(38% 0.025 80)",
+          "oklch(49% 0.025 80)",
+          "oklch(61% 0.025 80)",
+          "oklch(72% 0.025 80)",
+          "oklch(84% 0.025 80)",
+          "oklch(95% 0.025 80)"
+        ]
+      },
+      "placeholder": {
+        "role": "neutral",
+        "displayName": "placeholder",
+        "tonalRamp": [
+          "oklch(15% 0.012 60)",
+          "oklch(26% 0.012 60)",
+          "oklch(38% 0.012 60)",
+          "oklch(49% 0.012 60)",
+          "oklch(61% 0.012 60)",
+          "oklch(72% 0.012 60)",
+          "oklch(84% 0.012 60)",
+          "oklch(95% 0.012 60)"
+        ]
+      }
+    },
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Ação principal",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Ação principal da home.",
+      "html": "<button class=\"ds-primary\">Explorar os Arquivos</button>",
+      "css": ".ds-primary{background:#a8935a;color:#0f172a;border:0;border-radius:6px;padding:16px 32px;font:600 16px Arial;cursor:pointer;transition:background .15s,transform .15s}.ds-primary:hover{background:#c6a862;transform:translateY(-4px)}.ds-primary:focus-visible{outline:2px solid #c6a862;outline-offset:3px}"
+    },
+    {
+      "name": "Ação secundária",
+      "kind": "button",
+      "description": "Ação secundária da home em superfície escura.",
+      "html": "<button class=\"ds-secondary\">Ver o Mapa do Mundo</button>",
+      "css": ".ds-secondary{background:rgba(255,255,255,.05);color:oklch(96.2% .059 95.617);border:1px solid oklch(82.8% .189 84.429 / .3);border-radius:6px;padding:16px 32px;font:600 16px Arial;cursor:pointer;transition:transform .15s,border-color .15s}.ds-secondary:hover{border-color:oklch(82.8% .189 84.429 / .6);transform:translateY(-4px)}.ds-secondary:focus-visible{outline:2px solid #c6a862;outline-offset:3px}"
+    },
+    {
+      "name": "Campo de busca",
+      "kind": "input",
+      "description": "Campo existente em /search.",
+      "html": "<input class=\"ds-search\" aria-label=\"Pesquisar\" placeholder=\"Pesquisar\">",
+      "css": ".ds-search{background:oklch(27.4% .006 286.033);color:#ededed;border:1px solid oklch(37% .013 285.805);border-radius:8px;padding:12px 16px;font:18px Arial}.ds-search::placeholder{color:#78716c}.ds-search:focus-visible{outline:none;border-color:oklch(82.8% .189 84.429)}"
+    },
+    {
+      "name": "Cabeçalho",
+      "kind": "nav",
+      "description": "Cabeçalho recorrente das rotas.",
+      "html": "<nav class=\"ds-nav\"><a href=\"/\">WIKI ÁTRIAS</a></nav>",
+      "css": ".ds-nav{background:#0a1628;padding:16px 24px}.ds-nav a{color:oklch(82.8% .189 84.429);font-family:var(--font-cinzel,serif);font-size:18px;letter-spacing:.05em;text-decoration:none}.ds-nav a:hover{color:oklch(87.9% .169 91.605)}.ds-nav a:focus-visible{outline:2px solid #c6a862;outline-offset:3px}"
+    },
+    {
+      "name": "Cartão de lugar",
+      "kind": "card",
+      "refersTo": "card-place",
+      "description": "Corpo do cartão de lugar da home.",
+      "html": "<article class=\"ds-card\"><h3>Lugar</h3><p>Descrição do lugar.</p><a href=\"/places\">Ler Mais →</a></article>",
+      "css": ".ds-card{background:#f5efe5;border:1px solid oklch(82.8% .189 84.429);border-radius:16px;padding:24px;color:#475569;box-shadow:0 10px 15px -3px #0000001a,0 4px 6px -4px #0000001a;transition:transform .15s}.ds-card:hover{transform:translateY(-8px)}.ds-card h3{font-family:var(--font-cinzel,serif);font-size:20px;color:oklch(47.3% .137 46.201)}.ds-card p{font-family:var(--font-crimson,serif);font-size:14px;line-height:1.625}.ds-card a{color:oklch(55.5% .163 48.998);font-weight:600}.ds-card a:hover{color:oklch(41.4% .112 45.904)}.ds-card a:focus-visible{outline:2px solid #a8935a;outline-offset:3px}"
+    },
+    {
+      "name": "Tag de atributo",
+      "kind": "chip",
+      "description": "Tag informativa das listas de personagens.",
+      "html": "<span class=\"ds-chip\">Personagem</span>",
+      "css": ".ds-chip{display:inline-flex;background:oklch(96.2% .059 95.617);color:oklch(47.3% .137 46.201);border-radius:4px;padding:4px 8px;font:12px Arial}"
+    }
+  ],
+  "narrative": {
+    "northStar": "",
+    "overview": "A interface combina cenários ilustrados, superfícies escuras, detalhes dourados e áreas claras de leitura. Títulos ornamentados convivem com prosa serifada e controles sem serifa. A composição da home é mais cenográfica; listas e páginas de consulta têm maior densidade de conteúdo.",
+    "keyCharacteristics": [
+      "Alternância entre fundos noturnos e superfícies de pergaminho.",
+      "Títulos ornamentados e ícones de fantasia.",
+      "Cartões com cantos arredondados, bordas e estados de hover."
+    ],
+    "rules": [],
+    "dos": [],
+    "donts": []
+  }
+}
