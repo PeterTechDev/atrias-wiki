@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { Icon } from '@iconify/react'
 import { useAuth } from '@/components/AuthProvider'
 import { useRef, useState } from 'react'
 import { supabase } from '@/lib/supabase'
@@ -34,7 +35,7 @@ export function WikiContributionActions({ collection, slug, entityId, enabled = 
         {slug ? 'Editar página' : 'Adicionar página'}
       </Link>
       {entityId && slug && <>
-        <button type="button" aria-label="Arquivar página" onClick={() => dialog.current?.showModal()} className="rounded border border-slate-500 px-3 py-2 text-sm hover:border-amber-400">🗄️</button>
+        <button type="button" aria-label="Arquivar página" onClick={() => dialog.current?.showModal()} className="inline-flex min-h-11 min-w-11 items-center justify-center rounded border border-slate-500 px-3 py-2 text-sm hover:border-amber-400"><Icon icon="mdi:archive-outline" aria-hidden="true" className="h-5 w-5" /></button>
         <dialog ref={dialog} aria-labelledby="archive-title" className="rounded-lg bg-slate-900 p-6 text-slate-100 backdrop:bg-black/60">
           <h2 id="archive-title" className="text-lg font-semibold">Arquivar página</h2>
           <p className="mt-3">{slug}</p>
