@@ -18,7 +18,7 @@ import type { PlaceData } from '@/types/entities'
 import { getPlaceContent, getPlaceMaps, validatePlaceData } from '@/lib/placeContent'
 import { getPlaceMarker } from '@/lib/mapLocations'
 import { getCharacterMedia, validateCharacterMedia, type CharacterMedia } from '@/lib/characterMedia'
-import { collectionLabels, entityTypeToCollection, isAdminCollection } from '../_lib/entityTypes'
+import { entityTypeToCollection } from '../_lib/entityTypes'
 
 function slugify(input: string) {
   return input
@@ -642,9 +642,6 @@ export function AdminEntityForm({
     }
   }
 
-  const label = isAdminCollection(collection) ? collectionLabels[collection] : collection
-  const basePath = audience === 'member' ? `/wiki/${collection}` : `/admin/${collection}`
-
   if (audience === 'member' && !authLoading && !user) {
     return (
       <div className="rounded border border-amber-300 bg-amber-50 px-5 py-4 text-amber-950">
@@ -681,14 +678,6 @@ export function AdminEntityForm({
       }
     }} className="space-y-5">
       <fieldset disabled={isSaving || isUploading || (audience === 'member' && authLoading)} className="space-y-5">
-      {!memberCreate && <nav className="text-sm text-slate-600">
-        <Link href={audience === 'member' ? '/' : '/admin'} className="hover:underline">{audience === 'member' ? 'Wiki' : 'Admin'}</Link>
-        <span className="mx-2 text-slate-400">→</span>
-        <Link href={basePath} className="hover:underline">{label}</Link>
-        <span className="mx-2 text-slate-400">→</span>
-        <span className="text-slate-800 font-semibold">{mode === 'create' ? 'Nova página' : 'Editar'}</span>
-      </nav>}
-
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <label className="block">
           <span className="text-sm font-semibold text-slate-700">Categoria</span>
