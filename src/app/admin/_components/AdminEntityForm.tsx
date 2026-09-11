@@ -737,7 +737,7 @@ export function AdminEntityForm({
           <h3 className="mb-3 text-sm font-semibold text-slate-800">Character details</h3>
 
           <div className="grid grid-cols-1 gap-4">
-            <CharacterMediaEditor media={(dataFields as CharacterFields).media} onChange={media => updateDataField('media', media)} />
+            <CharacterMediaEditor media={(dataFields as CharacterFields).media} onChange={media => updateDataField('media', media)} onBusyChange={setIsUploading} />
 
             <div className="rounded border border-slate-200 bg-slate-50 p-3">
               <h4 className="mb-2 text-sm font-semibold text-slate-800">Identity</h4>

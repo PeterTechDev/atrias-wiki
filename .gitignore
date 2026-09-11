@@ -2,6 +2,7 @@
 /build
 content-inbox/
 /coverage
+.playwright-mcp/
 # debug
 # dependencies
 .DS_Store
