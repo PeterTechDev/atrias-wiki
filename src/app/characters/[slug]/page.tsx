@@ -7,7 +7,7 @@ import { getEntityBySlug, getPlacesForCharacter } from '@/db/queries/entities'
 import type { CharacterData } from '@/types/entities'
 import { getCharacterMedia } from '@/lib/characterMedia'
 import { getCharacterCard } from '@/lib/characterCard'
-import { CharacterCard } from '@/components/CharacterCard'
+import { CharacterCardViewer } from '@/components/CharacterCard'
 import { WikiContributionActions } from '@/components/WikiContributionActions'
 import { WikiLastEdited } from '@/components/WikiLastEdited'
 import { WikiFavoriteButton } from '@/components/WikiFavoriteButton'
@@ -67,17 +67,16 @@ export default async function CharacterPage({ params }: { params: Promise<{ slug
             <WikiFavoriteButton entityId={entity.id} />
             <WikiContributionActions collection="characters" slug={slug} entityId={entity.id} subtle enabled={process.env.WIKI_EDITING_ENABLED !== 'false'} />
           </div>
+          {!media.length && card && <CharacterCardViewer card={card} name={entity.name} />}
         </div>
-        {!!media.length && <div className={styles.media}><ImageGallery key={entity.id} media={media} name={entity.name} /></div>}
+        {!!media.length && <div className={styles.media}>
+          <ImageGallery key={entity.id} media={media} name={entity.name} />
+          {card && <CharacterCardViewer card={card} name={entity.name} />}
+        </div>}
         {!!facts.length && <dl aria-label="Ficha do personagem" className={styles.facts}>
           {facts.map(fact => <div key={fact.label}><dt>{fact.label}</dt><dd>{fact.value}</dd></div>)}
         </dl>}
       </section>
-
-      {card && <section aria-labelledby="character-card-title" className={styles.cardSection}>
-        <h2 id="character-card-title">Card 3D</h2>
-        <CharacterCard key={`${card.foreground}:${card.background}`} card={card} name={entity.name} />
-      </section>}
 
       {sections.length > 1 && <nav className={styles.sectionNav} aria-label="Nesta página">
         <span>Nesta página</span>

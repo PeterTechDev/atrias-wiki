@@ -19,8 +19,6 @@
 .actions:empty { display: none; }
 .actions button { min-height: 44px; min-width: 44px; }
 .media { grid-area: media; min-width: 0; }
-.cardSection { padding-block: 32px 48px; border-top: 1px solid #bdae95; }
-.cardSection h2 { font-family: var(--font-cinzel); font-size: 24px; }
 .facts { grid-area: facts; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; padding-top: 24px; border-top: 1px solid #bdae95; align-self: start; }
 .facts dt, .combat dt { font-size: 12px; color: #665b49; margin-bottom: 6px; }
 .facts dd { font-family: var(--font-crimson); font-size: 21px; line-height: 1.2; overflow-wrap: anywhere; }

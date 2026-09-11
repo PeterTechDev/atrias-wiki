@@ -1,9 +1,35 @@
 'use client'
 
-import { useId, useState } from 'react'
-import { ImageOff } from 'lucide-react'
+import { useEffect, useId, useRef, useState } from 'react'
+import { Box, ImageOff, X } from 'lucide-react'
 import type { CharacterCard as Card } from '@/lib/characterCard'
 import styles from './CharacterCard.module.css'
+
+export function CharacterCardViewer({ card, name }: { card: Card; name: string }) {
+  const dialog = useRef<HTMLDialogElement>(null)
+  const [open, setOpen] = useState(false)
+  const titleId = useId()
+
+  useEffect(() => {
+    if (!open) return
+    const previous = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = previous }
+  }, [open])
+
+  return <>
+    <button type="button" className={styles.trigger} aria-haspopup="dialog" onClick={() => { dialog.current?.showModal(); setOpen(true) }}>
+      <Box aria-hidden="true" size={16} />Ver card 3D
+    </button>
+    <dialog ref={dialog} className={styles.dialog} aria-labelledby={titleId} onClose={() => setOpen(false)} onClick={event => { if (event.target === event.currentTarget) dialog.current?.close() }}>
+      <div className={styles.dialogHeader}>
+        <h2 id={titleId}>Card 3D de {name}</h2>
+        <button type="button" aria-label="Fechar card 3D" onClick={() => dialog.current?.close()}><X aria-hidden="true" size={20} /></button>
+      </div>
+      {open && <CharacterCard card={card} name={name} />}
+    </dialog>
+  </>
+}
 
 export function CharacterCard({ card, name }: { card: Card; name: string }) {
   const [active, setActive] = useState(false)
@@ -31,7 +57,7 @@ export function CharacterCard({ card, name }: { card: Card; name: string }) {
     </div>}
     <figcaption className={styles.caption}>
       <span className={styles.nameSpace} aria-hidden="true">{name}</span>
-      <p id={hintId} className={styles.hint}>Passe o mouse ou toque para explorar.</p>
+      <p id={hintId} className={styles.hint}>Passe o mouse, toque ou use Enter para explorar.</p>
       <p className={styles.staticHint}>Ilustração de {name}.</p>
       {card.credit && <p>Crédito: {card.credit}</p>}
     </figcaption>
