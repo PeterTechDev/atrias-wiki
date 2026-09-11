@@ -1,0 +1,166 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - navigation "Navegação principal" [ref=e3]:
+      - link "Wiki Átrias — início" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e5]: Wiki Átrias
+      - button "Buscar na wiki… Ctrl K / ⌘ K" [ref=e6]:
+        - generic [ref=e10]: Buscar na wiki…
+        - generic [ref=e11]: Ctrl K / ⌘ K
+      - status [ref=e12]: Carregando conta…
+  - main [ref=e13]:
+    - generic [ref=e14]:
+      - navigation "Caminho da página" [ref=e15]:
+        - link "Início" [ref=e16] [cursor=pointer]:
+          - /url: /
+        - generic [aria-hidden] [ref=e17]: /
+        - link "Lugares" [ref=e18] [cursor=pointer]:
+          - /url: /places
+        - generic [aria-hidden] [ref=e19]: /
+        - generic [ref=e20]: Abrigo de Solária
+      - generic [ref=e21]:
+        - generic [ref=e22]:
+          - heading "Abrigo de Solária" [level=1] [ref=e23]
+          - paragraph [ref=e24]: Vila · Colinas do Serpeio
+        - link "Ver no mapa de Átrias" [ref=e26] [cursor=pointer]:
+          - /url: /map?place=abrigo-de-solaria
+      - figure "Abrigo de Solária" [ref=e29]:
+        - button "Ampliar imagem de Abrigo de Solária" [ref=e30]:
+          - img "Vila de construções de madeira sobre encostas rochosas, cercada por montanhas." [ref=e31]
+          - generic [ref=e32]: Ampliar
+      - generic "Ficha do lugar" [ref=e43]:
+        - generic [ref=e44]:
+          - term [ref=e45]: População
+          - definition [ref=e46]: Cerca de 600 habitantes
+        - generic [ref=e47]:
+          - term [ref=e48]: Governo
+          - definition [ref=e49]: Barão Aric Valtor e conselho de anciãos
+      - navigation "Nesta página" [ref=e50]:
+        - generic [ref=e52]:
+          - link "Visão geral" [ref=e53] [cursor=pointer]:
+            - /url: "#visao-geral"
+          - link "História" [ref=e54] [cursor=pointer]:
+            - /url: "#secao-1"
+          - link "Governo" [ref=e55] [cursor=pointer]:
+            - /url: "#secao-2"
+          - link "Comércio" [ref=e56] [cursor=pointer]:
+            - /url: "#secao-3"
+          - link "Defesas" [ref=e57] [cursor=pointer]:
+            - /url: "#secao-4"
+          - link "Pessoas" [ref=e58] [cursor=pointer]:
+            - /url: "#pessoas"
+          - link "Mapas" [ref=e59] [cursor=pointer]:
+            - /url: "#mapas"
+      - generic [ref=e60]:
+        - generic [ref=e61]:
+          - heading "Visão geral" [level=2] [ref=e62]
+          - paragraph [ref=e64]: Solaria é uma pequena vila situada nas Colinas do Serpeio, entre os picos do Alvorecer a Leste e a Passagem Crepitante que leva aos bosques da Mortalha ao oeste. A vila é reconhecida por um castelo de pedra cinzenta que domina a paisagem, sendo visível de longe. A população de Solaria é composta por cerca de 600 pessoas, onde é possível encontrar membros de cada um dos povos civilizados e não é incomum se deparar com indivíduos de ancestralidades exóticas, que em outros locais seriam hostilizados.
+        - generic [ref=e65]:
+          - heading "História" [level=2] [ref=e66]
+          - paragraph [ref=e68]: Isso se deve a história e cultura local, que no passado teve que lidar com grande opressão imposta por um governante tirano o qual possuía as terras ao redor. Não fosse pelas ações de Reynard de Sollam um corajoso guerreiro e seguidor de Uther o deus da Luz, bem como um grupo improvavel de aliados de todos os cantos de Atrias, a vila teria sucumbido perante o medo e a fome. Reynard tombou em batalha, mas por sua tenacidade e bravura recebeu a alcunha de O Leão Vermelho, e a vila foi batizada de Abrigo de Solaria em homenagem a sua devoção e ao seu desejo de um lugar em que todos fossem acolhidos.
+        - generic [ref=e69]:
+          - heading "Governo" [level=2] [ref=e70]
+          - generic [ref=e71]:
+            - paragraph [ref=e72]: Solaria é governada pelo Barão Aric Valtor, um homem de meia-idade que herdou o título de seu pai. Ele é um líder justo e respeitado pela maioria dos habitantes da vila. O Barão é assessorado por um conselho de anciãos que representam as várias guildas da vila, incluindo os fazendeiros, mineradores e artesãos.
+            - paragraph [ref=e73]: É possivel marcar audiencias com o Barão para tratar de demandas urgentes, entretanto qualquer assunto que exija mais atenção, só será discutido diante do conselho que se reune a cada quinzena.
+        - generic [ref=e74]:
+          - heading "Comércio" [level=2] [ref=e75]
+          - generic [ref=e76]:
+            - paragraph [ref=e77]: A vila de Solaria é conhecida por seus produtos agrícolas, principalmente frutas e vegetais frescos que são vendidos na feira semanal. A vila também possui várias lojas e oficinas que vendem produtos artesanais, ferramentas, tecidos e joias. A mineração é uma outra importante atividade econômica da vila, sendo extraído principalmente ferro e prata das montanhas ao leste.
+            - paragraph [ref=e78]: A compania Roccia chefiada por Gwendolyn tambem cuida do processo de exportação de tais minerais, sendo os condados de Noan seus principais clientes.
+        - generic [ref=e79]:
+          - heading "Defesas" [level=2] [ref=e80]
+          - generic [ref=e81]:
+            - paragraph [ref=e82]: A milícia de Solaria é uma força pouco treinada e equipada, composta principalmente por voluntários da vila. Ela é responsável por manter a ordem e a segurança nas áreas rurais e nas fronteiras da vila, protegendo-a de invasores e ladrões.
+            - paragraph [ref=e83]: Composta por cerca de 15 membros e 50 voluntários, a maioria dos quais são fazendeiros e artesãos que lutam apenas em caso de necessidade. Eles usam armas simples, como lanças, arcos e espadas, e não possuem uniformes ou equipamentos padronizados. No entanto, eles são dedicados e corajosos, e estão prontos para defender sua vila a qualquer momento
+            - paragraph [ref=e84]: Os voluntários participam de treinamentos semanais, aprendem o manuseio de armas simples e estratégias de defesa. Todos os voluntários recebem um soldo ao final do mês para complementarem sua renda.
+            - paragraph [ref=e85]: Apesar de não ser uma força militar profissional, a milícia de Solaria é uma importante parte da defesa da vila. Ela é bem integrada com as outras forças de segurança da vila, como os guardas do Barão e os caçadores locais, trabalhando em conjunto para manter a paz e a segurança
+      - generic [ref=e86]:
+        - heading "Pessoas de Abrigo de Solária" [level=2] [ref=e87]
+        - generic [ref=e88]:
+          - article [ref=e89]:
+            - img "Retrato de Barão Aric Valtor" [ref=e90]
+            - generic [ref=e91]:
+              - heading [level=3] [ref=e92]:
+                - link "Barão Aric Valtor" [ref=e93] [cursor=pointer]:
+                  - /url: /characters/barao-aric-valtor
+              - paragraph [ref=e94]: Líder da vila
+              - paragraph [ref=e96]: Líder da vila de Solária, um homem de meia-idade que é respeitado e amado por seu povo. Ele é conhecido por sua sabedoria e justiça.
+          - article [ref=e97]:
+            - img "Retrato de Lysandra" [ref=e98]
+            - generic [ref=e99]:
+              - heading [level=3] [ref=e100]:
+                - link "Lysandra" [ref=e101] [cursor=pointer]:
+                  - /url: /characters/lysandra
+              - paragraph [ref=e102]: Proprietária da Fios da Rainha
+              - paragraph [ref=e104]: Proprietária da principal loja da vila, “Fios da Rainha”, que vende tecidos e roupas. Ela é uma meia-elfa charmosa e elegante, que é habilidosa em seu trabalho e bem relacionada com os nobres das cidades vizinhas.
+          - article [ref=e105]:
+            - img "Retrato de Bertrand" [ref=e106]
+            - generic [ref=e107]:
+              - heading [level=3] [ref=e108]:
+                - link "Bertrand" [ref=e109] [cursor=pointer]:
+                  - /url: /characters/bertrand
+              - paragraph [ref=e110]: Fazendeiro-chefe
+              - paragraph [ref=e112]: Fazendeiro-chefe da vila, responsável por supervisionar a produção de alimentos na região. Ele é um homem amigável e extrovertido, que é sempre visto com um sorriso no rosto.
+          - article [ref=e113]:
+            - img "Retrato de Gwendolyn De Roccia" [ref=e114]
+            - generic [ref=e115]:
+              - heading [level=3] [ref=e116]:
+                - link "Gwendolyn De Roccia" [ref=e117] [cursor=pointer]:
+                  - /url: /characters/gwendolyn-de-roccia
+              - paragraph [ref=e118]: Chefe da Companhia Roccia
+              - paragraph [ref=e120]: Chefe da guilda dos mineiros “Companhia Roccia”, uma anã forte e corajosa que lidera as escavações nas montanhas próximas. Ela é conhecida por sua determinação e espírito empreendedor.
+          - article [ref=e121]:
+            - img "Retrato de Marcellus Stone" [ref=e122]
+            - generic [ref=e123]:
+              - heading [level=3] [ref=e124]:
+                - link "Marcellus Stone" [ref=e125] [cursor=pointer]:
+                  - /url: /characters/marcellus-stone
+              - paragraph [ref=e126]: Ferreiro da Fornalha Fulgurante
+              - paragraph [ref=e128]: Ferreiro da vila, ele comanda sua oficina “Fornalha Fulgurante”, que é responsável pela produção de ferramentas para os habitantes locais. Ele é um homem reservado e taciturno, que raramente se abre com estranhos.
+          - article [ref=e129]:
+            - img "Retrato de Abigail" [ref=e130]
+            - generic [ref=e131]:
+              - heading [level=3] [ref=e132]:
+                - link "Abigail" [ref=e133] [cursor=pointer]:
+                  - /url: /characters/abigail
+              - paragraph [ref=e134]: Curandeira · Sândalo Dourado
+              - paragraph [ref=e136]: A curandeira de Solária. Ela é uma mulher sábia e gentil, que conhece bem as ervas e remédios da região. Ela é conhecida por ajudar os doentes e feridos, e por ser uma conselheira confiável para aqueles que precisam. Ela possui um pequeno herbário, o Sândalo Dourado, e ocasionalmente supre alguns mercadores estrangeiros.
+          - article [ref=e137]:
+            - img "Retrato de Thorne Ravenwood" [ref=e138]
+            - generic [ref=e139]:
+              - heading [level=3] [ref=e140]:
+                - link "Thorne Ravenwood" [ref=e141] [cursor=pointer]:
+                  - /url: /characters/thorne-ravenwood
+              - paragraph [ref=e142]: Dono da taverna Leão Vermelho
+              - paragraph [ref=e144]: O dono da Leão Vermelho, a taverna de Solária. Ele é um homem extrovertido e simpático, que adora contar histórias e ouvir as fofocas da vila. Ele é conhecido por sua habilidade em preparar cerveja e por organizar festas e celebrações na taverna.
+          - article [ref=e145]:
+            - img "Retrato de Isadora" [ref=e146]
+            - generic [ref=e147]:
+              - heading [level=3] [ref=e148]:
+                - link "Isadora" [ref=e149] [cursor=pointer]:
+                  - /url: /characters/isadora
+              - paragraph [ref=e150]: Bibliotecária
+              - paragraph [ref=e152]: A bibliotecária de Solária. Ela é uma mulher inteligente e solitária, que adora ler e estudar. Ela é conhecida por sua vasta coleção de livros e por ser uma fonte confiável de conhecimento para aqueles que precisam.
+      - generic [ref=e153]:
+        - generic [ref=e154]:
+          - heading "Mapas do lugar" [level=2] [ref=e155]
+          - link "Localizar em Átrias" [ref=e156] [cursor=pointer]:
+            - /url: /map?place=abrigo-de-solaria
+        - figure "Mapa da vila de Solária" [ref=e158]:
+          - button "Ampliar imagem de Mapas de Abrigo de Solária" [ref=e159]:
+            - img "Planta ilustrada da vila de Solária, com ruas, construções, campos e muralhas." [ref=e160]
+            - generic [ref=e161]: Ampliar
+      - generic [ref=e172]:
+        - generic [ref=e173]:
+          - generic [ref=e174]: Última alteração por Autoria não registrada em
+          - time [ref=e175]: 10/09/2026, 21:42:00 (America/Bahia)
+        - generic [ref=e176]:
+          - link "Todos os lugares" [ref=e177] [cursor=pointer]:
+            - /url: /places
+          - link "Voltar ao início" [ref=e178] [cursor=pointer]:
+            - /url: "#inicio"
+    - generic [ref=e179]:
+      - text: Wiki Átrias
+      - paragraph [ref=e180]: As crônicas de Átrias são escritas pelo sangue dos heróis e as lágrimas dos caídos.
+  - button "Open Next.js Dev Tools" [ref=e186] [cursor=pointer]

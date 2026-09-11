@@ -1,0 +1,63 @@
+async (page) => {// Run via Playwright MCP: import this module and call checkPlaces(page).
+// Creates one temporary place through the local admin API; always removes it.
+async function checkPlaces(page) {
+  const base = 'http://localhost:3000'
+  const assert = (value, message) => { if (!value) throw new Error(message) }
+  const slug = `place-check-${Date.now()}`
+  const response = await page.request.post(`${base}/api/admin/entities`, { data: { type: 'place', name: 'Lugar temporário de verificação', slug, description: 'Um lugar pequeno.', data: { imported: { preserve: true }, sections: [{ title: 'História', content: 'Primeira seção.' }, { title: 'Governo', content: 'Segunda seção.' }] } } })
+  assert(response.status() === 201, `Create failed: ${await response.text()}`)
+  const { id } = await response.json()
+  try {
+    await page.goto(`${base}/admin/places/${slug}/edit`)
+    await page.getByRole('button', { name: 'Mover seção 1 para baixo', exact: true }).click()
+    assert(await page.getByLabel('Título da seção', { exact: true }).first().inputValue() === 'Governo', 'Section ordering failed')
+    const gallery = page.getByRole('region', { name: 'Galeria do lugar', exact: true })
+    await gallery.getByRole('button', { name: 'Adicionar mídia' }).click()
+    await gallery.getByLabel('Endereço do arquivo', { exact: true }).fill('/images/places/abrigo-de-solaria.png')
+    await gallery.getByLabel('Legenda (opcional)', { exact: true }).fill('Paisagem de teste')
+    await gallery.locator('input[type=file]').setInputFiles('C:/Users/Peter/Documents/Sideprojects/atrias-wiki/public/images/characters/solaria/SOURCE.md')
+    await gallery.getByRole('alert').waitFor()
+    assert(await gallery.getByLabel('Endereço do arquivo', { exact: true }).inputValue() === '/images/places/abrigo-de-solaria.png', 'Invalid upload erased existing image')
+    await page.getByRole('button', { name: 'Adicionar pessoa', exact: true }).click()
+    const person = page.getByRole('group', { name: 'Pessoa 1', exact: true })
+    await person.getByLabel('Nome', { exact: true }).fill('Lysandra')
+    await person.getByRole('combobox', { name: 'Página de personagem (opcional)', exact: true }).selectOption('lysandra')
+    await page.getByLabel('Ponto no mapa de Átrias (opcional)').selectOption('abrigo-de-solaria')
+    const save = page.waitForResponse(response => response.url().endsWith(`/api/admin/entities/${id}`) && response.request().method() === 'PATCH')
+    await page.getByRole('button', { name: 'Salvar alterações', exact: true }).click()
+    assert((await save).status() === 200, 'Save failed')
+    await page.waitForURL('**/admin/places?success=updated')
+    await page.goto(`${base}/places/${slug}`)
+    await page.getByRole('heading', { name: 'Governo', exact: true }).waitFor()
+    assert(await page.locator('main section h2').allTextContents().then(names => names.indexOf('Governo') < names.indexOf('História')), 'Saved section order changed')
+    await page.getByRole('link', { name: 'Lysandra', exact: true }).waitFor()
+    await page.getByRole('link', { name: 'Ver no mapa de Átrias', exact: true }).click()
+    await page.getByRole('link', { name: 'Lugar temporário de verificação', exact: true }).waitFor()
+    await page.goto(`${base}/admin/places/${slug}/edit`)
+    await page.getByRole('region', { name: 'Galeria do lugar', exact: true }).getByRole('button', { name: 'Remover mídia 1', exact: true }).click()
+    await page.getByRole('button', { name: 'Remover pessoa 1', exact: true }).click()
+    await page.getByRole('button', { name: 'Remover seção 1', exact: true }).click()
+    await page.getByRole('button', { name: 'Remover seção 1', exact: true }).click()
+    await page.getByLabel('Ponto no mapa de Átrias (opcional)').selectOption('')
+    await page.getByRole('button', { name: 'Salvar alterações', exact: true }).click()
+    await page.waitForURL('**/admin/places?success=updated')
+    await page.goto(`${base}/places/${slug}`)
+    assert(await page.locator('main img').count() === 0, 'Removed image resurfaced')
+    assert(await page.getByRole('navigation', { name: 'Nesta página' }).count() === 0, 'Sparse place has unnecessary navigation')
+    assert(await page.getByRole('link', { name: 'Ver no mapa de Átrias', exact: true }).count() === 0, 'Unlinked map resurfaced')
+    await page.setViewportSize({ width: 390, height: 844 })
+    assert(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth), 'Mobile overflow')
+    await page.screenshot({ path: '.impeccable/review/places/sparse-mobile.png', fullPage: true })
+    const invalid = await page.request.patch(`${base}/api/admin/entities/${id}`, { data: { data: { residents: [{ name: 'X', characterSlug: '../admin' }] } } })
+    assert(invalid.status() === 400, 'Server accepted an invalid reference')
+    const unauthorized = await page.request.get(`${base}/api/wiki/references`)
+    assert(unauthorized.status() === 401, 'Member references exposed without authentication')
+    return 'PASS: create, edit, reorder, media, invalid upload recovery, NPC link, optional map, clear fields, sparse mobile, server validation and auth'
+  } finally {
+    const cleanup = await page.request.delete(`${base}/api/admin/entities/${id}`)
+    assert(cleanup.ok(), `Temporary place cleanup failed: ${id}`)
+    await page.goto(`${base}/places/abrigo-de-solaria`)
+  }
+}
+
+return await checkPlaces(page); }

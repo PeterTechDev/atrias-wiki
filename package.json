@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "test:places": "tsx tests/place-content.test.ts",
+    "test:character-media": "tsx tests/character-media.test.ts",
     "test:dice": "tsx tests/dice.test.ts",
     "dev": "next dev",
     "build": "next build",

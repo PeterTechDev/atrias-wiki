@@ -5,6 +5,8 @@ import type { EntityCounts } from '@/types/entities'
 import { mergeEntityData, normalizeArchivedIds } from './entityEditing'
 import { isWikiDM, writerVisibility, entityVisibility, dmPermission } from '@/lib/wikiPermissions'
 import { readVisibility } from '@/lib/wikiRequest'
+import { validateCharacterMedia } from '@/lib/characterMedia'
+import { validatePlaceData } from '@/lib/placeContent'
 
 export const wikiEntityTypes = ['character', 'place', 'faction', 'item', 'lore', 'monster', 'other'] as const
 export type WikiEntityType = (typeof wikiEntityTypes)[number]
@@ -44,6 +46,14 @@ function validateEntityInput(input: { type: unknown; name: string; slug: string;
     throw new EntityWriteError('invalid', 'Description is too long.')
   }
   if (input.data !== undefined && !isRecord(input.data)) throw new EntityWriteError('invalid', 'Data must be an object.')
+  if (input.type === 'character' && isRecord(input.data) && input.data.media !== undefined) {
+    try { validateCharacterMedia(input.data.media) }
+    catch (error) { throw new EntityWriteError('invalid', error instanceof Error ? error.message : 'Mídia inválida.') }
+  }
+  if (input.type === 'place' && isRecord(input.data)) {
+    try { validatePlaceData(input.data) }
+    catch (error) { throw new EntityWriteError('invalid', error instanceof Error ? error.message : 'Conteúdo do lugar inválido.') }
+  }
 }
 
 function sameJson(left: unknown, right: unknown) {
@@ -217,6 +227,13 @@ export async function getEntityById(id: string, isDM?: boolean): Promise<Entity 
     console.error(`Failed to fetch entity with id "${id}":`, error)
     throw new Error('Unable to load entity. Please try again later.')
   }
+}
+
+export async function getPlacesForCharacter(slug: string) {
+  return db.select({ name: entities.name, slug: entities.slug }).from(entities).where(and(
+    eq(entities.type, 'place'), isNull(entities.archivedAt), await readVisibility(),
+    sql`${entities.data}->'residents' @> ${JSON.stringify([{ characterSlug: slug }])}::jsonb`,
+  )).orderBy(entities.name)
 }
 
 export async function getEntityCounts(isDM?: boolean): Promise<EntityCounts> {

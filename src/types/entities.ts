@@ -1,7 +1,11 @@
 import type { Entity, EntityType } from '@/db/schema'
+import type { CharacterMedia } from '@/lib/characterMedia'
+import type { PlaceResident, PlaceSection } from '@/lib/placeContent'
 
 // Type-specific data structures
 export interface CharacterData {
+  image?: string
+  media?: CharacterMedia[]
   race?: string
   class?: string
   alignment?: string
@@ -20,6 +24,11 @@ export interface CharacterData {
 }
 
 export interface PlaceData {
+  media?: CharacterMedia[]
+  maps?: CharacterMedia[]
+  sections?: PlaceSection[]
+  residents?: PlaceResident[]
+  mapMarker?: string | null
   region?: string
   type?: string
   climate?: string

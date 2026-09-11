@@ -1,0 +1,41 @@
+- generic [active] [ref=f1e1]:
+  - banner [ref=f1e2]:
+    - navigation "Navegação principal" [ref=f1e3]:
+      - link "Wiki Átrias — início" [ref=f1e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=f1e5]: Wiki Átrias
+      - button "Buscar na wiki… Ctrl K / ⌘ K" [ref=f1e6]:
+        - generic [ref=f1e10]: Buscar na wiki…
+        - generic [ref=f1e11]: Ctrl K / ⌘ K
+      - status [ref=f1e12]: Carregando conta…
+  - main [ref=f1e13]:
+    - generic [ref=f1e14]:
+      - navigation "Caminho da página" [ref=f1e15]:
+        - link "Início" [ref=f1e16] [cursor=pointer]:
+          - /url: /
+        - link "Personagens" [ref=f1e19] [cursor=pointer]:
+          - /url: /characters
+        - generic [ref=f1e22]: Ashyra
+      - region [ref=f1e23]:
+        - heading "Ashyra" [level=1] [ref=f1e25]
+        - figure [ref=f1e28]:
+          - button "Ampliar imagem de Ashyra" [ref=f1e29]:
+            - img "Ashyra" [ref=f1e30]
+            - generic [ref=f1e31]: Ampliar
+      - article [ref=f1e42]:
+        - heading "História" [level=2] [ref=f1e43]
+        - paragraph [ref=f1e48]: Personagem de Átrias (informações ainda não catalogadas nos documentos extraídos).
+      - generic [ref=f1e49]:
+        - generic [ref=f1e50]:
+          - generic [ref=f1e51]: Última alteração por Autoria não registrada em
+          - time [ref=f1e52]: 10/02/2026, 12:51:55 (America/Bahia)
+        - generic [ref=f1e53]:
+          - link "Todos os personagens" [ref=f1e54] [cursor=pointer]:
+            - /url: /characters
+          - link "Voltar ao início" [ref=f1e57] [cursor=pointer]:
+            - /url: "#inicio"
+    - generic [ref=f1e60]:
+      - generic [ref=f1e63]: Wiki Átrias
+      - generic [ref=f1e64]: As crônicas de Átrias são escritas pelo sangue dos heróis e as lágrimas dos caídos.
+  - button "Open Next.js Dev Tools" [ref=f1e70] [cursor=pointer]
+  - alert [ref=f1e74]

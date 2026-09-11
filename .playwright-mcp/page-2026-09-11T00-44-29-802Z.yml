@@ -1,0 +1,428 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - navigation "Navegação principal" [ref=e3]:
+      - link "Wiki Átrias — início" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e5]: Wiki Átrias
+      - button "Buscar na wiki… Ctrl K / ⌘ K" [ref=e6]:
+        - generic [ref=e10]: Buscar na wiki…
+        - generic [ref=e11]: Ctrl K / ⌘ K
+      - status [ref=e12]: Carregando conta…
+  - main [ref=e13]:
+    - generic [ref=e14]:
+      - link "Admin" [ref=e15] [cursor=pointer]:
+        - /url: /admin
+      - link "Back to Places" [ref=e16] [cursor=pointer]:
+        - /url: /admin/places
+      - generic [ref=e17]:
+        - generic [ref=e19]:
+          - heading "Edit Place" [level=1] [ref=e20]
+          - paragraph [ref=e21]: "Editing: Abrigo de Solária"
+        - group [ref=e23]:
+          - navigation [ref=e24]:
+            - link "Admin" [ref=e25] [cursor=pointer]:
+              - /url: /admin
+            - text: →
+            - link "Places" [ref=e26] [cursor=pointer]:
+              - /url: /admin/places
+            - text: →Edit
+          - generic [ref=e27]:
+            - generic [ref=e28]:
+              - text: Nome
+              - textbox "Nome" [ref=e29]: Abrigo de Solária
+            - generic [ref=e30]:
+              - text: Slug
+              - textbox "Slug" [ref=e31]: abrigo-de-solaria
+          - generic [ref=e32]:
+            - generic [ref=e33]:
+              - generic [ref=e34]: Apresentação do lugar
+              - button "Apresentação do lugar Solaria é uma pequena vila situada nas Colinas do Serpeio, entre os picos do Alvorecer a Leste e a Passagem Crepitante que leva aos bosques da Mortalha ao oeste. A vila é reconhecida por um castelo de pedra cinzenta que domina a paisagem, sendo visível de longe. A população de Solaria é composta por cerca de 600 pessoas, onde é possível encontrar membros de cada um dos povos civilizados e não é incomum se deparar com indivíduos de ancestralidades exóticas, que em outros locais seriam hostilizados." [ref=e35]:
+                - generic [ref=e36]: Magic Pen
+            - textbox [ref=e37]: Solaria é uma pequena vila situada nas Colinas do Serpeio, entre os picos do Alvorecer a Leste e a Passagem Crepitante que leva aos bosques da Mortalha ao oeste. A vila é reconhecida por um castelo de pedra cinzenta que domina a paisagem, sendo visível de longe. A população de Solaria é composta por cerca de 600 pessoas, onde é possível encontrar membros de cada um dos povos civilizados e não é incomum se deparar com indivíduos de ancestralidades exóticas, que em outros locais seriam hostilizados.
+          - generic [ref=e38]:
+            - generic [ref=e39]:
+              - text: Categoria
+              - textbox "Categoria" [ref=e40]: place
+            - generic [ref=e41]:
+              - text: Status
+              - combobox "Status" [ref=e42]:
+                - option "draft"
+                - option "review"
+                - option "published" [selected]
+          - generic [ref=e43]:
+            - generic [ref=e44]:
+              - heading "Ficha do lugar" [level=3] [ref=e45]
+              - paragraph [ref=e46]: Preencha somente o que é conhecido. Campos vazios não aparecem na página.
+              - generic [ref=e47]:
+                - generic [ref=e48]:
+                  - text: Tipo de lugar
+                  - textbox "Tipo de lugar" [ref=e49]: Vila
+                - generic [ref=e50]:
+                  - text: Região
+                  - textbox "Região" [ref=e51]: Colinas do Serpeio
+                - generic [ref=e52]:
+                  - text: População
+                  - textbox "População" [ref=e53]: Cerca de 600 habitantes
+                - generic [ref=e54]:
+                  - text: Governo
+                  - textbox "Governo" [ref=e55]: Barão Aric Valtor e conselho de anciãos
+                - generic [ref=e56]:
+                  - text: Clima
+                  - textbox "Clima" [ref=e57]
+            - generic [ref=e58]:
+              - heading "Seções de conteúdo" [level=3] [ref=e59]
+              - paragraph [ref=e60]: História, Governo, Comércio, Defesas… Escolha os títulos e a ordem de cada lugar.
+              - group "Seção 1" [ref=e61]:
+                - generic [ref=e63]:
+                  - button "Mover seção 1 para cima" [disabled] [ref=e64]
+                  - button "Mover seção 1 para baixo" [ref=e65]
+                  - button "Remover seção 1" [ref=e66]
+                - generic [ref=e67]:
+                  - text: Título da seção
+                  - textbox "Título da seção" [ref=e68]: História
+                - generic [ref=e69]:
+                  - text: Texto da seção
+                  - textbox "Texto da seção" [ref=e70]: Isso se deve a história e cultura local, que no passado teve que lidar com grande opressão imposta por um governante tirano o qual possuía as terras ao redor. Não fosse pelas ações de Reynard de Sollam um corajoso guerreiro e seguidor de Uther o deus da Luz, bem como um grupo improvavel de aliados de todos os cantos de Atrias, a vila teria sucumbido perante o medo e a fome. Reynard tombou em batalha, mas por sua tenacidade e bravura recebeu a alcunha de O Leão Vermelho, e a vila foi batizada de Abrigo de Solaria em homenagem a sua devoção e ao seu desejo de um lugar em que todos fossem acolhidos.
+              - group "Seção 2" [ref=e71]:
+                - generic [ref=e73]:
+                  - button "Mover seção 2 para cima" [ref=e74]
+                  - button "Mover seção 2 para baixo" [ref=e75]
+                  - button "Remover seção 2" [ref=e76]
+                - generic [ref=e77]:
+                  - text: Título da seção
+                  - textbox "Título da seção" [ref=e78]: Governo
+                - generic [ref=e79]:
+                  - text: Texto da seção
+                  - textbox "Texto da seção" [ref=e80]: Solaria é governada pelo Barão Aric Valtor, um homem de meia-idade que herdou o título de seu pai. Ele é um líder justo e respeitado pela maioria dos habitantes da vila. O Barão é assessorado por um conselho de anciãos que representam as várias guildas da vila, incluindo os fazendeiros, mineradores e artesãos. É possivel marcar audiencias com o Barão para tratar de demandas urgentes, entretanto qualquer assunto que exija mais atenção, só será discutido diante do conselho que se reune a cada quinzena.
+              - group "Seção 3" [ref=e81]:
+                - generic [ref=e83]:
+                  - button "Mover seção 3 para cima" [ref=e84]
+                  - button "Mover seção 3 para baixo" [ref=e85]
+                  - button "Remover seção 3" [ref=e86]
+                - generic [ref=e87]:
+                  - text: Título da seção
+                  - textbox "Título da seção" [ref=e88]: Comércio
+                - generic [ref=e89]:
+                  - text: Texto da seção
+                  - textbox "Texto da seção" [ref=e90]: A vila de Solaria é conhecida por seus produtos agrícolas, principalmente frutas e vegetais frescos que são vendidos na feira semanal. A vila também possui várias lojas e oficinas que vendem produtos artesanais, ferramentas, tecidos e joias. A mineração é uma outra importante atividade econômica da vila, sendo extraído principalmente ferro e prata das montanhas ao leste. A compania Roccia chefiada por Gwendolyn tambem cuida do processo de exportação de tais minerais, sendo os condados de Noan seus principais clientes.
+              - group "Seção 4" [ref=e91]:
+                - generic [ref=e93]:
+                  - button "Mover seção 4 para cima" [ref=e94]
+                  - button "Mover seção 4 para baixo" [disabled] [ref=e95]
+                  - button "Remover seção 4" [ref=e96]
+                - generic [ref=e97]:
+                  - text: Título da seção
+                  - textbox "Título da seção" [ref=e98]: Defesas
+                - generic [ref=e99]:
+                  - text: Texto da seção
+                  - textbox "Texto da seção" [ref=e100]: A milícia de Solaria é uma força pouco treinada e equipada, composta principalmente por voluntários da vila. Ela é responsável por manter a ordem e a segurança nas áreas rurais e nas fronteiras da vila, protegendo-a de invasores e ladrões. Composta por cerca de 15 membros e 50 voluntários, a maioria dos quais são fazendeiros e artesãos que lutam apenas em caso de necessidade. Eles usam armas simples, como lanças, arcos e espadas, e não possuem uniformes ou equipamentos padronizados. No entanto, eles são dedicados e corajosos, e estão prontos para defender sua vila a qualquer momento Os voluntários participam de treinamentos semanais, aprendem o manuseio de armas simples e estratégias de defesa. Todos os voluntários recebem um soldo ao final do mês para complementarem sua renda. Apesar de não ser uma força militar profissional, a milícia de Solaria é uma importante parte da defesa da vila. Ela é bem integrada com as outras forças de segurança da vila, como os guardas do Barão e os caçadores locais, trabalhando em conjunto para manter a paz e a segurança
+              - button "Adicionar seção" [ref=e101]
+            - generic [ref=e102]:
+              - heading "Fotos e ilustrações" [level=3] [ref=e103]
+              - region [ref=e104]:
+                - heading "Galeria do lugar" [level=4] [ref=e105]
+                - paragraph [ref=e106]: A primeira mídia aparece em destaque. Use endereços de imagens ou arquivos de vídeo (MP4, WebM), não links de páginas do YouTube.
+                - group "Mídia 1" [ref=e108]:
+                  - generic [ref=e110]:
+                    - generic [ref=e111]: Mídia principal
+                    - generic [ref=e112]:
+                      - button "Mover mídia 1 para cima" [disabled] [ref=e113]
+                      - button "Mover mídia 1 para baixo" [disabled] [ref=e116]
+                      - button "Remover mídia 1" [ref=e119]
+                  - generic [ref=e123]:
+                    - generic [ref=e124]:
+                      - text: Tipo
+                      - combobox "Tipo" [ref=e125]:
+                        - option "Imagem" [selected]
+                        - option "Vídeo"
+                    - generic [ref=e126]:
+                      - text: Endereço do arquivo
+                      - textbox "Endereço do arquivo" [ref=e127]:
+                        - /placeholder: https://… ou /images/…
+                        - text: /images/places/abrigo-de-solaria.png
+                    - generic [ref=e128]:
+                      - text: Legenda (opcional)
+                      - textbox "Legenda (opcional)" [ref=e129]: Abrigo de Solária
+                    - generic [ref=e130]:
+                      - text: Crédito / autoria (opcional)
+                      - textbox "Crédito / autoria (opcional)" [ref=e131]
+                    - generic [ref=e132]:
+                      - text: Descrição da imagem para leitores de tela
+                      - textbox "Descrição da imagem para leitores de tela" [ref=e133]: Vila de construções de madeira sobre encostas rochosas, cercada por montanhas.
+                  - generic [ref=e135]:
+                    - generic [ref=e136]:
+                      - text: Enviar foto
+                      - button "Enviar foto" [ref=e137]
+                    - paragraph [ref=e138]: JPG, PNG ou WebP, até 5 MB. As fotos enviadas são públicas.
+                  - img "Vila de construções de madeira sobre encostas rochosas, cercada por montanhas." [ref=e139]
+                - button "Adicionar mídia" [ref=e140]
+            - generic [ref=e142]:
+              - heading "Pessoas do lugar" [level=3] [ref=e143]
+              - paragraph [ref=e144]: Cadastre uma pessoa mesmo que ela ainda não tenha página. O vínculo pode ser adicionado depois.
+              - group "Pessoa 1" [ref=e145]:
+                - generic [ref=e147]:
+                  - generic [ref=e148]:
+                    - text: Nome
+                    - textbox "Nome" [ref=e149]: Barão Aric Valtor
+                  - generic [ref=e150]:
+                    - text: Função
+                    - textbox "Função" [ref=e151]: Líder da vila
+                - generic [ref=e152]:
+                  - text: Descrição
+                  - textbox "Descrição" [ref=e153]: Líder da vila de Solária, um homem de meia-idade que é respeitado e amado por seu povo. Ele é conhecido por sua sabedoria e justiça.
+                - generic [ref=e154]:
+                  - text: Página de personagem (opcional)
+                  - combobox "Página de personagem (opcional)" [ref=e155]:
+                    - option "Sem página vinculada"
+                    - 'option "Vínculo atual: barao-aric-valtor" [selected]'
+                - generic [ref=e156]:
+                  - text: Endereço do retrato (opcional)
+                  - textbox "Endereço do retrato (opcional)" [ref=e157]: /images/characters/solaria/barao-aric-valtor.png
+                - generic [ref=e158]:
+                  - generic [ref=e159]:
+                    - text: Enviar foto
+                    - button "Enviar foto" [ref=e160]
+                  - paragraph [ref=e161]: JPG, PNG ou WebP, até 5 MB. As fotos enviadas são públicas.
+                - button "Remover pessoa 1" [ref=e162]
+              - group "Pessoa 2" [ref=e163]:
+                - generic [ref=e165]:
+                  - generic [ref=e166]:
+                    - text: Nome
+                    - textbox "Nome" [ref=e167]: Lysandra
+                  - generic [ref=e168]:
+                    - text: Função
+                    - textbox "Função" [ref=e169]: Proprietária da Fios da Rainha
+                - generic [ref=e170]:
+                  - text: Descrição
+                  - textbox "Descrição" [ref=e171]: Proprietária da principal loja da vila, “Fios da Rainha”, que vende tecidos e roupas. Ela é uma meia-elfa charmosa e elegante, que é habilidosa em seu trabalho e bem relacionada com os nobres das cidades vizinhas.
+                - generic [ref=e172]:
+                  - text: Página de personagem (opcional)
+                  - combobox "Página de personagem (opcional)" [ref=e173]:
+                    - option "Sem página vinculada"
+                    - 'option "Vínculo atual: lysandra" [selected]'
+                - generic [ref=e174]:
+                  - text: Endereço do retrato (opcional)
+                  - textbox "Endereço do retrato (opcional)" [ref=e175]: /images/characters/solaria/lysandra.png
+                - generic [ref=e176]:
+                  - generic [ref=e177]:
+                    - text: Enviar foto
+                    - button "Enviar foto" [ref=e178]
+                  - paragraph [ref=e179]: JPG, PNG ou WebP, até 5 MB. As fotos enviadas são públicas.
+                - button "Remover pessoa 2" [ref=e180]
+              - group "Pessoa 3" [ref=e181]:
+                - generic [ref=e183]:
+                  - generic [ref=e184]:
+                    - text: Nome
+                    - textbox "Nome" [ref=e185]: Bertrand
+                  - generic [ref=e186]:
+                    - text: Função
+                    - textbox "Função" [ref=e187]: Fazendeiro-chefe
+                - generic [ref=e188]:
+                  - text: Descrição
+                  - textbox "Descrição" [ref=e189]: Fazendeiro-chefe da vila, responsável por supervisionar a produção de alimentos na região. Ele é um homem amigável e extrovertido, que é sempre visto com um sorriso no rosto.
+                - generic [ref=e190]:
+                  - text: Página de personagem (opcional)
+                  - combobox "Página de personagem (opcional)" [ref=e191]:
+                    - option "Sem página vinculada"
+                    - 'option "Vínculo atual: bertrand" [selected]'
+                - generic [ref=e192]:
+                  - text: Endereço do retrato (opcional)
+                  - textbox "Endereço do retrato (opcional)" [ref=e193]: /images/characters/solaria/bertrand.png
+                - generic [ref=e194]:
+                  - generic [ref=e195]:
+                    - text: Enviar foto
+                    - button "Enviar foto" [ref=e196]
+                  - paragraph [ref=e197]: JPG, PNG ou WebP, até 5 MB. As fotos enviadas são públicas.
+                - button "Remover pessoa 3" [ref=e198]
+              - group "Pessoa 4" [ref=e199]:
+                - generic [ref=e201]:
+                  - generic [ref=e202]:
+                    - text: Nome
+                    - textbox "Nome" [ref=e203]: Gwendolyn De Roccia
+                  - generic [ref=e204]:
+                    - text: Função
+                    - textbox "Função" [ref=e205]: Chefe da Companhia Roccia
+                - generic [ref=e206]:
+                  - text: Descrição
+                  - textbox "Descrição" [ref=e207]: Chefe da guilda dos mineiros “Companhia Roccia”, uma anã forte e corajosa que lidera as escavações nas montanhas próximas. Ela é conhecida por sua determinação e espírito empreendedor.
+                - generic [ref=e208]:
+                  - text: Página de personagem (opcional)
+                  - combobox "Página de personagem (opcional)" [ref=e209]:
+                    - option "Sem página vinculada"
+                    - 'option "Vínculo atual: gwendolyn-de-roccia" [selected]'
+                - generic [ref=e210]:
+                  - text: Endereço do retrato (opcional)
+                  - textbox "Endereço do retrato (opcional)" [ref=e211]: /images/characters/solaria/gwendolyn-de-roccia.png
+                - generic [ref=e212]:
+                  - generic [ref=e213]:
+                    - text: Enviar foto
+                    - button "Enviar foto" [ref=e214]
+                  - paragraph [ref=e215]: JPG, PNG ou WebP, até 5 MB. As fotos enviadas são públicas.
+                - button "Remover pessoa 4" [ref=e216]
+              - group "Pessoa 5" [ref=e217]:
+                - generic [ref=e219]:
+                  - generic [ref=e220]:
+                    - text: Nome
+                    - textbox "Nome" [ref=e221]: Marcellus Stone
+                  - generic [ref=e222]:
+                    - text: Função
+                    - textbox "Função" [ref=e223]: Ferreiro da Fornalha Fulgurante
+                - generic [ref=e224]:
+                  - text: Descrição
+                  - textbox "Descrição" [ref=e225]: Ferreiro da vila, ele comanda sua oficina “Fornalha Fulgurante”, que é responsável pela produção de ferramentas para os habitantes locais. Ele é um homem reservado e taciturno, que raramente se abre com estranhos.
+                - generic [ref=e226]:
+                  - text: Página de personagem (opcional)
+                  - combobox "Página de personagem (opcional)" [ref=e227]:
+                    - option "Sem página vinculada"
+                    - 'option "Vínculo atual: marcellus-stone" [selected]'
+                - generic [ref=e228]:
+                  - text: Endereço do retrato (opcional)
+                  - textbox "Endereço do retrato (opcional)" [ref=e229]: /images/characters/solaria/marcellus-stone.png
+                - generic [ref=e230]:
+                  - generic [ref=e231]:
+                    - text: Enviar foto
+                    - button "Enviar foto" [ref=e232]
+                  - paragraph [ref=e233]: JPG, PNG ou WebP, até 5 MB. As fotos enviadas são públicas.
+                - button "Remover pessoa 5" [ref=e234]
+              - group "Pessoa 6" [ref=e235]:
+                - generic [ref=e237]:
+                  - generic [ref=e238]:
+                    - text: Nome
+                    - textbox "Nome" [ref=e239]: Abigail
+                  - generic [ref=e240]:
+                    - text: Função
+                    - textbox "Função" [ref=e241]: Curandeira · Sândalo Dourado
+                - generic [ref=e242]:
+                  - text: Descrição
+                  - textbox "Descrição" [ref=e243]: A curandeira de Solária. Ela é uma mulher sábia e gentil, que conhece bem as ervas e remédios da região. Ela é conhecida por ajudar os doentes e feridos, e por ser uma conselheira confiável para aqueles que precisam. Ela possui um pequeno herbário, o Sândalo Dourado, e ocasionalmente supre alguns mercadores estrangeiros.
+                - generic [ref=e244]:
+                  - text: Página de personagem (opcional)
+                  - combobox "Página de personagem (opcional)" [ref=e245]:
+                    - option "Sem página vinculada"
+                    - 'option "Vínculo atual: abigail" [selected]'
+                - generic [ref=e246]:
+                  - text: Endereço do retrato (opcional)
+                  - textbox "Endereço do retrato (opcional)" [ref=e247]: /images/characters/solaria/abigail.png
+                - generic [ref=e248]:
+                  - generic [ref=e249]:
+                    - text: Enviar foto
+                    - button "Enviar foto" [ref=e250]
+                  - paragraph [ref=e251]: JPG, PNG ou WebP, até 5 MB. As fotos enviadas são públicas.
+                - button "Remover pessoa 6" [ref=e252]
+              - group "Pessoa 7" [ref=e253]:
+                - generic [ref=e255]:
+                  - generic [ref=e256]:
+                    - text: Nome
+                    - textbox "Nome" [ref=e257]: Thorne Ravenwood
+                  - generic [ref=e258]:
+                    - text: Função
+                    - textbox "Função" [ref=e259]: Dono da taverna Leão Vermelho
+                - generic [ref=e260]:
+                  - text: Descrição
+                  - textbox "Descrição" [ref=e261]: O dono da Leão Vermelho, a taverna de Solária. Ele é um homem extrovertido e simpático, que adora contar histórias e ouvir as fofocas da vila. Ele é conhecido por sua habilidade em preparar cerveja e por organizar festas e celebrações na taverna.
+                - generic [ref=e262]:
+                  - text: Página de personagem (opcional)
+                  - combobox "Página de personagem (opcional)" [ref=e263]:
+                    - option "Sem página vinculada"
+                    - 'option "Vínculo atual: thorne-ravenwood" [selected]'
+                - generic [ref=e264]:
+                  - text: Endereço do retrato (opcional)
+                  - textbox "Endereço do retrato (opcional)" [ref=e265]: /images/characters/solaria/thorne-ravenwood.png
+                - generic [ref=e266]:
+                  - generic [ref=e267]:
+                    - text: Enviar foto
+                    - button "Enviar foto" [ref=e268]
+                  - paragraph [ref=e269]: JPG, PNG ou WebP, até 5 MB. As fotos enviadas são públicas.
+                - button "Remover pessoa 7" [ref=e270]
+              - group "Pessoa 8" [ref=e271]:
+                - generic [ref=e273]:
+                  - generic [ref=e274]:
+                    - text: Nome
+                    - textbox "Nome" [ref=e275]: Isadora
+                  - generic [ref=e276]:
+                    - text: Função
+                    - textbox "Função" [ref=e277]: Bibliotecária
+                - generic [ref=e278]:
+                  - text: Descrição
+                  - textbox "Descrição" [ref=e279]: A bibliotecária de Solária. Ela é uma mulher inteligente e solitária, que adora ler e estudar. Ela é conhecida por sua vasta coleção de livros e por ser uma fonte confiável de conhecimento para aqueles que precisam.
+                - generic [ref=e280]:
+                  - text: Página de personagem (opcional)
+                  - combobox "Página de personagem (opcional)" [ref=e281]:
+                    - option "Sem página vinculada"
+                    - 'option "Vínculo atual: isadora" [selected]'
+                - generic [ref=e282]:
+                  - text: Endereço do retrato (opcional)
+                  - textbox "Endereço do retrato (opcional)" [ref=e283]: /images/characters/solaria/isadora.png
+                - generic [ref=e284]:
+                  - generic [ref=e285]:
+                    - text: Enviar foto
+                    - button "Enviar foto" [ref=e286]
+                  - paragraph [ref=e287]: JPG, PNG ou WebP, até 5 MB. As fotos enviadas são públicas.
+                - button "Remover pessoa 8" [ref=e288]
+              - button "Adicionar pessoa" [ref=e289]
+            - generic [ref=e290]:
+              - heading "Mapas e localização" [level=3] [ref=e291]
+              - generic [ref=e292]:
+                - text: Ponto no mapa de Átrias (opcional)
+                - combobox "Ponto no mapa de Átrias (opcional)" [ref=e293]:
+                  - option "Sem vínculo com o mapa"
+                  - option "Abrigo de Solária" [selected]
+                  - option "Vigília de Akos"
+                  - option "Pengram"
+                  - option "A Mortalha"
+                  - option "Portão do Vale"
+                  - option "Forte da Aliança"
+                  - option "Valtriunfo"
+                  - option "Skeld"
+                  - option "Skelligard"
+                  - option "Norbria"
+                  - option "Humma"
+                  - option "Elendel"
+                  - option "Nerania"
+                  - option "Falandir"
+                  - option "Zarkovia"
+                  - option "Ardanore"
+                  - option "Zaoh"
+                  - option "Raruna"
+                  - option "Kandar"
+              - paragraph [ref=e294]: O vínculo permite navegar entre esta página e o ponto do mapa. Plantas e mapas locais entram na galeria abaixo.
+              - region [ref=e295]:
+                - heading "Mapas do lugar" [level=4] [ref=e296]
+                - paragraph [ref=e297]: A primeira mídia aparece em destaque. Adicione o endereço da imagem ou envie uma foto.
+                - group "Mídia 1" [ref=e299]:
+                  - generic [ref=e301]:
+                    - generic [ref=e302]: Mídia principal
+                    - generic [ref=e303]:
+                      - button "Mover mídia 1 para cima" [disabled] [ref=e304]
+                      - button "Mover mídia 1 para baixo" [disabled] [ref=e307]
+                      - button "Remover mídia 1" [ref=e310]
+                  - generic [ref=e314]:
+                    - generic [ref=e315]:
+                      - text: Endereço do arquivo
+                      - textbox "Endereço do arquivo" [ref=e316]:
+                        - /placeholder: https://… ou /images/…
+                        - text: /images/maps/solaria.jpg
+                    - generic [ref=e317]:
+                      - text: Legenda (opcional)
+                      - textbox "Legenda (opcional)" [ref=e318]: Mapa da vila de Solária
+                    - generic [ref=e319]:
+                      - text: Crédito / autoria (opcional)
+                      - textbox "Crédito / autoria (opcional)" [ref=e320]
+                    - generic [ref=e321]:
+                      - text: Descrição da imagem para leitores de tela
+                      - textbox "Descrição da imagem para leitores de tela" [ref=e322]: Planta ilustrada da vila de Solária, com ruas, construções, campos e muralhas.
+                  - generic [ref=e324]:
+                    - generic [ref=e325]:
+                      - text: Enviar foto
+                      - button "Enviar foto" [ref=e326]
+                    - paragraph [ref=e327]: JPG, PNG ou WebP, até 5 MB. As fotos enviadas são públicas.
+                  - img "Planta ilustrada da vila de Solária, com ruas, construções, campos e muralhas." [ref=e328]
+                - button "Adicionar mídia" [ref=e329]
+              - generic [ref=e331]:
+                - text: Locais de interesse (um por linha)
+                - textbox "Locais de interesse (um por linha)" [ref=e332]
+          - generic [ref=e333]:
+            - button "Salvar alterações" [ref=e334]
+            - button "Cancelar" [ref=e335]
+    - paragraph [ref=e338]: Admin tools — handle with care.
+  - button "Open Next.js Dev Tools" [ref=e344] [cursor=pointer]

@@ -1,0 +1,44 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - navigation "Navegação principal" [ref=e3]:
+      - link "Wiki Átrias — início" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e5]: Wiki Átrias
+      - button "Buscar na wiki… Ctrl K / ⌘ K" [ref=e6]:
+        - generic [ref=e10]: Buscar na wiki…
+        - generic [ref=e11]: Ctrl K / ⌘ K
+      - status [ref=e12]: Carregando conta…
+  - main [ref=e13]:
+    - heading "Mapa do Mundo" [level=1] [ref=e14]
+    - generic [ref=e15]:
+      - complementary [ref=e16]:
+        - generic [ref=e17]:
+          - textbox "Buscar local..." [ref=e19]
+          - generic [ref=e20]:
+            - button "Locais" [ref=e21]
+            - button "Reinos" [ref=e22]
+          - generic [ref=e24]:
+            - button "A Mortalha 7" [ref=e25]:
+              - generic [ref=e26]: A Mortalha
+              - generic [ref=e28]: "7"
+            - generic [ref=e29]:
+              - button "Abrigo de Solária" [ref=e30]
+              - button "Vigília de Akos" [ref=e33]
+              - button "Pengram" [ref=e36]
+              - button "A Mortalha" [ref=e39]
+              - button "Portão do Vale" [ref=e42]
+              - button "Forte da Aliança" [ref=e45]
+              - button "Valtriunfo" [ref=e48]
+        - generic [ref=e51]:
+          - heading "Controles" [level=3] [ref=e52]
+          - list [ref=e53]:
+            - listitem [ref=e54]: Arraste para mover
+            - listitem [ref=e55]: Scroll para zoom
+            - listitem [ref=e56]: Clique nos marcadores
+      - generic [ref=e57]:
+        - paragraph [ref=e60]: Carregando mapa...
+        - generic [ref=e62]:
+          - button [ref=e63]
+          - button [ref=e64]
+          - button "Ver mapa completo" [ref=e65]
+  - button "Open Next.js Dev Tools" [ref=e71] [cursor=pointer]

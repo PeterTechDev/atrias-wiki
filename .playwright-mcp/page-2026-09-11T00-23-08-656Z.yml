@@ -1,0 +1,74 @@
+- generic [ref=e1]:
+  - banner [ref=e2]:
+    - navigation "Navegação principal" [ref=e3]:
+      - link "Wiki Átrias — início" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e5]: Wiki Átrias
+      - button "Buscar na wiki… Ctrl K / ⌘ K" [ref=e6]:
+        - generic [ref=e10]: Buscar na wiki…
+        - generic [ref=e11]: Ctrl K / ⌘ K
+      - link "Entrar" [ref=e77] [cursor=pointer]:
+        - /url: /login
+  - main [ref=e13]:
+    - heading "Mapa do Mundo" [level=1] [ref=e14]
+    - generic [ref=e15]:
+      - complementary [ref=e16]:
+        - generic [ref=e17]:
+          - textbox "Buscar local..." [ref=e19]
+          - generic [ref=e20]:
+            - button "Locais" [ref=e21]
+            - button "Reinos" [ref=e22]
+          - generic [ref=e24]:
+            - button "A Mortalha 7" [ref=e25]:
+              - generic [ref=e26]: A Mortalha
+              - generic [ref=e28]: "7"
+            - generic [ref=e29]:
+              - button "Abrigo de Solária" [active] [ref=e30]
+              - button "Vigília de Akos" [ref=e33]
+              - button "Pengram" [ref=e36]
+              - button "A Mortalha" [ref=e39]
+              - button "Portão do Vale" [ref=e42]
+              - button "Forte da Aliança" [ref=e45]
+              - button "Valtriunfo" [ref=e48]
+        - generic [ref=e51]:
+          - heading "Controles" [level=3] [ref=e52]
+          - list [ref=e53]:
+            - listitem [ref=e54]: Arraste para mover
+            - listitem [ref=e55]: Scroll para zoom
+            - listitem [ref=e56]: Clique nos marcadores
+      - generic [ref=e57]:
+        - generic [ref=e61]:
+          - generic:
+            - generic:
+              - button "Abrigo de Solária" [ref=e102] [cursor=pointer]
+              - button "Vigília de Akos" [ref=e104] [cursor=pointer]
+              - button "Pengram" [ref=e106] [cursor=pointer]
+              - button "A Mortalha" [ref=e108] [cursor=pointer]
+              - button "Portão do Vale" [ref=e110] [cursor=pointer]
+              - button "Forte da Aliança" [ref=e112] [cursor=pointer]
+              - button "Valtriunfo" [ref=e114] [cursor=pointer]
+              - button "Skeld" [ref=e116] [cursor=pointer]
+              - button "Skelligard" [ref=e118] [cursor=pointer]
+              - button "Norbria" [ref=e120] [cursor=pointer]
+              - button "Humma" [ref=e122] [cursor=pointer]
+              - button "Elendel" [ref=e124] [cursor=pointer]
+              - button "Nerania" [ref=e126] [cursor=pointer]
+              - button "Falandir" [ref=e128] [cursor=pointer]
+              - button "Zarkovia" [ref=e130] [cursor=pointer]
+              - button "Ardanore" [ref=e132] [cursor=pointer]
+              - button "Zaoh" [ref=e134] [cursor=pointer]
+              - button "Raruna" [ref=e136] [cursor=pointer]
+              - button "Kandar" [ref=e138] [cursor=pointer]
+        - generic [ref=e140]:
+          - button [ref=e141]
+          - text: Vila
+          - heading "Abrigo de Solária" [level=3] [ref=e144]
+          - paragraph [ref=e145]: Uma vila acolhedora nas Colinas do Serpeio
+          - link "Ver página completa" [ref=e146] [cursor=pointer]:
+            - /url: /places/abrigo-de-solaria
+        - generic [ref=e62]:
+          - button [ref=e63]
+          - button [ref=e64]
+          - button "Ver mapa completo" [ref=e65]
+  - button "Open Next.js Dev Tools" [ref=e71] [cursor=pointer]
+  - alert [ref=e155]

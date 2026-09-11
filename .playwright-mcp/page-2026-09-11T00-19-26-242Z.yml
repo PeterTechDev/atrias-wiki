@@ -1,0 +1,42 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - navigation "Navegação principal" [ref=e3]:
+      - link "Wiki Átrias — início" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e5]: Wiki Átrias
+      - button "Buscar na wiki… Ctrl K / ⌘ K" [ref=e6]:
+        - generic [ref=e10]: Buscar na wiki…
+        - generic [ref=e11]: Ctrl K / ⌘ K
+      - link "Entrar" [ref=e12] [cursor=pointer]:
+        - /url: /login
+  - main [ref=e13]:
+    - navigation [ref=e15]:
+      - link "Home" [ref=e16] [cursor=pointer]:
+        - /url: /
+      - generic [ref=e17]: ›
+      - link "Lugares" [ref=e18] [cursor=pointer]:
+        - /url: /places
+      - generic [ref=e19]: ›
+      - generic [ref=e20]: Abrigo de Solária
+    - generic [ref=e21]:
+      - generic [ref=e22]:
+        - generic [ref=e24]:
+          - generic [ref=e25]: Local
+          - heading "A brigo de Solária" [level=1] [ref=e26]:
+            - generic [ref=e27]: A
+            - text: brigo de Solária
+          - paragraph [ref=e29]: Solaria é uma pequena vila situada nas Colinas do Serpeio, entre os picos do Alvorecer a Leste e a Passagem Crepitante que leva aos bosques da Mortalha ao oeste. A vila é reconhecida por um castelo de pedra cinzenta que domina a paisagem, sendo visível de longe. A população de Solaria é composta por cerca de 600 pessoas, onde é possível encontrar membros de cada um dos povos civilizados e não é incomum se deparar com indivíduos de ancestralidades exóticas, que em outros locais seriam hostilizados. Isso se deve a história e cultura local, que no passado teve que lidar com grande opressão imposta por um governante tirano o qual pos-suía as terras ao redor. Não fosse pelas ações de Reynard de Sollam um corajoso guerreiro e seguidor de Uther o deus da Luz, bem como um grupo improvavel de aliados de todos os cantos de Atrias, a vila teria sucumbido perante o medo e a fome. Reynard tombou em batalha, mas por sua tenacidade e bravura recebeu a alcunha de O Leão Vermelho, e a vila foi batizada de Abrigo de Solaria em home-nagem a sua devoção e ao seu desejo de um lugar em que todos fossem acolhidos. GOVERNO Solaria é governada pelo Barão Aric Valtor, um homem de meia-idade que herdou o título de seu pai. Ele é um líder justo e respeitado pela maioria dos habitantes da vila. O Barão é asses-sorado por um conselho de anciãos que repre-sentam as várias guildas da vila, incluindo os fa-zendeiros, mineradores e artesãos. É possivel marcar audiencias com o Barão para tratar de demandas urgentes, entretanto qualquer assunto que exija mais atenção, só será discutido diante do conselho que se reune a cada quinzena. COMÉRCIO A vila de Solaria é conhecida por seus produtos agrícolas, principalmente frutas e vegetais fres-cos que são vendidos na feira semanal. A vila também possui várias lojas e oficinas que vendem produtos artesanais, ferramentas, teci-dos e joias. A mineração é uma outra importante atividade econômica da vila, sendo extraído principalmente ferro e prata das montanhas ao leste. A compania Roccia chefiada por Gwendolyn tambem cuida do processo de exportação de tais minerais, sendo os condados de Noan seus prin-cipais clientes. DEFESAS A milícia de Solaria é uma força pouco treinada e equipada, composta principalmente por voluntários da vila. Ela é responsável por manter a ordem e a segurança nas áreas rurais e nas fronteiras da vila, protegen-do-a de invasores e ladrões. Composta por cerca de 15 membros e 50 voluntários, a maioria dos quais são fazendeiros e artesãos que lutam apenas em caso de necessidade. Eles usam armas simples, como lanças, arcos e espadas, e não possuem uniformes ou equipamentos padronizados. No entanto, eles são dedica-dos e corajosos, e estão prontos para defender sua vila a qualquer mo-mento Os voluntários participam de treinamentos semanais, aprendem o manu-seio de armas simples e estratégias de defesa. Todos os voluntários re-cebem um soldo ao final do mês para complementarem sua renda. Apesar de não ser uma força militar profissional, a milícia de Solaria é uma importante parte da defesa da vila. Ela é bem integrada com as outras forças de segurança da vila, como os guardas do Barão e os caçadores locais, trabalhando em conjunto para manter a paz e a segurança
+          - button "Ver detalhes rápidos" [ref=e30]
+        - generic [ref=e32]:
+          - heading "Informacoes" [level=3] [ref=e33]
+          - generic [ref=e35]:
+            - text: Tipo
+            - paragraph [ref=e36]: Local
+      - generic [ref=e37]:
+        - generic [ref=e38]: Última alteração por Peter em
+        - time [ref=e39]: 10/09/2026, 21:05:32 (America/Bahia)
+    - generic [ref=e41]:
+      - paragraph [ref=e42]: "\"As cronicas de Atrias sao escritas pelo sangue dos herois e as lagrimas dos caidos.\""
+      - paragraph [ref=e43]: Wiki Atrias © 2026
+  - button "Open Next.js Dev Tools" [ref=e49] [cursor=pointer]
+  - alert [ref=e53]

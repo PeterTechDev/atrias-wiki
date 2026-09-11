@@ -11,6 +11,15 @@
         ],
         "createdAt": "2026-09-10T22:57:54.830Z",
         "reason": "Agent review: findings conflate selection utilities with the main background. Dark text on light amber selection is intentional; parchment and slate preserve DESIGN.md."
+      },
+      {
+        "rule": "overused-font",
+        "value": "arial",
+        "files": [
+          "src/app/globals.css"
+        ],
+        "createdAt": "2026-09-10T23:53:55.212Z",
+        "reason": "Agent triage: DESIGN.md documents Arial/Helvetica as the existing body font; the header critique explicitly requires preserving existing fonts. This scoped refinement does not replace the visual identity."
       }
     ]
   }

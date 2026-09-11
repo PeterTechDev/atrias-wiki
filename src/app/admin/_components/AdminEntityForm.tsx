@@ -8,6 +8,12 @@ import { AlertCircle, Loader2 } from 'lucide-react'
 import type { EntityStatus, EntityType } from '@/db/schema'
 import { useAuth } from '@/components/AuthProvider'
 import { supabase } from '@/lib/supabase'
+import { CharacterMediaEditor } from '@/components/CharacterMediaEditor'
+import { PlaceEditor } from '@/components/PlaceEditor'
+import type { PlaceData } from '@/types/entities'
+import { getPlaceContent, getPlaceMaps, validatePlaceData } from '@/lib/placeContent'
+import { getPlaceMarker } from '@/lib/mapLocations'
+import { getCharacterMedia, validateCharacterMedia, type CharacterMedia } from '@/lib/characterMedia'
 import { collectionLabels, entityTypeToCollection, isAdminCollection } from '../_lib/entityTypes'
 
 function slugify(input: string) {
@@ -21,15 +27,13 @@ function slugify(input: string) {
     .replace(/-+/g, '-')
 }
 
-type CharacterStatus = 'active' | 'deceased' | 'unknown' | 'missing'
-
 type CharacterFields = {
   race: string
   class: string
-  status: CharacterStatus
+  status: string
   titles: string
   affiliation: string
-  image: string
+  media: CharacterMedia[]
   alignment: string
   hierarchy: string
   abilities: string
@@ -50,7 +54,7 @@ type PlaceFields = {
   design: string
   notableLocations: string
   map: string
-}
+} & Omit<PlaceData, 'notableLocations'>
 
 type FactionFields = {
   alignment: string
@@ -129,19 +133,18 @@ function parseCommaList(input: string): string[] {
     .filter(Boolean)
 }
 
-function buildInitialFields(type: EntityType, data: Record<string, unknown>): DataFields[keyof DataFields] {
+function buildInitialFields(type: EntityType, data: Record<string, unknown>, image?: string | null, description = '', slug = ''): DataFields[keyof DataFields] {
   if (type === 'character') {
     const combat = asRecord(data.combat)
     const statusRaw = getString(data, 'status')
-    const allowed: CharacterStatus[] = ['active', 'deceased', 'unknown', 'missing']
 
     return {
       race: getString(data, 'race'),
       class: getString(data, 'class'),
-      status: allowed.includes(statusRaw as CharacterStatus) ? (statusRaw as CharacterStatus) : 'unknown',
+      status: statusRaw || 'unknown',
       titles: toCommaList(getStringArray(data, 'titles')),
       affiliation: getString(data, 'affiliation'),
-      image: getString(data, 'image'),
+      media: getCharacterMedia(data, image),
       alignment: getString(data, 'alignment'),
       hierarchy: toCommaList(getStringArray(data, 'hierarchy')),
       abilities: toCommaList(getStringArray(data, 'abilities')),
@@ -162,8 +165,13 @@ function buildInitialFields(type: EntityType, data: Record<string, unknown>): Da
       government: getString(data, 'government'),
       function: getString(data, 'function'),
       design: getString(data, 'design'),
-      notableLocations: toCommaList(getStringArray(data, 'notableLocations')),
+      notableLocations: getStringArray(data, 'notableLocations').join('\n'),
       map: getString(data, 'map'),
+      media: getCharacterMedia(data, image),
+      maps: getPlaceMaps(data as PlaceData),
+      sections: getPlaceContent(data as PlaceData, description).sections,
+      residents: (data as PlaceData).residents ?? [],
+      mapMarker: getPlaceMarker(data as PlaceData, slug)?.id ?? null,
     } satisfies PlaceFields
   }
 
@@ -232,7 +240,7 @@ function assembleData(type: EntityType, fields: DataFields[keyof DataFields]): R
       status: f.status,
       titles: parseCommaList(f.titles),
       affiliation: f.affiliation.trim() || undefined,
-      image: f.image.trim() || undefined,
+      media: f.media,
       alignment: f.alignment.trim() || undefined,
       hierarchy: parseCommaList(f.hierarchy),
       abilities: parseCommaList(f.abilities),
@@ -249,15 +257,20 @@ function assembleData(type: EntityType, fields: DataFields[keyof DataFields]): R
   if (type === 'place') {
     const f = fields as PlaceFields
     return {
-      region: f.region.trim() || undefined,
-      type: f.type.trim() || undefined,
-      climate: f.climate.trim() || undefined,
-      population: f.population.trim() || undefined,
-      government: f.government.trim() || undefined,
-      function: f.function.trim() || undefined,
-      design: f.design.trim() || undefined,
-      notableLocations: parseCommaList(f.notableLocations),
+      region: f.region.trim(),
+      type: f.type.trim(),
+      climate: f.climate.trim(),
+      population: f.population.trim(),
+      government: f.government.trim(),
+      function: f.function.trim(),
+      design: f.design.trim(),
+      notableLocations: f.notableLocations.split('\n').map(item => item.trim()).filter(Boolean),
       map: f.map.trim() || undefined,
+      media: f.media,
+      maps: f.maps,
+      sections: f.sections,
+      residents: f.residents,
+      mapMarker: f.mapMarker,
     }
   }
 
@@ -333,7 +346,6 @@ function buildContextSummary(type: EntityType, fields: DataFields[keyof DataFiel
     push('Status', f.status)
     push('Titles', f.titles)
     push('Affiliation', f.affiliation)
-    push('Image', f.image)
     push('Alignment', f.alignment)
     push('Hierarchy', f.hierarchy)
     push('Abilities', f.abilities)
@@ -399,6 +411,7 @@ function buildContextSummary(type: EntityType, fields: DataFields[keyof DataFiel
 }
 
 export type AdminEntityFormValues = {
+  image?: string | null
   id?: string
   type: EntityType
   name: string
@@ -427,13 +440,14 @@ export function AdminEntityForm({
 }) {
   const router = useRouter()
   const { user, loading: authLoading } = useAuth()
-  const [values, setValues] = useState<AdminEntityFormValues>(initial)
+  const [values, setValues] = useState<AdminEntityFormValues>(() => initial.type === 'place' ? { ...initial, description: getPlaceContent(initial.data as PlaceData ?? {}, initial.description).intro } : initial)
   const [dataFields, setDataFields] = useState<DataFields[keyof DataFields]>(
-    buildInitialFields(initial.type, initial.data ?? {})
+    buildInitialFields(initial.type, initial.data ?? {}, initial.image, initial.description, initial.slug)
   )
-  const fieldsByType = useRef(new Map<EntityType, DataFields[keyof DataFields]>([[initial.type, buildInitialFields(initial.type, initial.data ?? {})]]))
+  const fieldsByType = useRef(new Map<EntityType, DataFields[keyof DataFields]>([[initial.type, buildInitialFields(initial.type, initial.data ?? {}, initial.image, initial.description, initial.slug)]]))
 
   const [isSaving, setIsSaving] = useState(false)
+  const [isUploading, setIsUploading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
   const [isMagicPenLoading, setIsMagicPenLoading] = useState(false)
@@ -446,7 +460,7 @@ export function AdminEntityForm({
     setValues((v) => ({ ...v, [key]: value }))
   }
 
-  function updateDataField(key: string, value: string | boolean) {
+  function updateDataField(key: string, value: string | boolean | CharacterMedia[]) {
     setDataFields((prev) => {
       const next = {
       ...(prev as Record<string, unknown>),
@@ -507,66 +521,82 @@ export function AdminEntityForm({
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault()
+    if (isUploading || isSaving) return
+    if (values.type === 'place') {
+      try { validatePlaceData(assembleData('place', dataFields)) }
+      catch (error) { setError(error instanceof Error ? error.message : 'Revise o lugar.'); return }
+    }
+
+    if (values.type === 'character') {
+      try { validateCharacterMedia((dataFields as CharacterFields).media) }
+      catch (error) { setError(error instanceof Error ? error.message : 'Revise as mídias.'); return }
+    }
 
     setIsSaving(true)
     setError(null)
 
-    const payload = audience === 'member'
-      ? {
-          ...(mode === 'create' ? { type: values.type, slug: values.slug.trim() } : {}),
-          name: values.name.trim(),
-          description: values.description.trim(),
-          ...(isDM ? { isSpoiler: values.isSpoiler === true } : {}),
-          data: assembleData(values.type, dataFields),
-          ...(mode === 'edit' ? { revision: values.revision } : {}),
-        }
-      : {
-          type: values.type,
-          name: values.name.trim(),
-          slug: values.slug.trim(),
-          description: values.description.trim(),
-          status: values.status,
-          ...(isDM ? { isSpoiler: values.isSpoiler === true } : {}),
-          data: assembleData(values.type, dataFields),
-          ...(values.revision ? { revision: values.revision } : {}),
-        }
+    try {
+      const payload = audience === 'member'
+        ? {
+            ...(mode === 'create' ? { type: values.type, slug: values.slug.trim() } : {}),
+            name: values.name.trim(),
+            description: values.description.trim(),
+            ...(isDM ? { isSpoiler: values.isSpoiler === true } : {}),
+            data: assembleData(values.type, dataFields),
+            ...(mode === 'edit' ? { revision: values.revision } : {}),
+          }
+        : {
+            type: values.type,
+            name: values.name.trim(),
+            slug: values.slug.trim(),
+            description: values.description.trim(),
+            status: values.status,
+            ...(isDM ? { isSpoiler: values.isSpoiler === true } : {}),
+            data: assembleData(values.type, dataFields),
+            ...(values.revision ? { revision: values.revision } : {}),
+          }
 
-    let headers: HeadersInit = { 'content-type': 'application/json' }
-    if (audience === 'member') {
-      const { data } = await supabase.auth.getSession()
-      if (!data.session) {
-        setError('Sua sessão expirou. Entre novamente e tente salvar.')
+      let headers: HeadersInit = { 'content-type': 'application/json' }
+      if (audience === 'member') {
+        const { data } = await supabase.auth.getSession()
+        if (!data.session) {
+          setError('Sua sessão expirou. Entre novamente e tente salvar.')
+          setIsSaving(false)
+          return
+        }
+        headers = { ...headers, authorization: `Bearer ${data.session.access_token}` }
+      }
+
+      const url = audience === 'member'
+        ? mode === 'create' ? '/api/wiki/entities' : `/api/wiki/entities/${values.id}`
+        : mode === 'create' ? '/api/admin/entities' : `/api/admin/entities/${values.id}`
+      const method = mode === 'create' ? 'POST' : 'PATCH'
+
+      const res = await fetch(url, {
+        method,
+        headers,
+        body: JSON.stringify(payload),
+      })
+
+      if (!res.ok) {
+        const out = (await res.json().catch(() => null)) as { error?: string } | null
+        setError(out?.error ?? 'Request failed.')
         setIsSaving(false)
         return
       }
-      headers = { ...headers, authorization: `Bearer ${data.session.access_token}` }
-    }
 
-    const url = audience === 'member'
-      ? mode === 'create' ? '/api/wiki/entities' : `/api/wiki/entities/${values.id}`
-      : mode === 'create' ? '/api/admin/entities' : `/api/admin/entities/${values.id}`
-    const method = mode === 'create' ? 'POST' : 'PATCH'
-
-    const res = await fetch(url, {
-      method,
-      headers,
-      body: JSON.stringify(payload),
-    })
-
-    if (!res.ok) {
-      const out = (await res.json().catch(() => null)) as { error?: string } | null
-      setError(out?.error ?? 'Request failed.')
+      if (audience === 'member') {
+        router.push(`/${entityTypeToCollection[values.type]}/${values.slug.trim()}`)
+      } else {
+        const success = mode === 'create' ? 'created' : 'updated'
+        router.push(`/admin/${collection}?success=${success}`)
+      }
+      router.refresh()
+    } catch {
+      setError('Não foi possível salvar. Sua edição foi mantida; tente novamente.')
+    } finally {
       setIsSaving(false)
-      return
     }
-
-    if (audience === 'member') {
-      router.push(`/${entityTypeToCollection[values.type]}/${values.slug.trim()}`)
-    } else {
-      const success = mode === 'create' ? 'created' : 'updated'
-      router.push(`/admin/${collection}?success=${success}`)
-    }
-    router.refresh()
   }
 
   const label = isAdminCollection(collection) ? collectionLabels[collection] : collection
@@ -574,7 +604,7 @@ export function AdminEntityForm({
 
   if (audience === 'member' && !authLoading && !user) {
     return (
-      <div className="rounded border border-amber-300 bg-amber-50 px-5 py-4 text-slate-800">
+      <div className="rounded border border-amber-300 bg-amber-50 px-5 py-4 text-amber-950">
         <p>Entre para criar e editar páginas.</p>
         <Link href={`/login?next=/wiki/${collection}/${mode === 'edit' ? `${initial.slug}/edit` : 'new'}`} className="mt-3 inline-block font-semibold text-amber-800 underline">Entrar / Criar conta</Link>
       </div>
@@ -582,11 +612,12 @@ export function AdminEntityForm({
   }
 
   if (audience === 'member' && !enabled) {
-    return <p className="rounded border border-amber-300 bg-amber-50 px-5 py-4 text-slate-800">A edição está temporariamente indisponível.</p>
+    return <p className="rounded border border-amber-300 bg-amber-50 px-5 py-4 text-amber-950">A edição está temporariamente indisponível.</p>
   }
 
   return (
     <form onSubmit={onSubmit} className="space-y-5">
+      <fieldset disabled={isSaving || isUploading} className="space-y-5">
       <nav className="text-sm text-slate-600">
         <Link href={audience === 'member' ? '/' : '/admin'} className="hover:underline">{audience === 'member' ? 'Wiki' : 'Admin'}</Link>
         <span className="mx-2 text-slate-400">→</span>
@@ -603,7 +634,7 @@ export function AdminEntityForm({
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <label className="block">
-          <span className="text-sm font-semibold text-slate-700">Name</span>
+          <span className="text-sm font-semibold text-slate-700">Nome</span>
           <input
             value={values.name}
             onChange={(e) => {
@@ -628,9 +659,9 @@ export function AdminEntityForm({
         </label>
       </div>
 
-      <label className="block">
+      <div className="block">
         <div className="flex items-center justify-between">
-          <span className="text-sm font-semibold text-slate-700">Description</span>
+          <label htmlFor="entity-description" className="text-sm font-semibold text-slate-700">{values.type === 'place' ? 'Apresentação do lugar' : 'Descrição'}</label>
           {audience === 'admin' ? <button
             type="button"
             onClick={onMagicPen}
@@ -652,6 +683,7 @@ export function AdminEntityForm({
           </button> : null}
         </div>
         <textarea
+          id="entity-description"
           value={values.description}
           onChange={(e) => update('description', e.target.value)}
           className="mt-1 w-full min-h-24 rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
@@ -671,11 +703,11 @@ export function AdminEntityForm({
             <span>{magicPenError}</span>
           </p>
         ) : null}
-      </label>
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <label className="block">
-          <span className="text-sm font-semibold text-slate-700">Type</span>
+          <span className="text-sm font-semibold text-slate-700">Categoria</span>
           {mode === 'create' && audience === 'member' ? <select value={values.type} onChange={(e) => changeType(e.target.value as EntityType)} className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500">
             <option value="character">Personagem</option><option value="place">Lugar</option><option value="faction">Facção</option><option value="item">Item</option><option value="lore">Conhecimento</option><option value="monster">Criatura</option><option value="other">Outros</option>
           </select> : <input value={values.type} readOnly className="mt-1 w-full rounded border border-slate-300 bg-slate-100 px-3 py-2 text-slate-700" />}
@@ -696,7 +728,7 @@ export function AdminEntityForm({
       </div>
 
       {/* Typed data fields */}
-      {isDM && <label className="flex items-center gap-3 rounded border border-amber-400 bg-amber-50 p-4 text-slate-900">
+      {isDM && <label className="flex items-center gap-3 rounded border border-amber-400 bg-amber-50 p-4 text-amber-950">
         <input type="checkbox" checked={values.isSpoiler === true} onChange={event => update('isSpoiler', event.target.checked)} className="h-5 w-5" />
         <span><span className="block font-semibold">Spoiler / Restrito ao DM</span><span className="text-sm">Somente mestres podem acessar. Desmarque para liberar o post na wiki.</span></span>
       </label>}
@@ -705,14 +737,7 @@ export function AdminEntityForm({
           <h3 className="mb-3 text-sm font-semibold text-slate-800">Character details</h3>
 
           <div className="grid grid-cols-1 gap-4">
-            <label className="block">
-              <span className="text-sm font-semibold text-slate-700">Image URL</span>
-              <input
-                value={(dataFields as CharacterFields).image}
-                onChange={(e) => updateDataField('image', e.target.value)}
-                className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
-              />
-            </label>
+            <CharacterMediaEditor media={(dataFields as CharacterFields).media} onChange={media => updateDataField('media', media)} />
 
             <div className="rounded border border-slate-200 bg-slate-50 p-3">
               <h4 className="mb-2 text-sm font-semibold text-slate-800">Identity</h4>
@@ -748,9 +773,10 @@ export function AdminEntityForm({
                   <span className="text-sm font-semibold text-slate-700">Status</span>
                   <select
                     value={(dataFields as CharacterFields).status}
-                    onChange={(e) => updateDataField('status', e.target.value as CharacterStatus)}
+                    onChange={(e) => updateDataField('status', e.target.value)}
                     className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
                   >
+                    {!['active', 'deceased', 'unknown', 'missing'].includes((dataFields as CharacterFields).status) && <option value={(dataFields as CharacterFields).status}>{(dataFields as CharacterFields).status}</option>}
                     <option value="active">active</option>
                     <option value="deceased">deceased</option>
                     <option value="unknown">unknown</option>
@@ -861,41 +887,10 @@ export function AdminEntityForm({
       ) : null}
 
       {values.type === 'place' ? (
-        <div className="rounded border border-slate-200 bg-white p-4">
-          <h3 className="mb-3 text-sm font-semibold text-slate-800">Place details</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {(
-              [
-                ['region', 'Region'],
-                ['type', 'Type'],
-                ['climate', 'Climate'],
-                ['population', 'Population'],
-                ['government', 'Government'],
-                ['function', 'Function'],
-                ['design', 'Design'],
-                ['map', 'Map URL'],
-              ] as const
-            ).map(([key, label]) => (
-              <label key={key} className="block">
-                <span className="text-sm font-semibold text-slate-700">{label}</span>
-                <input
-                  value={String((dataFields as unknown as Record<string, unknown>)[key] ?? '')}
-                  onChange={(e) => updateDataField(key, e.target.value)}
-                  className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
-                />
-              </label>
-            ))}
-
-            <label className="block md:col-span-2">
-              <span className="text-sm font-semibold text-slate-700">Notable locations (comma-separated)</span>
-              <input
-                value={(dataFields as PlaceFields).notableLocations}
-                onChange={(e) => updateDataField('notableLocations', e.target.value)}
-                className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
-              />
-            </label>
-          </div>
-        </div>
+        <PlaceEditor audience={audience} value={{ ...(dataFields as PlaceFields), notableLocations: (dataFields as PlaceFields).notableLocations.split('\n') }} onBusyChange={setIsUploading} onChange={place => {
+          const next = { ...dataFields, ...place, notableLocations: (place.notableLocations ?? []).join('\n') } as PlaceFields
+          setDataFields(next); fieldsByType.current.set('place', next)
+        }} />
       ) : null}
 
       {values.type === 'faction' ? (
@@ -1113,7 +1108,7 @@ export function AdminEntityForm({
           className="inline-flex items-center justify-center gap-2 rounded bg-[#0a1628] px-4 py-2 text-sm font-semibold text-amber-300 hover:text-amber-200 disabled:opacity-60"
         >
           <Icon icon="game-icons:save" className="w-5 h-5" />
-          {isSaving ? 'Saving…' : mode === 'create' ? 'Create' : 'Save changes'}
+          {isSaving ? 'Salvando…' : isUploading ? 'Aguarde o envio da foto…' : mode === 'create' ? 'Criar página' : 'Salvar alterações'}
         </button>
         <button
           type="button"
@@ -1121,9 +1116,10 @@ export function AdminEntityForm({
           className="inline-flex items-center justify-center gap-2 rounded border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
         >
           <Icon icon="game-icons:cancel" className="w-5 h-5" />
-          Cancel
+          Cancelar
         </button>
       </div>
+      </fieldset>
     </form>
   )
 }

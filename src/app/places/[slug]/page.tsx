@@ -1,380 +1,88 @@
-/**
- * Place Detail Page
- * Beautiful fantasy-styled location profile
- */
-
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { Icon } from '@iconify/react'
-import DetailsToggle from './DetailsToggle'
-import { getEntityBySlug } from '@/db/queries/entities'
+import { getEntitiesByType, getEntityBySlug } from '@/db/queries/entities'
 import type { PlaceData } from '@/types/entities'
+import { getPlaceContent, getPlaceMaps } from '@/lib/placeContent'
+import { getCharacterMedia, isMediaUrl } from '@/lib/characterMedia'
+import { getPlaceMarker } from '@/lib/mapLocations'
+import ImageGallery from '@/components/ImageGallery'
 import { WikiContributionActions } from '@/components/WikiContributionActions'
-import { WikiLastEdited } from '@/components/WikiLastEdited'
 import { WikiFavoriteButton } from '@/components/WikiFavoriteButton'
+import { WikiLastEdited } from '@/components/WikiLastEdited'
+import styles from './place.module.css'
 
 export const dynamic = 'force-dynamic'
 
-interface PageProps {
-  params: Promise<{ slug: string }>
+function Paragraphs({ text }: { text: string }) {
+  return <>{text.split(/\r?\n/).filter(line => line.trim()).map((line, index) => <p key={index}>{line}</p>)}</>
 }
 
-export default async function PlacePage({ params }: PageProps) {
+export default async function PlacePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const entity = await getEntityBySlug('place', slug)
-
-  if (!entity) {
-    notFound()
-  }
-
-  const data = entity.data as PlaceData
-
-  const place = {
-    name: entity.name,
-    type: data.type || 'Local',
-    region: data.region || '',
-    kingdom: '',
-    population: data.population || '',
-    government: data.government || '',
-    description: entity.description || '',
-    quote: '',
-    history: '',
-    geography: '',
-    culture: '',
-    defenses: '',
-    landmarks: [] as { name: string; type: string; description: string }[],
-    notableResidents: [] as { name: string; role: string; link: string | null }[],
-    connections: [] as { name: string; type: string; description: string }[],
-    dangerLevel: '',
-    climate: data.climate || '',
-    resources: [] as string[],
-    tags: [] as string[],
-    function: data.function || '',
-    design: data.design || '',
-    notableLocations: data.notableLocations || [],
-  }
-
-  return (
-    <main className="min-h-screen flex flex-col bg-[#e8dcc8]">
-      {/* Header */}
-      <header className="bg-[#0a1628] text-white py-4 px-6">
-        <div className="max-w-6xl mx-auto flex justify-between items-center">
-          <Link href="/" className="flex items-center gap-2 text-amber-400 hover:text-amber-300">
-            <Icon icon="game-icons:book-cover" className="w-6 h-6" />
-            <span className="font-cinzel text-lg tracking-wider">WIKI ATRIAS</span>
-          </Link>
+  if (!entity) notFound()
+  const data = (entity.data ?? {}) as PlaceData
+  const content = getPlaceContent(data, entity.description ?? '')
+  const media = getCharacterMedia(data, entity.image)
+  const maps = getPlaceMaps(data)
+  const marker = getPlaceMarker(data, slug)
+  const residents = data.residents ?? []
+  const characters = residents.some(resident => resident.characterSlug) ? await getEntitiesByType('character') : []
+  const sections = [
+    ...content.sections,
+    ...(data.function ? [{ title: 'Função', content: data.function }] : []),
+    ...(data.design ? [{ title: 'Arquitetura', content: data.design }] : []),
+  ].filter(section => section.title && section.content)
+  const facts = [
+    { label: 'População', value: data.population },
+    { label: 'Governo', value: data.government },
+    { label: 'Clima', value: data.climate },
+  ].filter(fact => fact.value)
+  const landmarks = (data.notableLocations ?? []).filter(Boolean)
+  const navigation = [
+    ...(content.intro ? [{ id: 'visao-geral', title: 'Visão geral' }] : []),
+    ...sections.map((section, index) => ({ id: `secao-${index + 1}`, title: section.title })),
+    ...(residents.length ? [{ id: 'pessoas', title: 'Pessoas' }] : []),
+    ...(landmarks.length ? [{ id: 'locais', title: 'Locais de interesse' }] : []),
+    ...(maps.length ? [{ id: 'mapas', title: 'Mapas' }] : []),
+  ]
+  return <main id="inicio" className={styles.page}>
+    <div className={styles.container}>
+      <nav aria-label="Caminho da página" className={styles.breadcrumb}><Link href="/">Início</Link><span aria-hidden="true">/</span><Link href="/places">Lugares</Link><span aria-hidden="true">/</span><span aria-current="page">{entity.name}</span></nav>
+      <header className={styles.identity}>
+        <div><h1>{entity.name}</h1>{(data.type || data.region) && <p className={styles.location}>{[data.type, data.region].filter(Boolean).join(' · ')}</p>}</div>
+        <div className={styles.actions}>
+          {marker && <Link href={`/map?place=${encodeURIComponent(slug)}`} className={styles.mapLink}><Icon icon="mdi:map-marker-outline" aria-hidden="true" />Ver no mapa de Átrias</Link>}
+          <WikiFavoriteButton entityId={entity.id} /><WikiContributionActions collection="places" slug={slug} entityId={entity.id} subtle enabled={process.env.WIKI_EDITING_ENABLED !== 'false'} />
         </div>
       </header>
-
-      {/* Breadcrumb */}
-      <div className="max-w-6xl mx-auto px-6 py-4">
-        <nav className="flex items-center gap-2 text-sm text-slate-600">
-          <Link href="/" className="hover:text-amber-700">Home</Link>
-          <span>›</span>
-          <Link href="/places" className="hover:text-amber-700">Lugares</Link>
-          <span>›</span>
-          <span className="text-slate-800">{place.name}</span>
-        </nav>
+      {!!media.length && <div className={styles.cover}><ImageGallery media={media} name={entity.name} /></div>}
+      {!!facts.length && <dl className={styles.facts} aria-label="Ficha do lugar">{facts.map(fact => <div key={fact.label}><dt>{fact.label}</dt><dd>{fact.value}</dd></div>)}</dl>}
+      {navigation.length > 1 && <nav aria-label="Nesta página" className={styles.sectionNav}><span>Nesta página</span><div>{navigation.map(section => <a key={section.id} href={`#${section.id}`}>{section.title}</a>)}</div></nav>}
+      <div className={styles.reading}>
+        {content.intro ? <section id="visao-geral" className={styles.section}><h2>Visão geral</h2><div className={styles.prose}><Paragraphs text={content.intro} /></div></section> : !sections.length && <p className={styles.empty}>A descrição deste lugar ainda não foi registrada.</p>}
+        {sections.map((section, index) => <section key={index} id={`secao-${index + 1}`} className={styles.section}><h2>{section.title}</h2><div className={styles.prose}><Paragraphs text={section.content} /></div></section>)}
       </div>
-
-      {/* Map Image - Full Width */}
-      {(data.map || entity.image) && (
-        <div className="max-w-6xl mx-auto px-6 mb-8">
-          <div className="bg-white/80 rounded-lg shadow-lg overflow-hidden">
-            <img 
-              src={data.map || entity.image || ''} 
-              alt={`Mapa de ${entity.name}`}
-              className="w-full h-auto max-h-[500px] object-contain"
-            />
-            <div className="px-4 py-2 text-center text-sm text-slate-500 font-crimson italic">
-              Mapa de {entity.name}
+      {!!residents.length && <section id="pessoas" className={styles.people}>
+        <h2>Pessoas de {entity.name}</h2>
+        <div className={styles.peopleGrid}>{residents.map((resident, index) => {
+          const character = characters.find(character => character.slug === resident.characterSlug)
+          const portrait = resident.image || (character ? getCharacterMedia(character.data ?? {}, character.image).find(item => item.type === 'image')?.src : undefined)
+          return <article key={index} className={styles.person}>
+            {isMediaUrl(portrait) && <img src={portrait} alt={`Retrato de ${resident.name}`} width={112} height={128} loading="lazy" />}
+            <div><h3>{character ? <Link href={`/characters/${character.slug}`}>{resident.name}<Icon icon="mdi:arrow-top-right" aria-hidden="true" /></Link> : resident.name}</h3>
+              {resident.role && <p className={styles.role}>{resident.role}</p>}
+              {resident.description && <div className={styles.personDescription}><Paragraphs text={resident.description} /></div>}
+              {!resident.characterSlug && <Link className={styles.createLink} href={`/wiki/characters/new?name=${encodeURIComponent(resident.name)}`}>Criar página de personagem</Link>}
             </div>
-          </div>
-        </div>
-      )}
-
-      {/* Main Content */}
-      <div className="max-w-6xl mx-auto px-6 pb-12">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Main Column */}
-          <div className="lg:col-span-2">
-            {/* Place Header Card */}
-            <div className="bg-white/80 rounded-lg shadow-lg p-8 mb-8">
-              {/* Type Badge */}
-              <span className="inline-block bg-emerald-100 text-emerald-800 text-xs font-semibold px-3 py-1 rounded-full mb-4">
-                {place.type}
-              </span>
-
-              {/* Name with Drop Cap Effect */}
-              <h1 className="font-cinzel text-4xl md:text-5xl text-slate-800 mb-2">
-                <span className="text-6xl md:text-7xl text-amber-700 float-left mr-2 mt-1 leading-none">
-                  {place.name.charAt(0)}
-                </span>
-                {place.name.slice(1)}
-              </h1>
-
-              {/* Subtitle */}
-              {place.region && (
-                <p className="text-lg text-slate-600 italic font-crimson mb-6 clear-both">
-                  {place.region}{place.kingdom ? `, ${place.kingdom}` : ''}
-                </p>
-              )}
-
-              {/* Description */}
-              <div className="text-slate-700 font-crimson text-lg leading-relaxed mb-4 space-y-4">
-                {(place.description || 'Um lugar misterioso aguardando para ser explorado.').split('\n\n').map((paragraph, i) => (
-                  <p key={i}>{paragraph}</p>
-                ))}
-              </div>
-
-              {/* Quick Stats Toggle */}
-              <DetailsToggle
-                population={place.population}
-                government={place.government}
-                dangerLevel={place.dangerLevel}
-                climate={place.climate}
-              />
-            </div>
-
-            {/* Function & Design - if exists */}
-            {(place.function || place.design) && (
-              <div className="bg-white/80 rounded-lg shadow-lg p-8 mb-8">
-                <h2 className="font-cinzel text-2xl text-slate-800 mb-6 flex items-center gap-3">
-                  <Icon icon="game-icons:info" className="w-6 h-6 text-amber-700" />
-                  Detalhes
-                </h2>
-
-                {place.function && (
-                  <div className="mb-4">
-                    <h3 className="font-cinzel text-lg text-slate-700 mb-2">Funcao</h3>
-                    <p className="text-slate-600 font-crimson">{place.function}</p>
-                  </div>
-                )}
-                {place.design && (
-                  <div>
-                    <h3 className="font-cinzel text-lg text-slate-700 mb-2">Design</h3>
-                    <p className="text-slate-600 font-crimson">{place.design}</p>
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* Notable Locations - if exists */}
-            {place.notableLocations.length > 0 && (
-              <div className="bg-white/80 rounded-lg shadow-lg p-8 mb-8">
-                <h2 className="font-cinzel text-2xl text-slate-800 mb-6 flex items-center gap-3">
-                  <Icon icon="game-icons:tower" className="w-6 h-6 text-amber-700" />
-                  Locais Notaveis
-                </h2>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {place.notableLocations.map((loc, i) => (
-                    <div key={i} className="bg-amber-50 rounded-lg p-4 border border-amber-200">
-                      <p className="font-crimson text-slate-700">{loc}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* History - only if exists */}
-            {place.history && (
-              <div className="bg-white/80 rounded-lg shadow-lg p-8 mb-8">
-                <h2 className="font-cinzel text-2xl text-slate-800 mb-6 flex items-center gap-3">
-                  <Icon icon="game-icons:scroll-unfurled" className="w-6 h-6 text-amber-700" />
-                  Historia
-                </h2>
-
-                <div className="prose prose-slate max-w-none font-crimson text-lg leading-relaxed">
-                  {place.history.split('\n\n').map((paragraph, i) => (
-                    <p key={i} className="mb-4 text-slate-700">{paragraph}</p>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Geography - only if exists */}
-            {place.geography && (
-              <div className="bg-white/80 rounded-lg shadow-lg p-8 mb-8">
-                <h2 className="font-cinzel text-2xl text-slate-800 mb-6 flex items-center gap-3">
-                  <Icon icon="game-icons:mountain-road" className="w-6 h-6 text-amber-700" />
-                  Geografia
-                </h2>
-
-                <div className="prose prose-slate max-w-none font-crimson text-lg leading-relaxed">
-                  {place.geography.split('\n\n').map((paragraph, i) => (
-                    <p key={i} className="mb-4 text-slate-700">{paragraph}</p>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Culture - only if exists */}
-            {place.culture && (
-              <div className="bg-white/80 rounded-lg shadow-lg p-8 mb-8">
-                <h2 className="font-cinzel text-2xl text-slate-800 mb-6 flex items-center gap-3">
-                  <Icon icon="game-icons:public-speaker" className="w-6 h-6 text-amber-700" />
-                  Cultura & Sociedade
-                </h2>
-
-                <div className="prose prose-slate max-w-none font-crimson text-lg leading-relaxed">
-                  {place.culture.split('\n\n').map((paragraph, i) => (
-                    <p key={i} className="mb-4 text-slate-700">{paragraph}</p>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Landmarks - only if exists */}
-            {place.landmarks.length > 0 && (
-              <div className="bg-white/80 rounded-lg shadow-lg p-8">
-                <h2 className="font-cinzel text-2xl text-slate-800 mb-6 flex items-center gap-3">
-                  <Icon icon="game-icons:tower" className="w-6 h-6 text-amber-700" />
-                  Pontos de Interesse
-                </h2>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {place.landmarks.map((landmark, i) => (
-                    <div key={i} className="bg-amber-50 rounded-lg p-4 border border-amber-200">
-                      <span className="text-xs text-amber-600 uppercase tracking-wider">{landmark.type}</span>
-                      <h3 className="font-cinzel text-lg text-slate-800 mt-1">{landmark.name}</h3>
-                      <p className="text-slate-600 font-crimson text-sm mt-2">{landmark.description}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Sidebar */}
-          <div className="lg:col-span-1">
-            {/* Place Info Card */}
-            <div className="bg-[#0a1628] text-white rounded-lg p-6 mb-6 sticky top-6">
-              <h3 className="font-cinzel text-amber-400 text-lg mb-4 uppercase tracking-wider">
-                Informacoes
-              </h3>
-
-              <div className="space-y-4">
-                <div>
-                  <span className="text-amber-400/60 text-xs uppercase tracking-wider">Tipo</span>
-                  <p className="text-white font-medium">{place.type}</p>
-                </div>
-                {place.region && (
-                  <div>
-                    <span className="text-amber-400/60 text-xs uppercase tracking-wider">Regiao</span>
-                    <p className="text-white font-medium">{place.region}</p>
-                  </div>
-                )}
-                {place.kingdom && (
-                  <div>
-                    <span className="text-amber-400/60 text-xs uppercase tracking-wider">Reino</span>
-                    <p className="text-white font-medium">{place.kingdom}</p>
-                  </div>
-                )}
-                {place.climate && (
-                  <div>
-                    <span className="text-amber-400/60 text-xs uppercase tracking-wider">Clima</span>
-                    <p className="text-white font-medium">{place.climate}</p>
-                  </div>
-                )}
-              </div>
-
-              {/* Resources */}
-              {place.resources.length > 0 && (
-                <>
-                  <h4 className="font-cinzel text-amber-400 text-sm mt-6 mb-3 uppercase tracking-wider">
-                    Recursos
-                  </h4>
-                  <div className="flex flex-wrap gap-2">
-                    {place.resources.map((resource, i) => (
-                      <span key={i} className="text-xs bg-emerald-900/30 text-emerald-300 px-2 py-1 rounded">
-                        {resource}
-                      </span>
-                    ))}
-                  </div>
-                </>
-              )}
-            </div>
-
-            {/* Notable Residents - only if exists */}
-            {place.notableResidents.length > 0 && (
-              <div className="bg-white/80 rounded-lg shadow-lg p-6 mb-6">
-                <h3 className="font-cinzel text-slate-800 text-lg mb-4 flex items-center gap-2">
-                  <Icon icon="game-icons:cowled" className="w-5 h-5 text-amber-700" />
-                  Residentes Notaveis
-                </h3>
-
-                <div className="space-y-3">
-                  {place.notableResidents.map((resident, i) => (
-                    <div key={i} className="bg-amber-50 rounded p-3">
-                      <span className="text-amber-600 text-xs uppercase">{resident.role}</span>
-                      {resident.link ? (
-                        <Link href={resident.link} className="block font-cinzel text-slate-800 hover:text-amber-700">
-                          {resident.name} →
-                        </Link>
-                      ) : (
-                        <p className="font-cinzel text-slate-800">{resident.name}</p>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Connections - only if exists */}
-            {place.connections.length > 0 && (
-              <div className="bg-white/80 rounded-lg shadow-lg p-6">
-                <h3 className="font-cinzel text-slate-800 text-lg mb-4 flex items-center gap-2">
-                  <Icon icon="game-icons:world" className="w-5 h-5 text-amber-700" />
-                  Conexoes
-                </h3>
-
-                <div className="space-y-3">
-                  {place.connections.map((conn, i) => (
-                    <div key={i} className="border-b border-amber-200 pb-3 last:border-0 last:pb-0">
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="font-cinzel text-slate-800">{conn.name}</span>
-                        <span className="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded">
-                          {conn.type}
-                        </span>
-                      </div>
-                      <p className="text-slate-600 font-crimson text-sm">{conn.description}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Tags - only if exists */}
-        {place.tags.length > 0 && (
-          <div className="mt-8 flex items-center gap-3">
-            <Icon icon="game-icons:tied-scroll" className="w-5 h-5 text-slate-500" />
-            <span className="text-slate-500 text-sm">Tags:</span>
-            <div className="flex flex-wrap gap-2">
-              {place.tags.map((tag, i) => (
-                <span key={i} className="text-sm bg-white/60 text-slate-600 px-3 py-1 rounded-full border border-slate-300">
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </div>
-        )}
-
-        <WikiLastEdited entity={entity} />
-        <div className="mt-4 flex justify-end gap-2"><WikiFavoriteButton entityId={entity.id} /><WikiContributionActions collection="places" slug={slug} entityId={entity.id} enabled={process.env.WIKI_EDITING_ENABLED !== 'false'} /></div>
-      </div>
-
-      {/* Footer */}
-      <footer className="mt-auto bg-[#0a1628] text-white py-8 px-6">
-        <div className="max-w-6xl mx-auto text-center">
-          <p className="text-amber-400/60 font-crimson italic">
-            "As cronicas de Atrias sao escritas pelo sangue dos herois e as lagrimas dos caidos."
-          </p>
-          <p className="text-slate-500 text-sm mt-4">Wiki Atrias &copy; 2026</p>
-        </div>
-      </footer>
-    </main>
-  )
+          </article>
+        })}</div>
+      </section>}
+      {!!landmarks.length && <section id="locais" className={styles.section}><h2>Locais de interesse</h2><ul className={styles.landmarks}>{landmarks.map((place, index) => <li key={index}>{place}</li>)}</ul></section>}
+      {!!maps.length && <section id="mapas" className={styles.maps}><div className={styles.mapHeading}><h2>Mapas do lugar</h2>{marker && <Link href={`/map?place=${encodeURIComponent(slug)}`}>Localizar em Átrias<Icon icon="mdi:arrow-top-right" aria-hidden="true" /></Link>}</div><ImageGallery media={maps} name={`Mapas de ${entity.name}`} /></section>}
+      <div className={styles.endmatter}><WikiLastEdited entity={entity} /><div><Link href="/places"><Icon icon="mdi:arrow-left" aria-hidden="true" />Todos os lugares</Link><a href="#inicio">Voltar ao início<Icon icon="mdi:arrow-up" aria-hidden="true" /></a></div></div>
+    </div>
+    <footer className={styles.footer}><span className="font-cinzel">Wiki Átrias</span><p>As crônicas de Átrias são escritas pelo sangue dos heróis e as lágrimas dos caídos.</p></footer>
+  </main>
 }

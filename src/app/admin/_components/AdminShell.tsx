@@ -18,23 +18,10 @@ export function AdminShell({
 }) {
   return (
     <main className="min-h-screen bg-[#0a1628] text-amber-400">
-      <header className="bg-[#0a1628] text-white py-4 px-6 border-b border-amber-400/10">
-        <div className="max-w-6xl mx-auto flex justify-between items-center">
-          <Link href="/" className="flex items-center gap-2 text-amber-400 hover:text-amber-300">
-            <Icon icon="game-icons:book-cover" className="w-6 h-6" />
-            <span className="font-cinzel text-lg tracking-wider">WIKI ATRIAS</span>
-          </Link>
-          <Link
-            href={variant === 'admin' ? '/admin' : '/'}
-            className="text-sm text-amber-400/90 hover:text-amber-300 flex items-center gap-2"
-          >
-            <Icon icon="game-icons:shield" className="w-5 h-5" />
-            {variant === 'admin' ? 'Admin' : 'Wiki'}
-          </Link>
-        </div>
-      </header>
+
 
       <div className="max-w-6xl mx-auto px-6 py-6">
+        <Link href={variant === 'admin' ? '/admin' : '/'} className="mb-4 flex min-h-11 items-center gap-2 text-sm text-amber-300 hover:underline"><Icon icon="game-icons:shield" className="h-5 w-5" />{variant === 'admin' ? 'Admin' : 'Wiki'}</Link>
         {backHref ? (
           <Link href={backHref} className="inline-flex items-center gap-2 text-sm text-amber-300 hover:text-amber-200 mb-4">
             <Icon icon="game-icons:back-forth" className="w-4 h-4" />

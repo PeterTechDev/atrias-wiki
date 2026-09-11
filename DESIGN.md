@@ -100,7 +100,7 @@ Cartões de lugares na home usam paper, borda âmbar, imagem superior, sombra e 
 
 ### Navigation
 
-As rotas implementam cabeçalhos próprios. SiteNav retorna null e não é a navegação ativa. Cabeçalhos recorrentes usam fundo midnight, título Cinzel e links claros ou dourados. Na home, categorias aparecem como uma grade de ícones e legendas.
+O cabeçalho global em AuthProvider reúne marca, busca e conta em uma única linha, num contêiner max-w-6xl. Usa fundo midnight, marca Cinzel e links dourados. No celular, a busca mostra apenas a lupa e a conta autenticada mostra o avatar, mantendo nomes acessíveis. Cabeçalhos de marca locais foram removidos; breadcrumbs e controles contextuais permanecem nas páginas. A busca abre um dialog nativo com resultados, sugestões e pesquisas recentes da sessão; aceita Ctrl/Cmd+K, setas, Enter e Escape. Na home, categorias aparecem como uma grade de ícones e legendas.
 
 ### Chips
 

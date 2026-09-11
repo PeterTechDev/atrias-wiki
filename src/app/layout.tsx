@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Cinzel_Decorative, Crimson_Pro, IM_Fell_English, Geist } from "next/font/google";
-import SiteNav from '@/components/SiteNav'
 import AuthProvider from '@/components/AuthProvider'
 import "./globals.css";
 
@@ -47,7 +46,6 @@ export default function RootLayout({
         className={`${cinzelDecorative.variable} ${crimsonPro.variable} ${imFellEnglish.variable} ${geist.variable} antialiased bg-zinc-900`}
       >
         <AuthProvider>
-          <SiteNav />
           {children}
         </AuthProvider>
       </body>

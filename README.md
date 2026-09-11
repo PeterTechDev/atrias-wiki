@@ -36,6 +36,36 @@ O check local da preservação de dados é `npm run test:wiki`. Para uma publica
 Next.js, configure `DATABASE_URL`, as variáveis públicas do Supabase e execute `npm run lint`
 e `npm run build` no preview antes de habilitar a escrita.
 
+Personagens têm uma coleção ordenada de até 50 imagens e vídeos em **Editar página →
+Imagens e vídeos**. A primeira mídia abre o perfil; legenda, crédito, texto alternativo,
+capa de vídeo e legendas VTT são opcionais. Use URLs de arquivos (MP4/WebM para vídeo)
+ou caminhos locais, não páginas do YouTube. Os arquivos devem estar hospedados previamente;
+este editor não faz upload. A coleção usa `data.media`, sem migration, e mantém compatibilidade
+com a imagem antiga até ser editada. Uma coleção vazia remove a mídia da página de detalhe.
+Execute `npm run test:character-media` para verificar validação e compatibilidade.
+
+### Lugares e Solária
+
+Lugares têm apresentação, ficha opcional, seções ordenadas, pessoas e duas galerias:
+fotos/ilustrações e mapas locais. Campos vazios são omitidos. Pessoas podem existir
+sem página e receber um vínculo depois; personagens vinculados mostram o caminho
+de volta ao lugar. O ponto no mapa de Átrias é opcional e permite navegação nos dois
+sentidos, inclusive quando mais de uma página compartilha o mesmo ponto.
+
+Na criação e edição de lugares, membros autenticados podem enviar JPG, PNG e WebP
+de até 5 MB. Aplique `supabase/migrations/20260911002801_wiki_media_uploads.sql`
+no projeto de Auth/Storage antes do rollout. O bucket `wiki-media` é público; somente
+contas não anônimas podem inserir arquivos na própria pasta. Arquivos são imutáveis;
+remover uma mídia da página não exclui o arquivo compartilhado. URLs continuam aceitas.
+Verifique as políticas com `supabase/tests/wiki-media.sql` no SQL Editor do Supabase.
+
+`npx tsx scripts/seed-solaria.ts` mostra as alterações; `--apply` cadastra os oito NPCs
+da referência e organiza Solária no banco de conteúdo, preservando registros existentes.
+Os retratos e a paisagem estão em `public/images/` e precisam acompanhar a publicação.
+Execute `npm run test:places` para validação/compatibilidade. O check de navegador
+`tests/places.browser.mjs` exporta `checkPlaces(page)` para Playwright: usa o admin
+local, cria um lugar temporário, verifica edição/vínculos/remoção e o exclui ao terminar.
+
 O arquivamento de páginas usa `supabase/migrations/20260908090000_wiki_entity_archiving.sql`.
 Membros podem arquivar páginas pelo detalhe e excluir uma ou várias páginas em `/wiki/archived`.
 O check local de validação dos lotes é `npm run test:wiki-archiving`. A busca consulta o banco

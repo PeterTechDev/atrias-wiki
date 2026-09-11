@@ -20,7 +20,7 @@ export default async function WikiEditEntityPage({ params }: { params: Promise<{
         audience="member"
         collection={collection}
         enabled={process.env.WIKI_EDITING_ENABLED !== 'false'}
-        initial={{ id: entity.id, type: entity.type, name: entity.name, slug: entity.slug, description: entity.description ?? '', status: entity.status ?? 'published', revision: entity.revision, isSpoiler: entity.isSpoiler === true, data: (entity.data ?? {}) as Record<string, unknown> }}
+        initial={{ id: entity.id, type: entity.type, image: entity.image, name: entity.name, slug: entity.slug, description: entity.description ?? '', status: entity.status ?? 'published', revision: entity.revision, isSpoiler: entity.isSpoiler === true, data: (entity.data ?? {}) as Record<string, unknown> }}
       />
     </AdminShell>
   )

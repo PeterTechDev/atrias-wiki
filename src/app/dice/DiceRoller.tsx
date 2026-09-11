@@ -157,12 +157,7 @@ export default function DiceRoller() {
   const fumble = result?.dice.some(die => die.sides === 20 && die.value === 1)
 
   return <main className="min-h-screen bg-[#eee6d6] text-[#243247] [font-family:var(--font-geist)]">
-    <header className="border-b border-amber-200/15 bg-[#0a1628] px-4 py-4 text-amber-100 sm:px-8">
-      <div className="mx-auto flex max-w-[1600px] flex-wrap items-center justify-between gap-3">
-        <Link href="/" className="font-cinzel flex items-center gap-2 text-lg tracking-wider text-[#c6a862]"><Icon icon="game-icons:book-cover" width={24} /> WIKI ÁTRIAS</Link>
-        <Link href="/browse" className="inline-flex min-h-11 items-center gap-2 text-sm text-amber-100/80 hover:text-white"><Icon icon="mdi:arrow-left" /> Voltar aos arquivos</Link>
-      </div>
-    </header>
+    <div className="mx-auto max-w-[1600px] px-4 pt-4 sm:px-8"><Link href="/browse" className="inline-flex min-h-11 items-center gap-2 text-sm text-amber-900 hover:underline"><Icon icon="mdi:arrow-left" /> Voltar aos arquivos</Link></div>
     <div className="mx-auto max-w-[1600px] px-3 py-6 sm:px-6 lg:px-8">
       <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
         <div><p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-[#90713b]">À mesa, aventureiro</p><h1 className="font-cinzel text-3xl sm:text-4xl">Mesa de Dados</h1><p className="font-crimson mt-2 text-lg text-slate-600">Prepare a jogada. Respire fundo. Deixe o destino rolar.</p></div>

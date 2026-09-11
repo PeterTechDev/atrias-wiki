@@ -1,0 +1,463 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - navigation "Navegação principal" [ref=e3]:
+      - link "Wiki Átrias — início" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e5]: Wiki Átrias
+      - button "Buscar na wiki… Ctrl K / ⌘ K" [ref=e6]:
+        - generic [ref=e10]: Buscar na wiki…
+        - generic [ref=e11]: Ctrl K / ⌘ K
+      - status [ref=e12]: Carregando conta…
+  - main [ref=e13]:
+    - generic [ref=e14]:
+      - navigation "Navegação estrutural" [ref=e15]:
+        - link "Arquivos" [ref=e16] [cursor=pointer]:
+          - /url: /browse
+        - generic [aria-hidden] [ref=e17]: ›
+        - generic [ref=e18]: Personagens
+      - generic [ref=e20]:
+        - heading "Personagens" [level=1] [ref=e22]
+        - paragraph [ref=e23]: Heróis, vilões e todos entre eles
+      - region "Registros" [ref=e24]:
+        - generic [ref=e25]:
+          - generic [ref=e26]:
+            - generic [ref=e27]: Buscar por nome
+            - searchbox "Buscar por nome" [ref=e29]
+          - status [ref=e30]: 71 de 71 registros · A–Z
+        - list [ref=e31]:
+          - listitem [ref=e32]:
+            - generic [ref=e33]:
+              - heading [level=2] [ref=e34]:
+                - link "Alan Kendra" [ref=e35] [cursor=pointer]:
+                  - /url: /characters/alan-kendra
+              - paragraph [ref=e36]: Aliado dos Ursos-Negros (Coldwind). Reúne-se com Eibjolf e Izur como homem de confiança do Martelo-de-Vento; invoca forças da natureza em combate.
+          - listitem [ref=e40]:
+            - generic [ref=e41]:
+              - heading [level=2] [ref=e42]:
+                - link "Amergin Ghalbath" [ref=e43] [cursor=pointer]:
+                  - /url: /characters/amergin-ghalbath
+              - paragraph [ref=e44]: "Amergin Ghalbath é a figura central do mito de origem associado a Ghalbaht. Sua vida anterior é descrita como comum e incerta — pescador, pastor, padeiro — mas seu passado teria sido apagado (ou “transmutado”). No período pré-Ruptura, ao socorrer um homem mortalmente ferido, Amergin afirma sentir o lamento do mundo: a terra, o vento, a água e o sol pareciam sofrer com aquela morte. O moribundo revela-se Silvanus, então deus da natureza e dos elementos. Para proteger Amergin do que viria, Silvanus arrebata sua alma e a envia aos Planos Interiores, para que ouvisse a voz do mundo. Imbuído da essência vital do deus, Amergin vaga por décadas entre os quatro Planos Elementais: sua alma atravessa o Ar, é forjada no Fogo, moldada na Terra e renascida na Água. Entre djinns, elementais e para-elementais, ele aprende e compreende a necessidade de cicatrizar as feridas do mundo para que o ciclo continue. Seu retorno a Átrias é narrado como um prodígio: cinzas ao vento se aglomeram e tomam a forma de um homem, enquanto madeira queimada revive e brotos surgem — sinal de que Ghalbath volta não mais como um homem comum."
+          - listitem [ref=e48]:
+            - generic [ref=e49]:
+              - heading [level=2] [ref=e50]:
+                - link "Andrastos" [ref=e51] [cursor=pointer]:
+                  - /url: /characters/andrastos
+              - paragraph [ref=e52]: "Andrastos foi o governante de Vallen durante a escalada das invasões skeldianas ao norte da Terra dos Vales. Ao encontrar um porto e uma cidade rudimentar nos Rochedos de Baldren, escolheu a diplomacia e propôs um acordo com um clã invasor: concessão de terras e títulos em troca da proteção do norte de Humma. O trato desencadeou a reação de Skeld e a formação da primeira Horda. Para proteger o continente Oeste, Andrastos liderou a marcha do Pacto de Ociddens ao norte, acompanhado da Guarda Argêntea e de Cavaleiros de Nerânia. O Pacto venceu após dias de combate, mas Andrastos morreu na batalha. Sua memória permaneceu como símbolo de união e resistência."
+          - listitem [ref=e56]:
+            - generic [ref=e57]:
+              - heading [level=2] [ref=e58]:
+                - link "Andrastos O Unificador" [ref=e59] [cursor=pointer]:
+                  - /url: /characters/andrastos-o-unificador
+              - paragraph [ref=e60]: “Andrastos, o Unificador” é o título dado ao governante de Vallen que enfrentou a crise da primeira Horda skelden. Ele liderou, com a Guarda Argêntea e apoio dos Cavaleiros de Nerânia, o esforço do Pacto de Ociddens que salvou o continente Oeste. Andrastos morreu na campanha; anualmente, no dia de sua morte, celebra-se um festival em sua homenagem em Norbria e em Vallen.
+          - listitem [ref=e64]:
+            - generic [ref=e65]:
+              - heading [level=2] [ref=e66]:
+                - link "Arannis" [ref=e67] [cursor=pointer]:
+                  - /url: /characters/arannis
+              - paragraph [ref=e68]: Aventureiro do grupo das Fúrias de Videnserg. Protege Knut na travessia do rio e chega a se oferecer como campeão em um holmgang contra Folkvar; é ferido e perdido em meio ao caos do massacre de Videnserg.
+          - listitem [ref=e72]:
+            - generic [ref=e73]:
+              - heading [level=2] [ref=e74]:
+                - link "Ashyra" [ref=e75] [cursor=pointer]:
+                  - /url: /characters/ashyra
+              - paragraph [ref=e76]: Personagem de Átrias (informações ainda não catalogadas nos documentos extraídos).
+          - listitem [ref=e80]:
+            - generic [ref=e81]:
+              - heading [level=2] [ref=e82]:
+                - link "Augustinus Clifford" [ref=e83] [cursor=pointer]:
+                  - /url: /characters/augustinus-clifford
+              - paragraph [ref=e84]: Known as Gut Clifford, he does not own a commercial establishment but cultivates a medicinal herb garden in memory of his late wife.
+          - listitem [ref=e88]:
+            - generic [ref=e89]:
+              - heading [level=2] [ref=e90]:
+                - link "Barão Van Klaus" [ref=e91] [cursor=pointer]:
+                  - /url: /characters/barao-van-klaus
+              - paragraph [ref=e92]: Grão-Artífice dos Cruzados de Oas. Confronta as Fúrias em um forte de mineração e volta a enfrentá-los em Coldwind com um forjado bélico.
+          - listitem [ref=e96]:
+            - generic [ref=e97]:
+              - heading [level=2] [ref=e98]:
+                - link "Breaker" [ref=e99] [cursor=pointer]:
+                  - /url: /characters/breaker
+              - paragraph [ref=e100]: The player with the greatest physical strength, whose main function is to stop opponents and score within the opponent's defense area.
+          - listitem [ref=e104]:
+            - generic [ref=e105]:
+              - heading [level=2] [ref=e106]:
+                - link "Bromm" [ref=e107] [cursor=pointer]:
+                  - /url: /characters/bromm
+              - paragraph [ref=e108]: A strong blacksmith known for his skills, who operates a small tent on the outskirts of the village.
+          - listitem [ref=e112]:
+            - generic [ref=e113]:
+              - heading [level=2] [ref=e114]:
+                - link "Capitã Thalia Corçanegra" [ref=e115] [cursor=pointer]:
+                  - /url: /characters/capita-thalia-corcanegra
+              - paragraph [ref=e116]: A middle-aged human woman with a military posture, leading the Rangers of the Vigil of Akos.
+          - listitem [ref=e120]:
+            - generic [ref=e121]:
+              - heading [level=2] [ref=e122]:
+                - link "Capitão" [ref=e123] [cursor=pointer]:
+                  - /url: /characters/capitao
+              - paragraph [ref=e124]: The player with the commanding voice, responsible for coordinating the team and can freely act on the sides.
+          - listitem [ref=e128]:
+            - generic [ref=e129]:
+              - heading [level=2] [ref=e130]:
+                - link "Captain Eobald" [ref=e131] [cursor=pointer]:
+                  - /url: /characters/captain-eobald
+              - paragraph [ref=e132]: Personagem de Átrias (informações ainda não catalogadas nos documentos extraídos).
+          - listitem [ref=e136]:
+            - generic [ref=e137]:
+              - heading [level=2] [ref=e138]:
+                - link "Crono Elemental" [ref=e139] [cursor=pointer]:
+                  - /url: /characters/crono-elemental
+              - paragraph [ref=e140]: Entidade/ser elemental (informações ainda não catalogadas nos documentos extraídos).
+          - listitem [ref=e144]:
+            - generic [ref=e145]:
+              - heading [level=2] [ref=e146]:
+                - link "Dark Ionius" [ref=e147] [cursor=pointer]:
+                  - /url: /characters/dark-ionius
+              - paragraph [ref=e148]: Feiticeiro corrompido por um poder sombrio (ligado a Raga). Enfrenta Uthred em Videnserg e, após cair, seu sangue desencadeia um plano que incita a destruição da cidade.
+          - listitem [ref=e152]:
+            - generic [ref=e153]:
+              - heading [level=2] [ref=e154]:
+                - link "Defensor" [ref=e155] [cursor=pointer]:
+                  - /url: /characters/defensor
+              - paragraph [ref=e156]: The most resilient player whose main function is to protect the area of the Aro and is the only player who uses a shield for blocking.
+          - listitem [ref=e160]:
+            - generic [ref=e161]:
+              - heading [level=2] [ref=e162]:
+                - link "Drawghar Mototh" [ref=e163] [cursor=pointer]:
+                  - /url: /characters/drawghar-mototh
+              - paragraph [ref=e164]: selado (segundo tradição)
+              - paragraph [ref=e165]: Drawghar Mototh é descrito como um Lorde Infernal Supremo cuja horda foi libertada em sua forma plena durante os eventos que cercam a Ruptura. Derrotado a um grande custo pela coalizão liderada por Khay'zam, Mototh teria sido selado e suas forças banidas para o esquecimento, tornando-se um símbolo do risco existencial que a magia e a ambição desmedida podem desencadear.
+          - listitem [ref=e169]:
+            - generic [ref=e170]:
+              - heading [level=2] [ref=e171]:
+                - link "Drika" [ref=e172] [cursor=pointer]:
+                  - /url: /characters/drika
+              - paragraph [ref=e173]: The family member who assists Eoban Feller in managing the inn.
+          - listitem [ref=e177]:
+            - generic [ref=e178]:
+              - heading [level=2] [ref=e179]:
+                - link "Eibjolf" [ref=e180] [cursor=pointer]:
+                  - /url: /characters/eibjolf
+              - paragraph [ref=e181]: Coldwind
+              - paragraph [ref=e182]: Filho de Urdrolf Martelo-de-Vento, Jarl de Coldwind. Lidera guerreiros acompanhados por Ursos Negros e coopera com as Fúrias na guerra em Skeld.
+          - listitem [ref=e186]:
+            - generic [ref=e187]:
+              - heading [level=2] [ref=e188]:
+                - link "Eoban Feller" [ref=e189] [cursor=pointer]:
+                  - /url: /characters/eoban-feller
+              - paragraph [ref=e190]: The burgomaster of Sol Manso and owner of the inn Descanso Fortuno, known for his hospitality.
+          - listitem [ref=e194]:
+            - generic [ref=e195]:
+              - heading [level=2] [ref=e196]:
+                - link "Eribert Galwain" [ref=e197] [cursor=pointer]:
+                  - /url: /characters/eribert-galwain
+              - paragraph [ref=e198]: A dedicated young citizen in his twenties, known for helping with daily tasks in the village. He dreams of becoming a knight like his ancestor, Sir Gawain.
+          - listitem [ref=e202]:
+            - generic [ref=e203]:
+              - heading [level=2] [ref=e204]:
+                - link "Escora da Vida" [ref=e205] [cursor=pointer]:
+                  - /url: /characters/escora-da-vida
+              - paragraph [ref=e206]: Druids focused on healing and purification, possessing high religious and cultural knowledge.
+          - listitem [ref=e210]:
+            - generic [ref=e211]:
+              - heading [level=2] [ref=e212]:
+                - link "Exército do Escudo" [ref=e213] [cursor=pointer]:
+                  - /url: /characters/exercito-do-escudo
+              - paragraph [ref=e214]: Druids who do not fit into any of the previous roles, serving as general support for the Order.
+          - listitem [ref=e218]:
+            - generic [ref=e219]:
+              - heading [level=2] [ref=e220]:
+                - link "Fahrur" [ref=e221] [cursor=pointer]:
+                  - /url: /characters/fahrur
+              - paragraph [ref=e222]: Ferreiro kandariano e amigo do grupo. Ajuda Strauss a tratar Uthred e explica o envenenamento por Marat Alruh ("espelho da alma"), associado à Ordem de Sasere.
+          - listitem [ref=e226]:
+            - generic [ref=e227]:
+              - heading [level=2] [ref=e228]:
+                - link "Flint" [ref=e229] [cursor=pointer]:
+                  - /url: /characters/flint
+              - paragraph [ref=e230]: An anão guerreiro (dwarf warrior) who uses the Machado de Batalha in combat and experiences penalties due to damage.
+          - listitem [ref=e234]:
+            - generic [ref=e235]:
+              - heading [level=2] [ref=e236]:
+                - link "Folkvar Bico-Sangrento" [ref=e237] [cursor=pointer]:
+                  - /url: /characters/folkvar-bico-sangrento
+              - paragraph [ref=e238]: Líder do Clã do Corvo e rei de Skeld. Ocupa Videnserg com suas forças, entra em conflito com Stibjorn e incita a guerra que culmina no massacre da cidade.
+          - listitem [ref=e242]:
+            - generic [ref=e243]:
+              - heading [level=2] [ref=e244]:
+                - link "Galahad" [ref=e245] [cursor=pointer]:
+                  - /url: /characters/galahad
+              - paragraph [ref=e246]: Companheiro das Fúrias; caçador de sentidos aguçados. Torna-se hospedeiro do espírito Wendigo e assume forma bestial em combate.
+          - listitem [ref=e250]:
+            - generic [ref=e251]:
+              - heading [level=2] [ref=e252]:
+                - link "Ghalbath" [ref=e253] [cursor=pointer]:
+                  - /url: /characters/ghalbath
+              - paragraph [ref=e254]: Ghalbath é lembrado como um druida lendário ligado à fundação e aos ideais da Ordem de Ghalbaht. A tradição reforça seu repúdio ao uso de armas ofensivas e a centralidade do escudo como símbolo de defesa do círculo e da ordem natural. Também é associado ao mito de Amergin Ghalbath, no qual uma alma é moldada pelos quatro Planos Elementais para ouvir a voz do mundo e retornar como agente de equilíbrio.
+          - listitem [ref=e258]:
+            - generic [ref=e259]:
+              - heading [level=2] [ref=e260]:
+                - link "Gibson" [ref=e261] [cursor=pointer]:
+                  - /url: /characters/gibson
+              - paragraph [ref=e262]: Halfling do grupo das Fúrias. Decifra cartas criptografadas, prepara tônicos e atua como combatente ágil, frequentemente atacando pelos flancos.
+          - listitem [ref=e266]:
+            - generic [ref=e267]:
+              - heading [level=2] [ref=e268]:
+                - link "Gilmond Vern" [ref=e269] [cursor=pointer]:
+                  - /url: /characters/gilmond-vern
+              - paragraph [ref=e270]: A recently established baron in Pedraluna, known for his wealth and influence. He gained permission to explore sacred mines through public meetings and votes.
+          - listitem [ref=e274]:
+            - generic [ref=e275]:
+              - heading [level=2] [ref=e276]:
+                - link "Gordan" [ref=e277] [cursor=pointer]:
+                  - /url: /characters/gordan
+              - paragraph [ref=e278]: paladino · algoz
+              - paragraph [ref=e279]: Paladino que acompanhou o grupo no passado. Retorna como um Algoz ligado às forças sombrias (Sentinela Negro), com capacidade de invocar Dargheists.
+          - listitem [ref=e283]:
+            - generic [ref=e284]:
+              - heading [level=2] [ref=e285]:
+                - link "Grombard Pedravermelha" [ref=e286] [cursor=pointer]:
+                  - /url: /characters/grombard-pedravermelha
+              - paragraph [ref=e287]: A robust dwarf with long, pointed mustache and red hair, who manages the Estalagem da Lua Crescente.
+          - listitem [ref=e291]:
+            - generic [ref=e292]:
+              - heading [level=2] [ref=e293]:
+                - link "Guardiã da ordem" [ref=e294] [cursor=pointer]:
+                  - /url: /characters/guardia-da-ordem
+              - paragraph [ref=e295]: The druid who acts as the leader of the council, serving as the right hand of the Regente do Equilíbrio.
+          - listitem [ref=e299]:
+            - generic [ref=e300]:
+              - heading [level=2] [ref=e301]:
+                - link "Hiram Thorp" [ref=e302] [cursor=pointer]:
+                  - /url: /characters/hiram-thorp
+              - paragraph [ref=e303]: An old mercenary who chose Pedraluna for a peaceful retirement and was appointed as the Commander of the Guard. He oversees the protection of the village.
+          - listitem [ref=e307]:
+            - generic [ref=e308]:
+              - heading [level=2] [ref=e309]:
+                - link "Ilena Curafolhas" [ref=e310] [cursor=pointer]:
+                  - /url: /characters/ilena-curafolhas
+              - paragraph [ref=e311]: A gentle and compassionate elf who serves as a healer and nurse at the Casa Hospitalar.
+          - listitem [ref=e315]:
+            - generic [ref=e316]:
+              - heading [level=2] [ref=e317]:
+                - link "Investigador da Base" [ref=e318] [cursor=pointer]:
+                  - /url: /characters/investigador-da-base
+              - paragraph [ref=e319]: Druids responsible for recruiting potential new members and identifying imbalances in nature.
+          - listitem [ref=e323]:
+            - generic [ref=e324]:
+              - heading [level=2] [ref=e325]:
+                - link "Ionáh Feller" [ref=e326] [cursor=pointer]:
+                  - /url: /characters/ionah-feller
+              - paragraph [ref=e327]: The charismatic and helpful wife of Eoban Feller, who owns the Casa de Variedades Feller.
+          - listitem [ref=e331]:
+            - generic [ref=e332]:
+              - heading [level=2] [ref=e333]:
+                - link "Izur" [ref=e334] [cursor=pointer]:
+                  - /url: /characters/izur
+              - paragraph [ref=e335]: Aliado das Fúrias e homem de confiança do Martelo-de-Vento. Luta na linha de frente em Torngard e chega a se sacrificar para deter inimigos durante a batalha de Coldwind.
+          - listitem [ref=e339]:
+            - generic [ref=e340]:
+              - heading [level=2] [ref=e341]:
+                - link "Khay'zam" [ref=e342] [cursor=pointer]:
+                  - /url: /characters/khay-zam
+              - paragraph [ref=e343]: Khay'zam é um mago humano lendário associado ao período imediatamente posterior à Ruptura. Em meio ao avanço infernal e às divindades caídas e enfraquecidas, ele reuniu os poucos avatares divinos restantes e liderou forças celestiais contra as hordas do Lorde Supremo Drawghar Mototh. A vitória — obtida a alto custo — culminou no selamento de Mototh e na expulsão de sua horda. Após o conflito, as divindades sobreviventes teriam imbuído Khay'zam com parte de seu poder e conhecimento para que protegesse e vigiasse o mundo. Com esse legado, ele fundou as Alta'Arcanas, torres destinadas a concentrar o saber arcano e impedir que a magia voltasse a desencadear um cataclismo como o da Ruptura.
+          - listitem [ref=e347]:
+            - generic [ref=e348]:
+              - heading [level=2] [ref=e349]:
+                - link "Khayzam" [ref=e350] [cursor=pointer]:
+                  - /url: /characters/khayzam
+              - paragraph [ref=e351]: Humano (presumido)
+              - paragraph [ref=e352]: "Arquimago Khayzam. Um nome que ecoa pelos corredores das academias arcanas e pelas tavernas mais remotas de Átrias — embora poucos saibam separar o homem da lenda. Dizem que Khayzam foi o maior mago que já pisou no continente de Skeld. Alguns o chamam de gênio. Outros, de louco. A verdade, como sempre, é mais complicada. Sua obra mais conhecida — e mais temida — é o Livro das Estórias Não Contadas. Um artefato que não apenas registra o passado, mas parece conhecer o futuro. Como Khayzam o criou, ninguém sabe ao certo. Por que ele o criou é uma pergunta ainda mais perigosa. O que se sabe: Khayzam desapareceu há séculos. Seu corpo nunca foi encontrado. Seus estudos permanecem espalhados por bibliotecas e ruínas, cada fragmento mais enigmático que o anterior. E o Livro? O Livro encontrou seu próprio guardião — um ladrão tolo o bastante para tentar roubá-lo. Registrado por: Thaveus, O Escriba"
+          - listitem [ref=e356]:
+            - generic [ref=e357]:
+              - heading [level=2] [ref=e358]:
+                - link "Lady Arieth de Huma" [ref=e359] [cursor=pointer]:
+                  - /url: /characters/lady-arieth-de-huma
+              - paragraph [ref=e360]: The governing figure of Sol Manso, serving as the burgomaster.
+          - listitem [ref=e364]:
+            - generic [ref=e365]:
+              - heading [level=2] [ref=e366]:
+                - link "Lançador" [ref=e367] [cursor=pointer]:
+                  - /url: /characters/lancador
+              - paragraph [ref=e368]: The most intelligent and versatile player, responsible for leading the team with passes and intercepting opponent passes.
+          - listitem [ref=e372]:
+            - generic [ref=e373]:
+              - heading [level=2] [ref=e374]:
+                - link "Latélia Hugmore" [ref=e375] [cursor=pointer]:
+                  - /url: /characters/latelia-hugmore
+              - paragraph [ref=e376]: The Burgo-Mestra of Pedraluna, a middle-aged woman who inherited her position in recent years. She represents the local authority despite the absence of the village's walls.
+          - listitem [ref=e380]:
+            - generic [ref=e381]:
+              - heading [level=2] [ref=e382]:
+                - link "Lorde Supremo D r aw g h ar Mototh" [ref=e383] [cursor=pointer]:
+                  - /url: /characters/lorde-supremo-d-r-aw-g-h-ar-mototh
+              - paragraph [ref=e384]: The supreme lord of the Infernal forces who caused significant destruction during the Ruptura.
+          - listitem [ref=e388]:
+            - generic [ref=e389]:
+              - heading [level=2] [ref=e390]:
+                - link "Lorian Augustine" [ref=e391] [cursor=pointer]:
+                  - /url: /characters/lorian-augustine
+              - paragraph [ref=e392]: A middle-aged human man who manages the local branch of the Companhia de Comércio Augustine.
+          - listitem [ref=e396]:
+            - generic [ref=e397]:
+              - heading [level=2] [ref=e398]:
+                - link "Luminares" [ref=e399] [cursor=pointer]:
+                  - /url: /characters/luminares
+              - paragraph [ref=e400]: "Luminares é o nome dado ao clero da Chama Branca. Seus membros atuam como guardiões da lei, da ordem e da luz, conduzindo ritos, julgamentos e atos de restauração quando a corrupção se espalha. A tradição descreve uma progressão de graus: Vigilante, Luminar da Sentença e Luminar Elevado. Em muitas comunidades, os Luminares não se distinguem por uma vestimenta única — preferem sinais discretos ligados à vigilância e à justiça (como balanças, velas e a espada longa cruzada), refletindo a ideia de que a justiça deve existir em qualquer cultura."
+          - listitem [ref=e404]:
+            - generic [ref=e405]:
+              - heading [level=2] [ref=e406]:
+                - link "Mistério" [ref=e407] [cursor=pointer]:
+                  - /url: /characters/misterio
+              - paragraph [ref=e408]: Personagem de Átrias (informações ainda não catalogadas nos documentos extraídos).
+          - listitem [ref=e412]:
+            - generic [ref=e413]:
+              - heading [level=2] [ref=e414]:
+                - link "Mokkog" [ref=e415] [cursor=pointer]:
+                  - /url: /characters/mokkog
+              - paragraph [ref=e416]: Personagem de Átrias (informações ainda não catalogadas nos documentos extraídos).
+          - listitem [ref=e420]:
+            - generic [ref=e421]:
+              - heading [level=2] [ref=e422]:
+                - link "Parnasen" [ref=e423] [cursor=pointer]:
+                  - /url: /characters/parnasen
+              - paragraph [ref=e424]: A human considered wise among his people, who mastered the manipulation of ley lines and sought to become a god.
+          - listitem [ref=e428]:
+            - generic [ref=e429]:
+              - heading [level=2] [ref=e430]:
+                - link "Pássaros de Amparo" [ref=e431] [cursor=pointer]:
+                  - /url: /characters/passaros-de-amparo
+              - paragraph [ref=e432]: Druid messengers and guides responsible for exploring and passing information.
+          - listitem [ref=e436]:
+            - generic [ref=e437]:
+              - heading [level=2] [ref=e438]:
+                - link "Ponta" [ref=e439] [cursor=pointer]:
+                  - /url: /characters/ponta
+              - paragraph [ref=e440]: The most agile player responsible for covering the sides of the field and making throws from the quadrants.
+          - listitem [ref=e444]:
+            - generic [ref=e445]:
+              - heading [level=2] [ref=e446]:
+                - link "Principiante do Resguardo" [ref=e447] [cursor=pointer]:
+                  - /url: /characters/principiante-do-resguardo
+              - paragraph [ref=e448]: Young druids or those new to the Order who have not yet passed their trials.
+          - listitem [ref=e452]:
+            - generic [ref=e453]:
+              - heading [level=2] [ref=e454]:
+                - link "Quínewen" [ref=e455] [cursor=pointer]:
+                  - /url: /characters/quinewen
+              - paragraph [ref=e456]: Quínewen é a filha de Andrastos e sucessora no trono de Vallen após a guerra contra a primeira Horda skelden. Ela honrou o acordo firmado por seu pai, permitindo que skeldens se estabelecessem ao norte sob o estandarte de Humma, e consolidou a política de defesa que levaria à construção do forte de Hardenfor e à prosperidade de Norbria.
+          - listitem [ref=e460]:
+            - generic [ref=e461]:
+              - heading [level=2] [ref=e462]:
+                - link "Rasmusen" [ref=e463] [cursor=pointer]:
+                  - /url: /characters/rasmusen
+              - paragraph [ref=e464]: Viajante e contador de histórias (conhecido como Rasmus). Revela informações sobre as Mid-Frosts e o Gjallarhorn, além da origem e significado dos Vestígios.
+          - listitem [ref=e468]:
+            - generic [ref=e469]:
+              - heading [level=2] [ref=e470]:
+                - link "Recém-chegado da Tutela" [ref=e471] [cursor=pointer]:
+                  - /url: /characters/recem-chegado-da-tutela
+              - paragraph [ref=e472]: Individuals who are likely to become druids in the future, typically children or young people sensitive to the four elements.
+          - listitem [ref=e476]:
+            - generic [ref=e477]:
+              - heading [level=2] [ref=e478]:
+                - link "Regente do jogo" [ref=e479] [cursor=pointer]:
+                  - /url: /characters/regente-do-jogo
+              - paragraph [ref=e480]: Any authority present at the game who oversees the event.
+          - listitem [ref=e484]:
+            - generic [ref=e485]:
+              - heading [level=2] [ref=e486]:
+                - link "Rhogar" [ref=e487] [cursor=pointer]:
+                  - /url: /characters/rhogar
+              - paragraph [ref=e488]: feiticeiro
+              - paragraph [ref=e489]: Feiticeiro das Fúrias de Videnserg. Usa magia destrutiva e, mais tarde, carrega essência dracônica (incluindo Akatash) após rituais com Morveindren.
+          - listitem [ref=e493]:
+            - generic [ref=e494]:
+              - heading [level=2] [ref=e495]:
+                - link "Sêren" [ref=e496] [cursor=pointer]:
+                  - /url: /characters/seren
+              - paragraph [ref=e497]: A skilled golden elf blacksmith who runs A Trilha Ardente. He is capable of repairing weapons and armor but only produces equipment for reasons he deems correct.
+          - listitem [ref=e501]:
+            - generic [ref=e502]:
+              - heading [level=2] [ref=e503]:
+                - link "Silvanus" [ref=e504] [cursor=pointer]:
+                  - /url: /characters/silvanus
+              - paragraph [ref=e505]: Silvanus is the god of nature and elements who intervenes in Amergin's life to protect him from impending doom.
+          - listitem [ref=e509]:
+            - generic [ref=e510]:
+              - heading [level=2] [ref=e511]:
+                - link "Stibjorn" [ref=e512] [cursor=pointer]:
+                  - /url: /characters/stibjorn
+              - paragraph [ref=e513]: Líder do orgulhoso Clã Presa de Javali em Skeld. Entra em conflito com Folkvar e o desafia a um holmgang após a carnificina em Videnserg.
+          - listitem [ref=e517]:
+            - generic [ref=e518]:
+              - heading [level=2] [ref=e519]:
+                - link "Tal Rasha" [ref=e520] [cursor=pointer]:
+                  - /url: /characters/tal-rasha
+              - paragraph [ref=e521]: mago
+              - paragraph [ref=e522]: Mago das Fúrias. Toca uma orbe poderosa, é ligado ao espírito Morgana e usa um cetro/artefato para teletransportar o grupo durante a batalha de Coldwind.
+          - listitem [ref=e526]:
+            - generic [ref=e527]:
+              - heading [level=2] [ref=e528]:
+                - link "Targrim Ferrocanela" [ref=e529] [cursor=pointer]:
+                  - /url: /characters/targrim-ferrocanela
+              - paragraph [ref=e530]: A lively halfling with curly brown hair and bright, mischievous eyes, who runs the Taverna Galho de Freixo.
+          - listitem [ref=e534]:
+            - generic [ref=e535]:
+              - heading [level=2] [ref=e536]:
+                - link "Thaveus" [ref=e537] [cursor=pointer]:
+                  - /url: /characters/thaveus
+              - paragraph [ref=e538]: Escriba / Observador · Zeitgeist (anteriormente Humano) · Ativo (prisioneiro dimensional)
+              - paragraph [ref=e539]: "Quem, eu deveria ser? Faço essa pergunta a mim mesmo a cada manhã enfadonha — se é que posso chamar qualquer momento de \"manhã\" neste lugar onde o tempo não se digna a passar. Sou Thaveus. Ou fui. Ou serei. As conjugações perdem o sentido quando passado, presente e futuro são apenas páginas diferentes do mesmo livro. Fui um ladrão. Um bom ladrão, devo admitir — arrogante o suficiente para acreditar que poderia roubar o grande Khayzam, o Primeiro Arquimago. Meu alvo? O Livro das Estórias Não Contadas, um artefato capaz de registrar espontaneamente toda a vida de uma pessoa no plano material, cada vírgula e cada ponto final, do nascimento à morte. O mero vislumbre do Livro fragmentou meu espírito entre centenas de realidades. Um tormento de séculos comprimido em um único segundo. Para me poupar de um destino tão estarrecedor, Khayzam — meu carcereiro e, ironicamente, meu salvador — criou um bolsão extradimensional onde minha consciência pudesse permanecer contida, onde uma parte da minha racionalidade sobrevivesse. Ele me permitiu ficar com o Livro. Misericórdia ou crueldade refinada? Ainda debato isso comigo mesmo. Mas minha função ficou clara: observar. Registrar. Procurar pessoas e grupos notáveis — atos de bravura e valentia, compaixão e justiça, sagacidade e perspicácia. Tudo deve ser escrito. Sou um Zeitgeist agora. Um espírito do tempo, preso fora dele. Condenado a observar o inesperado perante os olhos daqueles que ainda podem escolher o próprio caminho. E nessas páginas que vocês leem, encontrarão o que registrei — cada herói, cada vilão, cada lugar esquecido, cada relíquia perdida. A solidão deste lugar é uma companhia constante. Mas de tempos em tempos, almas infelizes tropeçam nas armadilhas de Khayzam e acabam aqui — condenados temporários, assim como eu fui permanente. A prisão do Arquimago é vasta: andares distintos, cada um guardado por sentinelas cujas chaves são o único caminho adiante. Entre um andar e outro, porém, existe este meu refúgio — uma cabana modesta cercada de verde, pés de frutas, um pequeno lago onde o tempo finge ser gentil. Certa vez, um grupo particularmente barulhento foi arremessado para cá. Um deles — Morpheus, se não me engano — havia tocado em algo que não deveria. Típico. Chamavam-se os Improváveis de Solária, e o nome lhes caía bem. Abriguei-os. Dividi o que tinha. Bebemos, e entre um gole e outro, contei-lhes histórias — algumas do Livro, outras minhas, fragmentos que ainda consigo segurar antes que se dissolvam entre as páginas. Eles me contaram as deles também. Enquanto bebíamos, o Livro continuava a escrever. Vi páginas que ainda não lhes pertenciam — capítulos não vividos, finais ainda não escritos. Guardei silêncio. Há coisas que mesmo um escriba não tem o direito de contar. Foi... bom. Uma palavra simples para algo que um Zeitgeist raramente experimenta. Inevitavelmente, partiram. Todos partem. Mas suas estórias ficaram, e essas eu guardo com um cuidado que talvez nem eles saibam. Os Improváveis de Solária foram apenas um capítulo entre milhares. O Livro segue escrevendo, e eu sigo observando — cada alma notável, cada ato que merece ser lembrado. Para que um dia, quando o tempo do fim se apresente, todos ouçam O Chamado. E mais uma vez, Atrianos lutarão por Átrias. Até lá, eu observo. Eu escrevo. Eu espero. — Thaveus, O Escriba das Estórias Não Contadas"
+          - listitem [ref=e543]:
+            - generic [ref=e544]:
+              - heading [level=2] [ref=e545]:
+                - link "Thrandorin Dobra'ouro" [ref=e546] [cursor=pointer]:
+                  - /url: /characters/thrandorin-dobra-ouro
+              - paragraph [ref=e547]: Thrandorin Dobra'ouro was the king of the dwarves of Khal'Guldur, known for his bravery and craftsmanship. He led his people in battle against the Devourer of Worlds and was a symbol of pride and strength for the dwarves.
+          - listitem [ref=e551]:
+            - generic [ref=e552]:
+              - heading [level=2] [ref=e553]:
+                - link "Turmog" [ref=e554] [cursor=pointer]:
+                  - /url: /characters/turmog
+              - paragraph [ref=e555]: Personagem de Átrias (informações ainda não catalogadas nos documentos extraídos).
+          - listitem [ref=e559]:
+            - generic [ref=e560]:
+              - heading [level=2] [ref=e561]:
+                - link "Ulfgar" [ref=e562] [cursor=pointer]:
+                  - /url: /characters/ulfgar
+              - paragraph [ref=e563]: Anão devoto de Thor. Realiza rituais e milagres para salvar aliados (incluindo um ritual perigoso para curar Vasili) e lidera atos de fé durante a guerra em Skeld.
+          - listitem [ref=e567]:
+            - generic [ref=e568]:
+              - heading [level=2] [ref=e569]:
+                - link "Uthred" [ref=e570] [cursor=pointer]:
+                  - /url: /characters/uthred
+              - paragraph [ref=e571]: bárbaro
+              - paragraph [ref=e572]: Guerreiro bárbaro das Fúrias. Sofre efeitos do veneno Marat Alruh e enfrenta o corrompido Ionius em Videnserg.
+          - listitem [ref=e576]:
+            - generic [ref=e577]:
+              - heading [level=2] [ref=e578]:
+                - link "Vasili" [ref=e579] [cursor=pointer]:
+                  - /url: /characters/vasili
+              - paragraph [ref=e580]: bardo
+              - paragraph [ref=e581]: Bardo das Fúrias, usa magia de suporte e transformação (chega a transformar Gibson em mamute). Adoece gravemente e é salvo por um ritual arriscado conduzido por Ulfgar.
+          - listitem [ref=e585]:
+            - generic [ref=e586]:
+              - heading [level=2] [ref=e587]:
+                - link "Veleska Haralskin" [ref=e588] [cursor=pointer]:
+                  - /url: /characters/veleska-haralskin
+              - paragraph [ref=e589]: An exiled aristocrat from Nerânia who believes she has the right to govern Pedraluna due to her noble blood. She often conflicts with Latélia Hugmore.
+          - listitem [ref=e593]:
+            - generic [ref=e594]:
+              - heading [level=2] [ref=e595]:
+                - link "Vorlak" [ref=e596] [cursor=pointer]:
+                  - /url: /characters/vorlak
+              - paragraph [ref=e597]: Personagem de Átrias (informações ainda não catalogadas nos documentos extraídos).
+          - listitem [ref=e601]:
+            - generic [ref=e602]:
+              - heading [level=2] [ref=e603]:
+                - link "Yurdra" [ref=e604] [cursor=pointer]:
+                  - /url: /characters/yurdra
+              - paragraph [ref=e605]: Ferreira (com forja improvisada) ligada aos Ursos-Negros. Pede ao grupo para recuperar diagramas do pai em Torngard e acaba envolvida em uma possessão/ligação demoníaca.
+  - button "Open Next.js Dev Tools" [ref=e614] [cursor=pointer]

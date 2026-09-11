@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-09-08T22:51:09.657Z",
+  "generatedAt": "2026-09-10T23:54:32.770337+00:00",
   "title": "Design System: Átrias Wiki",
   "extensions": {
     "colorMeta": {
@@ -144,9 +144,9 @@
     {
       "name": "Cabeçalho",
       "kind": "nav",
-      "description": "Cabeçalho recorrente das rotas.",
-      "html": "<nav class=\"ds-nav\"><a href=\"/\">WIKI ÁTRIAS</a></nav>",
-      "css": ".ds-nav{background:#0a1628;padding:16px 24px}.ds-nav a{color:oklch(82.8% .189 84.429);font-family:var(--font-cinzel,serif);font-size:18px;letter-spacing:.05em;text-decoration:none}.ds-nav a:hover{color:oklch(87.9% .169 91.605)}.ds-nav a:focus-visible{outline:2px solid #c6a862;outline-offset:3px}"
+      "description": "Cabeçalho global único: marca, busca e conta, alinhados ao conteúdo. Prévia do estado visitante.",
+      "html": "<header class=\"ds-header\"><nav class=\"ds-nav\" aria-label=\"Navegação principal\"><a class=\"ds-brand\" href=\"/\">Wiki Átrias</a><button class=\"ds-search-trigger\" type=\"button\" aria-label=\"Buscar na wiki\" aria-haspopup=\"dialog\"><svg aria-hidden=\"true\" width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><circle cx=\"11\" cy=\"11\" r=\"8\"/><path d=\"m21 21-4.3-4.3\"/></svg><span>Buscar na wiki…</span><kbd>Ctrl K / ⌘ K</kbd></button><a class=\"ds-signin\" href=\"/login\">Entrar</a></nav></header>",
+      "css": ".ds-header{background:#0a1628;color:#fef3c7;border-bottom:1px solid #fde68a1a;font:14px Arial,Helvetica,sans-serif}.ds-nav{box-sizing:border-box;max-width:1152px;margin:auto;min-height:64px;display:flex;align-items:center;gap:24px;padding:8px 24px}.ds-brand{margin-right:auto;flex-shrink:0;color:#fbbf24;font:18px var(--font-cinzel,serif);text-decoration:none}.ds-search-trigger{display:flex;align-items:center;gap:8px;width:224px;min-height:44px;flex-shrink:0;background:#ffffff0d;border:1px solid #fde68a40;border-radius:8px;color:#fef3c7cc;padding:0 12px;font:inherit;cursor:pointer}.ds-search-trigger kbd{margin-left:auto;font:12px Arial;color:#fef3c7a6}.ds-signin{display:inline-flex;align-items:center;min-height:44px;padding:0 12px;flex-shrink:0;border:1px solid #fde68a66;border-radius:4px;color:inherit;text-decoration:none}.ds-nav :is(a,button):focus-visible{outline:2px solid #fbbf24;outline-offset:2px}.ds-brand:hover{color:#fcd34d}.ds-search-trigger:hover,.ds-signin:hover{background:#ffffff1a}@media(min-width:1024px){.ds-search-trigger{width:256px}}@media(max-width:639px){.ds-nav{gap:12px;padding:8px 16px}.ds-brand{font-size:14px}.ds-search-trigger{width:auto}.ds-search-trigger span,.ds-search-trigger kbd{display:none}}"
     },
     {
       "name": "Cartão de lugar",
@@ -173,7 +173,13 @@
       "Cartões com cantos arredondados, bordas e estados de hover."
     ],
     "rules": [],
-    "dos": [],
-    "donts": []
+    "dos": [
+      "Do preservar a identidade da superfície selecionada e seus estados funcionais ao gerar variantes.",
+      "Do reutilizar fontes carregadas, cores existentes e assets do cenário."
+    ],
+    "donts": [
+      "Don't tratar a ausência de padronização entre rotas como autorização para redesenhar o produto inteiro.",
+      "Don't declarar contraste, foco ou movimento acessíveis apenas porque aparecem neste registro; não foi feita auditoria de conformidade."
+    ]
   }
 }

@@ -35,6 +35,7 @@ export default async function AdminEditEntityPage({
         collection={collection}
         initial={{
           id: entity.id,
+          image: entity.image,
           type: entity.type,
           name: entity.name,
           slug: entity.slug,

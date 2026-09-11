@@ -8,14 +8,7 @@ export function WikiArchive({ title, subtitle, icon, collection, entries }: {
 }) {
   return (
     <main className="min-h-screen bg-[#e8dcc8] text-slate-800 selection:bg-amber-200 selection:text-slate-900">
-      <header className="bg-[#0a1628] px-6 py-4 text-amber-100">
-        <div className="mx-auto max-w-6xl">
-          <Link href="/" className="inline-flex min-h-11 items-center gap-2 text-amber-400 hover:text-amber-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-400">
-            <Icon icon="game-icons:book-cover" className="h-6 w-6" aria-hidden="true" />
-            <span className="font-cinzel text-lg">WIKI ÁTRIAS</span>
-          </Link>
-        </div>
-      </header>
+
       <div className="mx-auto w-full max-w-6xl px-5 pb-12 sm:px-6">
         <nav aria-label="Navegação estrutural" className="flex flex-wrap items-center gap-2 py-4 text-sm">
           <Link href="/browse" className="inline-flex min-h-11 items-center text-amber-800 underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-800">Arquivos</Link>
@@ -30,7 +23,7 @@ export function WikiArchive({ title, subtitle, icon, collection, entries }: {
             </div>
             <p className="mt-2 font-manuscript text-base italic text-slate-600">{subtitle}</p>
           </div>
-          <WikiContributionActions collection={collection} enabled={process.env.WIKI_EDITING_ENABLED !== 'false'} subtle />
+          <div className="flex flex-wrap items-center gap-4">{collection === 'places' && <Link href="/map" className="inline-flex min-h-11 items-center gap-2 text-sm text-amber-900 underline-offset-4 hover:underline"><Icon icon="mdi:map-outline" aria-hidden="true" />Explorar o mapa</Link>}<WikiContributionActions collection={collection} enabled={process.env.WIKI_EDITING_ENABLED !== 'false'} subtle /></div>
         </div>
         <WikiArchiveList collection={collection} entries={entries} />
       </div>

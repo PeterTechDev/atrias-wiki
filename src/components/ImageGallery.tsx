@@ -1,162 +1,87 @@
 'use client'
 
-import { useState } from 'react'
-import { Icon } from '@iconify/react'
+import { useEffect, useId, useRef, useState } from 'react'
+import { ArrowLeft, ArrowRight, Expand, ImageOff, Play, X } from 'lucide-react'
+import type { CharacterMedia } from '@/lib/characterMedia'
 
-interface GalleryImage {
-  src: string
-  alt: string
-  caption?: string
+function MediaAsset({ item, name, expanded = false }: { item: CharacterMedia; name: string; expanded?: boolean }) {
+  const [failed, setFailed] = useState(false)
+  const [attempt, setAttempt] = useState(0)
+  const src = item.type === 'video' && !expanded ? item.poster : item.src
+  if (failed) return <span className="flex min-h-56 flex-col items-center justify-center gap-3 p-6 text-center text-stone-200" role="status">
+    <ImageOff aria-hidden="true" className="h-8 w-8" />
+    <span>Não foi possível carregar {item.type === 'video' ? 'o vídeo' : 'a imagem'}.</span>
+    {expanded && <button type="button" className="min-h-11 rounded px-4 underline underline-offset-4" onClick={() => { setFailed(false); setAttempt(value => value + 1) }}>Tentar novamente</button>}
+  </span>
+  if (item.type === 'video' && expanded) return <video key={attempt} src={item.src} controls playsInline preload="metadata" poster={item.poster || undefined} onError={() => setFailed(true)} className="max-h-[65dvh] w-full" aria-label={item.caption || `Vídeo de ${name}`}>
+    {item.captions && <track kind="captions" src={item.captions} srcLang="pt-BR" label="Português" default />}
+    Seu navegador não suporta este vídeo.
+  </video>
+  if (!src) return <span className="flex min-h-64 items-center justify-center"><Play aria-hidden="true" className="h-16 w-16 text-[#c6a862]" /></span>
+  // Remote editorial assets preserve their proportions without image-host configuration.
+  // eslint-disable-next-line @next/next/no-img-element
+  return <img key={attempt} src={src} alt={item.alt || item.caption || name} onError={() => setFailed(true)} className={expanded ? 'mx-auto max-h-[65dvh] max-w-full object-contain' : 'max-h-[34rem] w-full object-contain'} fetchPriority={expanded ? 'auto' : 'high'} />
 }
 
-interface ImageGalleryProps {
-  images: GalleryImage[]
-}
+export default function ImageGallery({ media, name }: { media: CharacterMedia[]; name: string }) {
+  const [index, setIndex] = useState(0)
+  const [open, setOpen] = useState(false)
+  const dialog = useRef<HTMLDialogElement>(null)
+  const titleId = useId()
+  const current = media[index] ?? media[0]
 
-export default function ImageGallery({ images }: ImageGalleryProps) {
-  const [lightboxOpen, setLightboxOpen] = useState(false)
-  const [currentIndex, setCurrentIndex] = useState(0)
+  useEffect(() => {
+    if (!open) return
+    const previous = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = previous }
+  }, [open])
 
-  if (!images || images.length === 0) return null
+  if (!current) return null
+  function show() { setOpen(true); dialog.current?.showModal() }
+  function move(step: number) { setIndex(value => (value + step + media.length) % media.length) }
 
-  const openLightbox = (index: number) => {
-    setCurrentIndex(index)
-    setLightboxOpen(true)
-  }
+  return <div className="min-w-0 scroll-mt-6">
+    <figure>
+      <button type="button" onClick={show} aria-label={current.type === 'video' ? `Ver vídeo de ${name}` : `Ampliar imagem de ${name}`} className="group relative block w-full overflow-hidden rounded-xl bg-[#0a1628] text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-800">
+        <MediaAsset key={`${index}:${current.src}`} item={current} name={name} />
+        <span className="absolute right-4 bottom-4 inline-flex min-h-11 items-center gap-2 rounded-md bg-[#0a1628]/90 px-3 text-sm group-hover:bg-[#0a1628]">
+          {current.type === 'video' ? <Play aria-hidden="true" className="h-4 w-4" /> : <Expand aria-hidden="true" className="h-4 w-4" />}
+          {current.type === 'video' ? 'Ver vídeo' : 'Ampliar'}
+        </span>
+      </button>
+      {(current.caption || current.credit) && <figcaption className="mt-3 text-sm leading-relaxed text-[#665b49]">
+        {current.caption}{current.credit && <span className="block">Crédito: {current.credit}</span>}
+      </figcaption>}
+    </figure>
 
-  const closeLightbox = () => {
-    setLightboxOpen(false)
-  }
-
-  const goNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % images.length)
-  }
-
-  const goPrev = () => {
-    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length)
-  }
-
-  // Handle keyboard navigation
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Escape') closeLightbox()
-    if (e.key === 'ArrowRight') goNext()
-    if (e.key === 'ArrowLeft') goPrev()
-  }
-
-  return (
-    <>
-      {/* Thumbnail Grid */}
-      <div className={`grid gap-2 ${images.length === 1 ? 'grid-cols-1' : 'grid-cols-2'}`}>
-        {images.map((image, index) => (
-          <div
-            key={index}
-            className="relative cursor-pointer group overflow-hidden rounded-lg"
-            onClick={() => openLightbox(index)}
-          >
-            <img
-              src={image.src}
-              alt={image.alt}
-              className="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105"
-            />
-            {/* Hover Overlay */}
-            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
-              <Icon 
-                icon="game-icons:magnifying-glass" 
-                className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity"
-              />
-            </div>
-            {/* Caption */}
-            {image.caption && (
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-2">
-                <p className="text-white text-xs">{image.caption}</p>
-              </div>
-            )}
-          </div>
-        ))}
+    {media.length > 1 && <div className="mt-4">
+      <div className="mb-2 flex items-center justify-between text-sm text-[#665b49]"><span>Imagens e vídeos</span><span aria-live="polite">{index + 1} de {media.length}</span></div>
+      <div className="flex gap-3 overflow-x-auto px-1 py-1" aria-label="Selecionar mídia">
+        {media.map((item, i) => <button key={`${i}:${item.src}`} type="button" aria-label={`${item.type === 'video' ? 'Vídeo' : 'Imagem'} ${i + 1}${item.caption ? `: ${item.caption}` : ''}`} aria-pressed={index === i} onClick={() => setIndex(i)} className={`relative flex h-16 w-20 shrink-0 items-center justify-center overflow-hidden rounded-md bg-[#0a1628] text-white outline-offset-2 focus-visible:outline-2 focus-visible:outline-amber-800 ${index === i ? 'ring-2 ring-amber-800 ring-offset-2 ring-offset-[#e8dcc8]' : 'opacity-70 hover:opacity-100'}`}>
+          {(item.type === 'image' || item.poster) &&
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={item.type === 'image' ? item.src : item.poster} alt="" loading="lazy" className="h-full w-full object-cover" />}
+          {item.type === 'video' && <Play aria-hidden="true" className="absolute h-7 w-7 rounded-full bg-[#0a1628]/80 p-1" />}
+        </button>)}
       </div>
+    </div>}
 
-      {/* Lightbox */}
-      {lightboxOpen && (
-        <div
-          className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center"
-          onClick={closeLightbox}
-          onKeyDown={handleKeyDown}
-          tabIndex={0}
-        >
-          {/* Close Button */}
-          <button
-            className="absolute top-4 right-4 text-white/70 hover:text-white transition-colors z-10"
-            onClick={closeLightbox}
-          >
-            <Icon icon="game-icons:cancel" className="w-8 h-8" />
-          </button>
-
-          {/* Image Counter */}
-          {images.length > 1 && (
-            <div className="absolute top-4 left-4 text-white/70 text-sm">
-              {currentIndex + 1} / {images.length}
-            </div>
-          )}
-
-          {/* Previous Button */}
-          {images.length > 1 && (
-            <button
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white transition-colors"
-              onClick={(e) => { e.stopPropagation(); goPrev(); }}
-            >
-              <Icon icon="game-icons:arrow-left" className="w-10 h-10" />
-            </button>
-          )}
-
-          {/* Main Image */}
-          <div 
-            className="max-w-[90vw] max-h-[90vh] flex flex-col items-center"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <img
-              src={images[currentIndex].src}
-              alt={images[currentIndex].alt}
-              className="max-w-full max-h-[85vh] object-contain"
-            />
-            {images[currentIndex].caption && (
-              <p className="text-white/80 text-center mt-4 font-crimson italic">
-                {images[currentIndex].caption}
-              </p>
-            )}
-          </div>
-
-          {/* Next Button */}
-          {images.length > 1 && (
-            <button
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-white/70 hover:text-white transition-colors"
-              onClick={(e) => { e.stopPropagation(); goNext(); }}
-            >
-              <Icon icon="game-icons:arrow-right" className="w-10 h-10" />
-            </button>
-          )}
-
-          {/* Thumbnail Strip */}
-          {images.length > 1 && (
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-              {images.map((img, index) => (
-                <button
-                  key={index}
-                  className={`w-16 h-16 rounded overflow-hidden border-2 transition-all ${
-                    index === currentIndex ? 'border-amber-500 opacity-100' : 'border-transparent opacity-50 hover:opacity-75'
-                  }`}
-                  onClick={(e) => { e.stopPropagation(); setCurrentIndex(index); }}
-                >
-                  <img
-                    src={img.src}
-                    alt={img.alt}
-                    className="w-full h-full object-cover"
-                  />
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-      )}
-    </>
-  )
+    <dialog ref={dialog} aria-labelledby={titleId} onClose={() => setOpen(false)} onClick={event => { if (event.target === event.currentTarget) dialog.current?.close() }} onKeyDown={event => {
+      if (event.target instanceof HTMLVideoElement) return
+      if (media.length > 1 && ['ArrowLeft', 'ArrowRight'].includes(event.key)) { event.preventDefault(); move(event.key === 'ArrowLeft' ? -1 : 1) }
+    }} className="fixed inset-0 m-auto max-h-[95dvh] w-[min(72rem,96vw)] max-w-none overflow-y-auto rounded-xl bg-[#0a1628] p-4 text-[#f5efe5] backdrop:bg-black/85 sm:p-6 [&_button]:focus-visible:outline-2 [&_button]:focus-visible:outline-offset-2 [&_button]:focus-visible:outline-amber-300">
+      <div className="mb-4 flex items-center justify-between gap-4">
+        <h2 id={titleId} className="min-w-0 break-words font-crimson text-xl">{name}{media.length > 1 && <span className="ml-3 text-sm tabular-nums">{index + 1} / {media.length}</span>}</h2>
+        <button type="button" onClick={() => dialog.current?.close()} aria-label="Fechar galeria" className="flex h-11 w-11 shrink-0 items-center justify-center rounded-md hover:bg-white/10"><X aria-hidden="true" /></button>
+      </div>
+      {open && <MediaAsset key={`${index}:${current.src}`} item={current} name={name} expanded />}
+      {open && current.type === 'image' && <a href={current.src} target="_blank" rel="noopener noreferrer" className="mt-4 flex min-h-11 items-center justify-center text-sm text-amber-200 underline underline-offset-4 focus-visible:outline-2 focus-visible:outline-amber-300">Abrir imagem original em nova aba</a>}
+      {(current.caption || current.credit) && <p className="mt-4 text-center font-crimson text-lg">{current.caption}{current.credit && <span className="block text-sm text-stone-300">Crédito: {current.credit}</span>}</p>}
+      {media.length > 1 && <div className="mt-4 flex items-center justify-between gap-4">
+        <button type="button" onClick={() => move(-1)} className="inline-flex min-h-11 items-center gap-2 rounded-md px-3 hover:bg-white/10"><ArrowLeft aria-hidden="true" className="h-5 w-5" />Anterior</button>
+        <button type="button" onClick={() => move(1)} className="inline-flex min-h-11 items-center gap-2 rounded-md px-3 hover:bg-white/10">Próxima<ArrowRight aria-hidden="true" className="h-5 w-5" /></button>
+      </div>}
+    </dialog>
+  </div>
 }

@@ -30,15 +30,7 @@ export default async function BrowsePage() {
 
   return (
     <main className="min-h-screen flex flex-col bg-[#e8dcc8]">
-      {/* Header */}
-      <header className="bg-[#0a1628] text-white py-4">
-        <div className="max-w-6xl mx-auto px-6 flex justify-between items-center">
-          <Link href="/" className="flex items-center gap-2 text-amber-400 hover:text-amber-300">
-            <Icon icon="game-icons:book-cover" className="w-6 h-6" />
-            <span className="font-cinzel text-lg tracking-wider">WIKI ÁTRIAS</span>
-          </Link>
-        </div>
-      </header>
+
 
       <div className="w-full max-w-6xl mx-auto px-6 pt-6 pb-12 sm:pb-16">
         {/* Breadcrumb */}

@@ -1,0 +1,82 @@
+
+> atrias-wiki-app@0.1.0 build
+> next build
+
+▲ Next.js 16.1.6 (Turbopack)
+- Environments: .env.local
+
+⚠ The "middleware" file convention is deprecated. Please use "proxy" instead. Learn more: https://nextjs.org/docs/messages/middleware-to-proxy
+  Creating an optimized production build ...
+✓ Compiled successfully in 4.6s
+  Running TypeScript ...
+  Collecting page data using 11 workers ...
+  Generating static pages using 11 workers (0/22) ...
+  Generating static pages using 11 workers (5/22) 
+  Generating static pages using 11 workers (10/22) 
+  Generating static pages using 11 workers (16/22) 
+✓ Generating static pages using 11 workers (22/22) in 301.5ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ○ /_not-found
+├ ƒ /admin
+├ ƒ /admin/[collection]
+├ ƒ /admin/[collection]/[slug]/edit
+├ ƒ /admin/[collection]/new
+├ ƒ /admin/users
+├ ƒ /api/admin/entities
+├ ƒ /api/admin/entities/[id]
+├ ƒ /api/admin/magic-pen
+├ ƒ /api/admin/references
+├ ƒ /api/admin/users
+├ ƒ /api/graph
+├ ƒ /api/search
+├ ƒ /api/sessions/process
+├ ƒ /api/sessions/save
+├ ƒ /api/wiki/archived
+├ ƒ /api/wiki/entities
+├ ƒ /api/wiki/entities/[id]
+├ ƒ /api/wiki/entities/[id]/archive
+├ ƒ /api/wiki/favorites
+├ ƒ /api/wiki/favorites/[id]
+├ ƒ /api/wiki/references
+├ ƒ /api/wiki/session
+├ ƒ /browse
+├ ƒ /characters
+├ ƒ /characters/[slug]
+├ ○ /demo
+├ ○ /dice
+├ ƒ /factions
+├ ƒ /factions/[slug]
+├ ƒ /graph
+├ ƒ /items
+├ ƒ /items/[slug]
+├ ○ /login
+├ ƒ /lore
+├ ƒ /lore/[slug]
+├ ƒ /map
+├ ƒ /monsters
+├ ƒ /monsters/[slug]
+├ ƒ /others
+├ ƒ /others/[slug]
+├ ƒ /places
+├ ƒ /places/[slug]
+├ ○ /search
+├ ƒ /sessions
+├ ƒ /sessions/[campaign]
+├ ƒ /sessions/[campaign]/[chapter]
+├ ○ /sessions/new
+├ ○ /timeline
+├ ƒ /wiki/[collection]/[slug]
+├ ƒ /wiki/[collection]/[slug]/edit
+├ ƒ /wiki/[collection]/new
+├ ○ /wiki/archived
+└ ○ /wiki/favorites
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
