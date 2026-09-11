@@ -14,11 +14,12 @@ import GlobalSearch from '@/components/GlobalSearch'
 const AuthContext = createContext<{ user: User | null; loading: boolean }>({ user: null, loading: true })
 export const useAuth = () => useContext(AuthContext)
 
-export function Avatar({ value }: { value?: string }) {
+export function Avatar({ value, size = 40 }: { value?: string; size?: number }) {
   if (value?.startsWith(`${supabaseUrl}/storage/v1/object/public/avatars/`)) {
-    return <Image src={value} alt="Foto de perfil" width={40} height={40} unoptimized className="h-10 w-10 rounded-full object-cover" />
+    return <Image src={value} alt="Foto de perfil" width={size} height={size} unoptimized className="shrink-0 rounded-full object-cover" style={{ width: size, height: size }} />
   }
-  return <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-amber-100/10 text-2xl" aria-label={avatars.find(a => a.id === value)?.label || 'Mago'}>{avatars.find(a => a.id === value)?.symbol || '🧙'}</span>
+  const avatar = avatars.find(a => a.id === value) || avatars[0]
+  return <Image src={`/avatars/${avatar.id}.svg`} alt={avatar.label} width={size} height={size} className="shrink-0 rounded-full bg-amber-100/5 p-1.5" />
 }
 
 export default function AuthProvider({ children }: { children: React.ReactNode }) {
