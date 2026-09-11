@@ -1,5 +1,8 @@
 'use client'
 
+import { wikiLinkText } from '@/lib/wikiLinks'
+
+
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useAuth } from '@/components/AuthProvider'
@@ -56,7 +59,7 @@ function Favorites({ userId }: { userId: string }) {
       <div className="flex flex-wrap items-start justify-between gap-4">
         <Link href={item.archivedAt ? `/wiki/${paths[item.type]}/${item.slug}` : `/${paths[item.type]}/${item.slug}`} className="min-w-0 flex-1 hover:text-amber-300">
           <h2 className="break-words font-semibold">{item.name} {item.archivedAt && <span className="text-xs text-amber-400">Arquivada</span>}</h2>
-          <p className="mt-1 break-words text-sm text-zinc-400">{labels[item.type]}{item.description ? ` · ${item.description}` : ''}</p>
+          <p className="mt-1 break-words text-sm text-zinc-400">{labels[item.type]}{item.description ? ` · ${wikiLinkText(item.description)}` : ''}</p>
         </Link>
         <button type="button" onClick={() => remove(item.id)} disabled={busy || loading} className="text-sm text-amber-400 hover:text-amber-300 disabled:opacity-50">Remover dos favoritos</button>
       </div>

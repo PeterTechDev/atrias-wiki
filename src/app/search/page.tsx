@@ -1,5 +1,8 @@
 'use client'
 
+import { wikiLinkText } from '@/lib/wikiLinks'
+
+
 /**
  * Search page with instant client-side filtering
  * Works with static export (no API routes needed)
@@ -174,7 +177,7 @@ export default function SearchPage() {
                     </h3>
                     <span className="text-xs text-zinc-500 uppercase">{result.type}</span>
                     {result.description && (
-                      <p className="text-zinc-400 text-sm mt-1 line-clamp-2">{result.description}</p>
+                      <p className="text-zinc-400 text-sm mt-1 line-clamp-2">{wikiLinkText(result.description)}</p>
                     )}
                   </div>
                 </div>

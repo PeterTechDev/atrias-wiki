@@ -1,3 +1,4 @@
+import { WikiText } from '@/components/WikiText'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { ArrowLeft, ArrowUp, BookOpen, ChevronRight, Feather } from 'lucide-react'
@@ -5,6 +6,8 @@ import ImageGallery from '@/components/ImageGallery'
 import { getEntityBySlug, getPlacesForCharacter } from '@/db/queries/entities'
 import type { CharacterData } from '@/types/entities'
 import { getCharacterMedia } from '@/lib/characterMedia'
+import { getCharacterCard } from '@/lib/characterCard'
+import { CharacterCard } from '@/components/CharacterCard'
 import { WikiContributionActions } from '@/components/WikiContributionActions'
 import { WikiLastEdited } from '@/components/WikiLastEdited'
 import { WikiFavoriteButton } from '@/components/WikiFavoriteButton'
@@ -23,6 +26,7 @@ export default async function CharacterPage({ params }: { params: Promise<{ slug
   const places = await getPlacesForCharacter(slug)
   const data = (entity.data ?? {}) as CharacterData
   const media = getCharacterMedia(data, entity.image)
+  const card = getCharacterCard(data.card3d)
   const facts = [
     { label: 'Raça', value: data.race },
     { label: 'Status', value: data.status ? statusLabels[data.status] || data.status : undefined },
@@ -70,6 +74,11 @@ export default async function CharacterPage({ params }: { params: Promise<{ slug
         </dl>}
       </section>
 
+      {card && <section aria-labelledby="character-card-title" className={styles.cardSection}>
+        <h2 id="character-card-title">Card 3D</h2>
+        <CharacterCard key={`${card.foreground}:${card.background}`} card={card} name={entity.name} />
+      </section>}
+
       {sections.length > 1 && <nav className={styles.sectionNav} aria-label="Nesta página">
         <span>Nesta página</span>
         <div>{sections.map(section => <a key={section.id} href={`#${section.id}`}>{section.label}</a>)}</div>
@@ -79,7 +88,7 @@ export default async function CharacterPage({ params }: { params: Promise<{ slug
         <article id="historia" className={styles.story}>
           <h2><Feather aria-hidden="true" size={22} />História</h2>
           {entity.description ? <div className={styles.prose}>
-            {entity.description.split(/\n\s*\n/).filter(Boolean).map((paragraph, index) => <p key={index}>{paragraph}</p>)}
+            {entity.description.split(/\n\s*\n/).filter(Boolean).map((paragraph, index) => <p key={index}><WikiText text={paragraph} /></p>)}
           </div> : <p className={styles.empty}>A história deste personagem ainda não foi registrada.</p>}
         </article>
 

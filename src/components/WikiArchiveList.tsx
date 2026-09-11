@@ -1,5 +1,8 @@
 'use client'
 
+import { wikiLinkText } from '@/lib/wikiLinks'
+
+
 import { useState } from 'react'
 import Link from 'next/link'
 import { ArrowUpRight, Search } from 'lucide-react'
@@ -39,7 +42,7 @@ export function WikiArchiveList({ collection, entries }: { collection: string; e
                   <Link href={`/${collection}/${entry.slug}`} className="underline-offset-4 after:absolute after:inset-0 hover:text-amber-800 hover:underline focus-visible:outline-none focus-visible:after:outline-2 focus-visible:after:outline-offset-4 focus-visible:after:outline-amber-800">{entry.name}</Link>
                 </h2>
                 {entry.metadata?.some(Boolean) && <p className="mt-1 text-sm leading-6 break-words text-amber-900">{entry.metadata.filter(Boolean).join(' · ')}</p>}
-                <p className="mt-1 line-clamp-2 max-w-[72ch] font-crimson text-lg leading-6 break-words text-slate-600">{entry.description || 'Registro sem descrição.'}</p>
+                <p className="mt-1 line-clamp-2 max-w-[72ch] font-crimson text-lg leading-6 break-words text-slate-600">{wikiLinkText(entry.description || 'Registro sem descrição.')}</p>
               </div>
               {entry.image && <img src={entry.image} alt="" width={72} height={80} loading="lazy" className="h-20 w-16 shrink-0 rounded object-cover object-top sm:w-[72px]" />}
               <ArrowUpRight aria-hidden="true" className="mt-1 hidden h-5 w-5 shrink-0 text-amber-800 sm:block" />

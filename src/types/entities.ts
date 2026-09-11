@@ -1,11 +1,13 @@
 import type { Entity, EntityType } from '@/db/schema'
 import type { CharacterMedia } from '@/lib/characterMedia'
+import type { CharacterCard } from '@/lib/characterCard'
 import type { PlaceResident, PlaceSection } from '@/lib/placeContent'
 
 // Type-specific data structures
 export interface CharacterData {
   image?: string
   media?: CharacterMedia[]
+  card3d?: CharacterCard | null
   race?: string
   class?: string
   alignment?: string

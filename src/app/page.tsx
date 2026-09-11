@@ -1,3 +1,4 @@
+import { wikiLinkText } from '@/lib/wikiLinks'
 /**
  * Atrias Wiki - Epic Fantasy Landing Page
  * Fantasy aesthetic with Cinzel font and warm colors
@@ -151,7 +152,7 @@ export default async function Home() {
                     {place.name}
                   </h3>
                   <p className="mt-3 text-sm text-slate-600 font-crimson leading-relaxed">
-                    {place.description || "Um lugar misterioso aguardando para ser descoberto nas terras de Atrias."}
+                    {wikiLinkText(place.description || '') || "Um lugar misterioso aguardando para ser descoberto nas terras de Atrias."}
                   </p>
                   <Link
                     href={`/places/${place.slug}`}
@@ -190,7 +191,7 @@ export default async function Home() {
                   {char.name}
                 </h3>
                 <p className="mt-3 text-sm text-slate-300/80 font-crimson line-clamp-2">
-                  {char.description || "Um personagem misterioso do mundo de Atrias."}
+                  {wikiLinkText(char.description || '') || "Um personagem misterioso do mundo de Atrias."}
                 </p>
                 <span className="mt-4 inline-flex items-center text-sm text-amber-600 group-hover:translate-x-1 transition-transform">
                   Ler cronica →
@@ -228,7 +229,7 @@ export default async function Home() {
                 <div>
                   <h3 className="font-cinzel text-amber-600 tracking-wide">{faction.name}</h3>
                   <p className="mt-1 text-sm text-slate-400 font-crimson">
-                    {faction.description?.slice(0, 80) || "Uma organizacao influente em Atrias."}...
+                    {wikiLinkText(faction.description || '').slice(0, 80) || "Uma organizacao influente em Atrias."}...
                   </p>
                 </div>
               </div>

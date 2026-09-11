@@ -1,3 +1,4 @@
+import { WikiText } from '@/components/WikiText'
 /**
  * Item Detail Page
  */
@@ -77,7 +78,7 @@ export default async function ItemPage({ params }: PageProps) {
                 )}
               </div>
               <h1 className="font-cinzel text-4xl text-amber-400 mb-2">{item.name}</h1>
-              <div className="text-slate-300 font-crimson text-lg italic space-y-4">{(item.description || 'Um item misterioso aguardando para ser descoberto.').split('\n\n').map((p, i) => (<p key={i}>{p}</p>))}</div>
+              <div className="text-slate-300 font-crimson text-lg italic space-y-4">{(item.description || 'Um item misterioso aguardando para ser descoberto.').split('\n\n').map((p, i) => (<p key={i}><WikiText text={p} /></p>))}</div>
             </div>
           </div>
         </div>

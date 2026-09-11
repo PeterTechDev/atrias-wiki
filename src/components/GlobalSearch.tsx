@@ -1,5 +1,8 @@
 'use client'
 
+import { wikiLinkText } from '@/lib/wikiLinks'
+
+
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { Search, X } from 'lucide-react'
@@ -116,7 +119,7 @@ function SearchContents({ recent, onSelect, onClose }: { recent: string[]; onSel
         <Link href={`/${categories[result.type][1]}/${result.slug}`} onClick={() => onSelect(term)} className="block rounded-lg px-3 py-3 hover:bg-amber-100/10 focus-visible:bg-amber-100/10 focus-visible:outline-2 focus-visible:outline-amber-400">
           <span className="text-xs text-amber-100/65">Arquivos › {categories[result.type][0]}</span>
           <span className="mt-1 block break-words font-crimson text-xl font-semibold text-amber-50">{result.name}</span>
-          {result.description && <span className="mt-1 line-clamp-2 break-words text-sm leading-6 text-amber-100/75">{result.description}</span>}
+          {result.description && <span className="mt-1 line-clamp-2 break-words text-sm leading-6 text-amber-100/75">{wikiLinkText(result.description)}</span>}
         </Link>
       </li>)}</ul>}
     </div>

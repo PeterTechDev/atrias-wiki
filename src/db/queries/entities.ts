@@ -6,6 +6,7 @@ import { mergeEntityData, normalizeArchivedIds } from './entityEditing'
 import { isWikiDM, writerVisibility, entityVisibility, dmPermission } from '@/lib/wikiPermissions'
 import { readVisibility } from '@/lib/wikiRequest'
 import { validateCharacterMedia } from '@/lib/characterMedia'
+import { validateCharacterCard } from '@/lib/characterCard'
 import { validatePlaceData } from '@/lib/placeContent'
 
 export const wikiEntityTypes = ['character', 'place', 'faction', 'item', 'lore', 'monster', 'other'] as const
@@ -46,8 +47,11 @@ function validateEntityInput(input: { type: unknown; name: string; slug: string;
     throw new EntityWriteError('invalid', 'Description is too long.')
   }
   if (input.data !== undefined && !isRecord(input.data)) throw new EntityWriteError('invalid', 'Data must be an object.')
-  if (input.type === 'character' && isRecord(input.data) && input.data.media !== undefined) {
-    try { validateCharacterMedia(input.data.media) }
+  if (input.type === 'character' && isRecord(input.data)) {
+    try {
+      if (input.data.media !== undefined) validateCharacterMedia(input.data.media)
+      validateCharacterCard(input.data.card3d)
+    }
     catch (error) { throw new EntityWriteError('invalid', error instanceof Error ? error.message : 'Mídia inválida.') }
   }
   if (input.type === 'place' && isRecord(input.data)) {

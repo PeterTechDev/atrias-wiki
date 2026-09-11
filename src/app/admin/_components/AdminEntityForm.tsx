@@ -9,6 +9,10 @@ import type { EntityStatus, EntityType } from '@/db/schema'
 import { useAuth } from '@/components/AuthProvider'
 import { supabase } from '@/lib/supabase'
 import { CharacterMediaEditor } from '@/components/CharacterMediaEditor'
+import { CharacterCardEditor } from '@/components/CharacterCardEditor'
+import { getCharacterCard, validateCharacterCard, type CharacterCard } from '@/lib/characterCard'
+import { WikiTextEditor } from '@/components/WikiTextEditor'
+import { useUnsavedChanges } from '@/components/useUnsavedChanges'
 import { PlaceEditor } from '@/components/PlaceEditor'
 import type { PlaceData } from '@/types/entities'
 import { getPlaceContent, getPlaceMaps, validatePlaceData } from '@/lib/placeContent'
@@ -34,6 +38,7 @@ type CharacterFields = {
   titles: string
   affiliation: string
   media: CharacterMedia[]
+  card3d: CharacterCard | null
   alignment: string
   hierarchy: string
   abilities: string
@@ -145,6 +150,7 @@ function buildInitialFields(type: EntityType, data: Record<string, unknown>, ima
       titles: toCommaList(getStringArray(data, 'titles')),
       affiliation: getString(data, 'affiliation'),
       media: getCharacterMedia(data, image),
+      card3d: getCharacterCard(data.card3d),
       alignment: getString(data, 'alignment'),
       hierarchy: toCommaList(getStringArray(data, 'hierarchy')),
       abilities: toCommaList(getStringArray(data, 'abilities')),
@@ -241,6 +247,7 @@ function assembleData(type: EntityType, fields: DataFields[keyof DataFields]): R
       titles: parseCommaList(f.titles),
       affiliation: f.affiliation.trim() || undefined,
       media: f.media,
+      card3d: f.card3d,
       alignment: f.alignment.trim() || undefined,
       hierarchy: parseCommaList(f.hierarchy),
       abilities: parseCommaList(f.abilities),
@@ -451,6 +458,10 @@ export function AdminEntityForm({
   const [error, setError] = useState<string | null>(null)
 
   const [isMagicPenLoading, setIsMagicPenLoading] = useState(false)
+  const [original] = useState(() => JSON.stringify({ values, dataFields }))
+  const { allowLeave, markSaved } = useUnsavedChanges(
+    original !== JSON.stringify({ values, dataFields }) || isUploading || isMagicPenLoading
+  )
   const [magicPenError, setMagicPenError] = useState<string | null>(null)
   const [magicPenSuccessStage, setMagicPenSuccessStage] = useState<'hidden' | 'shown' | 'fading'>('hidden')
 
@@ -460,7 +471,7 @@ export function AdminEntityForm({
     setValues((v) => ({ ...v, [key]: value }))
   }
 
-  function updateDataField(key: string, value: string | boolean | CharacterMedia[]) {
+  function updateDataField(key: string, value: string | boolean | CharacterMedia[] | CharacterCard | null) {
     setDataFields((prev) => {
       const next = {
       ...(prev as Record<string, unknown>),
@@ -528,7 +539,10 @@ export function AdminEntityForm({
     }
 
     if (values.type === 'character') {
-      try { validateCharacterMedia((dataFields as CharacterFields).media) }
+      try {
+        validateCharacterMedia((dataFields as CharacterFields).media)
+        validateCharacterCard((dataFields as CharacterFields).card3d)
+      }
       catch (error) { setError(error instanceof Error ? error.message : 'Revise as mídias.'); return }
     }
 
@@ -585,6 +599,7 @@ export function AdminEntityForm({
         return
       }
 
+      markSaved()
       if (audience === 'member') {
         router.push(`/${entityTypeToCollection[values.type]}/${values.slug.trim()}`)
       } else {
@@ -682,10 +697,10 @@ export function AdminEntityForm({
             )}
           </button> : null}
         </div>
-        <textarea
+        <WikiTextEditor
           id="entity-description"
           value={values.description}
-          onChange={(e) => update('description', e.target.value)}
+          onChange={(value) => update('description', value)}
           className="mt-1 w-full min-h-24 rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
         />
         {magicPenSuccessStage !== 'hidden' ? (
@@ -738,6 +753,7 @@ export function AdminEntityForm({
 
           <div className="grid grid-cols-1 gap-4">
             <CharacterMediaEditor media={(dataFields as CharacterFields).media} onChange={media => updateDataField('media', media)} onBusyChange={setIsUploading} />
+            <CharacterCardEditor value={(dataFields as CharacterFields).card3d} onChange={card => updateDataField('card3d', card)} name={values.name} onBusyChange={setIsUploading} />
 
             <div className="rounded border border-slate-200 bg-slate-50 p-3">
               <h4 className="mb-2 text-sm font-semibold text-slate-800">Identity</h4>
@@ -1112,7 +1128,12 @@ export function AdminEntityForm({
         </button>
         <button
           type="button"
-          onClick={() => audience === 'member' && mode === 'create' ? router.push('/browse') : router.back()}
+          onClick={() => {
+            if (allowLeave()) {
+              if (audience === 'member' && mode === 'create') router.push('/browse')
+              else router.back()
+            }
+          }}
           className="inline-flex items-center justify-center gap-2 rounded border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
         >
           <Icon icon="game-icons:cancel" className="w-5 h-5" />

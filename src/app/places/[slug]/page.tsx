@@ -1,3 +1,4 @@
+import { WikiText } from '@/components/WikiText'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { Icon } from '@iconify/react'
@@ -15,7 +16,7 @@ import styles from './place.module.css'
 export const dynamic = 'force-dynamic'
 
 function Paragraphs({ text }: { text: string }) {
-  return <>{text.split(/\r?\n/).filter(line => line.trim()).map((line, index) => <p key={index}>{line}</p>)}</>
+  return <>{text.split(/\r?\n/).filter(line => line.trim()).map((line, index) => <p key={index}><WikiText text={line} /></p>)}</>
 }
 
 export default async function PlacePage({ params }: { params: Promise<{ slug: string }> }) {

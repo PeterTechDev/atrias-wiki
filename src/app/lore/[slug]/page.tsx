@@ -1,3 +1,4 @@
+import { WikiText } from '@/components/WikiText'
 /**
  * Lore Detail Page
  */
@@ -76,7 +77,7 @@ export default async function LorePage({ params }: PageProps) {
                 )}
               </div>
               <h1 className="font-cinzel text-4xl text-amber-400 mb-2">{lore.name}</h1>
-              <div className="text-slate-300 font-crimson text-lg italic space-y-4">{(lore.description || 'Conhecimento antigo aguardando para ser revelado.').split('\n\n').map((p, i) => (<p key={i}>{p}</p>))}</div>
+              <div className="text-slate-300 font-crimson text-lg italic space-y-4">{(lore.description || 'Conhecimento antigo aguardando para ser revelado.').split('\n\n').map((p, i) => (<p key={i}><WikiText text={p} /></p>))}</div>
             </div>
           </div>
         </div>
