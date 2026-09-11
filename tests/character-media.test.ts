@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict'
-import { getCharacterMedia, isMediaUrl, validateCharacterMedia } from '../src/lib/characterMedia'
+import { getCharacterMedia, getCharacterPortrait, isMediaUrl, validateCharacterMedia } from '../src/lib/characterMedia'
 import { mergeEntityData } from '../src/db/queries/entityEditing'
 
 const image = { type: 'image', src: '/images/characters/thaveus.webp', alt: 'Thaveus escrevendo' }
@@ -8,6 +8,8 @@ validateCharacterMedia([image, video])
 assert.deepEqual(getCharacterMedia({}, image.src), [{ type: 'image', src: image.src }])
 assert.deepEqual(getCharacterMedia({ image: '/edited.webp' }, image.src), [{ type: 'image', src: '/edited.webp' }])
 assert.deepEqual(getCharacterMedia({ media: [video, image] }, image.src), [video, image])
+assert.equal(getCharacterPortrait({ media: [video, image] }, '/legacy-portrait.webp')?.src, image.src)
+assert.equal(getCharacterPortrait({}, image.src)?.src, image.src)
 const removed = mergeEntityData({ image: image.src, race: 'Zeitgeist' }, { media: [] })
 assert.deepEqual(getCharacterMedia(removed, image.src), [])
 assert.equal(removed.race, 'Zeitgeist')

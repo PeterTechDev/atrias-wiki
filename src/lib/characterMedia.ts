@@ -43,3 +43,7 @@ export function getCharacterMedia(data: { media?: unknown; image?: unknown }, im
   const src = isMediaUrl(data.image) ? data.image : image
   return isMediaUrl(src) ? [{ type: 'image', src }] : []
 }
+
+export function getCharacterPortrait(data: { media?: unknown; image?: unknown }, image?: string | null) {
+  return getCharacterMedia(data, image).find((item) => item.type === 'image')
+}
