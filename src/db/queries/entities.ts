@@ -2,7 +2,7 @@ import { and, count, eq, inArray, isNull, sql } from 'drizzle-orm'
 import { db } from '@/db'
 import { entities, type Entity, type EntityStatus, type EntityType } from '@/db/schema'
 import type { EntityCounts } from '@/types/entities'
-import { mergeEntityData, normalizeArchivedIds } from './entityEditing'
+import { duplicateError, mergeEntityData, normalizeArchivedIds } from './entityEditing'
 import { isWikiDM, writerVisibility, entityVisibility, dmPermission } from '@/lib/wikiPermissions'
 import { readVisibility } from '@/lib/wikiRequest'
 import { validateCharacterMedia } from '@/lib/characterMedia'
@@ -64,11 +64,6 @@ function sameJson(left: unknown, right: unknown) {
   return JSON.stringify(left) === JSON.stringify(right)
 }
 
-function duplicateError(error: unknown) {
-  const message = error instanceof Error ? error.message : ''
-  return message.includes('duplicate key') || message.includes('unique') || message.includes('entities_slug')
-}
-
 export async function createEntity(
   input: { type: WikiEntityType; name: string; slug: string; description?: string | null; status?: EntityStatus; data?: Record<string, unknown>; isSpoiler?: boolean },
   writer: EntityWriter
@@ -98,7 +93,7 @@ export async function createEntity(
     }).returning()
     return created
   } catch (error) {
-    if (duplicateError(error)) throw new EntityWriteError('duplicate', 'An entity with this slug already exists.')
+    if (duplicateError(error)) throw new EntityWriteError('duplicate', 'Já existe uma página com esse endereço. Escolha outro endereço.')
     throw error
   }
 }
@@ -172,7 +167,7 @@ export async function updateEntity(input: {
     return updated
   } catch (error) {
     if (error instanceof EntityWriteError) throw error
-    if (duplicateError(error)) throw new EntityWriteError('duplicate', 'An entity with this slug already exists.')
+    if (duplicateError(error)) throw new EntityWriteError('duplicate', 'Já existe uma página com esse endereço. Escolha outro endereço.')
     throw error
   }
 }

@@ -7,6 +7,7 @@ export function AdminShell({
   backHref,
   backLabel,
   variant = 'admin',
+  compact = false,
   children,
 }: {
   title: string
@@ -14,24 +15,25 @@ export function AdminShell({
   backHref?: string
   backLabel?: string
   variant?: 'admin' | 'wiki'
+  compact?: boolean
   children: React.ReactNode
 }) {
   return (
     <main className="min-h-screen bg-[#0a1628] text-amber-400">
 
 
-      <div className="max-w-6xl mx-auto px-6 py-6">
-        <Link href={variant === 'admin' ? '/admin' : '/'} className="mb-4 flex min-h-11 items-center gap-2 text-sm text-amber-300 hover:underline"><Icon icon="game-icons:shield" className="h-5 w-5" />{variant === 'admin' ? 'Admin' : 'Wiki'}</Link>
+      <div className={`${compact ? 'max-w-3xl' : 'max-w-6xl'} mx-auto px-4 py-6 sm:px-6`}>
+        {!compact && <Link href={variant === 'admin' ? '/admin' : '/'} className="mb-4 flex min-h-11 items-center gap-2 text-sm text-amber-300 hover:underline"><Icon icon="game-icons:shield" className="h-5 w-5" />{variant === 'admin' ? 'Admin' : 'Wiki'}</Link>}
         {backHref ? (
-          <Link href={backHref} className="inline-flex items-center gap-2 text-sm text-amber-300 hover:text-amber-200 mb-4">
+          <Link href={backHref} className="inline-flex min-h-11 items-center gap-2 text-sm text-amber-300 hover:text-amber-200 mb-4">
             <Icon icon="game-icons:back-forth" className="w-4 h-4" />
             {backLabel ?? 'Back'}
           </Link>
         ) : null}
 
-        <div className="bg-[#e8dcc8] text-slate-800 rounded-lg shadow-lg p-6">
+        <div className="bg-[#e8dcc8] text-slate-800 rounded-lg shadow-lg p-4 sm:p-6">
           <div className="flex items-start gap-4 mb-6">
-            <Icon icon="game-icons:quill-ink" className="w-10 h-10 text-amber-700" />
+            <Icon icon="game-icons:quill-ink" className="w-10 h-10 shrink-0 text-amber-700" />
             <div>
               <h1 className="font-cinzel text-3xl">{title}</h1>
               {subtitle ? <p className="text-slate-600 font-crimson italic">{subtitle}</p> : null}

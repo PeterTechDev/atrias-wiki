@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Icon } from '@iconify/react'
@@ -29,6 +29,9 @@ function slugify(input: string) {
     .replace(/[^a-z0-9\s-]/g, '')
     .replace(/\s+/g, '-')
     .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '')
+    .slice(0, 160)
+    .replace(/-$/, '')
 }
 
 type CharacterFields = {
@@ -456,6 +459,20 @@ export function AdminEntityForm({
   const [isSaving, setIsSaving] = useState(false)
   const [isUploading, setIsUploading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const errorRef = useRef<HTMLDivElement>(null)
+  const detailsRef = useRef<HTMLDetailsElement>(null)
+  const addressRef = useRef<HTMLDetailsElement>(null)
+  const [slugEdited, setSlugEdited] = useState(false)
+  const [created, setCreated] = useState(false)
+  const successRef = useRef<HTMLHeadingElement>(null)
+  const memberCreate = audience === 'member' && mode === 'create'
+
+  useEffect(() => {
+    if (error && !isSaving) errorRef.current?.focus()
+  }, [error, isSaving])
+  useEffect(() => {
+    if (created) successRef.current?.focus()
+  }, [created])
 
   const [isMagicPenLoading, setIsMagicPenLoading] = useState(false)
   const [original] = useState(() => JSON.stringify({ values, dataFields }))
@@ -465,7 +482,7 @@ export function AdminEntityForm({
   const [magicPenError, setMagicPenError] = useState<string | null>(null)
   const [magicPenSuccessStage, setMagicPenSuccessStage] = useState<'hidden' | 'shown' | 'fading'>('hidden')
 
-  const canAutoSlug = useMemo(() => mode === 'create', [mode])
+  const canAutoSlug = mode === 'create' && !slugEdited
 
   function update<K extends keyof AdminEntityFormValues>(key: K, value: AdminEntityFormValues[K]) {
     setValues((v) => ({ ...v, [key]: value }))
@@ -488,6 +505,7 @@ export function AdminEntityForm({
     fieldsByType.current.set(type, fields)
     update('type', type)
     setDataFields(fields)
+    setError(null)
   }
 
   async function onMagicPen() {
@@ -532,10 +550,11 @@ export function AdminEntityForm({
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault()
-    if (isUploading || isSaving) return
+    if (isUploading || isSaving || created) return
+    setError(null)
     if (values.type === 'place') {
       try { validatePlaceData(assembleData('place', dataFields)) }
-      catch (error) { setError(error instanceof Error ? error.message : 'Revise o lugar.'); return }
+      catch (error) { if (detailsRef.current) detailsRef.current.open = true; setError(error instanceof Error ? error.message : 'Revise o lugar.'); return }
     }
 
     if (values.type === 'character') {
@@ -543,7 +562,7 @@ export function AdminEntityForm({
         validateCharacterMedia((dataFields as CharacterFields).media)
         validateCharacterCard((dataFields as CharacterFields).card3d)
       }
-      catch (error) { setError(error instanceof Error ? error.message : 'Revise as mídias.'); return }
+      catch (error) { if (detailsRef.current) detailsRef.current.open = true; setError(error instanceof Error ? error.message : 'Revise as mídias.'); return }
     }
 
     setIsSaving(true)
@@ -594,12 +613,21 @@ export function AdminEntityForm({
 
       if (!res.ok) {
         const out = (await res.json().catch(() => null)) as { error?: string } | null
-        setError(out?.error ?? 'Request failed.')
+        if (memberCreate && res.status === 409) {
+          if (addressRef.current) addressRef.current.open = true
+          setError('Já existe uma página com esse endereço. Escolha outro no campo “Endereço da página”.')
+        } else {
+          setError(res.status === 401 ? 'Sua sessão expirou. Entre novamente e tente salvar.' : res.status >= 500 ? 'Não foi possível salvar. Seu texto foi mantido; tente novamente.' : out?.error ?? 'Não foi possível salvar. Revise os campos e tente novamente.')
+        }
         setIsSaving(false)
         return
       }
 
       markSaved()
+      if (memberCreate) {
+        setCreated(true)
+        return
+      }
       if (audience === 'member') {
         router.push(`/${entityTypeToCollection[values.type]}/${values.slug.trim()}`)
       } else {
@@ -630,53 +658,102 @@ export function AdminEntityForm({
     return <p className="rounded border border-amber-300 bg-amber-50 px-5 py-4 text-amber-950">A edição está temporariamente indisponível.</p>
   }
 
+  if (created) {
+    const destination = `/${entityTypeToCollection[values.type]}/${values.slug.trim()}`
+    return <section className="space-y-5">
+      <h2 ref={successRef} tabIndex={-1} className="text-2xl font-semibold outline-none">Página criada</h2>
+      <p className="break-words"><strong>{values.name}</strong> já faz parte da wiki. {values.isSpoiler ? 'Somente mestres podem acessar.' : 'A página está visível para todos.'}</p>
+      <p className="text-slate-700">Você pode continuar editando e acrescentar detalhes quando quiser.</p>
+      <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+        <Link href={destination} className="inline-flex min-h-11 items-center justify-center rounded bg-[#0a1628] px-4 py-2 font-semibold text-amber-300 focus-visible:outline-2 focus-visible:outline-offset-2">Ver página</Link>
+        <Link href={`/wiki${destination}/edit`} className="inline-flex min-h-11 items-center justify-center rounded border border-slate-500 px-4 py-2 font-semibold focus-visible:outline-2">Continuar editando</Link>
+        {/* A new document resets the form and its unsaved-changes guard. */}
+        <a href={`/wiki/${entityTypeToCollection[values.type]}/new`} className="inline-flex min-h-11 items-center justify-center px-2 underline underline-offset-4 focus-visible:outline-2">Adicionar outra página</a>
+      </div>
+    </section>
+  }
+
   return (
-    <form onSubmit={onSubmit} className="space-y-5">
-      <fieldset disabled={isSaving || isUploading} className="space-y-5">
-      <nav className="text-sm text-slate-600">
+    <form onSubmit={onSubmit} onInvalidCapture={event => {
+      const field = event.target as HTMLInputElement
+      for (let parent = field.parentElement; parent; parent = parent.parentElement) {
+        if (parent instanceof HTMLDetailsElement) parent.open = true
+      }
+    }} className="space-y-5">
+      <fieldset disabled={isSaving || isUploading || (audience === 'member' && authLoading)} className="space-y-5">
+      {!memberCreate && <nav className="text-sm text-slate-600">
         <Link href={audience === 'member' ? '/' : '/admin'} className="hover:underline">{audience === 'member' ? 'Wiki' : 'Admin'}</Link>
         <span className="mx-2 text-slate-400">→</span>
         <Link href={basePath} className="hover:underline">{label}</Link>
         <span className="mx-2 text-slate-400">→</span>
-        <span className="text-slate-800 font-semibold">{mode === 'create' ? 'New' : 'Edit'}</span>
-      </nav>
-
-      {error ? (
-        <div className="rounded border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-800">
-          {error}
-        </div>
-      ) : null}
+        <span className="text-slate-800 font-semibold">{mode === 'create' ? 'Nova página' : 'Editar'}</span>
+      </nav>}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <label className="block">
-          <span className="text-sm font-semibold text-slate-700">Nome</span>
+          <span className="text-sm font-semibold text-slate-700">Categoria</span>
+          {mode === 'create' && audience === 'member' ? <select value={values.type} onChange={(e) => changeType(e.target.value as EntityType)} className="mt-1 min-h-11 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500">
+            <option value="character">Personagem</option><option value="place">Lugar</option><option value="faction">Facção</option><option value="item">Item</option><option value="lore">Conhecimento</option><option value="monster">Criatura</option><option value="other">Outros</option>
+          </select> : <input value={values.type} readOnly className="mt-1 min-h-11 w-full rounded border border-slate-300 bg-slate-100 px-3 py-2 text-slate-700" />}
+        </label>
+
+        {audience === 'admin' ? <label className="block">
+          <span className="text-sm font-semibold text-slate-700">Status</span>
+          <select
+            value={values.status}
+            onChange={(e) => update('status', e.target.value as EntityStatus)}
+            className="mt-1 min-h-11 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+          >
+            <option value="draft">Rascunho</option>
+            <option value="review">Em revisão</option>
+            <option value="published">Publicado</option>
+          </select>
+        </label> : null}
+      </div>
+
+      <div className={memberCreate ? "space-y-3" : "grid grid-cols-1 md:grid-cols-2 gap-4"}>
+        <label className="block">
+          <span className="text-sm font-semibold text-slate-700">Nome <span className="font-normal">(obrigatório)</span></span>
           <input
+            maxLength={200}
+            pattern={'.*\\S.*'}
+            title="Digite um nome, além de espaços."
             value={values.name}
             onChange={(e) => {
               const name = e.target.value
               update('name', name)
               if (canAutoSlug) update('slug', slugify(name))
             }}
-            className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+            className="mt-1 min-h-11 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
             required
           />
         </label>
 
-        <label className="block">
-          <span className="text-sm font-semibold text-slate-700">Slug</span>
+        <details ref={addressRef} open={memberCreate ? undefined : true} className="min-w-0 text-sm">
+          <summary className="min-h-11 cursor-pointer py-3 text-slate-700 underline decoration-slate-400 underline-offset-4 focus-visible:outline-2">Endereço da página <span className="font-normal">{memberCreate ? slugEdited ? '· personalizado' : '· gerado pelo nome' : ''}</span></summary>
+          <p className="mb-2 break-all text-slate-600">/{entityTypeToCollection[values.type]}/{values.slug || "nome-da-pagina"}</p>
+          <label className="block">
+          <span className="font-semibold text-slate-700">Endereço da página</span>
           <input
             value={values.slug}
-            onChange={(e) => update('slug', e.target.value)}
+            onChange={(e) => { setSlugEdited(true); update('slug', e.target.value) }}
+            maxLength={160}
+            pattern="[a-z0-9]+(-[a-z0-9]+)*"
+            title="Use letras minúsculas sem acentos, números e hífens entre palavras."
+            aria-describedby="entity-address-help"
+            style={{ fontSize: '1rem' }}
             readOnly={audience === 'member' && mode === 'edit'}
-            className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+            className="mt-1 min-h-11 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
             required
           />
         </label>
+        <p id="entity-address-help" className="mt-2 text-slate-600">Use letras minúsculas sem acentos, números e hífens entre palavras.</p>
+        </details>
       </div>
 
       <div className="block">
         <div className="flex items-center justify-between">
-          <label htmlFor="entity-description" className="text-sm font-semibold text-slate-700">{values.type === 'place' ? 'Apresentação do lugar' : 'Descrição'}</label>
+          <label htmlFor="entity-description" className="text-sm font-semibold text-slate-700">{values.type === 'place' ? 'Apresentação do lugar' : 'Descrição'} <span className="font-normal">(opcional)</span></label>
           {audience === 'admin' ? <button
             type="button"
             onClick={onMagicPen}
@@ -697,7 +774,10 @@ export function AdminEntityForm({
             )}
           </button> : null}
         </div>
+        <p id="entity-description-help" className="mt-1 text-sm text-slate-600">Quem ou o que é? Conte o que o grupo já sabe.</p>
         <WikiTextEditor
+          aria-describedby="entity-description-help"
+          maxLength={100000}
           id="entity-description"
           value={values.description}
           onChange={(value) => update('description', value)}
@@ -720,68 +800,47 @@ export function AdminEntityForm({
         ) : null}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <label className="block">
-          <span className="text-sm font-semibold text-slate-700">Categoria</span>
-          {mode === 'create' && audience === 'member' ? <select value={values.type} onChange={(e) => changeType(e.target.value as EntityType)} className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500">
-            <option value="character">Personagem</option><option value="place">Lugar</option><option value="faction">Facção</option><option value="item">Item</option><option value="lore">Conhecimento</option><option value="monster">Criatura</option><option value="other">Outros</option>
-          </select> : <input value={values.type} readOnly className="mt-1 w-full rounded border border-slate-300 bg-slate-100 px-3 py-2 text-slate-700" />}
-        </label>
-
-        {audience === 'admin' ? <label className="block">
-          <span className="text-sm font-semibold text-slate-700">Status</span>
-          <select
-            value={values.status}
-            onChange={(e) => update('status', e.target.value as EntityStatus)}
-            className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
-          >
-            <option value="draft">draft</option>
-            <option value="review">review</option>
-            <option value="published">published</option>
-          </select>
-        </label> : null}
-      </div>
-
       {/* Typed data fields */}
-      {isDM && <label className="flex items-center gap-3 rounded border border-amber-400 bg-amber-50 p-4 text-amber-950">
+      {isDM && <label className="flex cursor-pointer items-center gap-3 border-t border-stone-400/50 pt-4 text-slate-800">
         <input type="checkbox" checked={values.isSpoiler === true} onChange={event => update('isSpoiler', event.target.checked)} className="h-5 w-5" />
-        <span><span className="block font-semibold">Spoiler / Restrito ao DM</span><span className="text-sm">Somente mestres podem acessar. Desmarque para liberar o post na wiki.</span></span>
+        <span><span className="block font-semibold">Restringir a mestres (spoiler)</span><span className="text-sm text-slate-600" role="status">{values.isSpoiler ? "Somente mestres podem acessar esta página." : "Visível para todos, incluindo visitantes sem conta."}</span></span>
       </label>}
+      {values.type !== 'other' && <details ref={detailsRef} open={memberCreate ? undefined : true} className="border-t border-stone-400/50 pt-2">
+        <summary className="min-h-11 cursor-pointer py-3 font-semibold text-slate-800 focus-visible:outline-2">Adicionar detalhes <span className="font-normal text-slate-600">(opcional)</span></summary>
+        <p className="mb-5 text-sm text-slate-600">Preencha somente o que você sabe. Os detalhes podem ficar para depois.</p>
       {values.type === 'character' ? (
-        <div className="rounded border border-slate-200 bg-white p-4">
-          <h3 className="mb-3 text-sm font-semibold text-slate-800">Character details</h3>
+        <div className="space-y-5 py-4">
+          <h2 className="mb-3 text-sm font-semibold text-slate-800">Detalhes do personagem</h2>
 
           <div className="grid grid-cols-1 gap-4">
-            <CharacterMediaEditor media={(dataFields as CharacterFields).media} onChange={media => updateDataField('media', media)} onBusyChange={setIsUploading} />
-            <CharacterCardEditor value={(dataFields as CharacterFields).card3d} onChange={card => updateDataField('card3d', card)} name={values.name} onBusyChange={setIsUploading} />
 
-            <div className="rounded border border-slate-200 bg-slate-50 p-3">
-              <h4 className="mb-2 text-sm font-semibold text-slate-800">Identity</h4>
+            <div className="border-t border-stone-400/50 pt-5">
+              <h3 className="mb-2 text-sm font-semibold text-slate-800">Identidade</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <label className="block">
-                  <span className="text-sm font-semibold text-slate-700">Race</span>
+                  <span className="text-sm font-semibold text-slate-700">Raça</span>
                   <input
                     value={(dataFields as CharacterFields).race}
                     onChange={(e) => updateDataField('race', e.target.value)}
-                    className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="mt-1 min-h-11 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
                   />
                 </label>
 
                 <label className="block">
-                  <span className="text-sm font-semibold text-slate-700">Class</span>
+                  <span className="text-sm font-semibold text-slate-700">Classe</span>
                   <input
                     value={(dataFields as CharacterFields).class}
                     onChange={(e) => updateDataField('class', e.target.value)}
-                    className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="mt-1 min-h-11 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
                   />
                 </label>
 
                 <label className="block">
-                  <span className="text-sm font-semibold text-slate-700">Alignment</span>
+                  <span className="text-sm font-semibold text-slate-700">Alinhamento</span>
                   <input
                     value={(dataFields as CharacterFields).alignment}
                     onChange={(e) => updateDataField('alignment', e.target.value)}
-                    className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="mt-1 min-h-11 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
                   />
                 </label>
 
@@ -790,114 +849,118 @@ export function AdminEntityForm({
                   <select
                     value={(dataFields as CharacterFields).status}
                     onChange={(e) => updateDataField('status', e.target.value)}
-                    className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="mt-1 min-h-11 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
                   >
                     {!['active', 'deceased', 'unknown', 'missing'].includes((dataFields as CharacterFields).status) && <option value={(dataFields as CharacterFields).status}>{(dataFields as CharacterFields).status}</option>}
-                    <option value="active">active</option>
-                    <option value="deceased">deceased</option>
-                    <option value="unknown">unknown</option>
-                    <option value="missing">missing</option>
+                    <option value="active">Ativo</option>
+                    <option value="deceased">Morto</option>
+                    <option value="unknown">Desconhecido</option>
+                    <option value="missing">Desaparecido</option>
                   </select>
                 </label>
               </div>
             </div>
 
-            <div className="rounded border border-slate-200 bg-slate-50 p-3">
-              <h4 className="mb-2 text-sm font-semibold text-slate-800">Lore</h4>
+            <div className="border-t border-stone-400/50 pt-5">
+              <h3 className="mb-2 text-sm font-semibold text-slate-800">Lore</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <label className="block">
-                  <span className="text-sm font-semibold text-slate-700">Titles (comma-separated)</span>
+                  <span className="text-sm font-semibold text-slate-700">Títulos (separados por vírgulas)</span>
                   <input
                     value={(dataFields as CharacterFields).titles}
                     onChange={(e) => updateDataField('titles', e.target.value)}
-                    className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="mt-1 min-h-11 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
                   />
                 </label>
 
                 <label className="block">
-                  <span className="text-sm font-semibold text-slate-700">Affiliation</span>
+                  <span className="text-sm font-semibold text-slate-700">Afiliação</span>
                   <input
                     value={(dataFields as CharacterFields).affiliation}
                     onChange={(e) => updateDataField('affiliation', e.target.value)}
-                    className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="mt-1 min-h-11 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
                   />
                 </label>
 
                 <label className="block md:col-span-2">
-                  <span className="text-sm font-semibold text-slate-700">Hierarchy (comma-separated)</span>
+                  <span className="text-sm font-semibold text-slate-700">Hierarquia (separada por vírgulas)</span>
                   <input
                     value={(dataFields as CharacterFields).hierarchy}
                     onChange={(e) => updateDataField('hierarchy', e.target.value)}
-                    className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="mt-1 min-h-11 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
                   />
                 </label>
               </div>
             </div>
 
-            <div className="rounded border border-slate-200 bg-slate-50 p-3">
-              <h4 className="mb-2 text-sm font-semibold text-slate-800">Traits</h4>
+            <div className="border-t border-stone-400/50 pt-5">
+              <h3 className="mb-2 text-sm font-semibold text-slate-800">Características</h3>
               <div className="grid grid-cols-1 gap-4">
                 <label className="block">
-                  <span className="text-sm font-semibold text-slate-700">Abilities (comma-separated)</span>
+                  <span className="text-sm font-semibold text-slate-700">Habilidades (separadas por vírgulas)</span>
                   <input
                     value={(dataFields as CharacterFields).abilities}
                     onChange={(e) => updateDataField('abilities', e.target.value)}
-                    className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="mt-1 min-h-11 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
                   />
                 </label>
 
                 <label className="block">
-                  <span className="text-sm font-semibold text-slate-700">Weaknesses (comma-separated)</span>
+                  <span className="text-sm font-semibold text-slate-700">Fraquezas (separadas por vírgulas)</span>
                   <input
                     value={(dataFields as CharacterFields).weaknesses}
                     onChange={(e) => updateDataField('weaknesses', e.target.value)}
-                    className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="mt-1 min-h-11 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
                   />
                 </label>
               </div>
             </div>
           </div>
 
-          <div className="mt-4 rounded border border-slate-200 bg-slate-50 p-3">
-            <h4 className="mb-2 text-sm font-semibold text-slate-800">Combat</h4>
+          <div className="mt-4 border-t border-stone-400/50 pt-5">
+            <h3 className="mb-2 text-sm font-semibold text-slate-800">Combate</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <label className="block">
-                <span className="text-sm font-semibold text-slate-700">AC</span>
+                <span className="text-sm font-semibold text-slate-700">Classe de armadura (CA)</span>
                 <input
                   inputMode="numeric"
                   value={(dataFields as CharacterFields).combatAc}
                   onChange={(e) => updateDataField('combatAc', e.target.value)}
-                  className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="mt-1 min-h-11 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
                 />
               </label>
 
               <label className="block">
-                <span className="text-sm font-semibold text-slate-700">HP</span>
+                <span className="text-sm font-semibold text-slate-700">Pontos de vida (PV)</span>
                 <input
                   value={(dataFields as CharacterFields).combatHp}
                   onChange={(e) => updateDataField('combatHp', e.target.value)}
-                  className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="mt-1 min-h-11 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
                 />
               </label>
 
               <label className="block">
-                <span className="text-sm font-semibold text-slate-700">Speed</span>
+                <span className="text-sm font-semibold text-slate-700">Deslocamento</span>
                 <input
                   value={(dataFields as CharacterFields).combatSpeed}
                   onChange={(e) => updateDataField('combatSpeed', e.target.value)}
-                  className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="mt-1 min-h-11 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
                 />
               </label>
 
               <label className="block">
-                <span className="text-sm font-semibold text-slate-700">Attacks (comma-separated)</span>
+                <span className="text-sm font-semibold text-slate-700">Ataques (separados por vírgulas)</span>
                 <input
                   value={(dataFields as CharacterFields).combatAttacks}
                   onChange={(e) => updateDataField('combatAttacks', e.target.value)}
-                  className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="mt-1 min-h-11 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
                 />
               </label>
             </div>
+          </div>
+          <div className="mt-8 space-y-6">
+            <CharacterMediaEditor media={(dataFields as CharacterFields).media} onChange={media => updateDataField('media', media)} onBusyChange={setIsUploading} />
+            <CharacterCardEditor value={(dataFields as CharacterFields).card3d} onChange={card => updateDataField('card3d', card)} name={values.name} onBusyChange={setIsUploading} />
           </div>
         </div>
       ) : null}
@@ -910,60 +973,60 @@ export function AdminEntityForm({
       ) : null}
 
       {values.type === 'faction' ? (
-        <div className="rounded border border-slate-200 bg-white p-4">
-          <h3 className="mb-3 text-sm font-semibold text-slate-800">Faction details</h3>
+        <div className="space-y-5 py-4">
+          <h2 className="mb-3 text-sm font-semibold text-slate-800">Detalhes da facção</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <label className="block">
-              <span className="text-sm font-semibold text-slate-700">Alignment</span>
+              <span className="text-sm font-semibold text-slate-700">Alinhamento</span>
               <input
                 value={(dataFields as FactionFields).alignment}
                 onChange={(e) => updateDataField('alignment', e.target.value)}
-                className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="mt-1 min-h-11 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
               />
             </label>
 
             <label className="block">
-              <span className="text-sm font-semibold text-slate-700">Headquarters</span>
+              <span className="text-sm font-semibold text-slate-700">Sede</span>
               <input
                 value={(dataFields as FactionFields).headquarters}
                 onChange={(e) => updateDataField('headquarters', e.target.value)}
-                className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="mt-1 min-h-11 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
               />
             </label>
 
             <label className="block">
-              <span className="text-sm font-semibold text-slate-700">Leader</span>
+              <span className="text-sm font-semibold text-slate-700">Líder</span>
               <input
                 value={(dataFields as FactionFields).leader}
                 onChange={(e) => updateDataField('leader', e.target.value)}
-                className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="mt-1 min-h-11 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
               />
             </label>
 
             <label className="block md:col-span-2">
-              <span className="text-sm font-semibold text-slate-700">Domains (comma-separated)</span>
+              <span className="text-sm font-semibold text-slate-700">Domínios (separados por vírgulas)</span>
               <input
                 value={(dataFields as FactionFields).domains}
                 onChange={(e) => updateDataField('domains', e.target.value)}
-                className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="mt-1 min-h-11 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
               />
             </label>
 
             <label className="block md:col-span-2">
-              <span className="text-sm font-semibold text-slate-700">Portfolio (comma-separated)</span>
+              <span className="text-sm font-semibold text-slate-700">Áreas de influência (separadas por vírgulas)</span>
               <input
                 value={(dataFields as FactionFields).portfolio}
                 onChange={(e) => updateDataField('portfolio', e.target.value)}
-                className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="mt-1 min-h-11 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
               />
             </label>
 
             <label className="block md:col-span-2">
-              <span className="text-sm font-semibold text-slate-700">Goals (comma-separated)</span>
+              <span className="text-sm font-semibold text-slate-700">Objetivos (separados por vírgulas)</span>
               <input
                 value={(dataFields as FactionFields).goals}
                 onChange={(e) => updateDataField('goals', e.target.value)}
-                className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="mt-1 min-h-11 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
               />
             </label>
           </div>
@@ -971,24 +1034,24 @@ export function AdminEntityForm({
       ) : null}
 
       {values.type === 'item' ? (
-        <div className="rounded border border-slate-200 bg-white p-4">
-          <h3 className="mb-3 text-sm font-semibold text-slate-800">Item details</h3>
+        <div className="space-y-5 py-4">
+          <h2 className="mb-3 text-sm font-semibold text-slate-800">Detalhes do item</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <label className="block">
-              <span className="text-sm font-semibold text-slate-700">Rarity</span>
+              <span className="text-sm font-semibold text-slate-700">Raridade</span>
               <input
                 value={(dataFields as ItemFields).rarity}
                 onChange={(e) => updateDataField('rarity', e.target.value)}
-                className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="mt-1 min-h-11 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
               />
             </label>
 
             <label className="block">
-              <span className="text-sm font-semibold text-slate-700">Type</span>
+              <span className="text-sm font-semibold text-slate-700">Tipo</span>
               <input
                 value={(dataFields as ItemFields).type}
                 onChange={(e) => updateDataField('type', e.target.value)}
-                className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="mt-1 min-h-11 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
               />
             </label>
 
@@ -999,24 +1062,24 @@ export function AdminEntityForm({
                 onChange={(e) => updateDataField('attunement', e.target.checked)}
                 className="h-4 w-4 rounded border-slate-300"
               />
-              <span className="text-sm font-semibold text-slate-700">Requires attunement</span>
+              <span className="text-sm font-semibold text-slate-700">Requer sintonização</span>
             </label>
 
             <label className="block md:col-span-2">
-              <span className="text-sm font-semibold text-slate-700">Properties (comma-separated)</span>
+              <span className="text-sm font-semibold text-slate-700">Propriedades (separadas por vírgulas)</span>
               <input
                 value={(dataFields as ItemFields).properties}
                 onChange={(e) => updateDataField('properties', e.target.value)}
-                className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="mt-1 min-h-11 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
               />
             </label>
 
             <label className="block md:col-span-2">
-              <span className="text-sm font-semibold text-slate-700">Effects (comma-separated)</span>
+              <span className="text-sm font-semibold text-slate-700">Efeitos (separados por vírgulas)</span>
               <input
                 value={(dataFields as ItemFields).effects}
                 onChange={(e) => updateDataField('effects', e.target.value)}
-                className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="mt-1 min-h-11 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
               />
             </label>
           </div>
@@ -1024,51 +1087,51 @@ export function AdminEntityForm({
       ) : null}
 
       {values.type === 'lore' ? (
-        <div className="rounded border border-slate-200 bg-white p-4">
-          <h3 className="mb-3 text-sm font-semibold text-slate-800">Lore details</h3>
+        <div className="space-y-5 py-4">
+          <h2 className="mb-3 text-sm font-semibold text-slate-800">Detalhes do conhecimento</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <label className="block">
-              <span className="text-sm font-semibold text-slate-700">Category</span>
+              <span className="text-sm font-semibold text-slate-700">Categoria</span>
               <input
                 value={(dataFields as LoreFields).category}
                 onChange={(e) => updateDataField('category', e.target.value)}
-                className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="mt-1 min-h-11 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
               />
             </label>
 
             <label className="block">
-              <span className="text-sm font-semibold text-slate-700">Era</span>
+              <span className="text-sm font-semibold text-slate-700">Época</span>
               <input
                 value={(dataFields as LoreFields).era}
                 onChange={(e) => updateDataField('era', e.target.value)}
-                className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="mt-1 min-h-11 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
               />
             </label>
 
             <label className="block md:col-span-2">
-              <span className="text-sm font-semibold text-slate-700">Dogma (comma-separated)</span>
+              <span className="text-sm font-semibold text-slate-700">Dogmas (separados por vírgulas)</span>
               <input
                 value={(dataFields as LoreFields).dogma}
                 onChange={(e) => updateDataField('dogma', e.target.value)}
-                className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="mt-1 min-h-11 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
               />
             </label>
 
             <label className="block md:col-span-2">
-              <span className="text-sm font-semibold text-slate-700">Proverbs (comma-separated)</span>
+              <span className="text-sm font-semibold text-slate-700">Provérbios (separados por vírgulas)</span>
               <input
                 value={(dataFields as LoreFields).proverbs}
                 onChange={(e) => updateDataField('proverbs', e.target.value)}
-                className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="mt-1 min-h-11 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
               />
             </label>
 
             <label className="block md:col-span-2">
-              <span className="text-sm font-semibold text-slate-700">Significance</span>
+              <span className="text-sm font-semibold text-slate-700">Importância</span>
               <input
                 value={(dataFields as LoreFields).significance}
                 onChange={(e) => updateDataField('significance', e.target.value)}
-                className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="mt-1 min-h-11 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
               />
             </label>
           </div>
@@ -1076,15 +1139,15 @@ export function AdminEntityForm({
       ) : null}
 
       {values.type === 'monster' ? (
-        <div className="rounded border border-slate-200 bg-white p-4">
-          <h3 className="mb-3 text-sm font-semibold text-slate-800">Monster details</h3>
+        <div className="space-y-5 py-4">
+          <h2 className="mb-3 text-sm font-semibold text-slate-800">Detalhes da criatura</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {(
               [
-                ['cr', 'CR'],
-                ['size', 'Size'],
-                ['type', 'Type'],
-                ['alignment', 'Alignment'],
+                ['cr', 'Nível de desafio (ND)'],
+                ['size', 'Tamanho'],
+                ['type', 'Tipo'],
+                ['alignment', 'Alinhamento'],
               ] as const
             ).map(([key, label]) => (
               <label key={key} className="block">
@@ -1092,36 +1155,41 @@ export function AdminEntityForm({
                 <input
                   value={String((dataFields as unknown as Record<string, unknown>)[key] ?? '')}
                   onChange={(e) => updateDataField(key, e.target.value)}
-                  className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="mt-1 min-h-11 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
                 />
               </label>
             ))}
 
             <label className="block md:col-span-2">
-              <span className="text-sm font-semibold text-slate-700">Environment (comma-separated)</span>
+              <span className="text-sm font-semibold text-slate-700">Ambientes (separados por vírgulas)</span>
               <input
                 value={(dataFields as MonsterFields).environment}
                 onChange={(e) => updateDataField('environment', e.target.value)}
-                className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="mt-1 min-h-11 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
               />
             </label>
 
             <label className="block md:col-span-2">
-              <span className="text-sm font-semibold text-slate-700">Abilities (comma-separated)</span>
+              <span className="text-sm font-semibold text-slate-700">Habilidades (separadas por vírgulas)</span>
               <input
                 value={(dataFields as MonsterFields).abilities}
                 onChange={(e) => updateDataField('abilities', e.target.value)}
-                className="mt-1 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                className="mt-1 min-h-11 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
               />
             </label>
           </div>
         </div>
       ) : null}
 
+      </details>}
+
+      <div className="space-y-3 border-t border-stone-400/50 pt-5">
+      {memberCreate && <p className="text-sm text-slate-700">{values.isSpoiler ? 'Ao criar, a página fica disponível somente para mestres.' : 'Ao criar, a página fica pública na wiki.'} Você pode editar depois.</p>}
+      {error && <div ref={errorRef} role="alert" tabIndex={-1} className="rounded border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-900 focus-visible:outline-2 focus-visible:outline-red-800">{error}</div>}
       <div className="flex flex-col sm:flex-row gap-3 sm:items-center">
         <button
           disabled={isSaving}
-          className="inline-flex items-center justify-center gap-2 rounded bg-[#0a1628] px-4 py-2 text-sm font-semibold text-amber-300 hover:text-amber-200 disabled:opacity-60"
+          className="inline-flex min-h-11 items-center justify-center gap-2 rounded bg-[#0a1628] px-4 py-2 text-sm font-semibold text-amber-300 hover:text-amber-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-800 disabled:opacity-60"
         >
           <Icon icon="game-icons:save" className="w-5 h-5" />
           {isSaving ? 'Salvando…' : isUploading ? 'Aguarde o envio da foto…' : mode === 'create' ? 'Criar página' : 'Salvar alterações'}
@@ -1134,11 +1202,12 @@ export function AdminEntityForm({
               else router.back()
             }
           }}
-          className="inline-flex items-center justify-center gap-2 rounded border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          className="inline-flex min-h-11 items-center justify-center gap-2 rounded border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
         >
           <Icon icon="game-icons:cancel" className="w-5 h-5" />
           Cancelar
         </button>
+      </div>
       </div>
       </fieldset>
     </form>

@@ -2,6 +2,11 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return Boolean(value) && typeof value === 'object' && !Array.isArray(value)
 }
 
+export function duplicateError(error: unknown) {
+  const cause = error instanceof Error && error.cause ? error.cause : error
+  return isRecord(cause) && cause.code === '23505'
+}
+
 export function mergeEntityData(existing: Record<string, unknown>, patch: Record<string, unknown>) {
   const result = { ...existing }
   for (const [key, value] of Object.entries(patch)) {

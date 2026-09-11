@@ -46,7 +46,7 @@ export default function CinematicComet() {
     <>
       {/* Flash/bloom overlay - subtle with fade out */}
       <div 
-        className={`fixed inset-0 pointer-events-none z-[6] transition-opacity duration-300 ease-out ${
+        className={`comet-flash fixed inset-0 pointer-events-none z-[6] transition-opacity duration-300 ease-out ${
           showFlash ? 'opacity-100' : 'opacity-0'
         }`}
         style={{
@@ -56,7 +56,7 @@ export default function CinematicComet() {
 
       {/* Comet container - behind content */}
       <div 
-        className={`fixed top-0 left-0 w-full h-screen pointer-events-none z-[5] overflow-hidden ${shake ? 'shake-screen' : ''}`}
+        className={`fixed inset-0 pointer-events-none z-[5] overflow-hidden ${shake ? 'shake-screen' : ''}`}
         style={{ perspective: '1000px' }}
       >
         {/* The comet itself */}
@@ -222,6 +222,9 @@ export default function CinematicComet() {
         
         /* Reduced motion */
         @media (prefers-reduced-motion: reduce) {
+          .comet-flash {
+            display: none;
+          }
           .comet-streaker.animate {
             animation: none;
           }
