@@ -5,6 +5,8 @@ import { Icon } from '@iconify/react'
 import { useEffect, useEffectEvent, useRef, useState } from 'react'
 import { DICE_STORAGE_KEY, DIE_SIDES, FAVORITES_LIMIT, HISTORY_LIMIT, MAX_DICE, diceCount, motionStrength, notation, parseNotation, readDiceStorage, type DiceCombination, type DicePool, type DiceRoll, type DieSides } from '@/lib/dice'
 import type { createDiceScene, DiceTheme, TableTheme } from './diceScene'
+import DiceValues from './DiceValues'
+import RollSlider from './RollSlider'
 
 const button = 'inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-[#cbbd9f] px-3 py-2 text-sm font-medium transition-colors hover:border-amber-700 hover:bg-amber-50 disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-700'
 const panel = 'rounded-xl border border-[#d9cdb7] bg-[#faf7ef] p-4 shadow-sm'
@@ -14,6 +16,11 @@ const presets = [{ name: 'Ataque', expression: '1d20 + 5' }, { name: 'Bola de fo
 
 export default function DiceRoller() {
   const host = useRef<HTMLDivElement>(null)
+  const settings = useRef<HTMLDialogElement>(null)
+  const tableView = useRef<HTMLDialogElement>(null)
+  const expandButton = useRef<HTMLButtonElement>(null)
+  const [expanded, setExpanded] = useState(false)
+  const [settingsOpen, setSettingsOpen] = useState(false)
   const engine = useRef<ReturnType<typeof createDiceScene> | null>(null)
   const mounted = useRef(false)
   const rolling = useRef(false)
@@ -34,11 +41,12 @@ export default function DiceRoller() {
   const [theme, setTheme] = useState<DiceTheme>('white-flame')
   const [table, setTable] = useState<TableTheme>('sanctuary')
   const [force, setForce] = useState(2)
-  const [sound, setSound] = useState(false)
+  const [sound, setSound] = useState(true)
   const [busy, setBusy] = useState(false)
   const [result, setResult] = useState<DiceRoll | null>(null)
   const [tab, setTab] = useState<'history' | 'favorites'>('history')
-  const [motion, setMotion] = useState(false)
+  const [motion, setMotion] = useState(true)
+  const [motionPermission, setMotionPermission] = useState(false)
   const [motionPending, setMotionPending] = useState(false)
   const [motionMessage, setMotionMessage] = useState('')
   const [sensitivity, setSensitivity] = useState(16)
@@ -65,6 +73,23 @@ export default function DiceRoller() {
 
   useEffect(() => { if (ready) engine.current?.customize(theme, table, pool) }, [ready, theme, table, pool])
 
+  useEffect(() => {
+    if (!settingsOpen && !expanded) return
+    const previous = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = previous }
+  }, [settingsOpen, expanded])
+
+  function toggleTable() {
+    const view = tableView.current
+    if (!view) return
+    view.close()
+    if (expanded) view.show()
+    else view.showModal()
+    setExpanded(!expanded)
+    expandButton.current?.focus({ preventScroll: true })
+  }
+
   function persist(next: typeof saved) {
     ledger.current = next; setSaved(next)
     if (!storageReadable.current) return
@@ -89,9 +114,12 @@ export default function DiceRoller() {
   }
 
   async function roll() {
-    if (rolling.current || !engine.current || !ready || !count || !modifierValid) return
+    if (settings.current?.open || rolling.current || !engine.current || !ready || !storageReady || !count || !modifierValid) return
+    if (motion && !motionPermission && typeof DeviceMotionEvent !== 'undefined' && 'requestPermission' in DeviceMotionEvent) void enableMotion(true)
+    try { engine.current.setSound(sound) }
+    catch { setSound(false) }
     rolling.current = true; setBusy(true); setError(''); setNotice(''); setResult(null)
-    host.current?.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'center' })
+    if (!expanded) host.current?.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'center' })
     const snapshot = { pool: { ...pool }, modifier: Number(modifier) }
     try {
       const dice = await engine.current.roll(snapshot.pool, force)
@@ -115,32 +143,34 @@ export default function DiceRoller() {
 
   useEffect(() => {
     if (!motion) return
+    if (typeof DeviceMotionEvent !== 'undefined' && 'requestPermission' in DeviceMotionEvent && !motionPermission) return
     let received = false, peak = 0
     const started = performance.now()
     function onMotion(event: DeviceMotionEvent) {
       const hasData = [event.acceleration?.x, event.acceleration?.y, event.acceleration?.z, event.accelerationIncludingGravity?.x, event.accelerationIncludingGravity?.y, event.accelerationIncludingGravity?.z].some(value => typeof value === 'number' && Number.isFinite(value))
       if (hasData && !received) { received = true; setMotionMessage('Sensor pronto. Faça um gesto de arremesso segurando o celular.') }
-      if (!hasData || document.hidden || rolling.current || performance.now() < cooldown.current || performance.now() - started < 1200) { peak = 0; return }
+      if (!hasData || document.hidden || settings.current?.open || rolling.current || performance.now() < cooldown.current || performance.now() - started < 1200) { peak = 0; return }
       const strength = motionStrength(event)
       if (strength >= sensitivity) peak = performance.now()
       if (peak && strength < sensitivity * 0.45 && performance.now() - peak < 800) {
         peak = 0; cooldown.current = performance.now() + 2500; rollFromEvent()
       }
     }
-    const timeout = window.setTimeout(() => { if (!received) { setMotion(false); setMotionMessage('Nenhum sinal do sensor. Confira a permissão de movimento ou use o botão de rolar.') } }, 8000)
+    const timeout = window.setTimeout(() => { if (!received) { setMotion(false); setMotionMessage('Nenhum sinal do sensor. Confira a permissão de movimento ou use o controle de rolagem.') } }, 8000)
     window.addEventListener('devicemotion', onMotion)
     return () => { window.clearTimeout(timeout); window.removeEventListener('devicemotion', onMotion) }
-  }, [motion, sensitivity])
+  }, [motion, motionPermission, sensitivity])
 
-  async function enableMotion() {
-    if (motion) { setMotion(false); setMotionMessage('Movimento desativado.'); return }
+  async function enableMotion(requestOnly = false) {
+    if (motionPending) return
+    if (motion && !requestOnly) { setMotion(false); setMotionMessage('Movimento desativado.'); return }
     if (!window.isSecureContext || typeof DeviceMotionEvent === 'undefined') { setMotionMessage('Este navegador não oferece o sensor de movimento. No celular, abra a página por HTTPS.'); return }
     setMotionPending(true)
     try {
       const api = DeviceMotionEvent as typeof DeviceMotionEvent & { requestPermission?: () => Promise<string> }
-      if (api.requestPermission && await api.requestPermission() !== 'granted') { setMotionMessage('Permissão de movimento negada. Você pode continuar usando o botão.'); return }
-      setMotion(true); setMotionMessage('Aguardando o sensor…')
-    } catch { setMotionMessage('Não foi possível ativar o sensor. Use o botão de rolar.') }
+      if (api.requestPermission && await api.requestPermission() !== 'granted') { setMotion(false); setMotionMessage('Permissão de movimento negada. Você pode continuar usando o controle de rolagem.'); return }
+      setMotionPermission(true); setMotion(true); setMotionMessage('Aguardando o sensor…')
+    } catch { setMotion(false); setMotionMessage('Não foi possível ativar o sensor. Use o controle de rolagem.') }
     finally { setMotionPending(false) }
   }
 
@@ -153,15 +183,12 @@ export default function DiceRoller() {
     setFavoriteName(''); setNotice('Combinação adicionada aos favoritos.'); setTab('favorites')
   }
 
-  const critical = result?.dice.some(die => die.sides === 20 && die.value === 20)
-  const fumble = result?.dice.some(die => die.sides === 20 && die.value === 1)
-
   return <main className="min-h-screen bg-[#eee6d6] text-[#243247] [font-family:var(--font-geist)]">
     <div className="mx-auto max-w-[1600px] px-4 pt-4 sm:px-8"><Link href="/browse" className="inline-flex min-h-11 items-center gap-2 text-sm text-amber-900 hover:underline"><Icon icon="mdi:arrow-left" /> Voltar aos arquivos</Link></div>
     <div className="mx-auto max-w-[1600px] px-3 py-6 sm:px-6 lg:px-8">
       <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
         <div><p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.24em] text-[#90713b]">À mesa, aventureiro</p><h1 className="font-cinzel text-3xl sm:text-4xl">Mesa de Dados</h1><p className="font-crimson mt-2 text-lg text-slate-600">Prepare a jogada. Respire fundo. Deixe o destino rolar.</p></div>
-        <span className="flex items-center gap-2 rounded-full border border-[#d9cdb7] bg-[#faf7ef] px-4 py-2 text-xs text-slate-600"><Icon icon="mdi:shield-sun-outline" width={18} className="text-amber-700" /> Forjados para suas aventuras</span>
+        <button type="button" className={`${button} bg-[#faf7ef] text-[#765721]`} aria-haspopup="dialog" aria-controls="dice-settings" onClick={() => { settings.current?.showModal(); setSettingsOpen(true) }}><Icon icon="mdi:cog-outline" width={20} /> Configurações</button>
       </div>
       <div className="grid items-start gap-4 lg:grid-cols-[260px_minmax(0,1fr)] xl:grid-cols-[260px_minmax(0,1fr)_280px]">
         <aside className="space-y-4" aria-label="Preparar rolagem">
@@ -181,40 +208,33 @@ export default function DiceRoller() {
           <section className={panel}><h2 className="font-cinzel mb-3 text-sm">Jogadas rápidas</h2><div className="flex flex-wrap gap-2">{presets.map(preset => <button key={preset.name} disabled={busy} className={`${button} flex-1 flex-col gap-0 px-2 text-xs`} onClick={() => prepare(parseNotation(preset.expression))}>{preset.name}<span className="text-[11px] font-normal text-slate-500">{preset.expression}</span></button>)}</div></section>
         </aside>
 
-        <section className="min-w-0 space-y-4" aria-label="Mesa de rolagem" aria-busy={busy}>
-          <div className="overflow-hidden rounded-xl border border-[#c9b891] bg-[#0f2035] shadow-lg">
-            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#b99853]/30 px-4 py-3 text-[#dbc799]"><span className="flex items-center gap-2 text-xs uppercase tracking-[0.13em]"><Icon icon={table === 'sanctuary' ? 'mdi:shield-sun-outline' : 'game-icons:wooden-sign'} width={19} />{table === 'sanctuary' ? 'Santuário da Chama Branca' : 'Mesa da taverna'}</span><span className="text-[11px] text-slate-300">{busy ? 'O destino está em movimento…' : 'Sua próxima história começa aqui'}</span></div>
-            <div className="relative h-[350px] sm:h-[440px] lg:h-[460px] 2xl:h-[540px]">
+        <dialog ref={tableView} open role={expanded ? 'dialog' : 'region'} aria-modal={expanded || undefined} aria-label="Mesa de rolagem" aria-busy={busy}
+          onCancel={event => { event.preventDefault(); if (expanded) toggleTable() }}
+          className={expanded ? 'fixed inset-0 m-0 flex h-dvh max-h-none w-screen max-w-none flex-col gap-2 [@media(max-height:500px)_and_(min-width:640px)]:flex-row overflow-y-auto overscroll-contain border-0 bg-[#0f2035] p-2 text-[#243247] [padding-bottom:max(0.5rem,env(safe-area-inset-bottom))] [padding-top:max(0.5rem,env(safe-area-inset-top))] [padding-left:max(0.5rem,env(safe-area-inset-left))] [padding-right:max(0.5rem,env(safe-area-inset-right))] backdrop:bg-[#0f2035]' : 'static m-0 block w-full min-w-0 max-w-none space-y-4 border-0 bg-transparent p-0 text-inherit'}>
+          <div className={`overflow-hidden rounded-xl border border-[#c9b891] bg-[#0f2035] shadow-lg ${expanded ? "flex min-h-64 flex-1 flex-col" : ""}`}>
+            <div className="flex flex-wrap items-center justify-between gap-1 border-b border-[#b99853]/30 px-3 py-1 sm:px-4 sm:py-3 text-[#dbc799]"><span className="flex min-w-0 flex-1 items-center gap-2 text-xs uppercase tracking-[0.13em]"><Icon icon={table === 'sanctuary' ? 'mdi:shield-sun-outline' : 'game-icons:wooden-sign'} width={19} /><span className="truncate">{table === 'sanctuary' ? 'Santuário da Chama Branca' : 'Mesa da taverna'}</span></span><button type="button" aria-label="Configurações da mesa" aria-haspopup="dialog" aria-controls="dice-settings" onClick={() => { settings.current?.showModal(); setSettingsOpen(true) }} className="flex min-h-11 min-w-11 items-center justify-center rounded-lg text-amber-50 hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-amber-200"><Icon icon="mdi:cog-outline" width={20} /></button><button ref={expandButton} type="button" onClick={toggleTable} aria-label={expanded ? 'Sair da tela cheia' : 'Abrir mesa em tela cheia'} aria-pressed={expanded} className="inline-flex min-h-11 shrink-0 items-center gap-2 rounded-lg px-3 text-sm text-amber-50 hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-amber-200"><Icon icon={expanded ? 'mdi:fullscreen-exit' : 'mdi:fullscreen'} width={24} /><span>{expanded ? 'Sair' : 'Tela cheia'}</span></button></div>
+            <div className={expanded ? "relative min-h-32 flex-1" : "relative h-[350px] sm:h-[440px] lg:h-[460px] 2xl:h-[540px]"}>
               <div ref={host} className="absolute inset-0 [&_canvas]:block [&_canvas]:h-full [&_canvas]:w-full" />
               {!ready && <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 p-8 text-center text-amber-100"><Icon icon="game-icons:dice-twenty-faces-twenty" width={48} className={engineError ? '' : 'animate-pulse motion-reduce:animate-none'} /><p role={engineError ? 'alert' : 'status'}>{engineError || 'Preparando sua mesa…'}</p>{engineError && <button className={`${button} text-amber-100 hover:text-slate-900`} onClick={() => window.location.reload()}>Recarregar mesa</button>}</div>}
               {ready && !count && <div className="pointer-events-none absolute inset-0 flex items-center justify-center"><p className="rounded-lg bg-[#faf7ef]/90 px-5 py-3 text-sm text-slate-700">Escolha seus dados para começar.</p></div>}
               {ready && !busy && count > 0 && !result && <span className="pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-[#0a1628]/80 px-3 py-1.5 text-[11px] text-amber-50">Dados preparados · aguardando seu lançamento</span>}
             </div>
-            <div aria-live="polite" aria-atomic="true" className="flex min-h-28 items-center justify-between gap-4 border-t border-[#b99853]/30 px-5 py-4 text-amber-50">
-              <div className="min-w-0"><p className="text-[10px] uppercase tracking-[0.2em] text-[#c6a862]">{busy ? 'Que a sorte acompanhe você' : result ? critical ? '20 natural · a chama brilha!' : fumble ? '1 natural · até heróis tropeçam' : 'O destino respondeu' : 'Sua combinação'}</p><p className="mt-2 break-words text-lg font-semibold">{busy ? 'Rolando…' : notation(result || combination)}</p><p className="mt-1 text-xs leading-relaxed text-slate-300">{result ? `${result.dice.map(die => `d${die.sides}: ${die.value}`).join(' · ')}${result.modifier ? ` · modificador: ${result.modifier > 0 ? '+' : ''}${result.modifier}` : ''}` : busy ? 'O resultado será revelado quando os dados pararem.' : 'O resultado aparece depois do lançamento.'}</p></div>
-              <div className="shrink-0 text-center"><span className="text-[10px] uppercase tracking-widest text-[#c6a862]">Total</span><p className={`font-cinzel mt-1 text-5xl ${critical ? 'text-amber-300' : 'text-[#f5e8c8]'}`}>{result ? result.total : '—'}</p></div>
+            <div aria-live="polite" aria-atomic="true" className={`flex shrink-0 items-center justify-between gap-3 border-t border-[#b99853]/30 px-3 py-2 sm:px-4 sm:py-3 text-amber-50 ${expanded ? "max-h-[25dvh] overflow-y-auto" : "sm:min-h-28"}`}>
+              <div className="min-w-0 flex-1 basis-48"><p className="hidden text-sm text-[#c6a862] sm:block">{busy ? 'Que a sorte acompanhe você' : result ? 'O destino respondeu' : 'Sua combinação'}</p><p className="break-words text-sm font-semibold sm:mt-2 sm:text-lg">{busy ? 'Rolando…' : notation(result || combination)}</p>
+                {result ? <><DiceValues dice={result.dice} />{result.modifier !== 0 && <p className="mt-1 text-xs text-slate-300 sm:mt-3">Modificador: {result.modifier > 0 ? '+' : ''}{result.modifier}</p>}</> : <p className="mt-1 hidden text-xs leading-relaxed text-slate-300 sm:block">{busy ? 'O resultado será revelado quando os dados pararem.' : 'O resultado aparece depois do lançamento.'}</p>}
+              </div>
+              <div className="shrink-0 text-center"><span className="text-[10px] uppercase tracking-widest text-[#c6a862]">Total</span><p className="font-cinzel text-4xl text-[#f5e8c8] sm:mt-1 sm:text-5xl">{result ? result.total : '—'}</p></div>
             </div>
           </div>
 
-          <div className={`${panel} space-y-4`}>
-            <div className="flex items-center gap-4"><Icon icon="game-icons:strong" width={24} className="shrink-0 text-[#947339]" /><label htmlFor="roll-force" className="shrink-0 text-sm">Força <span className="block text-xs text-slate-500">{['', 'Suave', 'Firme', 'Épica'][force]}</span></label><input id="roll-force" type="range" min={1} max={3} step={1} value={force} disabled={busy} onChange={event => setForce(Number(event.target.value))} className="min-h-11 w-full accent-[#947339]" aria-valuetext={['', 'Suave', 'Firme', 'Épica'][force]} /><Icon icon="game-icons:comet-spark" width={24} className="shrink-0 text-[#947339]" /></div>
-            <button onClick={() => void roll()} disabled={!ready || busy || !count || !modifierValid || !storageReady} className="flex min-h-18 w-full items-center justify-center gap-3 rounded-lg border border-[#d7bf7f] bg-gradient-to-b from-[#bda262] to-[#9c7c3e] px-5 py-4 font-semibold text-[#111e2f] shadow-md transition hover:brightness-110 active:translate-y-px disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-800"><Icon icon="game-icons:rolling-dices" width={30} className={busy ? 'animate-pulse motion-reduce:animate-none' : ''} /><span className="font-cinzel text-lg">{busy ? 'O destino está rolando…' : result ? 'Rolar novamente' : 'Rolar os dados'}</span></button>
-            <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-slate-500"><span>Um toque. Infinitas possibilidades.</span><span className="hidden sm:inline">Atalho: barra de espaço</span></div>
+          <div className={`shrink-0 rounded-xl bg-[#0f2035] px-4 py-2 ${expanded ? " [@media(max-height:500px)_and_(min-width:640px)]:w-72 [@media(max-height:500px)_and_(min-width:640px)]:self-end" : "sm:p-4"}`}>
+            <RollSlider disabled={!ready || busy || !count || !modifierValid || !storageReady} busy={busy} onRoll={() => void roll()} />
           </div>
           {error && <p role="alert" className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800">{error}</p>}
-          {notice && <p role="status" className="text-sm text-[#6a542e]">{notice}</p>}
+          {notice && <p role="status" className={`text-sm ${expanded ? "text-amber-100" : "text-[#6a542e]"}`}>{notice}</p>}
 
-          <section className={panel} aria-label="Personalizar a experiência">
-            <h2 className="font-cinzel mb-4 text-base">Dê seu toque à mesa</h2>
-            <div className="grid gap-5 sm:grid-cols-2">
-              <fieldset disabled={busy}><legend className="mb-2 text-xs font-semibold text-slate-600">Textura dos dados</legend><div className="grid grid-cols-2 gap-2">{([{ id: 'white-flame', name: 'Chama Branca', swatch: 'bg-[repeating-linear-gradient(35deg,#f6f0df,#f6f0df_5px,#c4b58c_6px,#f6f0df_8px)]' }, { id: 'obsidian', name: 'Obsidiana', swatch: 'bg-[repeating-linear-gradient(135deg,#202c47,#202c47_4px,#677c9b_5px,#202c47_8px)]' }] as const).map(item => <button key={item.id} aria-pressed={theme === item.id} onClick={() => { setTheme(item.id); setResult(null) }} className={`${button} flex-col px-1 ${theme === item.id ? 'border-amber-700 bg-[#eee5d0]' : ''}`}><span className={`h-7 w-7 rounded-lg border border-[#ad8c4d] ${item.swatch}`} /><span className="text-xs">{item.name}</span></button>)}</div></fieldset>
-              <fieldset disabled={busy}><legend className="mb-2 text-xs font-semibold text-slate-600">Superfície da mesa</legend><div className="grid grid-cols-2 gap-2">{([{ id: 'sanctuary', name: 'Santuário', swatch: 'bg-[#e9dfc9]' }, { id: 'tavern', name: 'Taverna', swatch: 'bg-[repeating-linear-gradient(0deg,#523526,#523526_5px,#35251a_6px)]' }] as const).map(item => <button key={item.id} aria-pressed={table === item.id} onClick={() => { setTable(item.id); setResult(null) }} className={`${button} flex-col px-1 ${table === item.id ? 'border-amber-700 bg-[#eee5d0]' : ''}`}><span className={`h-7 w-12 rounded border border-[#ad8c4d] ${item.swatch}`} /><span className="text-xs">{item.name}</span></button>)}</div></fieldset>
-            </div>
-            <div className="mt-4 flex flex-wrap gap-2 border-t border-[#ded5c3] pt-4"><button className={button} aria-pressed={sound} disabled={!ready} onClick={() => { try { engine.current?.setSound(!sound); setSound(!sound) } catch { setError('Áudio indisponível neste navegador.') } }}><Icon icon={sound ? 'mdi:volume-high' : 'mdi:volume-off'} width={18} /> Som {sound ? 'ligado' : 'desligado'}</button><button className={button} aria-pressed={motion} disabled={!ready || motionPending} onClick={() => void enableMotion()}><Icon icon="mdi:cellphone-wireless" width={18} />{motionPending ? 'Ativando…' : motion ? 'Desativar gesto' : 'Rolar com movimento'}</button></div>
-            {motionMessage && <p role="status" className="mt-3 text-xs leading-relaxed text-slate-600">{motionMessage}</p>}
-            {motion && <div className="mt-3"><label htmlFor="motion-sensitivity" className="text-xs text-slate-600">Sensibilidade do gesto · {sensitivity <= 12 ? 'alta' : sensitivity >= 22 ? 'baixa' : 'média'}</label><input id="motion-sensitivity" type="range" min={8} max={28} step={2} value={sensitivity} onChange={event => setSensitivity(Number(event.target.value))} className="block min-h-11 w-full accent-[#947339]" /><p className="text-xs text-slate-500">Segure o celular com firmeza; o gesto não precisa ser brusco.</p></div>}
-          </section>
-        </section>
+
+        </dialog>
 
         <aside className={`${panel} lg:col-span-2 xl:col-span-1`} aria-label="Histórico e favoritos">
           <div className="mb-4 flex border-b border-[#ded5c3]" role="tablist" aria-label="Registros da mesa" onKeyDown={event => {
@@ -243,6 +263,18 @@ export default function DiceRoller() {
           {storageError && <p role="alert" className="mt-3 text-xs text-red-800">{storageError}</p>}
         </aside>
       </div>
+          <dialog ref={settings} id="dice-settings" aria-labelledby="dice-settings-title" onClose={() => setSettingsOpen(false)} className="fixed inset-0 m-auto max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-xl overflow-y-auto overscroll-contain rounded-xl border border-[#d9cdb7] bg-[#faf7ef] p-5 text-[#243247] shadow-xl backdrop:bg-[#0a1628]/70 sm:p-6">
+            <div className="mb-5 flex items-center justify-between gap-3"><h2 id="dice-settings-title" className="font-cinzel text-lg">Dê seu toque à mesa</h2><button type="button" className={`${button} shrink-0 px-3`} aria-label="Fechar configurações" onClick={() => settings.current?.close()}><Icon icon="mdi:close" width={20} /></button></div>
+            <div className="mb-5 flex items-center gap-4"><Icon icon="game-icons:strong" width={24} className="shrink-0 text-[#947339]" /><label htmlFor="roll-force" className="shrink-0 text-sm">Força <span className="block text-xs text-slate-500">{['', 'Suave', 'Firme', 'Épica'][force]}</span></label><input id="roll-force" type="range" min={1} max={3} step={1} value={force} disabled={busy} onChange={event => setForce(Number(event.target.value))} className="min-h-11 w-full accent-[#947339]" aria-valuetext={['', 'Suave', 'Firme', 'Épica'][force]} /><Icon icon="game-icons:comet-spark" width={24} className="shrink-0 text-[#947339]" /></div>
+            <div className="grid gap-5 sm:grid-cols-2">
+              <fieldset disabled={busy}><legend className="mb-2 text-xs font-semibold text-slate-600">Textura dos dados</legend><div className="grid grid-cols-2 gap-2">{([{ id: 'white-flame', name: 'Chama Branca', swatch: 'bg-[repeating-linear-gradient(35deg,#f6f0df,#f6f0df_5px,#c4b58c_6px,#f6f0df_8px)]' }, { id: 'obsidian', name: 'Obsidiana', swatch: 'bg-[repeating-linear-gradient(135deg,#202c47,#202c47_4px,#677c9b_5px,#202c47_8px)]' }] as const).map(item => <button key={item.id} aria-pressed={theme === item.id} onClick={() => { setTheme(item.id); setResult(null) }} className={`${button} flex-col px-1 ${theme === item.id ? 'border-amber-700 bg-[#eee5d0]' : ''}`}><span className={`h-7 w-7 rounded-lg border border-[#ad8c4d] ${item.swatch}`} /><span className="text-xs">{item.name}</span></button>)}</div></fieldset>
+              <fieldset disabled={busy}><legend className="mb-2 text-xs font-semibold text-slate-600">Superfície da mesa</legend><div className="grid grid-cols-2 gap-2">{([{ id: 'sanctuary', name: 'Santuário', swatch: 'bg-[#e9dfc9]' }, { id: 'tavern', name: 'Taverna', swatch: 'bg-[repeating-linear-gradient(0deg,#523526,#523526_5px,#35251a_6px)]' }] as const).map(item => <button key={item.id} aria-pressed={table === item.id} onClick={() => { setTable(item.id); setResult(null) }} className={`${button} flex-col px-1 ${table === item.id ? 'border-amber-700 bg-[#eee5d0]' : ''}`}><span className={`h-7 w-12 rounded border border-[#ad8c4d] ${item.swatch}`} /><span className="text-xs">{item.name}</span></button>)}</div></fieldset>
+            </div>
+            <div className="mt-4 flex flex-wrap gap-2 border-t border-[#ded5c3] pt-4"><button className={button} aria-pressed={sound} disabled={!ready} onClick={() => { try { engine.current?.setSound(!sound); setSound(!sound) } catch { setError('Áudio indisponível neste navegador.') } }}><Icon icon={sound ? 'mdi:volume-high' : 'mdi:volume-off'} width={18} /> Som {sound ? 'ligado' : 'desligado'}</button><button className={button} aria-pressed={motion} disabled={!ready || motionPending} onClick={() => void enableMotion()}><Icon icon="mdi:cellphone-wireless" width={18} />{motionPending ? 'Ativando…' : motion ? 'Movimento ligado' : 'Rolar com movimento'}</button></div>
+            {motion && !motionPermission && !motionMessage && <p className="mt-3 text-xs leading-relaxed text-slate-600">No celular, permita o acesso ao sensor ao tocar em rolar, se solicitado.</p>}
+            {motionMessage && <p role="status" className="mt-3 text-xs leading-relaxed text-slate-600">{motionMessage}</p>}
+            {motion && <div className="mt-3"><label htmlFor="motion-sensitivity" className="text-xs text-slate-600">Sensibilidade do gesto · {sensitivity <= 12 ? 'alta' : sensitivity >= 22 ? 'baixa' : 'média'}</label><input id="motion-sensitivity" type="range" min={8} max={28} step={2} value={sensitivity} onChange={event => setSensitivity(Number(event.target.value))} className="block min-h-11 w-full accent-[#947339]" /><p className="text-xs text-slate-500">Segure o celular com firmeza; o gesto não precisa ser brusco.</p></div>}
+          </dialog>
       <p className="font-manuscript mt-8 text-center text-sm italic text-[#8b795a]">Que a Chama Branca ilumine seus caminhos — e seus dados.</p>
     </div>
   </main>

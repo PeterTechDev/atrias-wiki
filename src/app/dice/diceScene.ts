@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import * as CANNON from 'cannon-es'
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js'
+import { createContactFlames } from './contactFlames'
 import { diceGeometry, upwardFace } from '@/lib/diceGeometry'
 import { DIE_SIDES, validCombination, type DicePool, type DiceResult, type DieSides } from '@/lib/dice'
 
@@ -127,6 +128,16 @@ export function createDiceScene(host: HTMLDivElement, onError: (message: string)
   floorBody.quaternion.setFromEuler(-Math.PI / 2, 0, 0); world.addBody(floorBody)
   const floor = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.MeshStandardMaterial({ map: tableTexture('sanctuary'), roughness: 0.85, metalness: 0.08 }))
   floor.rotation.x = -Math.PI / 2; floor.receiveShadow = true; scene.add(floor)
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+  const flames = createContactFlames(scene, floorBody, canvasTexture(ctx => {
+    const glow = ctx.createRadialGradient(32, 43, 1, 32, 38, 27)
+    glow.addColorStop(0, '#ffffff'); glow.addColorStop(0.3, '#ffffffdd'); glow.addColorStop(1, '#dceaff00')
+    ctx.fillStyle = glow
+    ctx.beginPath(); ctx.moveTo(32, 61)
+    ctx.bezierCurveTo(4, 53, 22, 30, 28, 23)
+    ctx.bezierCurveTo(35, 15, 35, 9, 32, 3)
+    ctx.bezierCurveTo(58, 26, 54, 52, 32, 61); ctx.fill()
+  }, 64))
   const walls: CANNON.Body[] = []
   const rails: THREE.Mesh[] = []
   let dice: Die[] = [], width = 20, depth = 16, frame = 0, disposed = false
@@ -137,6 +148,7 @@ export function createDiceScene(host: HTMLDivElement, onError: (message: string)
 
   function render() { if (!disposed) renderer.render(scene, camera) }
   function clearDice() {
+    cancelAnimationFrame(frame); flames.clear()
     const released = new Set<THREE.BufferGeometry>()
     for (const die of dice) {
       scene.remove(die.mesh); world.removeBody(die.body)
@@ -203,10 +215,18 @@ export function createDiceScene(host: HTMLDivElement, onError: (message: string)
     render()
   }
   function tick(time: number) {
-    if (!active || disposed) return
+    if (disposed) return
     const dt = Math.min((time - lastTime) / 1000 || 1 / 60, 0.05)
-    lastTime = time; active.elapsed += dt
+    lastTime = time
+    if (!active) {
+      const fading = flames.update(dt, [], !reducedMotion.matches && !document.hidden)
+      render()
+      if (fading) frame = requestAnimationFrame(tick)
+      return
+    }
+    active.elapsed += dt
     world.step(1 / 60, dt, 4)
+    flames.update(dt, world.contacts, !reducedMotion.matches && !document.hidden)
     for (const die of dice) { die.mesh.position.copy(die.body.position); die.mesh.quaternion.copy(die.body.quaternion) }
     render()
     const settled = dice.every(die => die.body.sleepState === CANNON.Body.SLEEPING)
@@ -214,6 +234,7 @@ export function createDiceScene(host: HTMLDivElement, onError: (message: string)
       const results = dice.map(die => upwardFace(die.hull.faces, die.mesh.quaternion, die.sides))
       if (results.every(result => result.readable)) {
         const { resolve } = active; active = null
+        frame = requestAnimationFrame(tick)
         resolve(results.map((result, i) => ({ sides: dice[i].sides, value: result.value }))); return
       }
     }
@@ -228,7 +249,7 @@ export function createDiceScene(host: HTMLDivElement, onError: (message: string)
         }
       }
     }
-    if (active.elapsed > 18) { const { reject } = active; active = null; reject(new Error('Um dado ficou preso. Tente rolar novamente.')); return }
+    if (active.elapsed > 18) { const { reject } = active; active = null; frame = requestAnimationFrame(tick); reject(new Error('Um dado ficou preso. Tente rolar novamente.')); return }
     frame = requestAnimationFrame(tick)
   }
   function preview(pool: DicePool) {
@@ -277,9 +298,9 @@ export function createDiceScene(host: HTMLDivElement, onError: (message: string)
       const columns = Math.max(2, Math.floor((width - 3) / 2.5))
       for (const sides of DIE_SIDES) for (let j = 0; j < (pool[sides] ?? 0); j++, i++) {
         const die = addDie(sides)
-        die.body.position.set((i % columns - (columns - 1) / 2) * 2.3, 3 + Math.floor(i / columns) * 2.4, -depth / 2 + 2.5 + Math.random())
+        die.body.position.set((i % columns - (columns - 1) / 2) * 2.3, 3 + Math.floor(i / columns) * 2.4, depth / 2 - 2.5 - Math.random())
         die.body.quaternion.setFromEuler(Math.random() * Math.PI * 2, Math.random() * Math.PI * 2, Math.random() * Math.PI * 2)
-        die.body.velocity.set((Math.random() - 0.5) * (5 + power * 3), 0, 6 + power * 3 + Math.random() * 3)
+        die.body.velocity.set((Math.random() - 0.5) * (5 + power * 3), 0, -(6 + power * 3 + Math.random() * 3))
         die.body.angularVelocity.set((Math.random() - 0.5) * 20 * power, (Math.random() - 0.5) * 20 * power, (Math.random() - 0.5) * 20 * power)
       }
       return new Promise((resolve, reject) => { active = { resolve, reject, elapsed: 0, nudged: 0 }; lastTime = performance.now(); frame = requestAnimationFrame(tick) })
@@ -289,6 +310,7 @@ export function createDiceScene(host: HTMLDivElement, onError: (message: string)
       if (active) { active.reject(new Error('Mesa fechada.')); active = null }
       clearDice()
       rails.forEach(rail => { rail.geometry.dispose(); (rail.material as THREE.Material).dispose() })
+      flames.dispose()
       floor.geometry.dispose(); floor.material.map?.dispose(); floor.material.dispose()
       light.shadow.dispose(); environmentMap.dispose()
       renderer.domElement.removeEventListener('webglcontextlost', contextLost)
