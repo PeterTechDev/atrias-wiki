@@ -12,6 +12,7 @@ const categories = {
   character: ['Personagens', 'characters'], place: ['Lugares', 'places'],
   faction: ['Facções', 'factions'], item: ['Itens', 'items'],
   lore: ['Conhecimento', 'lore'], monster: ['Criaturas', 'monsters'],
+  deity: ['Divindades', 'deities'],
   other: ['Outros', 'others'], session: ['Sessões', 'sessions'],
 } as const
 const suggestions = ['Átrias', 'Magia', 'Deuses']

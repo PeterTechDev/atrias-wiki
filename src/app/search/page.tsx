@@ -29,6 +29,7 @@ const typeIcons: Record<string, string> = {
   item: 'game-icons:swap-bag',
   lore: 'game-icons:scroll-unfurled',
   monster: 'game-icons:spiked-dragon-head',
+  deity: 'game-icons:holy-symbol',
   other: 'game-icons:archive-register',
   session: 'game-icons:quill-ink',
 }
@@ -41,6 +42,7 @@ const typeIconBg: Record<string, string> = {
   item: 'bg-cyan-900/50',
   lore: 'bg-yellow-900/50',
   monster: 'bg-red-900/50',
+  deity: 'bg-amber-900/50',
   other: 'bg-slate-700',
   session: 'bg-blue-900/50',
 }
@@ -53,6 +55,7 @@ const typeIconColor: Record<string, string> = {
   item: 'text-cyan-400',
   lore: 'text-yellow-400',
   monster: 'text-red-400',
+  deity: 'text-amber-300',
   other: 'text-slate-300',
   session: 'text-blue-400',
 }
@@ -65,6 +68,7 @@ const typeNameColor: Record<string, string> = {
   item: 'text-cyan-300',
   lore: 'text-yellow-300',
   monster: 'text-red-300',
+  deity: 'text-amber-300',
   other: 'text-slate-300',
   session: 'text-blue-300',
 }
@@ -77,6 +81,7 @@ const typeToPath: Record<string, string> = {
   item: 'items',
   lore: 'lore',
   monster: 'monsters',
+  deity: 'deities',
   other: 'others',
   session: 'sessions',
 }

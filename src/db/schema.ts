@@ -33,6 +33,7 @@ export const entityTypeEnum = [
   'item',
   'lore',
   'monster',
+  'deity',
   'other',
   'session',
 ] as const

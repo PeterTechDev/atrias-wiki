@@ -4,8 +4,16 @@ import { wikiLinkText } from '@/lib/wikiLinks'
 
 
 import { useState } from 'react'
-import Link from 'next/link'
-import { ArrowUpRight, Search } from 'lucide-react'
+import Link, { useLinkStatus } from 'next/link'
+import { ArrowUpRight, LoaderCircle, Search } from 'lucide-react'
+
+function LinkFeedback() {
+  const { pending } = useLinkStatus()
+  return <span hidden={!pending} role="status" className="ml-3 inline-flex items-center gap-2 font-sans text-sm font-normal text-amber-800">
+    <LoaderCircle aria-hidden="true" className="h-4 w-4 animate-spin motion-reduce:animate-none" />
+    Abrindo…
+  </span>
+}
 
 export type ArchiveEntry = {
   slug: string; name: string; description: string | null; image?: string | null
@@ -39,7 +47,7 @@ export function WikiArchiveList({ collection, entries }: { collection: string; e
             <li key={entry.slug} className="relative flex items-start gap-4 py-5 sm:gap-5">
               <div className="min-w-0 flex-1">
                 <h2 className="font-crimson text-2xl leading-7 font-semibold break-words">
-                  <Link href={`/${collection}/${entry.slug}`} className="underline-offset-4 after:absolute after:inset-0 hover:text-amber-800 hover:underline focus-visible:outline-none focus-visible:after:outline-2 focus-visible:after:outline-offset-4 focus-visible:after:outline-amber-800">{entry.name}</Link>
+                  <Link href={`/${collection}/${entry.slug}`} className="underline-offset-4 after:absolute after:inset-0 hover:text-amber-800 hover:underline focus-visible:outline-none focus-visible:after:outline-2 focus-visible:after:outline-offset-4 focus-visible:after:outline-amber-800">{entry.name}<LinkFeedback /></Link>
                 </h2>
                 {entry.metadata?.some(Boolean) && <p className="mt-1 text-sm leading-6 break-words text-amber-900">{entry.metadata.filter(Boolean).join(' · ')}</p>}
                 <p className="mt-1 line-clamp-2 max-w-[72ch] font-crimson text-lg leading-6 break-words text-slate-600">{wikiLinkText(entry.description || 'Registro sem descrição.')}</p>

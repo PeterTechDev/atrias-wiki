@@ -1,3 +1,4 @@
+import { getCharacterPortrait } from '@/lib/characterMedia'
 import { getEntitiesByType } from '@/db/queries/entities'
 import { WikiArchive } from '@/components/WikiArchive'
 import type { LoreData } from '@/types/entities'
@@ -10,7 +11,7 @@ export default async function ArchivePage() {
     const data = (e.data ?? {}) as LoreData
     return {
       slug: e.slug, name: e.name, description: e.description,
-      image: e.image, metadata: [data.category, data.era],
+      image: getCharacterPortrait(e.data ?? {}, e.image)?.src, metadata: [data.category, data.era],
     }
   }).sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'))
   return <WikiArchive title="Conhecimento" subtitle="História, lendas e conhecimento antigo" icon="game-icons:scroll-unfurled" collection="lore" entries={entries} />

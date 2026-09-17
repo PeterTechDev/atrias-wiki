@@ -63,12 +63,12 @@ export function WikiTextEditor({ value, onChange, ...props }: Omit<TextareaHTMLA
   return <div>
     <textarea {...props} ref={textarea} value={value} onChange={event => { setOpen(false); onChange(event.target.value) }} />
     <div className="mt-2 flex flex-wrap items-center gap-3 text-sm text-slate-700">
-      <button type="button" disabled={props.disabled} aria-expanded={open} className="min-h-11 rounded border border-amber-800 px-3 text-amber-900 hover:bg-amber-50 focus-visible:outline-2" onClick={() => {
+      <button type="button" disabled={props.disabled} aria-expanded={open} className="wiki-button" onClick={() => {
         selection.current = { start: textarea.current?.selectionStart ?? value.length, end: textarea.current?.selectionEnd ?? value.length }
         search(value.slice(selection.current.start, selection.current.end))
         setOpen(true)
       }}>Inserir referência</button>
-      <button type="button" aria-expanded={preview} className="min-h-11 underline underline-offset-4" onClick={() => setPreview(!preview)}>{preview ? 'Ocultar prévia' : 'Ver prévia'}</button>
+      <button type="button" aria-expanded={preview} className="wiki-button wiki-button-quiet" onClick={() => setPreview(!preview)}>{preview ? 'Ocultar prévia' : 'Ver prévia'}</button>
       <span>Selecione um trecho para transformá-lo em link.</span>
     </div>
     {open && <div className="mt-2 rounded border border-stone-300 bg-white p-3 text-slate-900" onKeyDown={event => { if (event.key === 'Escape') { event.preventDefault(); close() } }}>
@@ -77,7 +77,7 @@ export function WikiTextEditor({ value, onChange, ...props }: Omit<TextareaHTMLA
       </label>
       <p role="status" className="mt-2 text-sm">{status}</p>
       <ul className="max-h-60 overflow-y-auto">{results.map(page => <li key={page.id}><button type="button" className="min-h-11 w-full rounded px-2 py-2 text-left hover:bg-amber-50 focus-visible:outline-2" onClick={() => insert(page)}>{page.name}<span className="ml-2 text-xs text-slate-500">/{entityTypeToCollection[page.type]}/{page.slug}</span></button></li>)}</ul>
-      <button type="button" className="mt-2 min-h-11 underline" onClick={close}>Cancelar</button>
+      <button type="button" className="wiki-button wiki-button-quiet mt-2" onClick={close}>Cancelar</button>
     </div>}
     {preview && <div className="mt-3 whitespace-pre-wrap break-words rounded border border-stone-300 bg-white p-4 text-slate-800"><WikiText text={value} /></div>}
   </div>

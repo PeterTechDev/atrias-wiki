@@ -9,7 +9,7 @@ import { CharacterMediaEditor } from './CharacterMediaEditor'
 import { ImageUpload } from './ImageUpload'
 
 const field = 'mt-1 min-h-11 w-full rounded border border-stone-300 bg-white px-3 py-2 text-slate-900 focus-visible:outline-2 focus-visible:outline-amber-800'
-const action = 'inline-flex min-h-11 items-center justify-center gap-2 rounded border border-amber-800 px-3 text-sm text-amber-900 hover:bg-amber-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-800 disabled:opacity-40'
+const action = 'wiki-button'
 
 export function PlaceEditor({ value, onChange, onBusyChange, audience = 'member' }: { value: PlaceData; onChange: (value: PlaceData) => void; onBusyChange: (busy: boolean) => void; audience?: 'member' | 'admin' }) {
   const [characters, setCharacters] = useState<{ name: string; slug: string }[]>([])
@@ -30,13 +30,7 @@ export function PlaceEditor({ value, onChange, onBusyChange, audience = 'member'
     void load()
     return () => { active = false }
   }, [attempt, audience])
-  const sections = value.sections ?? []
   const residents = value.residents ?? []
-  function move(index: number, step: number) {
-    const next = [...sections]
-    ;[next[index], next[index + step]] = [next[index + step], next[index]]
-    onChange({ ...value, sections: next })
-  }
   return <div className="space-y-8 text-slate-800 [&_h2]:font-cinzel [&_h2]:text-xl">
     <section className="border-t border-stone-300 pt-6">
       <h2>Ficha do lugar</h2><p className="mt-2 text-sm text-stone-600">Preencha somente o que é conhecido. Campos vazios não aparecem na página.</p>
@@ -45,21 +39,6 @@ export function PlaceEditor({ value, onChange, onBusyChange, audience = 'member'
       </div>
       {(value.function || value.design) && <div className="mt-4 grid gap-4 sm:grid-cols-2">{([['function', 'Função'], ['design', 'Arquitetura']] as const).map(([key, label]) => <label key={key} className="text-sm">{label}<textarea maxLength={5000} rows={3} value={value[key] ?? ''} className={field} onChange={event => onChange({ ...value, [key]: event.target.value })} /></label>)}</div>}
     </section>
-    <section className="border-t border-stone-300 pt-6">
-      <h2>Seções de conteúdo</h2><p className="mt-2 text-sm text-stone-600">História, Governo, Comércio, Defesas… Escolha os títulos e a ordem de cada lugar.</p>
-      {sections.map((section, index) => <fieldset key={index} className="mt-5 border-b border-stone-200 pb-5">
-        <legend className="sr-only">Seção {index + 1}</legend>
-        <div className="mb-3 flex flex-wrap gap-2">
-          <button type="button" className={action} disabled={!index} onClick={() => move(index, -1)} aria-label={`Mover seção ${index + 1} para cima`}><Icon icon="mdi:arrow-up" /></button>
-          <button type="button" className={action} disabled={index === sections.length - 1} onClick={() => move(index, 1)} aria-label={`Mover seção ${index + 1} para baixo`}><Icon icon="mdi:arrow-down" /></button>
-          <button type="button" className={action} onClick={() => onChange({ ...value, sections: sections.filter((_, i) => i !== index) })}>Remover seção {index + 1}</button>
-        </div>
-        <label className="block text-sm">Título da seção<input required maxLength={120} value={section.title} className={field} onChange={event => onChange({ ...value, sections: sections.map((item, i) => i === index ? { ...item, title: event.target.value } : item) })} /></label>
-        <label className="mt-3 block text-sm">Texto da seção<textarea required maxLength={50000} rows={6} value={section.content} className={field} onChange={event => onChange({ ...value, sections: sections.map((item, i) => i === index ? { ...item, content: event.target.value } : item) })} /></label>
-      </fieldset>)}
-      <button type="button" className={`${action} mt-4`} disabled={sections.length >= 30} onClick={() => onChange({ ...value, sections: [...sections, { title: '', content: '' }] })}><Icon icon="mdi:plus" />Adicionar seção</button>
-    </section>
-    <section className="border-t border-stone-300 pt-6"><h2 className="mb-4">Fotos e ilustrações</h2><CharacterMediaEditor title="Galeria do lugar" media={value.media ?? []} onChange={media => onChange({ ...value, media })} onBusyChange={onBusyChange} /></section>
     <section className="border-t border-stone-300 pt-6">
       <h2>Pessoas do lugar</h2><p className="mt-2 text-sm text-stone-600">Cadastre uma pessoa mesmo que ela ainda não tenha página. O vínculo pode ser adicionado depois.</p>
       {error && <div role="status" className="mt-3 text-sm text-amber-900">{error} <button type="button" className="min-h-11 underline" onClick={() => setAttempt(value => value + 1)}>Tentar novamente</button></div>}
@@ -76,7 +55,7 @@ export function PlaceEditor({ value, onChange, onBusyChange, audience = 'member'
         </select></label>
         <label className="block text-sm">Endereço do retrato (opcional)<input maxLength={2048} value={resident.image ?? ''} className={field} onChange={event => onChange({ ...value, residents: residents.map((item, i) => i === index ? { ...item, image: event.target.value } : item) })} /></label>
         <ImageUpload onBusyChange={onBusyChange} onUpload={image => onChange({ ...value, residents: residents.map((item, i) => i === index ? { ...item, image } : item) })} />
-        <button type="button" className={action} onClick={() => onChange({ ...value, residents: residents.filter((_, i) => i !== index) })}>Remover pessoa {index + 1}</button>
+        <button type="button" className={`${action} wiki-button-danger`} onClick={() => onChange({ ...value, residents: residents.filter((_, i) => i !== index) })}>Remover pessoa {index + 1}</button>
       </fieldset>)}
       <button type="button" className={`${action} mt-4`} disabled={residents.length >= 100} onClick={() => onChange({ ...value, residents: [...residents, { name: '' }] })}><Icon icon="mdi:plus" />Adicionar pessoa</button>
     </section>

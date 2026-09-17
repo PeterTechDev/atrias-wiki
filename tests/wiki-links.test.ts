@@ -16,5 +16,6 @@ for (const href of ['javascript:alert(1)', '//evil.test', 'https://evil.test', '
   assert.deepEqual(parseWikiLinks(text), [{ text }])
 }
 assert.equal(parseWikiLinks('[A](/places/a) e [B](/items/b)').filter(part => part.href).length, 2)
+assert.deepEqual(parseWikiLinks('[Divindade](/deities/divindade)')[1], { text: 'Divindade', href: '/deities/divindade' })
 assert.equal(wikiLinkText('Texto [incompleto e <script>alert(1)</script>'), 'Texto [incompleto e <script>alert(1)</script>')
 console.log('Wiki links: OK')

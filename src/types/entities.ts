@@ -3,6 +3,12 @@ import type { CharacterMedia } from '@/lib/characterMedia'
 import type { CharacterCard } from '@/lib/characterCard'
 import type { PlaceResident, PlaceSection } from '@/lib/placeContent'
 
+export interface DeityData {
+  alignment?: string
+  domains?: string[]
+  symbol?: string
+}
+
 // Type-specific data structures
 export interface CharacterData {
   image?: string
@@ -92,6 +98,7 @@ export type EntityDataMap = {
   item: ItemData
   lore: LoreData
   monster: MonsterData
+  deity: DeityData
   other: Record<string, never>
   session: SessionData
 }
@@ -111,6 +118,7 @@ export interface EntityCounts {
   items: number
   lore: number
   monsters: number
+  deities: number
   others: number
   sessions: number
   total: number

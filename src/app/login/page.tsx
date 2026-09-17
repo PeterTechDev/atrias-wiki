@@ -12,7 +12,7 @@ import { signupPasswordError } from '@/lib/signupPassword'
 import { syncWikiSession } from '@/lib/wikiSession'
 
 const inputClass = 'mt-2 min-h-11 w-full rounded-md border border-amber-200/30 bg-slate-950/50 px-3 py-2 text-white focus:border-amber-400 focus:outline-2 focus:outline-amber-400'
-const buttonClass = 'rounded bg-[#c6a862] px-5 py-3 font-semibold text-slate-950 hover:bg-amber-200 disabled:opacity-50'
+const buttonClass = 'wiki-button wiki-button-primary'
 
 function ProfileFields({ user, children }: { user?: User; children?: React.ReactNode }) {
   const [avatar, setAvatar] = useState(user?.user_metadata.avatar || 'mage')

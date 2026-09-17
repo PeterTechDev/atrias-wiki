@@ -4,7 +4,7 @@ import { entities, entityFavorites } from '@/db/schema'
 import { isEntityId } from '@/lib/entityId'
 import { entityVisibility } from '@/lib/wikiPermissions'
 
-export const favoritableEntityTypes = ['character', 'place', 'faction', 'item', 'lore', 'monster'] as const
+export const favoritableEntityTypes = ['character', 'place', 'faction', 'item', 'lore', 'monster', 'deity'] as const
 
 export function isFavoriteEntityId(id: string) {
   return isEntityId(id)

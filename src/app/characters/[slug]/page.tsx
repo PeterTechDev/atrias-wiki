@@ -1,3 +1,4 @@
+import { WikiSections } from '@/components/WikiSections'
 import { WikiText } from '@/components/WikiText'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -88,7 +89,8 @@ export default async function CharacterPage({ params }: { params: Promise<{ slug
           <h2><Feather aria-hidden="true" size={22} />História</h2>
           {entity.description ? <div className={styles.prose}>
             {entity.description.split(/\n\s*\n/).filter(Boolean).map((paragraph, index) => <p key={index}><WikiText text={paragraph} /></p>)}
-          </div> : <p className={styles.empty}>A história deste personagem ainda não foi registrada.</p>}
+          </div> : !Array.isArray(entity.data?.sections) || !entity.data.sections.length ? <p className={styles.empty}>A história deste personagem ainda não foi registrada.</p> : null}
+          <WikiSections data={entity.data ?? {}} />
         </article>
 
         {hasReference && <aside aria-label="Referência do personagem" className={styles.reference}>

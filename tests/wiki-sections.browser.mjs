@@ -1,0 +1,36 @@
+// Run checkWikiSections(tab.playwright) on a fresh authenticated /wiki/others/new.
+// The only attempted submission has an empty required block; nothing is published.
+export async function checkWikiSections(page) {
+  const assert = (condition, message) => { if (!condition) throw new Error(message) }
+  const button = name => page.getByRole('button', { name, exact: true })
+  const title = number => page.getByRole('textbox', { name: `Título do bloco ${number}`, exact: true })
+  const content = number => page.getByRole('textbox', { name: `Texto do bloco ${number}`, exact: true })
+  await button('Adicionar bloco').click()
+  await title(1).fill('História')
+  await content(1).fill('Primeiro parágrafo.\n\nVeja [Átrias](/places/atrias).')
+  await button('Adicionar bloco').click()
+  await title(2).fill('Cultura')
+  await content(2).fill('Segundo bloco.')
+  await button('Mover bloco 2 para cima').click()
+  assert(await title(1).evaluate(el => el.value) === 'Cultura', 'Move up lost order')
+  await button('Mover bloco 1 para baixo').click()
+  assert(await title(1).evaluate(el => el.value) === 'História', 'Move down lost order')
+  await button('Remover bloco 1').click()
+  await button('Desfazer remoção').click()
+  assert(await title(1).evaluate(el => el.value) === 'História', 'Undo lost the block')
+  await page.getByRole('combobox', { name: 'Categoria', exact: true }).selectOption('place')
+  await page.getByRole('combobox', { name: 'Categoria', exact: true }).selectOption('other')
+  assert(await content(2).evaluate(el => el.value) === 'Segundo bloco.', 'Changing category lost content')
+  await button('Prévia dos blocos').click()
+  assert(await page.getByRole('heading', { name: 'História', exact: true }).isVisible(), 'Preview lost heading')
+  assert(await page.getByRole('link', { name: 'Átrias', exact: true }).isVisible(), 'Preview lost wiki link')
+  await button('Adicionar bloco').click()
+  assert(await title(3).evaluate(el => el === document.activeElement), 'New block did not receive focus')
+  await page.getByRole('textbox', { name: 'Nome (obrigatório)', exact: true }).fill('Teste local de blocos')
+  await button('Prévia dos blocos').click()
+  assert(await page.locator('input:invalid').count() > 0, 'Refusing valid submission')
+  await button('Criar página').click()
+  assert(await title(3).isVisible(), 'Invalid block remained hidden')
+  assert(await title(3).evaluate(el => el === document.activeElement), 'Invalid block did not receive focus')
+  return 'PASS: blocks, ordering, undo, category preservation, preview, links and hidden-field validation.'
+}

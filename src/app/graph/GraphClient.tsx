@@ -57,6 +57,8 @@ function nodeColor(type: EntityType): string {
       return '#a855f7' // purple
     case 'lore':
       return '#94a3b8' // gray
+    case 'deity':
+      return '#c6a862'
     case 'other':
       return '#64748b' // slate
     default:
@@ -79,6 +81,8 @@ function hrefForEntity(type: EntityType, slug: string): string | null {
       return `/monsters/${slug}`
     case 'lore':
       return `/lore/${slug}`
+    case 'deity':
+      return `/deities/${slug}`
     case 'other':
       return `/others/${slug}`
     // Sessions are stored as entities too, but the UI routes are campaign-based.
@@ -152,6 +156,7 @@ export default function GraphClient() {
       { type: 'item', label: 'Item', color: nodeColor('item') },
       { type: 'monster', label: 'Monster', color: nodeColor('monster') },
       { type: 'lore', label: 'Lore', color: nodeColor('lore') },
+      { type: 'deity', label: 'Divindades', color: nodeColor('deity') },
       { type: 'other', label: 'Other', color: nodeColor('other') },
     ],
     []

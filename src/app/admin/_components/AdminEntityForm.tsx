@@ -11,7 +11,10 @@ import { supabase } from '@/lib/supabase'
 import { CharacterMediaEditor } from '@/components/CharacterMediaEditor'
 import { CharacterCardEditor } from '@/components/CharacterCardEditor'
 import { getCharacterCard, validateCharacterCard, type CharacterCard } from '@/lib/characterCard'
+import { WikiSectionsEditor } from '@/components/WikiSectionsEditor'
+import { getWikiSections, validateWikiSections } from '@/lib/wikiSections'
 import { WikiTextEditor } from '@/components/WikiTextEditor'
+import { WikiCreationSuccess } from '@/components/WikiCreationSuccess'
 import { useUnsavedChanges } from '@/components/useUnsavedChanges'
 import { PlaceEditor } from '@/components/PlaceEditor'
 import type { PlaceData } from '@/types/entities'
@@ -40,7 +43,6 @@ type CharacterFields = {
   status: string
   titles: string
   affiliation: string
-  media: CharacterMedia[]
   card3d: CharacterCard | null
   alignment: string
   hierarchy: string
@@ -98,6 +100,8 @@ type MonsterFields = {
   abilities: string
 }
 
+type DeityFields = { alignment: string; domains: string; symbol: string }
+
 type OtherFields = Record<string, never>
 
 type DataFields = {
@@ -107,6 +111,7 @@ type DataFields = {
   item: ItemFields
   lore: LoreFields
   monster: MonsterFields
+  deity: DeityFields
   other: OtherFields
 }
 
@@ -141,7 +146,7 @@ function parseCommaList(input: string): string[] {
     .filter(Boolean)
 }
 
-function buildInitialFields(type: EntityType, data: Record<string, unknown>, image?: string | null, description = '', slug = ''): DataFields[keyof DataFields] {
+function buildInitialFields(type: EntityType, data: Record<string, unknown>, description = '', slug = ''): DataFields[keyof DataFields] {
   if (type === 'character') {
     const combat = asRecord(data.combat)
     const statusRaw = getString(data, 'status')
@@ -152,7 +157,6 @@ function buildInitialFields(type: EntityType, data: Record<string, unknown>, ima
       status: statusRaw || 'unknown',
       titles: toCommaList(getStringArray(data, 'titles')),
       affiliation: getString(data, 'affiliation'),
-      media: getCharacterMedia(data, image),
       card3d: getCharacterCard(data.card3d),
       alignment: getString(data, 'alignment'),
       hierarchy: toCommaList(getStringArray(data, 'hierarchy')),
@@ -176,7 +180,6 @@ function buildInitialFields(type: EntityType, data: Record<string, unknown>, ima
       design: getString(data, 'design'),
       notableLocations: getStringArray(data, 'notableLocations').join('\n'),
       map: getString(data, 'map'),
-      media: getCharacterMedia(data, image),
       maps: getPlaceMaps(data as PlaceData),
       sections: getPlaceContent(data as PlaceData, description).sections,
       residents: (data as PlaceData).residents ?? [],
@@ -226,6 +229,8 @@ function buildInitialFields(type: EntityType, data: Record<string, unknown>, ima
     } satisfies MonsterFields
   }
 
+  if (type === 'deity') return { alignment: getString(data, 'alignment'), domains: toCommaList(getStringArray(data, 'domains')), symbol: getString(data, 'symbol') } satisfies DeityFields
+
   if (type === 'other') return {} satisfies OtherFields
 
   // Default (should never happen for admin collections)
@@ -249,7 +254,6 @@ function assembleData(type: EntityType, fields: DataFields[keyof DataFields]): R
       status: f.status,
       titles: parseCommaList(f.titles),
       affiliation: f.affiliation.trim() || undefined,
-      media: f.media,
       card3d: f.card3d,
       alignment: f.alignment.trim() || undefined,
       hierarchy: parseCommaList(f.hierarchy),
@@ -276,7 +280,6 @@ function assembleData(type: EntityType, fields: DataFields[keyof DataFields]): R
       design: f.design.trim(),
       notableLocations: f.notableLocations.split('\n').map(item => item.trim()).filter(Boolean),
       map: f.map.trim() || undefined,
-      media: f.media,
       maps: f.maps,
       sections: f.sections,
       residents: f.residents,
@@ -328,6 +331,11 @@ function assembleData(type: EntityType, fields: DataFields[keyof DataFields]): R
       environment: parseCommaList(f.environment),
       abilities: parseCommaList(f.abilities),
     }
+  }
+
+  if (type === 'deity') {
+    const f = fields as DeityFields
+    return { alignment: f.alignment.trim(), domains: parseCommaList(f.domains), symbol: f.symbol.trim() }
   }
 
   if (type === 'other') return {}
@@ -417,6 +425,13 @@ function buildContextSummary(type: EntityType, fields: DataFields[keyof DataFiel
     push('Abilities', f.abilities)
   }
 
+  if (type === 'deity') {
+    const f = fields as DeityFields
+    push('Alinhamento', f.alignment)
+    push('Domínios', f.domains)
+    push('Símbolo', f.symbol)
+  }
+
   return lines.join('\n')
 }
 
@@ -452,10 +467,12 @@ export function AdminEntityForm({
   const { user, loading: authLoading } = useAuth()
   const [values, setValues] = useState<AdminEntityFormValues>(() => initial.type === 'place' ? { ...initial, description: getPlaceContent(initial.data as PlaceData ?? {}, initial.description).intro } : initial)
   const [dataFields, setDataFields] = useState<DataFields[keyof DataFields]>(
-    buildInitialFields(initial.type, initial.data ?? {}, initial.image, initial.description, initial.slug)
+    buildInitialFields(initial.type, initial.data ?? {}, initial.description, initial.slug)
   )
-  const fieldsByType = useRef(new Map<EntityType, DataFields[keyof DataFields]>([[initial.type, buildInitialFields(initial.type, initial.data ?? {}, initial.image, initial.description, initial.slug)]]))
+  const fieldsByType = useRef(new Map<EntityType, DataFields[keyof DataFields]>([[initial.type, buildInitialFields(initial.type, initial.data ?? {}, initial.description, initial.slug)]]))
 
+  const [sections, setSections] = useState(() => initial.type === 'place' ? getPlaceContent(initial.data as PlaceData ?? {}, initial.description).sections : getWikiSections(initial.data ?? {}))
+  const [media, setMedia] = useState(() => getCharacterMedia(initial.data ?? {}, initial.image))
   const [isSaving, setIsSaving] = useState(false)
   const [isUploading, setIsUploading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -464,20 +481,16 @@ export function AdminEntityForm({
   const addressRef = useRef<HTMLDetailsElement>(null)
   const [slugEdited, setSlugEdited] = useState(false)
   const [created, setCreated] = useState(false)
-  const successRef = useRef<HTMLHeadingElement>(null)
   const memberCreate = audience === 'member' && mode === 'create'
 
   useEffect(() => {
     if (error && !isSaving) errorRef.current?.focus()
   }, [error, isSaving])
-  useEffect(() => {
-    if (created) successRef.current?.focus()
-  }, [created])
 
   const [isMagicPenLoading, setIsMagicPenLoading] = useState(false)
-  const [original] = useState(() => JSON.stringify({ values, dataFields }))
+  const [original] = useState(() => JSON.stringify({ values, dataFields, media, sections }))
   const { allowLeave, markSaved } = useUnsavedChanges(
-    original !== JSON.stringify({ values, dataFields }) || isUploading || isMagicPenLoading
+    original !== JSON.stringify({ values, dataFields, media, sections }) || isUploading || isMagicPenLoading
   )
   const [magicPenError, setMagicPenError] = useState<string | null>(null)
   const [magicPenSuccessStage, setMagicPenSuccessStage] = useState<'hidden' | 'shown' | 'fading'>('hidden')
@@ -553,17 +566,16 @@ export function AdminEntityForm({
     if (isUploading || isSaving || created) return
     setError(null)
     if (values.type === 'place') {
-      try { validatePlaceData(assembleData('place', dataFields)) }
+      try { validatePlaceData({ ...assembleData('place', dataFields), sections }) }
       catch (error) { if (detailsRef.current) detailsRef.current.open = true; setError(error instanceof Error ? error.message : 'Revise o lugar.'); return }
     }
 
-    if (values.type === 'character') {
-      try {
-        validateCharacterMedia((dataFields as CharacterFields).media)
-        validateCharacterCard((dataFields as CharacterFields).card3d)
-      }
-      catch (error) { if (detailsRef.current) detailsRef.current.open = true; setError(error instanceof Error ? error.message : 'Revise as mídias.'); return }
+    try {
+      validateWikiSections(sections)
+      validateCharacterMedia(media)
+      if (values.type === 'character') validateCharacterCard((dataFields as CharacterFields).card3d)
     }
+    catch (error) { if (detailsRef.current) detailsRef.current.open = true; setError(error instanceof Error ? error.message : 'Revise as mídias.'); return }
 
     setIsSaving(true)
     setError(null)
@@ -575,7 +587,7 @@ export function AdminEntityForm({
             name: values.name.trim(),
             description: values.description.trim(),
             ...(isDM ? { isSpoiler: values.isSpoiler === true } : {}),
-            data: assembleData(values.type, dataFields),
+            data: { ...assembleData(values.type, dataFields), media, sections },
             ...(mode === 'edit' ? { revision: values.revision } : {}),
           }
         : {
@@ -585,7 +597,7 @@ export function AdminEntityForm({
             description: values.description.trim(),
             status: values.status,
             ...(isDM ? { isSpoiler: values.isSpoiler === true } : {}),
-            data: assembleData(values.type, dataFields),
+            data: { ...assembleData(values.type, dataFields), media, sections },
             ...(values.revision ? { revision: values.revision } : {}),
           }
 
@@ -657,17 +669,7 @@ export function AdminEntityForm({
 
   if (created) {
     const destination = `/${entityTypeToCollection[values.type]}/${values.slug.trim()}`
-    return <section className="space-y-5">
-      <h2 ref={successRef} tabIndex={-1} className="text-2xl font-semibold outline-none">Página criada</h2>
-      <p className="break-words"><strong>{values.name}</strong> já faz parte da wiki. {values.isSpoiler ? 'Somente mestres podem acessar.' : 'A página está visível para todos.'}</p>
-      <p className="text-slate-700">Você pode continuar editando e acrescentar detalhes quando quiser.</p>
-      <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-        <Link href={destination} className="inline-flex min-h-11 items-center justify-center rounded bg-[#0a1628] px-4 py-2 font-semibold text-amber-300 focus-visible:outline-2 focus-visible:outline-offset-2">Ver página</Link>
-        <Link href={`/wiki${destination}/edit`} className="inline-flex min-h-11 items-center justify-center rounded border border-slate-500 px-4 py-2 font-semibold focus-visible:outline-2">Continuar editando</Link>
-        {/* A new document resets the form and its unsaved-changes guard. */}
-        <a href={`/wiki/${entityTypeToCollection[values.type]}/new`} className="inline-flex min-h-11 items-center justify-center px-2 underline underline-offset-4 focus-visible:outline-2">Adicionar outra página</a>
-      </div>
-    </section>
+    return <WikiCreationSuccess name={values.name.trim()} destination={destination} collection={entityTypeToCollection[values.type]} isSpoiler={values.isSpoiler === true} />
   }
 
   return (
@@ -682,7 +684,7 @@ export function AdminEntityForm({
         <label className="block">
           <span className="text-sm font-semibold text-slate-700">Categoria</span>
           {mode === 'create' && audience === 'member' ? <select value={values.type} onChange={(e) => changeType(e.target.value as EntityType)} className="mt-1 min-h-11 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500">
-            <option value="character">Personagem</option><option value="place">Lugar</option><option value="faction">Facção</option><option value="item">Item</option><option value="lore">Conhecimento</option><option value="monster">Criatura</option><option value="other">Outros</option>
+            <option value="character">Personagem</option><option value="place">Lugar</option><option value="faction">Facção</option><option value="item">Item</option><option value="lore">Conhecimento</option><option value="monster">Criatura</option><option value="deity">Divindade</option><option value="other">Outros</option>
           </select> : <input value={values.type} readOnly className="mt-1 min-h-11 w-full rounded border border-slate-300 bg-slate-100 px-3 py-2 text-slate-700" />}
         </label>
 
@@ -742,7 +744,7 @@ export function AdminEntityForm({
 
       <div className="block">
         <div className="flex items-center justify-between">
-          <label htmlFor="entity-description" className="text-sm font-semibold text-slate-700">{values.type === 'place' ? 'Apresentação do lugar' : 'Descrição'} <span className="font-normal">(opcional)</span></label>
+          <label htmlFor="entity-description" className="text-sm font-semibold text-slate-700">Introdução <span className="font-normal">(opcional)</span></label>
           {audience === 'admin' ? <button
             type="button"
             onClick={onMagicPen}
@@ -789,11 +791,15 @@ export function AdminEntityForm({
         ) : null}
       </div>
 
+      <WikiSectionsEditor value={sections} onChange={setSections} />
+
       {/* Typed data fields */}
       {isDM && <label className="flex cursor-pointer items-center gap-3 border-t border-stone-400/50 pt-4 text-slate-800">
         <input type="checkbox" checked={values.isSpoiler === true} onChange={event => update('isSpoiler', event.target.checked)} className="h-5 w-5" />
         <span><span className="block font-semibold">Restringir a mestres (spoiler)</span><span className="text-sm text-slate-600" role="status">{values.isSpoiler ? "Somente mestres podem acessar esta página." : "Visível para todos, incluindo visitantes sem conta."}</span></span>
       </label>}
+      <div className="border-t border-stone-400/50 py-5"><CharacterMediaEditor media={media} onChange={setMedia} onBusyChange={setIsUploading} /></div>
+
       {values.type !== 'other' && <details ref={detailsRef} open={memberCreate ? undefined : true} className="border-t border-stone-400/50 pt-2">
         <summary className="min-h-11 cursor-pointer py-3 font-semibold text-slate-800 focus-visible:outline-2">Adicionar detalhes <span className="font-normal text-slate-600">(opcional)</span></summary>
         <p className="mb-5 text-sm text-slate-600">Preencha somente o que você sabe. Os detalhes podem ficar para depois.</p>
@@ -948,7 +954,6 @@ export function AdminEntityForm({
             </div>
           </div>
           <div className="mt-8 space-y-6">
-            <CharacterMediaEditor media={(dataFields as CharacterFields).media} onChange={media => updateDataField('media', media)} onBusyChange={setIsUploading} />
             <CharacterCardEditor value={(dataFields as CharacterFields).card3d} onChange={card => updateDataField('card3d', card)} name={values.name} onBusyChange={setIsUploading} />
           </div>
         </div>
@@ -960,6 +965,13 @@ export function AdminEntityForm({
           setDataFields(next); fieldsByType.current.set('place', next)
         }} />
       ) : null}
+
+      {values.type === 'deity' && <div className="space-y-5 py-4">
+        <h2 className="text-sm font-semibold text-slate-800">Detalhes da divindade</h2>
+        <div className="grid gap-4 sm:grid-cols-2">
+          {([['alignment', 'Alinhamento'], ['domains', 'Domínios (separados por vírgulas)'], ['symbol', 'Símbolo']] as const).map(([key, label]) => <label key={key} className="block text-sm font-semibold text-slate-700">{label}<input value={(dataFields as DeityFields)[key]} onChange={event => updateDataField(key, event.target.value)} className="mt-1 min-h-11 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus-visible:outline-2 focus-visible:outline-amber-800" /></label>)}
+        </div>
+      </div>}
 
       {values.type === 'faction' ? (
         <div className="space-y-5 py-4">
@@ -1178,7 +1190,7 @@ export function AdminEntityForm({
       <div className="flex flex-col sm:flex-row gap-3 sm:items-center">
         <button
           disabled={isSaving}
-          className="inline-flex min-h-11 items-center justify-center gap-2 rounded bg-[#0a1628] px-4 py-2 text-sm font-semibold text-amber-300 hover:text-amber-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-800 disabled:opacity-60"
+          className="wiki-button wiki-button-primary"
         >
           <Icon icon="game-icons:save" className="w-5 h-5" />
           {isSaving ? 'Salvando…' : isUploading ? 'Aguarde o envio da foto…' : mode === 'create' ? 'Criar página' : 'Salvar alterações'}
@@ -1191,7 +1203,7 @@ export function AdminEntityForm({
               else router.back()
             }
           }}
-          className="inline-flex min-h-11 items-center justify-center gap-2 rounded border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50"
+          className="wiki-button"
         >
           <Icon icon="game-icons:cancel" className="w-5 h-5" />
           Cancelar

@@ -28,10 +28,10 @@ export function CharacterMediaEditor({ media, onChange, title = 'Imagens e víde
         <legend className="sr-only">Mídia {index + 1}</legend>
         <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
           <span className="text-sm font-semibold">{index === 0 ? 'Mídia principal' : `Mídia ${index + 1}`}</span>
-          <div className="flex gap-1 [&_button]:flex [&_button]:h-11 [&_button]:w-11 [&_button]:items-center [&_button]:justify-center [&_button]:rounded [&_button]:hover:bg-slate-100 [&_button]:focus-visible:outline-2 [&_button]:focus-visible:outline-amber-800 [&_button]:disabled:opacity-30">
-            <button type="button" disabled={index === 0} onClick={() => move(index, -1)} aria-label={`Mover mídia ${index + 1} para cima`}><ArrowUp aria-hidden="true" size={18} /></button>
-            <button type="button" disabled={index === media.length - 1} onClick={() => move(index, 1)} aria-label={`Mover mídia ${index + 1} para baixo`}><ArrowDown aria-hidden="true" size={18} /></button>
-            <button type="button" onClick={() => onChange(media.filter((_, i) => i !== index))} aria-label={`Remover mídia ${index + 1}`}><Trash2 aria-hidden="true" size={18} /></button>
+          <div className="flex gap-2">
+            <button type="button" className="wiki-button wiki-button-icon" disabled={index === 0} onClick={() => move(index, -1)} aria-label={`Mover mídia ${index + 1} para cima`}><ArrowUp aria-hidden="true" size={18} /></button>
+            <button type="button" className="wiki-button wiki-button-icon" disabled={index === media.length - 1} onClick={() => move(index, 1)} aria-label={`Mover mídia ${index + 1} para baixo`}><ArrowDown aria-hidden="true" size={18} /></button>
+            <button type="button" className="wiki-button wiki-button-danger wiki-button-icon" onClick={() => onChange(media.filter((_, i) => i !== index))} aria-label={`Remover mídia ${index + 1}`}><Trash2 aria-hidden="true" size={18} /></button>
           </div>
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
@@ -48,6 +48,6 @@ export function CharacterMediaEditor({ media, onChange, title = 'Imagens e víde
         {item.type === 'image' && isMediaUrl(item.src) && <img src={item.src} alt={item.alt || 'Prévia da imagem'} className="mt-4 max-h-40 max-w-full rounded object-contain" />}
       </fieldset>)}
     </div>
-    <button type="button" disabled={media.length >= 50} onClick={() => onChange([...media, { type: 'image', src: '' }])} className="inline-flex min-h-11 items-center gap-2 rounded border border-amber-800 px-4 py-2 text-sm font-semibold text-amber-800 hover:bg-amber-50 focus-visible:outline-2 focus-visible:outline-amber-800 disabled:opacity-50"><Plus aria-hidden="true" size={18} />Adicionar mídia</button>
+    <button type="button" disabled={media.length >= 50} onClick={() => onChange([...media, { type: 'image', src: '' }])} className="wiki-button"><Plus aria-hidden="true" size={18} />Adicionar mídia</button>
   </section>
 }

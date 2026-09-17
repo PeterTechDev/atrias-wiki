@@ -19,6 +19,7 @@ export default async function Home() {
     { title: 'O mundo', links: [
       { label: 'Personagens', href: '/characters', count: stats.characters },
       { label: 'Lugares', href: '/places', count: stats.places },
+      { label: 'Divindades', href: '/deities', count: stats.deities },
       { label: 'Facções', href: '/factions', count: stats.factions },
       { label: 'Itens', href: '/items', count: stats.items },
     ] },

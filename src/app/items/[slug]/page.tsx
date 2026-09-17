@@ -1,3 +1,6 @@
+import { WikiSections } from '@/components/WikiSections'
+import ImageGallery from '@/components/ImageGallery'
+import { getCharacterMedia } from '@/lib/characterMedia'
 import { WikiText } from '@/components/WikiText'
 /**
  * Item Detail Page
@@ -62,14 +65,14 @@ export default async function ItemPage({ params }: PageProps) {
       </div>
 
       {/* Content */}
-      <div className="max-w-6xl mx-auto px-6 pb-12">
+      <div className="w-full max-w-6xl mx-auto px-6 pb-12">
         {/* Hero Section */}
         <div className="bg-[#0a1628] rounded-lg p-8 mb-8">
-          <div className="flex items-start gap-6">
+          <div className="flex flex-col items-start gap-6 sm:flex-row">
             <div className="w-20 h-20 rounded-lg bg-amber-900/30 flex items-center justify-center flex-shrink-0">
               <Icon icon="game-icons:swap-bag" className="w-10 h-10 text-amber-400" />
             </div>
-            <div className="flex-1">
+            <div className="min-w-0 flex-1 break-words">
               <div className="flex flex-wrap gap-2 mb-2">
                 <span className="text-xs bg-cyan-600/20 text-cyan-400 px-2 py-1 rounded">{item.type}</span>
                 <span className={`text-xs px-2 py-1 rounded ${rarityColors[item.rarity] || rarityColors['Comum']}`}>{item.rarity}</span>
@@ -82,6 +85,10 @@ export default async function ItemPage({ params }: PageProps) {
             </div>
           </div>
         </div>
+
+        <div className="mb-8"><ImageGallery media={getCharacterMedia(entity.data ?? {}, entity.image)} name={entity.name} /></div>
+
+        <WikiSections data={entity.data ?? {}} />
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Content */}

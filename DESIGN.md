@@ -88,7 +88,9 @@ Botões da home têm cantos de 6px. Campos e vários cartões usam 8px; navegaç
 
 ### Buttons
 
-A ação principal da home usa fundo gold-muted, texto escuro, peso 600 e padding de 16px por 32px. Hover usa gold e deslocamento para cima. Ação secundária usa fundo branco translúcido, borda âmbar e texto claro. Controles administrativos e de edição têm variantes locais; não devem ser substituídos automaticamente pelo botão da home.
+Os controles compartilhados usam `.wiki-button`: altura mínima de 44px, cantos de 6px, texto de 14px/600 e superfície de papel com borda bronze. `.wiki-button-primary` usa dourado e texto midnight; `.wiki-button-quiet` serve a ações auxiliares; `.wiki-button-danger` identifica remoção com vermelho; `.wiki-button-icon` preserva alvos compactos de 44px. Aplicado aos editores de texto, blocos, mídias e lugares, salvar/cancelar, login, contribuição, favoritos e exclusão de arquivados.
+
+Hover altera superfície e borda; pressionar adiciona sombra interna discreta. Foco visível usa contorno bronze; desabilitados ficam atenuados e não recebem hover. A transição respeita movimento reduzido. A base global define cursor de mão para controles interativos e cursor de bloqueio para desabilitados. A home e controles especializados de mapa e dados mantêm suas composições locais.
 
 ### Inputs / Fields
 

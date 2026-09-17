@@ -1,3 +1,4 @@
+import { getCharacterPortrait } from '@/lib/characterMedia'
 import { getEntitiesByType } from '@/db/queries/entities'
 import { WikiArchive } from '@/components/WikiArchive'
 import type { ItemData } from '@/types/entities'
@@ -10,7 +11,7 @@ export default async function ArchivePage() {
     const data = (e.data ?? {}) as ItemData
     return {
       slug: e.slug, name: e.name, description: e.description,
-      image: e.image, metadata: [data.type, data.rarity],
+      image: getCharacterPortrait(e.data ?? {}, e.image)?.src, metadata: [data.type, data.rarity],
     }
   }).sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'))
   return <WikiArchive title="Itens" subtitle="Artefatos, armas e tesouros mágicos" icon="game-icons:swap-bag" collection="items" entries={entries} />

@@ -1,8 +1,11 @@
+import { WikiSections } from '@/components/WikiSections'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { ArrowLeft, ArrowUp, BookOpen, ChevronRight, Feather } from 'lucide-react'
 import { getEntityBySlug } from '@/db/queries/entities'
 import type { FactionData } from '@/types/entities'
+import ImageGallery from '@/components/ImageGallery'
+import { getCharacterMedia } from '@/lib/characterMedia'
 import { WikiText } from '@/components/WikiText'
 import { WikiContributionActions } from '@/components/WikiContributionActions'
 import { WikiLastEdited } from '@/components/WikiLastEdited'
@@ -53,6 +56,8 @@ export default async function FactionPage({ params }: { params: Promise<{ slug: 
         </dl>}
       </header>
 
+      <div className="mb-8"><ImageGallery media={getCharacterMedia(entity.data ?? {}, entity.image)} name={entity.name} /></div>
+
       {sections.length > 1 && <nav className={styles.sectionNav} aria-label="Nesta página">
         <span>Nesta página</span>
         <div>{sections.map(section => <a key={section.id} href={`#${section.id}`}>{section.label}</a>)}</div>
@@ -63,7 +68,8 @@ export default async function FactionPage({ params }: { params: Promise<{ slug: 
           <h2 id="history-title"><Feather aria-hidden="true" size={22} />História</h2>
           {entity.description ? <div className={styles.prose}>
             {entity.description.split(/\n\s*\n/).filter(Boolean).map((paragraph, index) => <p key={index}><WikiText text={paragraph} /></p>)}
-          </div> : <p className={styles.empty}>A história desta facção ainda não foi registrada.</p>}
+          </div> : !Array.isArray(entity.data?.sections) || !entity.data.sections.length ? <p className={styles.empty}>A história desta facção ainda não foi registrada.</p> : null}
+          <WikiSections data={entity.data ?? {}} />
         </article>
 
         {!!references.length && <aside aria-label="Referência da facção" className={styles.reference}>

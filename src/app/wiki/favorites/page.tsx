@@ -7,8 +7,8 @@ import { favoriteRequest } from '@/lib/wikiFavorites'
 import { wikiLinkText } from '@/lib/wikiLinks'
 
 type Favorite = { id: string; slug: string; name: string; type: string; description: string | null; archivedAt: string | null }
-const paths: Record<string, string> = { character: 'characters', place: 'places', faction: 'factions', item: 'items', lore: 'lore', monster: 'monsters' }
-const labels: Record<string, string> = { character: 'Personagem', place: 'Lugar', faction: 'Facção', item: 'Item', lore: 'Lore', monster: 'Monstro' }
+const paths: Record<string, string> = { character: 'characters', place: 'places', faction: 'factions', item: 'items', lore: 'lore', monster: 'monsters', deity: 'deities' }
+const labels: Record<string, string> = { character: 'Personagem', place: 'Lugar', faction: 'Facção', item: 'Item', lore: 'Lore', monster: 'Monstro', deity: 'Divindade' }
 
 export default function FavoritesPage() {
   const { user, loading } = useAuth()

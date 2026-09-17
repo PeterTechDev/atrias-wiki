@@ -1,3 +1,4 @@
+import { validateWikiSections } from './wikiSections'
 import { getCharacterMedia, isMediaUrl, validateCharacterMedia, type CharacterMedia } from './characterMedia'
 
 export type PlaceSection = { title: string; content: string }
@@ -36,12 +37,7 @@ export function validatePlaceData(data: Record<string, unknown>) {
   if (Array.isArray(data.maps) && data.maps.some(item => item.type !== 'image')) throw new Error('Adicione mapas como imagens.')
   if (data.mapMarker !== undefined && data.mapMarker !== null && (typeof data.mapMarker !== 'string' || !/^[a-z0-9-]{1,160}$/.test(data.mapMarker))) throw new Error('Escolha uma localização válida no mapa.')
   if (data.notableLocations !== undefined && (!Array.isArray(data.notableLocations) || data.notableLocations.length > 100 || data.notableLocations.some(item => typeof item !== 'string' || item.length > 5000))) throw new Error('Adicione até 100 locais de interesse, com até 5.000 caracteres cada.')
-  if (data.sections !== undefined) {
-    if (!Array.isArray(data.sections) || data.sections.length > 30) throw new Error('Adicione até 30 seções por lugar.')
-    for (const section of data.sections) {
-      if (!section || typeof section.title !== 'string' || !section.title.trim() || section.title.length > 120 || typeof section.content !== 'string' || !section.content.trim() || section.content.length > 50000) throw new Error('Cada seção precisa de título (até 120 caracteres) e texto (até 50.000 caracteres).')
-    }
-  }
+  validateWikiSections(data.sections)
   if (data.residents !== undefined) {
     if (!Array.isArray(data.residents) || data.residents.length > 100) throw new Error('Adicione até 100 pessoas por lugar.')
     for (const resident of data.residents) {

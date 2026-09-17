@@ -15,6 +15,7 @@ const categories = [
   { type: 'item', label: 'Itens', href: '/items', icon: 'game-icons:crossed-swords', description: 'Armas, relíquias e artefatos' },
   { type: 'lore', label: 'Conhecimento', href: '/lore', icon: 'game-icons:scroll-unfurled', description: 'Histórias, mitos e sabedoria antiga' },
   { type: 'monster', label: 'Criaturas', href: '/monsters', icon: 'game-icons:spiked-dragon-head', description: 'Bestas e monstros que espreitam Átrias' },
+  { type: 'deity', label: 'Divindades', href: '/deities', icon: 'game-icons:holy-symbol', description: 'Deuses, domínios e símbolos de Átrias' },
   { type: 'other', label: 'Outros', href: '/others', icon: 'game-icons:archive-register', description: 'Registros que não se encaixam nas demais categorias' },
 ]
 
@@ -26,7 +27,7 @@ const extras = [
 
 export default async function BrowsePage() {
   const stats = await getEntityCounts()
-  const countMap: Record<string, number> = { character: stats.characters, place: stats.places, faction: stats.factions, item: stats.items, lore: stats.lore, monster: stats.monsters, other: stats.others }
+  const countMap: Record<string, number> = { character: stats.characters, place: stats.places, faction: stats.factions, item: stats.items, lore: stats.lore, monster: stats.monsters, deity: stats.deities, other: stats.others }
 
   return (
     <main className="min-h-screen flex flex-col bg-[#e8dcc8]">

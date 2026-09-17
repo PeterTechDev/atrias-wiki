@@ -46,6 +46,9 @@ export default async function AdminDashboardPage() {
       icon: 'game-icons:hydra',
     },
     {
+      href: '/admin/deities', label: 'Divindades', count: counts.deities, icon: 'game-icons:holy-symbol',
+    },
+    {
       href: '/admin/others',
       label: 'Others',
       count: counts.others,

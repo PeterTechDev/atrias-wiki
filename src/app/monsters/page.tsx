@@ -1,3 +1,4 @@
+import { getCharacterPortrait } from '@/lib/characterMedia'
 import { getEntitiesByType } from '@/db/queries/entities'
 import { WikiArchive } from '@/components/WikiArchive'
 import type { MonsterData } from '@/types/entities'
@@ -10,7 +11,7 @@ export default async function ArchivePage() {
     const data = (e.data ?? {}) as MonsterData
     return {
       slug: e.slug, name: e.name, description: e.description,
-      image: e.image, metadata: [data.type, data.environment?.[0]],
+      image: getCharacterPortrait(e.data ?? {}, e.image)?.src, metadata: [data.type, data.environment?.[0]],
     }
   }).sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'))
   return <WikiArchive title="Bestiário" subtitle="Criaturas e monstros que habitam o mundo" icon="game-icons:spiked-dragon-head" collection="monsters" entries={entries} />

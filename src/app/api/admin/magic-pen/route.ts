@@ -25,6 +25,7 @@ function isEntityType(value: unknown): value is EntityType {
     value === 'item' ||
     value === 'lore' ||
     value === 'monster' ||
+    value === 'deity' ||
     value === 'session'
   )
 }

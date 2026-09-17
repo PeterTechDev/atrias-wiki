@@ -1,0 +1,12 @@
+/* One ink stroke acknowledges a successfully saved entry. */
+@media (prefers-reduced-motion: no-preference) {
+  .mark path:nth-child(2) {
+    stroke-dasharray: 24;
+    animation: ink 600ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+@keyframes ink {
+  from { stroke-dashoffset: 24; }
+  to { stroke-dashoffset: 0; }
+}

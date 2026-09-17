@@ -1,3 +1,4 @@
+import { validateWikiSections } from '@/lib/wikiSections'
 import { and, count, eq, inArray, isNull, sql } from 'drizzle-orm'
 import { db } from '@/db'
 import { entities, type Entity, type EntityStatus, type EntityType } from '@/db/schema'
@@ -9,7 +10,7 @@ import { validateCharacterMedia } from '@/lib/characterMedia'
 import { validateCharacterCard } from '@/lib/characterCard'
 import { validatePlaceData } from '@/lib/placeContent'
 
-export const wikiEntityTypes = ['character', 'place', 'faction', 'item', 'lore', 'monster', 'other'] as const
+export const wikiEntityTypes = ['character', 'place', 'faction', 'item', 'lore', 'monster', 'deity', 'other'] as const
 export type WikiEntityType = (typeof wikiEntityTypes)[number]
 export type EntityWriter = { source: 'member' | 'admin'; userId?: string }
 
@@ -47,10 +48,11 @@ function validateEntityInput(input: { type: unknown; name: string; slug: string;
     throw new EntityWriteError('invalid', 'Description is too long.')
   }
   if (input.data !== undefined && !isRecord(input.data)) throw new EntityWriteError('invalid', 'Data must be an object.')
-  if (input.type === 'character' && isRecord(input.data)) {
+  if (isRecord(input.data)) {
     try {
+      validateWikiSections(input.data.sections)
       if (input.data.media !== undefined) validateCharacterMedia(input.data.media)
-      validateCharacterCard(input.data.card3d)
+      if (input.type === 'character') validateCharacterCard(input.data.card3d)
     }
     catch (error) { throw new EntityWriteError('invalid', error instanceof Error ? error.message : 'Mídia inválida.') }
   }
@@ -261,6 +263,7 @@ export async function getEntityCounts(isDM?: boolean): Promise<EntityCounts> {
       items: countMap['item'] ?? 0,
       lore: countMap['lore'] ?? 0,
       monsters: countMap['monster'] ?? 0,
+      deities: countMap['deity'] ?? 0,
       others: countMap['other'] ?? 0,
       sessions: countMap['session'] ?? 0,
       total,

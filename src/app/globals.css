@@ -1,5 +1,114 @@
 @import "tailwindcss";
 
+@layer base {
+  :where(button, a[href], [role="button"], select, input[type="checkbox"], input[type="radio"], input[type="submit"], input[type="button"], summary),
+  input::file-selector-button {
+    cursor: pointer;
+  }
+  :where(button, input):disabled, [aria-disabled="true"] {
+    cursor: not-allowed;
+  }
+  select:disabled, input:disabled::file-selector-button { cursor: not-allowed; }
+  :where(button, a, [role="button"], summary):focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  .wiki-button {
+    --button-bg: #f5efe5;
+    --button-hover: #e8dcc8;
+    --button-ink: #49391f;
+    --button-border: #9b814d;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    min-width: 44px;
+    padding: 0.625rem 1rem;
+    border: 1px solid var(--button-border);
+    border-radius: 6px;
+    background: var(--button-bg);
+    color: var(--button-ink);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.4;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 160ms ease-out, border-color 160ms ease-out, box-shadow 160ms ease-out, translate 160ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .wiki-button-primary {
+    --button-bg: #c6a862;
+    --button-hover: #dbc28a;
+    --button-ink: #0a1628;
+    --button-border: #9b814d;
+  }
+  .wiki-button-quiet {
+    --button-bg: transparent;
+    --button-hover: color-mix(in srgb, currentColor 10%, transparent);
+    --button-ink: inherit;
+    --button-border: transparent;
+  }
+  .wiki-button-danger {
+    --button-bg: #fff5f0;
+    --button-hover: #f8ddd3;
+    --button-ink: #922f23;
+    --button-border: #b76d60;
+  }
+  .wiki-button-icon { padding: 0.625rem; }
+  .wiki-button:disabled, .wiki-button[aria-disabled="true"] {
+    opacity: 0.4;
+    box-shadow: none;
+  }
+  @media (hover: hover) {
+    .wiki-button:not(:disabled):not([aria-disabled="true"]):hover {
+      background: var(--button-hover);
+      border-color: currentColor;
+      translate: 0 -2px;
+      box-shadow: 0 4px 8px #0a16281f;
+    }
+  }
+  .wiki-button:not(:disabled):not([aria-disabled="true"]):active {
+    background: var(--button-hover);
+    box-shadow: inset 0 2px 3px #0a162826;
+    translate: 0 1px;
+  }
+  .wiki-button:focus-visible {
+    outline: 2px solid #9b814d;
+    outline-offset: 3px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .wiki-button { transition-duration: 0s; }
+    .wiki-button:not(:disabled):not([aria-disabled="true"]):is(:hover, :active) { translate: none; }
+  }
+}
+
+/* Shared navigation and search respond without delaying interaction. */
+:is(nav[aria-label="Navegação principal"], #global-search) :is(a, button) {
+  transition: background-color 160ms ease-out, border-color 160ms ease-out, color 160ms ease-out;
+}
+button[aria-controls="account-menu"] > svg {
+  transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+#global-search[open], #account-menu {
+  animation: wiki-panel-in 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+#global-search[open]::backdrop { animation: wiki-backdrop-in 180ms ease-out; }
+@keyframes wiki-panel-in {
+  from { opacity: 0.5; translate: 0 -6px; }
+  to { opacity: 1; translate: 0 0; }
+}
+@keyframes wiki-backdrop-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #global-search[open], #account-menu, #global-search[open]::backdrop { animation: none; }
+  button[aria-controls="account-menu"] > svg { transition: none; }
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;

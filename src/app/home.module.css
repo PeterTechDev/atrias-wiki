@@ -18,9 +18,7 @@
 .scrollHint { position: absolute; bottom: 24px; left: calc(50% - 22px); display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; color: #c6a862; }
 .primary, .secondary { min-height: 48px; display: inline-flex; align-items: center; justify-content: center; gap: 12px; padding: 12px 24px; border-radius: 6px; font-size: 14px; font-weight: 600; transition: background-color 160ms ease-out; }
 .primary { background: #c6a862; color: #0a1628; }
-.primary:hover { background: #e8dcc8; }
 .secondary { border: 1px solid #a8935a; color: #e8dcc8; background: #0a1628; }
-.secondary:hover { background: #1a1a2e; }
 .directory { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 48px; padding-block: 28px 40px; }
 .directory h2 { font-size: 20px; color: #c6a862; margin-bottom: 12px; }
 .directory ul { list-style: none; padding: 0; }
@@ -85,6 +83,46 @@
   .directory nav:nth-child(2) a { align-items: flex-start; flex-direction: column; padding-block: 6px; }
   .places, .section, .about { padding-block: 32px; }
 }
+/* A warm edge catches the light as an archive action is selected. */
+.primary, .secondary {
+  position: relative;
+  transition: background-color 180ms ease-out, border-color 180ms ease-out, box-shadow 180ms ease-out, translate 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.primary::after, .secondary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow: inset 0 1px 0 #fff2ca99;
+  opacity: 0;
+  transition: opacity 180ms ease-out;
+}
+.directory a, .place, .character h3, .faction h3 {
+  transition: background-color 180ms ease-out, color 180ms ease-out;
+}
+.readLink svg, .sectionHeading > a svg, .directory a > span, .scrollHint svg {
+  transition: translate 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.primary:focus-visible::after, .secondary:focus-visible::after { opacity: 1; }
+.page :is(.place, .character, .faction):focus-visible .readLink { text-decoration: underline; }
+@media (hover: hover) {
+  .primary:hover { background: #dbc28a; }
+  .secondary:hover { background: #1a1a2e; border-color: #e8dcc8; }
+  .primary:hover, .secondary:hover { translate: 0 -2px; box-shadow: 0 6px 14px #00000040; }
+  .primary:hover::after, .secondary:hover::after { opacity: 1; }
+  .directory a:hover { background: #c6a8620d; }
+  .directory a:hover > span:first-child { translate: 4px 0; }
+  .place:hover { background: #fff9ef; }
+  .character:hover h3, .faction:hover h3 { color: #c6a862; }
+  .page :is(.place, .character, .faction):hover .readLink svg,
+  .sectionHeading > a:hover svg { translate: 4px 0; }
+  .scrollHint:hover svg { translate: 0 4px; }
+}
+.primary:active, .secondary:active { translate: 0 1px; box-shadow: inset 0 2px 4px #0a162840; }
 @media (prefers-reduced-motion: reduce) {
-  .page a { transition: none; }
+  .page a, .page a::after, .page a svg, .directory a > span { transition: none; }
+  .page :is(a, a svg, .directory a > span),
+  .page :is(.place, .character, .faction):hover .readLink svg,
+  .directory a:hover > span:first-child { translate: none; }
 }

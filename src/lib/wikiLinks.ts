@@ -1,6 +1,6 @@
 export function parseWikiLinks(text: string): { text: string; href?: string }[] {
   const parts: { text: string; href?: string }[] = []
-  const pattern = /\[((?:\\.|[^\]\\\n])+)\]\((\/(?:characters|places|factions|items|lore|monsters|others)\/[a-z0-9]+(?:-[a-z0-9]+)*)\)/g
+  const pattern = /\[((?:\\.|[^\]\\\n])+)\]\((\/(?:characters|places|factions|items|lore|monsters|deities|others)\/[a-z0-9]+(?:-[a-z0-9]+)*)\)/g
   let cursor = 0
   for (const match of text.matchAll(pattern)) {
     parts.push({ text: text.slice(cursor, match.index) })
