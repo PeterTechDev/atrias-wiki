@@ -35,9 +35,12 @@ const originalFetch = globalThis.fetch
 function member(name: string): User {
   return {
     id: `sim-${name}`,
+    aud: 'authenticated',
+    app_metadata: {},
+    created_at: '2026-01-01T00:00:00.000Z',
     is_anonymous: false,
     user_metadata: { display_name: name, avatar: 'mage' },
-  } as User
+  }
 }
 
 function sessionFor(name: string, token: string) {

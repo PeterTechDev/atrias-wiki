@@ -9,7 +9,7 @@ import { ChevronDown } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
 import { HEADER_ACCOUNT_TIMEOUT_MS, headerAccountTimeoutMessage, visibleAccount } from '@/lib/headerAccount'
 import { avatars, authError, supabase, supabaseUrl } from '@/lib/supabase'
-import { syncWikiSession } from '@/lib/wikiSession'
+import { sessionExpiredMessage, syncWikiSession } from '@/lib/wikiSession'
 import GlobalSearch from '@/components/GlobalSearch'
 
 const AuthContext = createContext<{ user: User | null; loading: boolean }>({ user: null, loading: true })
@@ -36,6 +36,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
   const setMenuOpen = (open: boolean) => setMenuPath(open ? pathname : null)
   const menuRef = useRef<HTMLDivElement>(null)
   const triggerRef = useRef<HTMLButtonElement>(null)
+  const syncGeneration = useRef(0)
 
   useEffect(() => {
     let active = true
@@ -51,17 +52,21 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
       if (!active) return
       settled = true
       window.clearTimeout(timeout)
+      const generation = ++syncGeneration.current
       setMenuPath(null)
       setError('')
       setUser(visibleAccount(session?.user))
       setLoading(false)
       // A stalled cookie sync must not keep the header on "Carregando conta…".
       void syncWikiSession(session).then(() => {
-        if (!active) return
+        if (!active || generation !== syncGeneration.current) return
         if (_event === 'SIGNED_OUT') { window.location.replace('/'); return }
         router.refresh()
       }).catch(error => {
-        if (active) setError(error instanceof Error ? error.message : headerAccountTimeoutMessage)
+        if (!active || generation !== syncGeneration.current) return
+        const message = error instanceof Error ? error.message : headerAccountTimeoutMessage
+        if (message === sessionExpiredMessage) setUser(null)
+        setError(message)
       })
     })
     return () => { active = false; window.clearTimeout(timeout); subscription.unsubscribe() }

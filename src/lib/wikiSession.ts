@@ -3,6 +3,7 @@ import type { Session } from '@supabase/supabase-js'
 let pending: Promise<unknown> = Promise.resolve()
 
 const sessionSyncError = 'Não foi possível sincronizar a sessão. Recarregue a página.'
+export const sessionExpiredMessage = 'Sua sessão expirou. Entre novamente.'
 
 export function syncWikiSession(session: Pick<Session, 'access_token'> | null, timeoutMs = 8000) {
   // A late login response must never overwrite the cookie after logout.
@@ -14,7 +15,7 @@ export function syncWikiSession(session: Pick<Session, 'access_token'> | null, t
         signal: AbortSignal.timeout(timeoutMs),
       })
       if (!response.ok) throw new Error(sessionSyncError)
-      if (session && !(await response.json()).authenticated) throw new Error('Sua sessão expirou. Entre novamente.')
+      if (session && !(await response.json()).authenticated) throw new Error(sessionExpiredMessage)
     } catch (error) {
       if (error instanceof Error && (error.name === 'TimeoutError' || error.name === 'AbortError')) throw new Error(sessionSyncError)
       throw error
