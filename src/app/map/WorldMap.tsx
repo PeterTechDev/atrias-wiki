@@ -10,6 +10,10 @@ import Link from 'next/link'
 import { Icon } from '@iconify/react'
 import type { Map as LeafletMap } from 'leaflet'
 import type { MapLocation, LocationCategory } from '@/lib/mapLocations'
+// Leaflet 1.9 requires its stylesheet before the map is created. Importing the
+// package CSS (Next.js external stylesheet) avoids a runtime CDN link that can
+// still be missing when L.map() runs.
+import 'leaflet/dist/leaflet.css'
 
 // Map markers for known locations
 // coords: [x, y] where x=horizontal from left, y=from TOP of image
@@ -63,15 +67,6 @@ export default function WorldMap({ locations, initialPlace }: { locations: MapLo
       const L = (await import('leaflet')).default
       if (cancelled || !mapContainer.current) return
 
-      // Load CSS dynamically
-      if (!document.getElementById('leaflet-css')) {
-        const link = document.createElement('link')
-        link.id = 'leaflet-css'
-        link.rel = 'stylesheet'
-        link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css'
-        document.head.appendChild(link)
-      }
-
       // Image dimensions
       const imageWidth = 8192
       const imageHeight = IMAGE_HEIGHT
@@ -90,8 +85,24 @@ export default function WorldMap({ locations, initialPlace }: { locations: MapLo
       // Calculate bounds
       const bounds = [[0, 0], [imageHeight, imageWidth]] as [[number, number], [number, number]]
 
-      // Add image overlay
-      L.imageOverlay('/world-map.jpg', bounds).addTo(map)
+      // ImageOverlay fires load/error (Leaflet 1.9 reference). Keep the loading
+      // state until the existing map image is ready, or surface the recoverable error.
+      const overlay = L.imageOverlay('/world-map.jpg', bounds)
+      let settled = false
+      const revealMap = () => {
+        if (cancelled || settled) return
+        settled = true
+        setIsLoading(false)
+      }
+      const revealError = () => {
+        if (cancelled || settled) return
+        settled = true
+        setMapError(true)
+        setIsLoading(false)
+      }
+      overlay.once('load', revealMap)
+      overlay.once('error', revealError)
+      overlay.addTo(map)
 
       // Fit map to image bounds
       map.fitBounds(bounds)
@@ -139,7 +150,8 @@ export default function WorldMap({ locations, initialPlace }: { locations: MapLo
         setSelectedLocation(requested)
         setActiveCategory(requested.category)
       }
-      setIsLoading(false)
+      const image = overlay.getElement()
+      if (image instanceof HTMLImageElement && image.complete && image.naturalWidth > 0) revealMap()
     }
 
     void initMap().catch(() => { if (!cancelled) { setMapError(true); setIsLoading(false) } })
