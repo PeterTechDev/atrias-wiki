@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 import Link from 'next/link'
 import { Icon } from '@iconify/react'
+import { uiCopy } from '@/lib/uiLabels'
 
 // Timeline data - events organized by era
 const timelineData = {
@@ -594,7 +595,7 @@ export default function TimelinePage() {
     )
   }
 
-  // Witness History Mode
+  // Guided playback through the timeline
   const startWitnessMode = useCallback(() => {
     setWitnessMode(true)
     setWitnessIndex(0)
@@ -689,14 +690,14 @@ export default function TimelinePage() {
                 </h1>
               </div>
 
-              {/* Witness History Button */}
+              {/* Guided playback */}
               {!witnessMode ? (
                 <button
                   onClick={startWitnessMode}
                   className="px-4 py-2 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white font-semibold rounded-lg transition-all hover:scale-105 flex items-center gap-2 shadow-lg shadow-amber-900/50"
                 >
                   <span>▶</span>
-                  Witness History
+                  {uiCopy.witnessHistory}
                 </button>
               ) : (
                 <button
@@ -1100,7 +1101,7 @@ export default function TimelinePage() {
                   onClick={stopWitnessMode}
                   className="px-6 py-3 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-lg transition-all"
                 >
-                  Explorar a Timeline
+                  {uiCopy.exploreTimeline}
                 </button>
               </div>
             </div>

@@ -22,6 +22,7 @@ import { getPlaceContent, getPlaceMaps, validatePlaceData } from '@/lib/placeCon
 import { getPlaceMarker } from '@/lib/mapLocations'
 import { getCharacterMedia, validateCharacterMedia, type CharacterMedia } from '@/lib/characterMedia'
 import { entityTypeToCollection } from '../_lib/entityTypes'
+import { CHARACTER_STATUS_LABELS, labelCharacterStatus } from '@/lib/uiLabels'
 
 function slugify(input: string) {
   return input
@@ -846,11 +847,8 @@ export function AdminEntityForm({
                     onChange={(e) => updateDataField('status', e.target.value)}
                     className="mt-1 min-h-11 w-full rounded border border-slate-300 bg-white px-3 py-2 text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
                   >
-                    {!['active', 'deceased', 'unknown', 'missing'].includes((dataFields as CharacterFields).status) && <option value={(dataFields as CharacterFields).status}>{(dataFields as CharacterFields).status}</option>}
-                    <option value="active">Ativo</option>
-                    <option value="deceased">Morto</option>
-                    <option value="unknown">Desconhecido</option>
-                    <option value="missing">Desaparecido</option>
+                    {!Object.keys(CHARACTER_STATUS_LABELS).includes((dataFields as CharacterFields).status) && <option value={(dataFields as CharacterFields).status}>{labelCharacterStatus((dataFields as CharacterFields).status)}</option>}
+                    {Object.entries(CHARACTER_STATUS_LABELS).map(([value, label]) => <option key={value} value={value}>{label}</option>)}
                   </select>
                 </label>
               </div>

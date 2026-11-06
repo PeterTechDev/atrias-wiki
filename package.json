@@ -13,6 +13,7 @@
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
     "db:seed": "tsx scripts/seed-database.ts",
+    "test:ui-labels": "tsx tests/ui-labels.test.ts",
     "test:signup-password": "tsx tests/signup-password.test.ts",
     "test:wiki": "tsx tests/wiki-editing.test.ts",
     "test:wiki-archiving": "tsx tests/wiki-archiving.test.ts",

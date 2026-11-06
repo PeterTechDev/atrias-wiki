@@ -8,6 +8,7 @@ import { getEntityBySlug, getPlacesForCharacter } from '@/db/queries/entities'
 import type { CharacterData } from '@/types/entities'
 import { getCharacterMedia } from '@/lib/characterMedia'
 import { getCharacterCard } from '@/lib/characterCard'
+import { labelCharacterStatus } from '@/lib/uiLabels'
 import { CharacterCardViewer } from '@/components/CharacterCard'
 import { WikiContributionActions } from '@/components/WikiContributionActions'
 import { WikiLastEdited } from '@/components/WikiLastEdited'
@@ -15,10 +16,6 @@ import { WikiFavoriteButton } from '@/components/WikiFavoriteButton'
 import styles from './character.module.css'
 
 export const dynamic = 'force-dynamic'
-
-const statusLabels: Record<string, string> = {
-  active: 'Ativo', deceased: 'Falecido', unknown: 'Desconhecido', missing: 'Desaparecido',
-}
 
 export default async function CharacterPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
@@ -30,7 +27,7 @@ export default async function CharacterPage({ params }: { params: Promise<{ slug
   const card = getCharacterCard(data.card3d)
   const facts = [
     { label: 'Raça', value: data.race },
-    { label: 'Status', value: data.status ? statusLabels[data.status] || data.status : undefined },
+    { label: 'Status', value: labelCharacterStatus(data.status) },
     { label: 'Alinhamento', value: data.alignment },
     { label: 'Afiliação', value: data.affiliation },
   ].filter(fact => fact.value)
