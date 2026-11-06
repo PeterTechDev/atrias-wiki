@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "test:places": "tsx tests/place-content.test.ts",
+    "test:e2e:map": "playwright test tests/e2e/map-canvas.spec.ts --retries=0",
     "test:character-media": "tsx tests/character-media.test.ts",
     "test:dice": "tsx tests/dice.test.ts",
     "dev": "next dev",
@@ -39,6 +40,7 @@
     "three": "0.186.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.58.2",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/pg": "^8.16.0",

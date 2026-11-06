@@ -23,6 +23,9 @@ npm-debug.log*
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 # testing
 *.tsbuildinfo
+/test-results/
+/playwright-report/
+/blob-report/
 # typescript
 # vercel
 .vercel
