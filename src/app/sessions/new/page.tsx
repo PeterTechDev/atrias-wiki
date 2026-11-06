@@ -9,6 +9,10 @@ import { useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { Icon } from '@iconify/react'
+import { useAuth } from '@/components/AuthProvider'
+import { SessionCreateWall, sessionCreateView } from '@/components/SessionCreateAccess'
+import { sessionSaveHeaders } from '@/lib/sessionSave'
+import { supabase } from '@/lib/supabase'
 
 type InputMode = 'quick' | 'text' | 'audio' | 'manual'
 
@@ -65,6 +69,7 @@ function formatBytes(bytes: number): string {
 
 export default function NewSessionPage() {
   const router = useRouter()
+  const { user, loading: authLoading } = useAuth()
 
   const [inputMode, setInputMode] = useState<InputMode>('quick')
   const [isProcessing, setIsProcessing] = useState(false)
@@ -233,6 +238,17 @@ export default function NewSessionPage() {
     }
   }
 
+  const postSession = async (body: unknown) => {
+    const { data } = await supabase.auth.getSession()
+    const prepared = sessionSaveHeaders(data.session?.access_token)
+    if ('error' in prepared) throw new Error(prepared.error)
+    return fetch('/api/sessions/save', {
+      method: 'POST',
+      headers: prepared.headers,
+      body: JSON.stringify(body),
+    })
+  }
+
   const handleSave = async () => {
     setError(null)
 
@@ -245,27 +261,25 @@ export default function NewSessionPage() {
       if (!manualSummary.trim()) return setError('Informe um resumo.')
 
       try {
-        const res = await fetch('/api/sessions/save', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            campaign,
-            sessionNumber: Number(sessionNumber),
-            playDate,
-            title: manualTitle.trim(),
-            summary: manualSummary.trim(),
-            keyEvents: [],
-            quotes: [],
-            cliffhanger: '',
-            matchedEntities: [],
-          }),
+        const res = await postSession({
+          campaign,
+          sessionNumber: Number(sessionNumber),
+          playDate,
+          title: manualTitle.trim(),
+          summary: manualSummary.trim(),
+          keyEvents: [],
+          quotes: [],
+          cliffhanger: '',
+          matchedEntities: [],
         })
 
         const json: unknown = await res.json()
         if (!res.ok) {
-          const msg = (json && typeof json === 'object' && 'error' in json && typeof json.error === 'string')
-            ? json.error
-            : 'Falha ao salvar.'
+          const msg = res.status === 401
+            ? 'Sua sessão expirou. Entre novamente e tente salvar.'
+            : (json && typeof json === 'object' && 'error' in json && typeof json.error === 'string')
+              ? json.error
+              : 'Falha ao salvar.'
           throw new Error(msg)
         }
 
@@ -285,28 +299,26 @@ export default function NewSessionPage() {
     }
 
     try {
-      const res = await fetch('/api/sessions/save', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          campaign,
-          sessionNumber: typeof sessionNumber === 'number' ? sessionNumber : Number(sessionNumber),
-          playDate,
-          title: generatedContent.title,
-          summary: generatedContent.summary,
-          keyEvents: generatedContent.keyEvents,
-          quotes: generatedContent.quotes,
-          cliffhanger: generatedContent.cliffhanger,
-          transcript: generatedContent.transcript,
-          matchedEntities: generatedContent.matchedEntities,
-        }),
+      const res = await postSession({
+        campaign,
+        sessionNumber: typeof sessionNumber === 'number' ? sessionNumber : Number(sessionNumber),
+        playDate,
+        title: generatedContent.title,
+        summary: generatedContent.summary,
+        keyEvents: generatedContent.keyEvents,
+        quotes: generatedContent.quotes,
+        cliffhanger: generatedContent.cliffhanger,
+        transcript: generatedContent.transcript,
+        matchedEntities: generatedContent.matchedEntities,
       })
 
       const json: unknown = await res.json()
       if (!res.ok) {
-        const msg = (json && typeof json === 'object' && 'error' in json && typeof json.error === 'string')
-          ? json.error
-          : 'Falha ao salvar.'
+        const msg = res.status === 401
+          ? 'Sua sessão expirou. Entre novamente e tente salvar.'
+          : (json && typeof json === 'object' && 'error' in json && typeof json.error === 'string')
+            ? json.error
+            : 'Falha ao salvar.'
         throw new Error(msg)
       }
 
@@ -317,6 +329,25 @@ export default function NewSessionPage() {
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Erro desconhecido')
     }
+  }
+
+  if (sessionCreateView(authLoading, user) !== 'form') {
+    return (
+      <main className="min-h-screen bg-[#e8dcc8]">
+        <div className="max-w-4xl mx-auto px-6 py-4">
+          <nav className="flex items-center gap-2 text-sm text-slate-600">
+            <Link href="/" className="hover:text-amber-700">Home</Link>
+            <span>›</span>
+            <Link href="/sessions" className="hover:text-amber-700">Sessões</Link>
+            <span>›</span>
+            <span className="text-slate-800">Nova Sessão</span>
+          </nav>
+        </div>
+        <div className="max-w-4xl mx-auto px-6 pb-12">
+          {sessionCreateView(authLoading, user) === 'wall' ? <SessionCreateWall /> : <p role="status">Carregando conta…</p>}
+        </div>
+      </main>
+    )
   }
 
   return (
