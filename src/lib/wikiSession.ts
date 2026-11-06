@@ -17,7 +17,10 @@ export function syncWikiSession(session: Pick<Session, 'access_token'> | null, t
       if (!response.ok) throw new Error(sessionSyncError)
       if (session && !(await response.json()).authenticated) throw new Error(sessionExpiredMessage)
     } catch (error) {
-      if (error instanceof Error && (error.name === 'TimeoutError' || error.name === 'AbortError')) throw new Error(sessionSyncError)
+      if (error instanceof Error && error.message === sessionExpiredMessage) throw error
+      if (error instanceof Error && (error.name === 'TimeoutError' || error.name === 'AbortError' || error.name === 'TypeError')) {
+        throw new Error(sessionSyncError)
+      }
       throw error
     }
   })

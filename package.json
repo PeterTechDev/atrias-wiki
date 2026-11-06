@@ -18,6 +18,8 @@
     "test:signup-password": "tsx tests/signup-password.test.ts",
     "test:header-auth": "tsx tests/header-auth.test.ts",
     "test:header-session": "tsx tests/header-session-expired.test.tsx",
+    "test:wiki-session": "tsx tests/wiki-session-classification.test.ts",
+    "test:login-next": "tsx tests/login-next-sync.test.tsx",
     "test:wiki": "tsx tests/wiki-editing.test.ts",
     "test:wiki-archiving": "tsx tests/wiki-archiving.test.ts",
     "test:wiki-entity-types": "tsx tests/wiki-entity-types.test.ts",

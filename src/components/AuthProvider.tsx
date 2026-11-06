@@ -12,7 +12,7 @@ import { avatars, authError, supabase, supabaseUrl } from '@/lib/supabase'
 import { sessionExpiredMessage, syncWikiSession } from '@/lib/wikiSession'
 import GlobalSearch from '@/components/GlobalSearch'
 
-const AuthContext = createContext<{ user: User | null; loading: boolean }>({ user: null, loading: true })
+const AuthContext = createContext<{ user: User | null; loading: boolean; sessionSettled: boolean }>({ user: null, loading: true, sessionSettled: false })
 export const useAuth = () => useContext(AuthContext)
 
 export function Avatar({ value, size = 40 }: { value?: string; size?: number }) {
@@ -27,6 +27,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
   const [user, setUser] = useState<User | null>(null)
   const router = useRouter()
   const [loading, setLoading] = useState(true)
+  const [sessionSettled, setSessionSettled] = useState(false)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
   const pathname = usePathname()
@@ -46,6 +47,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
       settled = true
       setUser(null)
       setLoading(false)
+      setSessionSettled(true)
       setError(headerAccountTimeoutMessage)
     }, HEADER_ACCOUNT_TIMEOUT_MS)
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
@@ -57,16 +59,22 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
       setError('')
       setUser(visibleAccount(session?.user))
       setLoading(false)
+      setSessionSettled(false)
       // A stalled cookie sync must not keep the header on "Carregando conta…".
       void syncWikiSession(session).then(() => {
         if (!active || generation !== syncGeneration.current) return
+        setSessionSettled(true)
         if (_event === 'SIGNED_OUT') { window.location.replace('/'); return }
         router.refresh()
       }).catch(error => {
         if (!active || generation !== syncGeneration.current) return
         const message = error instanceof Error ? error.message : headerAccountTimeoutMessage
-        if (message === sessionExpiredMessage) setUser(null)
+        if (message === sessionExpiredMessage) {
+          setUser(null)
+          router.refresh()
+        }
         setError(message)
+        setSessionSettled(true)
       })
     })
     return () => { active = false; window.clearTimeout(timeout); subscription.unsubscribe() }
@@ -98,7 +106,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
     }
   }
 
-  return <AuthContext.Provider value={{ user, loading }}>
+  return <AuthContext.Provider value={{ user, loading, sessionSettled }}>
     <header className="relative z-40 border-b border-amber-200/10 bg-[#0a1628] text-sm text-amber-100">
     <nav aria-label="Navegação principal" className="mx-auto flex min-h-16 max-w-6xl items-center gap-3 px-4 py-2 sm:gap-6 sm:px-6">
       <Link href="/" aria-label="Wiki Átrias — início" className="mr-auto flex shrink-0 items-center gap-2 rounded text-amber-400 hover:text-amber-300 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-400">

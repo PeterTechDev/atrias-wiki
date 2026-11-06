@@ -96,7 +96,7 @@ function ProfileFields({ user, children }: { user?: User; children?: React.React
 }
 
 export default function LoginPage() {
-  const { user, loading } = useAuth()
+  const { user, loading, sessionSettled } = useAuth()
   const [mode, setMode] = useState<'login' | 'signup'>('login')
   const [busy, setBusy] = useState(false)
   const [message, setMessage] = useState('')
@@ -116,8 +116,8 @@ export default function LoginPage() {
   }, [])
 
   useEffect(() => {
-    if (user && next) window.location.replace(nextPath)
-  }, [user, next, nextPath])
+    if (sessionSettled && user && next) window.location.replace(nextPath)
+  }, [sessionSettled, user, next, nextPath])
 
   async function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
