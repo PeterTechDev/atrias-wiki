@@ -37,7 +37,7 @@ const listeners: AuthListener[] = []
 const originalFetch = globalThis.fetch
 const goTrueUser = `${origin}/auth/v1/user`
 
-type GoTrueMode = 'member' | 'unauthorized' | 'unavailable' | 'network' | 'hang'
+type GoTrueMode = 'member' | 'unauthorized' | 'unavailable' | 'network' | 'rate-limit' | 'timeout' | 'hang'
 let mode: GoTrueMode = 'hang'
 let releaseGoTrue: (value: Response | PromiseLike<Response>) => void = () => {}
 
@@ -53,14 +53,19 @@ function member(name: string): User {
 }
 
 function jsonResponse(status: number, body: unknown) {
-  return new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json' } })
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: { 'Content-Type': 'application/json', 'X-Supabase-Api-Version': '2024-01-01' },
+  })
 }
 
 function goTrueResponse() {
   if (mode === 'hang') return new Promise<Response>(resolve => { releaseGoTrue = resolve })
   if (mode === 'network') throw new TypeError('Failed to fetch')
   if (mode === 'unavailable') return jsonResponse(503, { message: 'upstream unavailable' })
-  if (mode === 'unauthorized') return jsonResponse(401, { message: 'invalid JWT', error_code: 'bad_jwt' })
+  if (mode === 'rate-limit') return jsonResponse(429, { code: 'over_request_rate_limit', message: 'Rate limit exceeded' })
+  if (mode === 'timeout') return jsonResponse(408, { code: 'request_timeout', message: 'Request timeout' })
+  if (mode === 'unauthorized') return jsonResponse(401, { code: 'bad_jwt', message: 'invalid JWT' })
   return jsonResponse(200, {
     id: 'member-sim',
     aud: 'authenticated',
@@ -149,6 +154,20 @@ async function main() {
     assert.doesNotMatch(unavailable, /Sua sessão expirou/)
     assert.match(unavailable, /Não foi possível sincronizar a sessão/)
     assert.deepEqual(redirects, ['/wiki/favorites'], 'indisponibilidade mantém a conta e o destino pedido')
+
+    for (const transient of ['rate-limit', 'timeout'] as const) {
+      redirects.length = 0
+      mode = transient
+      await act(async () => {
+        listener('TOKEN_REFRESHED', { access_token: 'simulated-token', user: member('Conta Simulada') })
+        await new Promise(resolve => setTimeout(resolve, 20))
+      })
+      const limited = container.querySelector('header')?.innerHTML ?? ''
+      assert.match(limited, /Menu da conta: Conta Simulada/, `${transient} mantém a conta no header`)
+      assert.doesNotMatch(limited, /Sua sessão expirou/, `${transient} não anuncia expiração`)
+      assert.match(limited, /Não foi possível sincronizar a sessão/)
+      assert.deepEqual(redirects, ['/wiki/favorites'], `${transient} não trata a conta como sessão encerrada`)
+    }
 
     dom.happyDOM.setURL(`${origin}/login?next=/wiki/favorites`)
     redirects.length = 0
