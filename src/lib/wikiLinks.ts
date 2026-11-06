@@ -17,6 +17,19 @@ export function insertWikiLink(value: string, start: number, end: number, name: 
   return { value: value.slice(0, start) + link + value.slice(end), cursor: start + link.length }
 }
 
+function needsWordSpace(left: string, right: string) {
+  return /[\p{L}\p{N}]$/u.test(left) && /^[\p{L}\p{N}]/u.test(right)
+}
+
 export function wikiLinkText(text: string) {
-  return parseWikiLinks(text).map(part => part.text).join('')
+  let plain = ''
+  for (const part of parseWikiLinks(text)) {
+    if (!part.text) continue
+    // A link written against the previous word, as in "Vellenor[O Protetorado](/…)",
+    // has no space in the source. Previews flatten the label into the sentence, so
+    // insert one only where two words would otherwise become a single token.
+    if (plain && needsWordSpace(plain, part.text)) plain += ' '
+    plain += part.text
+  }
+  return plain
 }
