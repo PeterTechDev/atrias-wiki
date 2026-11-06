@@ -35,6 +35,17 @@ try {
       assert.equal(result.rowCount, 1, `Concurrent edit: ${slug}; rerun after reviewing`)
     }
   }
+  const portrait = '/images/characters/idris-portrait.jpg'
+  assert.ok(existsSync(`public${portrait}`))
+  const { rows: [idris] } = await pool.query("select id, data from entities where slug = 'idris-rucandel'")
+  if (Array.isArray(idris?.data?.media) && idris.data.media.some(item => item.src?.startsWith('https://janxtcbtksxrbghuoogd.supabase.co/')) && !idris.data.media.some(item => item.src === portrait)) {
+    console.log('idris-rucandel: add local portrait; preserve original gallery')
+    if (process.argv.includes('--apply')) {
+      const media = [{ type: 'image', src: portrait, alt: 'Retrato de Idris Rucandel' }, ...idris.data.media]
+      const result = await pool.query("update entities set data = jsonb_set(data, '{media}', $1::jsonb) where id = $2 and data = $3::jsonb returning id", [JSON.stringify(media), idris.id, JSON.stringify(idris.data)])
+      assert.equal(result.rowCount, 1, 'Concurrent edit: Idris; rerun after reviewing')
+    }
+  }
 } finally {
   await pool.end()
 }

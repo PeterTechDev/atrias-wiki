@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import WikiImage from '@/components/WikiImage'
 import Link from 'next/link'
 import { Icon } from '@iconify/react'
 import CinematicComet from '@/components/CinematicComet'
@@ -67,7 +67,7 @@ export default async function Home() {
             const data = (place.data ?? {}) as PlaceData
             const cover = getCharacterMedia(data, place.image).find(item => item.type === 'image') ?? getPlaceMaps(data)[0]
             return <Link key={place.id} href={`/places/${place.slug}`} aria-label={`Conhecer ${place.name}`} className={styles.place}>
-              {cover && <Image src={cover.src} alt={cover.alt || `Ilustração de ${place.name}`} width={800} height={460} unoptimized className={styles.placeImage} />}
+              {cover && <WikiImage src={cover.src} alt={cover.alt || `Ilustração de ${place.name}`} width={800} height={460} className={styles.placeImage} />}
               <div className={styles.placeText}>
                 <h3>{place.name}</h3>
                 <p>{wikiLinkText(getPlaceContent(data, place.description ?? '').intro) || 'A descrição deste lugar ainda não foi registrada.'}</p>
@@ -86,7 +86,7 @@ export default async function Home() {
         {characters.slice(0, 3).map(character => {
           const portrait = getCharacterMedia(character.data ?? {}, character.image).find(item => item.type === 'image')
           return <Link key={character.id} href={`/characters/${character.slug}`} aria-label={`Conhecer ${character.name}`} className={styles.character}>
-            {portrait && <Image src={portrait.src} alt={portrait.alt || `Retrato de ${character.name}`} width={112} height={136} unoptimized className={styles.portrait} />}
+            {portrait && <WikiImage src={portrait.src} alt={portrait.alt || `Retrato de ${character.name}`} width={112} height={136} className={styles.portrait} />}
             <div><h3>{character.name}</h3><p>{wikiLinkText(character.description ?? '') || 'A história deste personagem ainda não foi registrada.'}</p><span className={styles.readLink}>Conhecer {character.name} <Icon icon="mdi:arrow-right" aria-hidden="true" /></span></div>
           </Link>
         })}
