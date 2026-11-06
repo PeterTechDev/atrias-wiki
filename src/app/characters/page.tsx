@@ -2,6 +2,7 @@ import { getEntitiesByType } from '@/db/queries/entities'
 import { WikiArchive } from '@/components/WikiArchive'
 import type { CharacterData } from '@/types/entities'
 import { getCharacterPortrait } from '@/lib/characterMedia'
+import { labelCharacterStatus } from '@/lib/uiLabels'
 
 export const dynamic = 'force-dynamic'
 
@@ -11,7 +12,7 @@ export default async function ArchivePage() {
     const data = (e.data ?? {}) as CharacterData
     return {
       slug: e.slug, name: e.name, description: e.description,
-      image: getCharacterPortrait(data, e.image)?.src, metadata: [data.titles?.[0], data.class, data.race, data.status, data.affiliation],
+      image: getCharacterPortrait(data, e.image)?.src, metadata: [data.titles?.[0], data.class, data.race, labelCharacterStatus(data.status), data.affiliation],
     }
   }).sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'))
   return <WikiArchive title="Personagens" subtitle="Heróis, vilões e todos entre eles" icon="game-icons:cowled" collection="characters" entries={entries} />
