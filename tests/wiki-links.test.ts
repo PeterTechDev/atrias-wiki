@@ -18,4 +18,13 @@ for (const href of ['javascript:alert(1)', '//evil.test', 'https://evil.test', '
 assert.equal(parseWikiLinks('[A](/places/a) e [B](/items/b)').filter(part => part.href).length, 2)
 assert.deepEqual(parseWikiLinks('[Divindade](/deities/divindade)')[1], { text: 'Divindade', href: '/deities/divindade' })
 assert.equal(wikiLinkText('Texto [incompleto e <script>alert(1)</script>'), 'Texto [incompleto e <script>alert(1)</script>')
+// Home previews flatten a wiki link into the surrounding sentence. A link written
+// against the previous word must not glue the two phrases together.
+assert.equal(
+  wikiLinkText('Sede do Protetorado de Vellenor[O Protetorado de Vellenor](/factions/o-protetorado-de-vellenor)\n'),
+  'Sede do Protetorado de Vellenor O Protetorado de Vellenor\n',
+)
+assert.equal(wikiLinkText('Sede [O Protetorado](/factions/o-protetorado-de-vellenor) segue.'), 'Sede O Protetorado segue.')
+assert.equal(wikiLinkText('[A](/places/a)[B](/factions/b)'), 'A B')
+assert.equal(wikiLinkText('ano[1990](/lore/ano).'), 'ano 1990.')
 console.log('Wiki links: OK')
