@@ -7,6 +7,7 @@ import Image from 'next/image'
 import { Icon } from '@iconify/react'
 import { ChevronDown } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
+import { HEADER_ACCOUNT_TIMEOUT_MS, headerAccountTimeoutMessage, visibleAccount } from '@/lib/headerAccount'
 import { avatars, authError, supabase, supabaseUrl } from '@/lib/supabase'
 import { syncWikiSession } from '@/lib/wikiSession'
 import GlobalSearch from '@/components/GlobalSearch'
@@ -38,18 +39,32 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
 
   useEffect(() => {
     let active = true
+    let settled = false
+    const timeout = window.setTimeout(() => {
+      if (!active || settled) return
+      settled = true
+      setUser(null)
+      setLoading(false)
+      setError(headerAccountTimeoutMessage)
+    }, HEADER_ACCOUNT_TIMEOUT_MS)
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (!active) return
+      settled = true
+      window.clearTimeout(timeout)
       setMenuPath(null)
+      setError('')
+      setUser(visibleAccount(session?.user))
+      setLoading(false)
+      // A stalled cookie sync must not keep the header on "Carregando conta…".
       void syncWikiSession(session).then(() => {
         if (!active) return
         if (_event === 'SIGNED_OUT') { window.location.replace('/'); return }
-        setUser(session?.user && !session.user.is_anonymous ? session.user : null)
         router.refresh()
       }).catch(error => {
-        if (active) { setUser(null); setError(error instanceof Error ? error.message : 'Não foi possível carregar a sessão.') }
-      }).finally(() => { if (active) setLoading(false) })
+        if (active) setError(error instanceof Error ? error.message : headerAccountTimeoutMessage)
+      })
     })
-    return () => { active = false; subscription.unsubscribe() }
+    return () => { active = false; window.clearTimeout(timeout); subscription.unsubscribe() }
   }, [router])
 
   useEffect(() => {
